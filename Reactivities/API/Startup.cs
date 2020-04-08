@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Activities;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -41,7 +43,13 @@ namespace API
                 });
             });
 
-            services.AddControllers();
+            services.AddMediatR(typeof(List.Handler).Assembly);
+            //we well have lots of handlers but we only need to tell mediator about one and then
+            //to use that particular reference to look inside this assembly to locate all of the
+            //other handlers
+
+            //services.AddControllers();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

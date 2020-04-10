@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Box, makeStyles, Theme, createStyles } from '@material-ui/core';
 import { IActivity } from '../../../app/models/activity';
 import { ActivityList } from './ActivityList';
 import { ActivityDetails } from '../details/ActivityDetails';
@@ -8,19 +8,49 @@ import { ActivityForm } from '../form/ActivityForm';
 interface IProps {
     activities: IActivity[];
     selectActivity: (id: string) => void;
-    selectedActivity: IActivity | null
+    selectedActivity: IActivity | null;
+    editMode: boolean;
+    setEditMode: (editMode: boolean) => void;
 }
 
-export const ActivityDashboard: React.FC<IProps> = ({activities, selectActivity, selectedActivity}) => {
+const useStyles = makeStyles((theme: Theme) => createStyles({
+    title: {
+        fontSize: 14,
+    },
+    rightPanel: {
+        position: "fixed",
+        maxWidth: 400,
+        [theme.breakpoints.down('xs')]: {
+            //zIndex: "modal",
+            position: "static",
+            border: 1, 
+            margin: "auto"
+        }
+    }
+  })
+);
+
+export const ActivityDashboard: React.FC<IProps> = ({
+    activities, 
+    selectActivity, 
+    selectedActivity,
+    editMode,
+    setEditMode }) => {
+    const classes = useStyles();
+
     return (
         <Grid container spacing={3}>        
             <Grid item md={8} sm={6} xs={12}>
                 <ActivityList activities={activities} selectActivity={selectActivity}/>
             </Grid>
             <Grid item md={4} sm={6} xs={12}>
-                {/* if selectedActivity != null */}
-                {selectedActivity && <ActivityDetails activity={selectedActivity}/>}
-                <ActivityForm />
+                <Box className={classes.rightPanel} zIndex="modal">
+                    {/* if selectedActivity != null */}
+                    {selectedActivity && !editMode && (
+                        <ActivityDetails activity={selectedActivity} setEditMode={setEditMode}/>
+                    )}
+                    {editMode && <ActivityForm />}
+                </Box>
             </Grid>
         </Grid>
     );

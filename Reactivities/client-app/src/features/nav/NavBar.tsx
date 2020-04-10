@@ -15,7 +15,7 @@ export const NavBar = () => {
     const classes = useStyles();
 
     return (
-        <AppBar position="static" className="menu">
+        <AppBar position="fixed" className="menu">
             <Container>
                 <Toolbar>
                     <MenuItem>

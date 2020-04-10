@@ -1,11 +1,8 @@
 import React from 'react';
-import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, makeStyles, CardHeader, ButtonGroup } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, makeStyles, CardHeader, ButtonGroup, Box } from '@material-ui/core';
 import { IActivity } from '../../../app/models/activity';
 
 const useStyles = makeStyles({
-    root: {
-      //maxWidth: 345,
-    },
     title: {
         fontSize: 14,
       },
@@ -13,14 +10,15 @@ const useStyles = makeStyles({
 
 interface IProps {
     activity: IActivity;
+    setEditMode: (editMode: boolean) => void;
 }
 
 
-export const ActivityDetails: React.FC<IProps> = ({activity}) => {
+export const ActivityDetails: React.FC<IProps> = ({activity, setEditMode}) => {
     const classes = useStyles();
 
     return (
-        <Card className={classes.root}>
+        <Card>
             <CardActionArea>
                 <CardMedia
                     component="img"
@@ -44,11 +42,11 @@ export const ActivityDetails: React.FC<IProps> = ({activity}) => {
 
             <CardActions>
                 <ButtonGroup fullWidth>
-                    <Button>Edit</Button>
+                    <Button onClick={() => setEditMode(true)}>Edit</Button>
                     <Button color="primary">Cancel</Button>
                 </ButtonGroup>
             </CardActions>
             
-        </Card>
+            </Card>
     );
 };

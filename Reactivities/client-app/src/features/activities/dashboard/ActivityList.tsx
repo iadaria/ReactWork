@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 export const ActivityList: React.FC<IProps> = ({activities, selectActivity}) => {
     const classes = useStyles();
     return (
-        <Box>
+        <Box >
           {activities.map(activity => (
             <Card className={classes.root}>
               <CardHeader 

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { IActivity } from '../models/activity';
 import { NavBar } from '../../features/nav/NavBar';
-import { List, ListItemText, Container } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import { ActivityDashboard } from '../../features/activities/dashboard/ActivityDashboard';
 
 

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Card, CardContent, Typography, makeStyles, CardHeader, CardActions, Button, Box } from '@material-ui/core';
 import { IActivity } from '../../../app/models/activity';
 
@@ -8,7 +8,6 @@ interface IProps {
 
 const useStyles = makeStyles({
     root: {
-      minWidth: 500,
       marginTop: '5px'
     },
     title: {
@@ -33,7 +32,7 @@ export const ActivityList: React.FC<IProps> = ({activities}) => {
               />
               <CardContent>
                   <Typography className={classes.title} color="textSecondary" gutterBottom>
-                      Date
+                      {activity.date}
                   </Typography>
                   <Typography variant="body2" component="p">
                       <div>{activity.description}</div>

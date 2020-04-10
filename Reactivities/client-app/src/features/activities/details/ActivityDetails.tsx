@@ -1,7 +1,19 @@
 import React from 'react';
-import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, makeStyles, CardHeader, ButtonGroup } from '@material-ui/core';
+
+const useStyles = makeStyles({
+    root: {
+      maxWidth: 345,
+    },
+    title: {
+        fontSize: 14,
+      },
+  });
+
 
 export const ActivityDetails = () => {
+    const classes = useStyles();
+
     return (
         <Card className={classes.root}>
 
@@ -9,28 +21,28 @@ export const ActivityDetails = () => {
                 <CardMedia
                     component="img"
                     alt="Contemplative Reptile"
-                    height="140"
-                    image="/static/images/cards/contemplative-reptile.jpg"
+                    //height="140"
+                    image="/assets/placeholder.png"
                     title="Contemplative Reptile"
                 />
+                <CardHeader
+                    title="Title" 
+                />
                 <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                    Lizard
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                    across all continents except Antarctica
-                </Typography>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                        Date
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Description
+                    </Typography>
                 </CardContent>
             </CardActionArea>
 
             <CardActions>
-                <Button size="small" color="primary">
-                    Share
-                </Button>
-                <Button size="small" color="primary">
-                    Learn More
-                </Button>
+                <ButtonGroup fullWidth>
+                    <Button>Edit</Button>
+                    <Button color="primary">Cancel</Button>
+                </ButtonGroup>
             </CardActions>
             
         </Card>

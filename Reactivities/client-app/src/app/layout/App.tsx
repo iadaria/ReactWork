@@ -9,10 +9,16 @@ import { ActivityDashboard } from '../../features/activities/dashboard/ActivityD
 
 interface IState {
   activities: IActivity[]
+  selectedActivity: IActivity | null;
 }
 
 const App = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
+  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
+
+  const handleSelectActivity = (id: string) => {
+    setSelectedActivity(activities.filter(activity => activity.id === id)[0]);
+  }
 
   useEffect(() => {
     axios.get<IActivity[]>('http://localhost:5000/api/activities')
@@ -25,7 +31,11 @@ const App = () => {
     <Fragment>
       <NavBar />
       <Container style={{marginTop: '3em'}}>
-        <ActivityDashboard activities={activities}/>
+        <ActivityDashboard 
+          activities={activities}
+          selectActivity={handleSelectActivity}
+          selectedActivity={selectedActivity}
+        />
       </Container>
     </Fragment>    
   );

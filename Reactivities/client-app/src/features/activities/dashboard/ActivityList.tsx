@@ -4,6 +4,7 @@ import { IActivity } from '../../../app/models/activity';
 
 interface IProps {
   activities: IActivity[]
+  selectActivity: (id: string) => void;
 }
 
 const useStyles = makeStyles({
@@ -21,7 +22,7 @@ const useStyles = makeStyles({
     }
   });
 
-export const ActivityList: React.FC<IProps> = ({activities}) => {
+export const ActivityList: React.FC<IProps> = ({activities, selectActivity}) => {
     const classes = useStyles();
     return (
         <Box>
@@ -41,7 +42,12 @@ export const ActivityList: React.FC<IProps> = ({activities}) => {
               </CardContent>
               <CardActions className={classes.cardButtons}>
                   <Button variant="outlined" size="small">{activity.category}</Button>
-                  <Button size="large" color="primary">View</Button>
+                  <Button 
+                    onClick={() => selectActivity(activity.id)}
+                    size="large" color="primary"
+                  >
+                    View
+                  </Button>
               </CardActions>
             </Card>
           ))}

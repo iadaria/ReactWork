@@ -1,5 +1,6 @@
 import React from 'react';
-import { TextField, makeStyles, createStyles, Theme} from '@material-ui/core';
+import { TextField, makeStyles, createStyles, Theme, Button, Box } from '@material-ui/core';
+import { green } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -13,6 +14,18 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: theme.spacing(1),
         },
     },
+    success: {
+        backgroundColor: green[500],
+        color: '#fff',
+        marginLeft: 10
+    },
+    wrapperForButtons: {
+        marginRight: 5,
+        marginLeft: "auto",
+    },
+    button: {
+        marginLeft: 5
+    }
   }),
 );
 
@@ -20,10 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export const ActivityForm = () => {
     //const [name, setName] = React.useState('Composed TextField');
     const classes = useStyles();
-
-    /* const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setName(event.target.value);
-    }; */
 
     return (
         <form className={classes.root} autoComplete="Off">
@@ -50,19 +59,6 @@ export const ActivityForm = () => {
                 color="secondary"
                 fullWidth
             />
-            {/* <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="date-picker-inline"
-                label="Date picker inline"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                }}
-            /> */}
             <TextField 
                 id="activityFormDate"
                 label="Date"
@@ -88,6 +84,10 @@ export const ActivityForm = () => {
                 color="secondary"
                 fullWidth
             />
+            <Box className={classes.wrapperForButtons}>
+                <Button type="button" variant="outlined" size="small">Cancel</Button>
+                <Button className={classes.success} type="submit" variant="contained" size="small">Submit</Button>
+            </Box>
         </form>
     );
 };

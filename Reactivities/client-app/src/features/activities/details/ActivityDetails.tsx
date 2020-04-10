@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, makeStyles, CardHeader, ButtonGroup, Box } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, makeStyles, CardHeader, ButtonGroup } from '@material-ui/core';
 import { IActivity } from '../../../app/models/activity';
 
 const useStyles = makeStyles({

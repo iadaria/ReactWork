@@ -7,11 +7,15 @@ const useStyles = makeStyles({
     successButton: {
         backgroundColor: green[500],
         textTransform: "none",
-        whiteSpace: "nowrap"
+        whiteSpace: "nowrap",
     }
 });
 
-export const NavBar = () => {
+interface IProps {
+    openCreateForm: () => void;
+}
+
+export const NavBar: React.FC<IProps> = ({openCreateForm}) => {
     const classes = useStyles();
 
     return (
@@ -26,7 +30,12 @@ export const NavBar = () => {
                     <MenuItem>
                         Activiteis
                     </MenuItem>
-                    <Button color="inherit" className={classes.successButton}>Create Activity</Button>
+                    <Button 
+                        onClick={openCreateForm} 
+                        color="inherit" className={classes.successButton}
+                    >
+                        Create Activity
+                    </Button>
                 </Toolbar>
             </Container>
         </AppBar>

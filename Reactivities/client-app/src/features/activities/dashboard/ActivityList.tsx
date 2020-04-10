@@ -27,7 +27,7 @@ export const ActivityList: React.FC<IProps> = ({activities, selectActivity}) => 
     return (
         <Box >
           {activities.map(activity => (
-            <Card className={classes.root}>
+            <Card key={activity.id} className={classes.root}>
               <CardHeader 
                 title={activity.title}
               />
@@ -35,9 +35,9 @@ export const ActivityList: React.FC<IProps> = ({activities, selectActivity}) => 
                   <Typography className={classes.title} color="textSecondary" gutterBottom>
                       {activity.date}
                   </Typography>
-                  <Typography variant="body2" component="p">
-                      <div>{activity.description}</div>
-                      <div>{activity.city}, {activity.venue}</div>
+                  <Typography variant="body2" component="div">
+                      <p>{activity.description}</p>
+                      <p>{activity.city}, {activity.venue}</p>
                   </Typography>
               </CardContent>
               <CardActions className={classes.cardButtons}>

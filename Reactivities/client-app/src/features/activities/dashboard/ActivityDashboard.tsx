@@ -11,31 +11,16 @@ interface IProps {
     selectedActivity: IActivity | null;
     editMode: boolean;
     setEditMode: (editMode: boolean) => void;
+    setSelectedActivity: (activity: IActivity | null) => void;
 }
-
-const useStyles = makeStyles((theme: Theme) => createStyles({
-    title: {
-        fontSize: 14,
-    },
-    rightPanel: {
-        position: "fixed",
-        maxWidth: 400,
-        [theme.breakpoints.down('xs')]: {
-            //zIndex: "modal",
-            position: "static",
-            border: 1, 
-            margin: "auto"
-        }
-    }
-  })
-);
 
 export const ActivityDashboard: React.FC<IProps> = ({
     activities, 
     selectActivity, 
     selectedActivity,
     editMode,
-    setEditMode }) => {
+    setEditMode,
+    setSelectedActivity }) => {
     const classes = useStyles();
 
     return (
@@ -45,13 +30,37 @@ export const ActivityDashboard: React.FC<IProps> = ({
             </Grid>
             <Grid item md={4} sm={6} xs={12}>
                 <Box className={classes.rightPanel} zIndex="modal">
-                    {/* if selectedActivity != null */}
-                    {selectedActivity && !editMode && (
-                        <ActivityDetails activity={selectedActivity} setEditMode={setEditMode}/>
-                    )}
-                    {editMode && <ActivityForm />}
+                    {   selectedActivity && !editMode && (
+                        <ActivityDetails 
+                            activity={selectedActivity} 
+                            setEditMode={setEditMode}
+                            setSelectedActivity={setSelectedActivity}
+                        />)
+                    }    
+                    {   editMode && 
+                        <ActivityForm 
+                            setEditMode={setEditMode}
+                            activity={selectedActivity!} 
+                        />
+                    }
                 </Box>
             </Grid>
         </Grid>
     );
 };
+
+const useStyles = makeStyles((theme: Theme) => createStyles({
+    title: {
+        fontSize: 14,
+    },
+    rightPanel: {
+        position: "fixed",
+        maxWidth: 400,
+        [theme.breakpoints.down('xs')]: {
+            position: "static",
+            border: 1, 
+            margin: "auto"
+        }
+    }
+  })
+);

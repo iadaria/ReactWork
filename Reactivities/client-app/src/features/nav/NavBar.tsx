@@ -3,14 +3,6 @@ import { AppBar, Button, MenuItem, Toolbar, makeStyles, Container } from '@mater
 
 import green from '@material-ui/core/colors/green';
 
-const useStyles = makeStyles({
-    successButton: {
-        backgroundColor: green[500],
-        textTransform: "none",
-        whiteSpace: "nowrap",
-    }
-});
-
 interface IProps {
     openCreateForm: () => void;
 }
@@ -40,4 +32,12 @@ export const NavBar: React.FC<IProps> = ({openCreateForm}) => {
             </Container>
         </AppBar>
     );
-}
+};
+
+const useStyles = makeStyles({
+    successButton: {
+        backgroundColor: green[500],
+        textTransform: "none",
+        whiteSpace: "nowrap",
+    }
+});

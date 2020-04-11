@@ -7,21 +7,6 @@ interface IProps {
   selectActivity: (id: string) => void;
 }
 
-const useStyles = makeStyles({
-    root: {
-      marginTop: '5px'
-    },
-    title: {
-      fontSize: 14,
-    },
-    pos: {
-      marginBottom: 12,
-    },
-    cardButtons: {
-      justifyContent: "space-between"
-    }
-  });
-
 export const ActivityList: React.FC<IProps> = ({activities, selectActivity}) => {
     const classes = useStyles();
     return (
@@ -54,3 +39,18 @@ export const ActivityList: React.FC<IProps> = ({activities, selectActivity}) => 
         </Box>
     );
 };
+
+const useStyles = makeStyles({
+  root: {
+    marginTop: '5px'
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+  cardButtons: {
+    justifyContent: "space-between"
+  }
+});

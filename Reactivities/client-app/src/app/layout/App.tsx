@@ -26,6 +26,22 @@ const App = () => {
     setEditMode(true);
   }
 
+  const handleCreateActivity = (activity: IActivity) => {
+    setActivities([...activities, activity]);
+    //for display current created activity
+    setSelectedActivity(activity);
+    setEditMode(false);
+  }
+
+  const handleEditActivity = (activity: IActivity) => {
+    //first array after fileter will be contain a new array of all of the activities
+    //that do not match the id of the changing activity
+    setActivities([...activities.filter(a => a.id !== activity.id), activity]);
+    //for display current changed activity
+    setSelectedActivity(activity);
+    setEditMode(false);
+  }
+
   useEffect(() => {
     axios.get<IActivity[]>('http://localhost:5000/api/activities')
     .then((response) => {
@@ -46,6 +62,8 @@ const App = () => {
           editMode={editMode}
           setEditMode={setEditMode}
           setSelectedActivity={setSelectedActivity}
+          createActivity={handleCreateActivity}
+          editActivity={handleEditActivity}
         />
       </Container>
     </Fragment>    

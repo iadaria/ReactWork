@@ -2,16 +2,21 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { TextField, makeStyles, createStyles, Theme, Button, Box, TextareaAutosize } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
 import { IActivity } from '../../../app/models/activity';
+import { v4 as uuid} from 'uuid';
 
 interface IProps {
     setEditMode: (editMode: boolean) => void;
     activity: IActivity | null;
+    createActivity: (activity: IActivity) => void;
+    editActivity: (activity: IActivity) => void;
 }
 
-export const ActivityForm: React.FC<IProps> = ({setEditMode, activity: initialFormState }) => {
-    
-    
-    
+export const ActivityForm: React.FC<IProps> = ({
+    setEditMode, 
+    activity: initialFormState,
+    createActivity,
+    editActivity }) => {
+
     const initializeForm = () : IActivity => {
         if (initialFormState) {
             return initialFormState;
@@ -35,12 +40,25 @@ export const ActivityForm: React.FC<IProps> = ({setEditMode, activity: initialFo
         //console.log(`${event.target.name} = ${event.target.value}`);
         setActivity({ ...activity, [name]: value });
         //[event.target.name]: event.target.value
-    }
+    };
+
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (activity.id.length === 0) {
+            let newActivity = {
+                ...activity,
+                id: uuid()
+            };
+            createActivity(newActivity);
+        } else {
+            editActivity(activity);
+        }
+    };
     
     const classes = useStyles();
 
     return (
-        <form className={classes.root} autoComplete="Off">
+        <form className={classes.root} onSubmit={handleSubmit} autoComplete="Off">
             <TextField 
                 onChange={handleInputChange}
                 name="title"

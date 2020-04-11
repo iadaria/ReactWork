@@ -104,7 +104,7 @@ export const ActivityForm: React.FC<IProps> = ({
                 variant="outlined"
                 type="datetime-local"
                 color="secondary"
-                value={activity.date}
+                value={activity.date.length ===0 ? (new Date()).toISOString() : activity.date}
                 fullWidth
             />
             <TextField 

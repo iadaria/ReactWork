@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, FormEvent } from 'react';
 import { TextField, makeStyles, createStyles, Theme, Button, Box, TextareaAutosize } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
 import { IActivity } from '../../../app/models/activity';
@@ -128,8 +128,23 @@ export const ActivityForm: React.FC<IProps> = ({
                 fullWidth
             />
             <Box className={classes.wrapperForButtons}>
-                <Button onClick={() => setEditMode(false)} type="button" variant="outlined" size="small">Cancel</Button>
-                <Button className={classes.success} type="submit" variant="contained" size="small">Submit</Button>
+                <Button 
+                    onClick={() => setEditMode(false)} 
+                    type="button"
+                    variant="outlined" 
+                    size="small"
+                >
+                    Cancel
+                </Button>
+
+                <Button 
+                    className={classes.success} 
+                    type="submit" 
+                    variant="contained" 
+                    size="small"
+                >
+                    Submit
+                </Button>
             </Box>
         </form>
     );

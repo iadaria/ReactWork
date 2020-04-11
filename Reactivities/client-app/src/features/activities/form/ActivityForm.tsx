@@ -102,7 +102,7 @@ export const ActivityForm: React.FC<IProps> = ({
                     shrink: true,
                   }}
                 variant="outlined"
-                type="date"
+                type="datetime-local"
                 color="secondary"
                 value={activity.date}
                 fullWidth

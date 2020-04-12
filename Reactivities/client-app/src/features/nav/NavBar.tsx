@@ -1,14 +1,14 @@
-import React from 'react'
-import { AppBar, Button, MenuItem, Toolbar, makeStyles, Container } from '@material-ui/core';
+import React, { useContext } from 'react'
+import ActivityStore from '../../app/stores/activityStore';
+import { observer } from 'mobx-react-lite';
 
+import { AppBar, Button, MenuItem, Toolbar, makeStyles, Container } from '@material-ui/core';
 import green from '@material-ui/core/colors/green';
 
-interface IProps {
-    openCreateForm: () => void;
-}
+const NavBar: React.FC = () => {
 
-export const NavBar: React.FC<IProps> = ({openCreateForm}) => {
     const classes = useStyles();
+    const activityStore = useContext(ActivityStore);
 
     return (
         <AppBar position="fixed" className="menu">
@@ -23,7 +23,7 @@ export const NavBar: React.FC<IProps> = ({openCreateForm}) => {
                         Activiteis
                     </MenuItem>
                     <Button 
-                        onClick={openCreateForm} 
+                        onClick={activityStore.openCreateForm} 
                         color="inherit" className={classes.successButton}
                     >
                         Create Activity
@@ -41,3 +41,5 @@ const useStyles = makeStyles({
         whiteSpace: "nowrap",
     }
 });
+
+export default observer(NavBar);

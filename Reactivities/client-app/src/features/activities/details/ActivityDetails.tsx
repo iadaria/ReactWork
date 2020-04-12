@@ -1,19 +1,12 @@
 import React, { useContext } from 'react';
 import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, makeStyles, CardHeader, ButtonGroup } from '@material-ui/core';
-import { IActivity } from '../../../app/models/activity';
 import ActivityStore from '../../../app/stores/activityStore';
 import { observer } from 'mobx-react-lite';
 
-interface IProps {
-    setEditMode: (editMode: boolean) => void;
-    setSelectedActivity: (activity: IActivity | null) => void;
-}
-
-
-const ActivityDetails: React.FC<IProps> = ({setEditMode, setSelectedActivity}) => {
+const ActivityDetails: React.FC = () => {
     const classes = useStyles();
     const activityStore = useContext(ActivityStore);
-    const {selectedActivity: activity} = activityStore;
+    const {selectedActivity: activity, openEditForm, cancelSelectedActivity} = activityStore;
     return (
         <Card>
             <CardActionArea>
@@ -39,8 +32,8 @@ const ActivityDetails: React.FC<IProps> = ({setEditMode, setSelectedActivity}) =
 
             <CardActions>
                 <ButtonGroup fullWidth>
-                    <Button onClick={() => setEditMode(true)}>Edit</Button>
-                    <Button onClick={() => setSelectedActivity(null)} color="primary">Cancel</Button>
+                    <Button onClick={() => openEditForm(activity!.id)}>Edit</Button>
+                    <Button onClick={cancelSelectedActivity} color="primary">Cancel</Button>
                 </ButtonGroup>
             </CardActions>
             

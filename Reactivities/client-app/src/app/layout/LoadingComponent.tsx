@@ -1,7 +1,7 @@
 import React from 'react';
 import { CircularProgress, Typography, makeStyles, Theme, createStyles, Box } from '@material-ui/core';
 
-export const LoadingComponent: React.FC<{content? : string}> = ({content}) => {
+const LoadingComponent: React.FC<{content? : string}> = ({content}) => {
     const classes = useStyles();
 
     return (
@@ -34,9 +34,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }
     /* button: {
       margin: theme.spacing(2),
-    },
-    placeholder: {
-      height: 40,
-    }, */
+    },*/
   }),
 );
+
+export default LoadingComponent;

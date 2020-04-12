@@ -1,23 +1,17 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useContext } from 'react';
+import ActivityStore from '../../../app/stores/activityStore';
 import { TextField, Button, Box, TextareaAutosize, makeStyles, Theme, createStyles, CircularProgress } from '@material-ui/core';
 import { IActivity } from '../../../app/models/activity';
 import { v4 as uuid} from 'uuid';
 import { green } from '@material-ui/core/colors';
+import { observer } from 'mobx-react-lite';
 
 interface IProps {
-    setEditMode: (editMode: boolean) => void;
     activity: IActivity | null;
-    createActivity: (activity: IActivity) => void;
-    editActivity: (activity: IActivity) => void;
-    submitting: boolean;
 }
 
-export const ActivityForm: React.FC<IProps> = ({
-    setEditMode, 
-    activity: initialFormState,
-    createActivity,
-    editActivity,
-    submitting }) => {
+const ActivityForm: React.FC<IProps> = ({
+    activity: initialFormState}) => {
 
     const initializeForm = () : IActivity => {
         if (initialFormState) {
@@ -58,6 +52,8 @@ export const ActivityForm: React.FC<IProps> = ({
     };
     
     const classes = useStyles();
+    const activityStore = useContext(ActivityStore);
+    const {createActivity, editActivity, cancelFormOpen, submitting} = activityStore;
 
     return (
         <form className={classes.root} onSubmit={handleSubmit} autoComplete="Off">
@@ -131,7 +127,7 @@ export const ActivityForm: React.FC<IProps> = ({
             />
             <Box className={classes.wrapperForButtons}>
                 <Button 
-                    onClick={() => setEditMode(false)} 
+                    onClick={cancelFormOpen} 
                     type="button"
                     variant="outlined" 
                     size="small"
@@ -181,3 +177,5 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   }),
 );
+
+export default observer(ActivityForm);

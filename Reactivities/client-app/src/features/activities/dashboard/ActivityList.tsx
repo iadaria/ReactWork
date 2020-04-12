@@ -1,27 +1,16 @@
-import React, { SyntheticEvent, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Card, CardContent, Typography, makeStyles, CardHeader, CardActions, Button, Box, Theme, createStyles, CircularProgress } from '@material-ui/core';
-import { IActivity } from '../../../app/models/activity';
 import { observer } from 'mobx-react-lite';
 import ActivityStore from '../../../app/stores/activityStore';
 
-interface IProps {
-  deleteActivity: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void;
-  submitting: boolean;
-  target: string;
-}
-
-const ActivityList: React.FC<IProps> = ({
-  deleteActivity,
-  submitting,
-  target }) => {
-
+const ActivityList: React.FC = () => {
     const classes = useStyles();
     const activityStore = useContext(ActivityStore);
-    const {activities, selectActivity} = activityStore;
+    const { activitiesByDate, selectActivity, deleteActivity, submitting, target } = activityStore;
 
     return (
         <Box >
-          {activities.map(activity => (
+          {activitiesByDate.map(activity => (
             <Card key={activity.id} className={classes.root}>
               <CardHeader 
                 title={activity.title}

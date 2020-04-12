@@ -22,7 +22,7 @@ namespace API
                 {
                     var context = services.GetRequiredService<DataContext>();
                     context.Database.Migrate(); //if not exist then create
-                    //Seed.SeedData(context);
+                    Seed.SeedData(context);
                 } 
                 catch (Exception ex) 
                 {

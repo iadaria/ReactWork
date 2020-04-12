@@ -1,21 +1,23 @@
 import React, { useState, FormEvent } from 'react';
-import { TextField, makeStyles, createStyles, Theme, Button, Box, TextareaAutosize } from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
+import { TextField, Button, Box, TextareaAutosize, makeStyles, Theme, createStyles, CircularProgress } from '@material-ui/core';
 import { IActivity } from '../../../app/models/activity';
 import { v4 as uuid} from 'uuid';
+import { green } from '@material-ui/core/colors';
 
 interface IProps {
     setEditMode: (editMode: boolean) => void;
     activity: IActivity | null;
     createActivity: (activity: IActivity) => void;
     editActivity: (activity: IActivity) => void;
+    submitting: boolean;
 }
 
 export const ActivityForm: React.FC<IProps> = ({
     setEditMode, 
     activity: initialFormState,
     createActivity,
-    editActivity }) => {
+    editActivity,
+    submitting }) => {
 
     const initializeForm = () : IActivity => {
         if (initialFormState) {
@@ -137,14 +139,17 @@ export const ActivityForm: React.FC<IProps> = ({
                     Cancel
                 </Button>
 
-                <Button 
-                    className={classes.success} 
-                    type="submit" 
-                    variant="contained" 
-                    size="small"
-                >
-                    Submit
-                </Button>
+
+                    <Button 
+                        className={classes.success} 
+                        type="submit" 
+                        variant="contained" 
+                        size="small"
+                    >
+                        {submitting && <CircularProgress size='1.3rem'/>}
+                        {!submitting && 'Submit'}
+                    </Button>
+
             </Box>
         </form>
     );

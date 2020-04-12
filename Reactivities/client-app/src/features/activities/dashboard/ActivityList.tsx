@@ -1,18 +1,22 @@
-import React from 'react';
-import { Card, CardContent, Typography, makeStyles, CardHeader, CardActions, Button, Box, Theme, createStyles } from '@material-ui/core';
+import React, { SyntheticEvent } from 'react';
+import { Card, CardContent, Typography, makeStyles, CardHeader, CardActions, Button, Box, Theme, createStyles, CircularProgress } from '@material-ui/core';
 import { IActivity } from '../../../app/models/activity';
 import { red } from '@material-ui/core/colors';
 
 interface IProps {
   activities: IActivity[]
   selectActivity: (id: string) => void;
-  deleteActivity: (id: string) => void;
+  deleteActivity: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void;
+  submitting: boolean;
+  target: string;
 }
 
 export const ActivityList: React.FC<IProps> = ({
   activities, 
   selectActivity,
-  deleteActivity }) => {
+  deleteActivity,
+  submitting,
+  target }) => {
     const classes = useStyles();
     return (
         <Box >
@@ -36,11 +40,14 @@ export const ActivityList: React.FC<IProps> = ({
                   <Box>
                     <Button 
                       className={classes.delete}
-                      onClick={() => deleteActivity(activity.id)}
+                      name={activity.id}
+                      onClick={(event) => deleteActivity(event, activity.id)}
                       size="small" 
                       //variant="outlined"
+                      color="secondary"
                     >
-                      Delete
+                      {target === activity.id && submitting && <CircularProgress size='1.3rem'/>}
+                      {(target !== activity.id || !submitting) && 'Delete'}
                     </Button>
                     
                     <Button 
@@ -75,8 +82,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     justifyContent: "space-between"
   },
   delete: {
-    color: red[500],
-    borderColor: red[500],
-    marginRight: 8
+    //color: red[500],
+    //borderColor: red[500],
+    marginRight: 10
   },
 }));

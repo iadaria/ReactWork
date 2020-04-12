@@ -1,23 +1,24 @@
-import React, { SyntheticEvent } from 'react';
+import React, { SyntheticEvent, useContext } from 'react';
 import { Card, CardContent, Typography, makeStyles, CardHeader, CardActions, Button, Box, Theme, createStyles, CircularProgress } from '@material-ui/core';
 import { IActivity } from '../../../app/models/activity';
-import { red } from '@material-ui/core/colors';
+import { observer } from 'mobx-react-lite';
+import ActivityStore from '../../../app/stores/activityStore';
 
 interface IProps {
-  activities: IActivity[]
-  selectActivity: (id: string) => void;
   deleteActivity: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void;
   submitting: boolean;
   target: string;
 }
 
-export const ActivityList: React.FC<IProps> = ({
-  activities, 
-  selectActivity,
+const ActivityList: React.FC<IProps> = ({
   deleteActivity,
   submitting,
   target }) => {
+
     const classes = useStyles();
+    const activityStore = useContext(ActivityStore);
+    const {activities, selectActivity} = activityStore;
+
     return (
         <Box >
           {activities.map(activity => (
@@ -87,3 +88,5 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     marginRight: 10
   },
 }));
+
+export default observer(ActivityList);

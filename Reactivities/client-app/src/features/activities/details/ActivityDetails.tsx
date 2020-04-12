@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, makeStyles, CardHeader, ButtonGroup } from '@material-ui/core';
 import { IActivity } from '../../../app/models/activity';
+import ActivityStore from '../../../app/stores/activityStore';
+import { observer } from 'mobx-react-lite';
 
 interface IProps {
-    activity: IActivity;
     setEditMode: (editMode: boolean) => void;
     setSelectedActivity: (activity: IActivity | null) => void;
 }
 
 
-export const ActivityDetails: React.FC<IProps> = ({activity, setEditMode, setSelectedActivity}) => {
+const ActivityDetails: React.FC<IProps> = ({setEditMode, setSelectedActivity}) => {
     const classes = useStyles();
-
+    const activityStore = useContext(ActivityStore);
+    const {selectedActivity: activity} = activityStore;
     return (
         <Card>
             <CardActionArea>
@@ -19,18 +21,18 @@ export const ActivityDetails: React.FC<IProps> = ({activity, setEditMode, setSel
                     component="img"
                     alt="Contemplative Reptile"
                     //height="140"
-                    image={`/assets/categoryImages/${activity.category}.jpg`}
+                    image={`/assets/categoryImages/${activity?.category}.jpg`}
                     title="Contemplative Reptile"
                 />
                 <CardHeader
-                    title={activity.title}
+                    title={activity?.title}
                 />
                 <CardContent>
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
-                        {activity.date}
+                        {activity?.date}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {activity.description}
+                        {activity?.description}
                     </Typography>
                 </CardContent>
             </CardActionArea>
@@ -51,3 +53,5 @@ const useStyles = makeStyles({
         fontSize: 14,
       },
   });
+
+export default observer(ActivityDetails);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, SyntheticEvent } from 'react';
+import React, { useState, useEffect, Fragment, SyntheticEvent, useContext } from 'react';
 import agent from '../api/agent';
 
 import { IActivity } from '../models/activity';
@@ -6,6 +6,7 @@ import { NavBar } from '../../features/nav/NavBar';
 import { Container } from '@material-ui/core';
 import { ActivityDashboard } from '../../features/activities/dashboard/ActivityDashboard';
 import { LoadingComponent } from './LoadingComponent';
+import ActivityStore from '../stores/activityStore';
 
 interface IState {
   activities: IActivity[]
@@ -13,6 +14,7 @@ interface IState {
 }
 
 const App = () => {
+  const activityStore = useContext(ActivityStore);
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
   const [editMode, setEditMode] = useState(false);
@@ -82,6 +84,7 @@ const App = () => {
         openCreateForm={handleOpenCreateForm}
       />
       <Container style={{marginTop: '5em'}}>
+        <h1>{activityStore.title}</h1>
         <ActivityDashboard 
           activities={activities}
           selectActivity={handleSelectActivity}

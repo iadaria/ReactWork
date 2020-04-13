@@ -12,7 +12,7 @@ const ActivityDashboard: React.FC = () => {
     
     const classes = useStyles();
     const activityStore = useContext(ActivityStore);
-    const {editMode, selectedActivity} = activityStore;
+    const { editMode, selectedActivity } = activityStore;
 
     return (
         <Grid container spacing={3}>        

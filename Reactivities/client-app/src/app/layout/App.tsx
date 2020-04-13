@@ -1,5 +1,6 @@
 import React, { useEffect, Fragment, useContext } from 'react';
 import { observer } from 'mobx-react-lite';
+import 'mobx-react-lite/batchingForReactDom';
 
 import { Container } from '@material-ui/core';
 import LoadingComponent from './LoadingComponent';

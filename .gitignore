@@ -24,6 +24,13 @@ chrome-user-data
 *.swp
 *.swo
 
+obj
+bin
+.vscode
+.DS_Store
+appsettings.json
+*.db
+
 packages/react-devtools-core/dist
 packages/react-devtools-extensions/chrome/build
 packages/react-devtools-extensions/chrome/*.crx

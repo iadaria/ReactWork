@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { Card, CardContent, Typography, makeStyles, CardHeader, CardActions, Button, Box, Theme, createStyles, CircularProgress } from '@material-ui/core';
 import { observer } from 'mobx-react-lite';
 import ActivityStore from '../../../app/stores/activityStore';
+import { Link } from 'react-router-dom';
 
 const ActivityList: React.FC = () => {
     const classes = useStyles();
     const activityStore = useContext(ActivityStore);
-    const { activitiesByDate, selectActivity, deleteActivity, submitting, target } = activityStore;
+    const { activitiesByDate, deleteActivity, submitting, target } = activityStore;
 
     return (
         <Box >
@@ -40,11 +41,21 @@ const ActivityList: React.FC = () => {
                       {(target !== activity.id || !submitting) && 'Delete'}
                     </Button>
                     
-                    <Button 
+                    {/* <Button 
                       onClick={() => selectActivity(activity.id)}
                       size="small" 
                       color="primary"
                       variant="contained"
+                    >
+                      View
+                    </Button> */}
+
+                    <Button 
+                      component={Link} to={`/activities/${activity.id}`}
+                      size="small" 
+                      color="primary"
+                      variant="outlined"
+                      style={{marginLeft: 5}}
                     >
                       View
                     </Button>
@@ -60,7 +71,7 @@ const ActivityList: React.FC = () => {
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     marginTop: '5px',
-    padding: 10
+    padding: 10,
   },
   title: {
     fontSize: 14,

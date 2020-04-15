@@ -1,12 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, makeStyles, CardHeader, ButtonGroup } from '@material-ui/core';
 import ActivityStore from '../../../app/stores/activityStore';
 import { observer } from 'mobx-react-lite';
+import { RouteComponentProps, Link } from 'react-router-dom';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
 
-const ActivityDetails: React.FC = () => {
+interface DetailParams {
+    id: string;
+}
+
+const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
+    match,
+    history }) => {
     const classes = useStyles();
     const activityStore = useContext(ActivityStore);
-    const {selectedActivity: activity, openEditForm, cancelSelectedActivity} = activityStore;
+    const {activity, loadActivity, loadingInitial} = activityStore;
+
+    useEffect(() => {
+        loadActivity(match.params.id);
+    }, [loadActivity, match.params.id]);
+
+    if(loadingInitial || !activity) return <LoadingComponent content='Loading activity...'/>;
+
     return (
         <Card>
             <CardActionArea>
@@ -32,8 +47,9 @@ const ActivityDetails: React.FC = () => {
 
             <CardActions>
                 <ButtonGroup fullWidth>
-                    <Button onClick={() => openEditForm(activity!.id)}>Edit</Button>
-                    <Button onClick={cancelSelectedActivity} color="primary">Cancel</Button>
+                    <Button component={Link} to={`/manage/${activity.id}`}>Edit</Button>
+                    {/* <Button onClick={cancelactivity} color="primary">Cancel</Button> */}
+                    <Button onClick={() => history.push('/activities')} color="primary">Cancel</Button>
                 </ButtonGroup>
             </CardActions>
             

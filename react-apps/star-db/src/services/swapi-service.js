@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default class SwapiService {
 
     _apiBase = 'https://swapi.co/api';

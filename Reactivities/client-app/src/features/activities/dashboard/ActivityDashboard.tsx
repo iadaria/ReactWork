@@ -1,18 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import ActivityList from './ActivityList';
-import ActivityDetails from '../details/ActivityDetails';
-import ActivityForm from '../form/ActivityForm';
-import ActivityStore from '../../../app/stores/activityStore';
+//import ActivityDetails from '../details/ActivityDetails';
+//import ActivityForm from '../form/ActivityForm';
+//import ActivityStore from '../../../app/stores/activityStore';
 
-import { Grid, Box, makeStyles, Theme, createStyles } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
+//import { Route, withRouter } from 'react-router-dom';
 
 const ActivityDashboard: React.FC = () => {
     
-    const classes = useStyles();
-    const activityStore = useContext(ActivityStore);
-    const { editMode, selectedActivity } = activityStore;
+    //const classes = useStyles();
+    //const activityStore = useContext(ActivityStore);
+    //const { editMode, activity } = activityStore;
 
     return (
         <Grid container spacing={3}>        
@@ -20,21 +21,22 @@ const ActivityDashboard: React.FC = () => {
                 <ActivityList />
             </Grid>
             <Grid item md={4} sm={6} xs={12}>
-                <Box className={classes.rightPanel} zIndex="modal">
-                    {   selectedActivity && !editMode && <ActivityDetails />}    
+                <h1>Activity filter</h1>
+                {/* <Box className={classes.rightPanel} zIndex="modal">
+                    {   activity && !editMode && <ActivityDetails />}
                     {   editMode && 
                         <ActivityForm 
-                            key={(selectedActivity && selectedActivity.id) || 0}
-                            activity={selectedActivity!}
+                            key={(activity && activity.id) || 0}
+                            activity={activity!}
                         />
                     }
-                </Box>
+                </Box> */}
             </Grid>
         </Grid>
     );
 };
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+/* const useStyles = makeStyles((theme: Theme) => createStyles({
     title: {
         fontSize: 14,
     },
@@ -48,6 +50,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         }
     }
   })
-);
+); */
 
 export default observer(ActivityDashboard);

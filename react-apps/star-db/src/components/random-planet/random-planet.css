@@ -8,3 +8,11 @@
     height: 150px;
     border-radius: 10px;
 }
+
+.random-planet .planet-caption {
+    margin-left: 1rem;
+}
+
+.random-planet .term {
+    margin-right: .5rem;
+}

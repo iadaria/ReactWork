@@ -1,0 +1,13 @@
+.error-indicator {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.error-indicator img {
+    margin-bottom: 1.5rem;
+}
+
+.error-indicator span {
+    display: block;
+    color: #f57c00;
+}

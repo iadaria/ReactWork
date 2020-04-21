@@ -51,7 +51,7 @@ export default class SwapiService {
     }
 
     getPlanetImage = async (id) => {
-        return `${this._imageBase}/plantes/${id}.jpg`;
+        return `${this._imageBase}/planets/${id}.jpg`;
     }
 
 

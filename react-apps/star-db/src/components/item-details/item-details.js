@@ -7,7 +7,7 @@ import ErrorButton from '../error-button';
 import './item-details.css';
 
 
-const Record = ({ item, field, label }) => {
+export const Record = ({ item, field, label }) => {
     return (
         <li className="list-group-item">
             <span className="term">{label}</span>
@@ -15,8 +15,6 @@ const Record = ({ item, field, label }) => {
         </li>
     );
 };
-
-export { Record };
 
 export default class ItemDetails extends Component {
 
@@ -46,8 +44,6 @@ export default class ItemDetails extends Component {
     }
 
     itemLoaded = (item, image) => {
-        //console.log(item);
-        //console.log(image);
         this.setState({
             item,
             image,
@@ -83,11 +79,13 @@ export default class ItemDetails extends Component {
     itemsRender(item, image) {
         return (
             <div className="item-details card">
-                <img className="item-image"
-                    width="150"
-                    src={image}
-                    alt="character"
-                />
+                <div class="image-wrapper">
+                    <img className="item-image"
+                        width="150"
+                        src={image}
+                        alt="character"
+                    />
+                </div>
                 <div className="card-body">
                     <h4>{item.name}</h4>
                     <ul className="list-group list-group-flush">
@@ -126,26 +124,3 @@ export default class ItemDetails extends Component {
         );
     }
 };
-
-/* const ItemView = ({ item, image }) => {
-    return (
-        <div className="item-details card">
-            <img className="item-image"
-                width="150"
-                src={image}
-                alt="character"
-            />
-            <div className="card-body">
-                <h4>{item.name}</h4>
-                <ul className="list-group list-group-flush">
-                    {
-                       React.Children.map(this.props.children, (child) => {
-                           return React.cloneElement(child, { item });
-                       }) 
-                    }
-                </ul>
-                <ErrorButton />
-            </div>
-        </div>
-    );
-}; */

@@ -1,11 +1,55 @@
-import React, { Component } from 'react';
-import Spinner from '../spinner';
-//import SwapiService from '../../services/swapi-service';
-import ErrorIndicator from '../error-indicator';
+import React from 'react';
+//import { withData } from '../hoc-helper';
+//import Spinner from '../spinner';
+//import ErrorIndicator from '../error-indicator';
 
 import './item-list.css';
+import SwapiService from '../../services/swapi-service';
 
-class ItemList extends Component {
+const ItemList = (props) => {
+
+    const { data, itemSelected, children: renderLabel } = props;
+
+    const items = data.map(item => {
+        const label = renderLabel(item);
+        const { id } = item;
+
+        return (
+            <li className="list-group-item" 
+                key={id}
+                onClick={() => itemSelected(id)}
+            >
+                {label}
+            </li>
+        );
+    });
+
+    return (
+        <ul className="item-list list-group">
+            {items}
+        </ul>
+    );
+    
+};
+
+export default ItemList;
+
+/* const ListView = ({ itemList, renderItem, itemSelected }) => {
+    return itemList.map(item => {
+        const { id } = item;
+        const label = renderItem(item);
+        return (
+            <li className="list-group-item" 
+                key={id}
+                onClick={() => itemSelected(id)}
+            >
+                {label}
+            </li>
+        );
+    });
+}; */
+
+/* class ItemList extends Component {
     //swapiService = new SwapiService();
 
     state = {
@@ -55,26 +99,5 @@ class ItemList extends Component {
                 {content}
             </ul>
         );
-    }  
-};
-
-const ListView = ({ itemList, renderItem, itemSelected }) => {
-    return itemList.map(item => {
-        const { id } = item;
-        const label = renderItem(item);
-        return (
-            <li className="list-group-item" 
-                key={id}
-                onClick={() => itemSelected(id)}
-            >
-                {label}
-            </li>
-        );
-    });
-};
-
-const f = () => {
-    return <ItemList />;
-};
-
-export default f();
+    } 
+}; */

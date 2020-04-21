@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import Spinner from '../spinner';
-import SwapiService from '../../services/swapi-service';
+//import SwapiService from '../../services/swapi-service';
 import ErrorIndicator from '../error-indicator';
 
 import './item-list.css';
 
-export default class ItemList extends Component {
-
-    swapiService = new SwapiService();
+class ItemList extends Component {
+    //swapiService = new SwapiService();
 
     state = {
-        peopleList: null,
+        itemList: null,
+        //peopleList: null,
         loading: true,
         error: false
     };
 
-    onPeopleLoaded = peopleList => 
+    onListLoaded = itemList => 
         this.setState({
-            peopleList,
+            //peopleList,
+            itemList,
             loading: false,
             error: false,
         })
@@ -25,23 +26,25 @@ export default class ItemList extends Component {
     onError = error => this.setState({ error: true, loading: false });
 
     componentDidMount() {
-        this.swapiService
-            .getAllPeople()
-            .then(this.onPeopleLoaded)
+        const { getData } = this.props;
+
+        getData()
+            .then(this.onListLoaded)
             .catch(this.onError);
     }
 
     render() {
-        const { peopleList, loading, error } = this.state;
+        const { itemList, loading, error } = this.state;
 
         const hasData = !(loading || error);
 
         const errorMessage = error ? <ErrorIndicator /> : null;
         const spinner = loading ? <Spinner /> : null;
         const content = hasData ? 
-            <PeopleList 
-                peopleList={peopleList} 
-                personSelected={this.props.personSelected}
+            <ListView
+                itemList={itemList}
+                renderItem={this.props.children}//renderItem}
+                itemSelected={this.props.itemSelected}
             /> : 
             null;
 
@@ -55,25 +58,23 @@ export default class ItemList extends Component {
     }  
 };
 
-const PeopleList = ({ peopleList, personSelected }) => {
-    return (
-        <ul className="item-list list-group">
-            { peopleList.map(person => 
-                <PersonView 
-                    key={person.id}
-                    name={person.name} 
-                    personSelected={() => personSelected(person.id)} 
-                />
-              ) 
-            }
-        </ul>
-    );
+const ListView = ({ itemList, renderItem, itemSelected }) => {
+    return itemList.map(item => {
+        const { id } = item;
+        const label = renderItem(item);
+        return (
+            <li className="list-group-item" 
+                key={id}
+                onClick={() => itemSelected(id)}
+            >
+                {label}
+            </li>
+        );
+    });
 };
 
-const PersonView = ({ name, personSelected }) => {
-    return (
-        <li className="list-group-item" onClick={personSelected}>
-            {name}
-        </li>
-    );
+const f = () => {
+    return <ItemList />;
 };
+
+export default f();

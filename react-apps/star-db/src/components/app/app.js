@@ -1,60 +1,76 @@
 import React, { Component } from 'react';
+import SwapiService from '../../services/swapi-service';
 import RandomPlanet from '../random-planet';
 import Header from '../header';
-import ErrorButton from '../error-button';
-import ErrorIndicator from '../error-indicator';
-import PersonDetails from '../person-details/person-details';
-import ItemList from '../item-list';
+import ErrorBoundry from '../error-boundry';
+import Row from '../row';
 
 import './app.css';
 import PeoplePage from '../people-page/people-page';
+import ItemDetails, { Record } from '../item-details/item-details';
 
 
 export default class App extends Component {
-
+    swapiService = new SwapiService();
     state = {
         showRandomPlanet: true,
-        hasError: false,
+        selectedItem: null,
     };
 
-    componentDidCatch() {
-        console.log('componentDidCatch');
-        //Как только поймали от компонента снизу ошибку
-        //Говорим у нас есть ошибка
-        this.setState({hasError: true});
-    }
+    handleItemSelected = (id) => {
+        console.log('set id=' + id);
+        this.setState( {
+            selectedItem: id,
+        });
+    };
 
     render() {
-
-        if (this.state.hasError) {
-            return <ErrorIndicator />
-        }
+        const {
+            getPerson, 
+            getStarship, 
+            getPersonImage, 
+            getStarshipImage}  = this.swapiService;
 
         const planet = this.state.showRandomPlanet ?
             <RandomPlanet />:
             null;
 
+        const personDetails = (
+            <ItemDetails 
+                itemId={3}
+                getData={getPerson}
+                getImageUrl={getPersonImage} 
+            >
+                <Record field="gender" label="Gender" />
+                <Record field="eyeColor" label="Eye Color" />
+            </ItemDetails>
+        );
+
+        const starshipDetails = (
+            <ItemDetails 
+                itemId={5}
+                getData={getStarship}
+                getImageUrl={getStarshipImage}
+            >
+                <Record field="model" label="Model" />
+                <Record field="length" label="Length" />
+                <Record field="costInCredits" label="Cost in credits" />
+            </ItemDetails>
+        );
+
         return (
-            <div className="container">
-                <Header />
-                {planet}
+            <ErrorBoundry>
+                <div className="container">
+                    <Header />
+                    <PeoplePage />
 
-                <div className="row mb2 button-row">
-                    <ErrorButton />
+                    {/* <Row
+                        left={personDetails}
+                        right={starshipDetails}
+                    /> */}
+
                 </div>
-
-                <PeoplePage />
-                
-                <div className="row mb-3">
-                    <div className="col-md-6">
-                        <ItemList personSelected={this.handlePersonSelected}/>
-                    </div>
-                    <div className="col-md-6">
-                        <PersonDetails personId={this.state.selectedPerson}/>
-                    </div>
-                </div>
-
-            </div>
+            </ErrorBoundry>
         );
     }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SwapiService from '../../services/swapi-service';
-import ItemDetails from '../item-details/item-details';
+import ItemDetails from './item-details';
 import ItemList from '../item-list';
 import Row from '../row';
 import ErrorBoundry from '../error-boundry';

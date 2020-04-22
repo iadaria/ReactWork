@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import Spinner from '../spinner';
-import SwapiService from '../../services/swapi-service';
 import ErrorIndicator from '../error-indicator';
 import ErrorButton from '../error-button';
 
@@ -17,8 +16,6 @@ export const Record = ({ item, field, label }) => {
 };
 
 export default class ItemDetails extends Component {
-
-    swapiService = new SwapiService();
 
     state = {
         item: null,

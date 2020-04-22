@@ -7,12 +7,12 @@
 
 .item-details .item-image {
     display: block;
-
     border-radius: 10px;
 }
 
 .item-details .list-group-item {
     padding: .25rem;
+
 }
 
 .item-details .list-group-item .term {

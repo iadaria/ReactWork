@@ -4,7 +4,6 @@ import React from 'react';
 //import ErrorIndicator from '../error-indicator';
 
 import './item-list.css';
-import SwapiService from '../../services/swapi-service';
 
 const ItemList = (props) => {
 

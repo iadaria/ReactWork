@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 //import { withData } from '../hoc-helper';
 //import Spinner from '../spinner';
 //import ErrorIndicator from '../error-indicator';
@@ -28,7 +29,16 @@ const ItemList = (props) => {
             {items}
         </ul>
     );
-    
+};
+
+ItemList.defaultProps = {
+    itemSelected: () => { console.log('default props for func itemSelected')}
+};
+
+ItemList.propTypes = {
+    itemSelected: PropTypes.func,
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    children: PropTypes.func.isRequired
 };
 
 export default ItemList;

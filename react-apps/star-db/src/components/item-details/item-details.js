@@ -31,13 +31,14 @@ export default class ItemDetails extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        const prevId = prevProps.itemId;
-        let id = this.props.itemId;
-        if (prevId === id || !id) console.log("it is equal");
-        else {
+        if (prevProps.itemId !== this.props.itemId || 
+            this.props.getData !== prevProps.getData ||
+            this.props.getImageUrl !== prevProps.getImageUrl) 
+        {
             console.log('it is not equal');
-            this.updateItem(id);
+            this.updateItem(this.props.itemId);
         }
+        else console.log("it is equal");
     }
 
     itemLoaded = (item, image) => {
@@ -50,6 +51,8 @@ export default class ItemDetails extends Component {
     };
 
     updateItem = (id) => {
+        if (!id) return;
+
         const { getData, getImageUrl } = this.props;
         
         this.setState({
@@ -76,7 +79,7 @@ export default class ItemDetails extends Component {
     itemsRender(item, image) {
         return (
             <div className="item-details card">
-                <div class="image-wrapper">
+                <div className="image-wrapper">
                     <img className="item-image"
                         width="150"
                         src={image}

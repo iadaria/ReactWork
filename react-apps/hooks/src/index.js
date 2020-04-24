@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useCallback} from 'react';
 import ReactDOM from 'react-dom';
 
 const App = () => {
@@ -34,22 +34,48 @@ const App = () => {
   }
 };
 
-const PlanetInfo = ( {id} ) => {
+const getPlanet = (id) => {
+  return fetch(`https://swapi.dev/api/planets/${id}`)
+    .then(res => res.json())
+    .then(data => data);
+};
 
-  const [planetName, setPlanetName] = useState('');
+const useRequest = (request) => {
+  const [ dataState, setDataState] = useState({
+    data: null,
+    loading: true,
+    error: null
+  });
 
   useEffect(() => {
     let cancelled = false;
 
-    fetch(`https://swapi.dev/api/planets/${id}`)
-    .then(res => res.json())
-    .then(data => !cancelled && setPlanetName(data.name));
+    request()
+      .then(data => !cancelled && setDataState(data));
 
     return () => { console.log('unmound'); cancelled = true; }
-  }, [ id ]);
+  }, [ request ]);
+
+  return dataState;
+}
+
+const usePlanetInfo = (id) => {
+  
+  // если id не изменится, то useCallback вернет ту же функцию и не будет создавать новую
+  const request = useCallback(
+    () => getPlanet(id), [ id ]
+  );
+
+  //const request = () => getPlanet(id); //каждый раз request создается заново
+  return useRequest(request);
+}
+
+const PlanetInfo = ( {id} ) => {
+
+  const data = usePlanetInfo(id);
 
   return (
-    <div>{id} - {planetName}</div>
+    <div>{id} - {data && data.name}</div>
   );
 };
 

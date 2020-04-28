@@ -14,7 +14,8 @@ class BookList extends Component {
     componentDidMount() {
         //1. receive data
         //2. dispath action to store
-        const { 
+        this.props.fetchBooks();
+        /* const { 
             bookstoreService, 
             booksLoaded,
             booksRequested,
@@ -23,7 +24,7 @@ class BookList extends Component {
         booksRequested();
         bookstoreService.Books
             .then(data => booksLoaded(data))
-            .catch(error => booksError(error));
+            .catch(error => booksError(error)); */
             //this.props.booksLoaded(data);
     }
 
@@ -62,10 +63,21 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps  = {
-    booksLoaded,
+const mapDispatchToProps = (dispatch, ownProps) => {
+    const { bookstoreService } = ownProps;
+    return {
+        fetchBooks: () => {
+            console.log('fetching books');
+            dispatch(booksRequested());
+            bookstoreService.Books
+                .then(data => dispatch(booksLoaded(data)))
+                .catch(error => dispatch(booksError(error)));
+            //this.props.booksLoaded(data);
+        }
+    };
+   /*  booksLoaded,
     booksRequested,
-    booksError,
+    booksError, */
 };
 /* = (dispatch) => {
     return bindActionCreators({

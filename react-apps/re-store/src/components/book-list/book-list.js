@@ -4,6 +4,7 @@ import './book-list.css';
 import { connect } from 'react-redux';
 import { withBookstoreService } from '../hoc';
 import { booksLoaded } from '../../actions';
+import { compose } from '../../utils';
 //import { bindActionCreators } from 'redux';
 
 class BookList extends Component {
@@ -21,7 +22,7 @@ class BookList extends Component {
     render() {
         const { books } = this.props;
         return (
-            <ul>
+            <ul className="book-list">
                 {
                     books.map(book => {
                         return (
@@ -62,6 +63,11 @@ const mapDispatchToProps  = {
     };
 }; */
 
-export default withBookstoreService()(
+export default compose(
+    withBookstoreService(),
+    connect(mapStateToProps, mapDispatchToProps)
+)(BookList);
+
+/* export default withBookstoreService()(
     connect(mapStateToProps, mapDispatchToProps)(BookList)
-);
+); */

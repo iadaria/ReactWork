@@ -1,8 +1,3 @@
-const compose = (...funcs) => (component) => {
-    return funcs.reduceRight(
-        (wrapped, func) => func(wrapped), 
-        component
-    );
-};
+import { compose } from './compose'
 
-export default compose;
+export { compose };

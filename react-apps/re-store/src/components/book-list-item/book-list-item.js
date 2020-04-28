@@ -10,7 +10,7 @@ const BookListItem = ({ book }) => {
                 <img src={coverImage} alt="cover"></img>
             </div>
             <div className="book-details">
-                <a href="/" className="book-title">{title}</a>
+                <span className="book-title">{title}</span>
                 <div href="#" className="book-author">{author}</div>
                 <div href="#" className="book-price">${price}</div>
                 <button className="btn btn-info add-to-cart">Add to card</button>

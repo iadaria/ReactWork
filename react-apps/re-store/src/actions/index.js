@@ -16,7 +16,28 @@ const booksError = (error) => {
         type: 'FETCH_BOOKS_FAILURE',
         payload: error
     };
-}
+};
+
+const bookAddedToCart = (bookId) => {
+    return {
+        type: 'BOOK_ADDED_TO_CART',
+        payload: bookId,
+    };
+};
+
+const bookRemovedFromCart = (bookId) => {
+    return {
+        type: 'BOOK_REMOVED_FROM_CART',
+        payload: bookId,
+    };
+};
+const allBooksRemovedFromCart = (bookId) => {
+    return {
+        type: 'ALL_BOOKS_REMOVED_FROM_CART',
+        payload: bookId,
+    };
+};
+
 
 //внутренняя функция предназначена для компомнента
 //внешняя для mapDispatchToProps
@@ -30,8 +51,11 @@ const fetchBooks = (bookstoreService, dispatch) => () => {
 };
 
 export {
-    booksLoaded,
-    booksRequested,
-    booksError,
+    //booksLoaded,
+    //booksRequested,
+    //booksError,
     fetchBooks,
+    bookAddedToCart,
+    bookRemovedFromCart,
+    allBooksRemovedFromCart,
 };

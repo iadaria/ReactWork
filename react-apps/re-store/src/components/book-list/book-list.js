@@ -63,11 +63,11 @@ class BookListContainer extends Component {
     }
 };
 
-const mapStateToProps = (state) => {
-    return {
-        books: state.books,
+const mapStateToProps = ({ bookList: { books, loading, error }}) => {
+    return { books, loading, error
+       /*  books: state.books,
         loading: state.loading,
-        error: state.error,
+        error: state.error, */
     };
 };
 

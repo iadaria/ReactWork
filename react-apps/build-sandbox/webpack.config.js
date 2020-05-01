@@ -76,15 +76,18 @@ module.exports = (env = {}) => {
                         }
                     ]
                 },
-
+                //
+                // Loading css
+                //
                 {
                     test: /\.(css)$/,
                     //use: ['style-loader', 'css-loader']
                     //use: [ MiniCssExtractPlugin.loader, 'css-loader']
                     use: getStyleLoaders()
                 },
-
+                //
                 // Loading SASS/SCSS
+                //
                 {
                     test: /\.(s[ca]ss)$/,
                     use: [

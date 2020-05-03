@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-
+import ActivityStore from '../../../app/stores/activityStore';
 import ActivityList from './ActivityList';
-//import ActivityDetails from '../details/ActivityDetails';
-//import ActivityForm from '../form/ActivityForm';
-//import ActivityStore from '../../../app/stores/activityStore';
-
 import { Grid } from '@material-ui/core';
-//import { Route, withRouter } from 'react-router-dom';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
+
 
 const ActivityDashboard: React.FC = () => {
-    
-    //const classes = useStyles();
-    //const activityStore = useContext(ActivityStore);
-    //const { editMode, activity } = activityStore;
+    const activityStore = useContext(ActivityStore);
+
+    useEffect(() => {
+      activityStore.loadActivities();
+    }, [activityStore]); //activityStore as its dependency
+  
+    if (activityStore.loadingInitial) 
+      return <LoadingComponent content='Loading activities...'/>
 
     return (
         <Grid container spacing={3}>        
@@ -22,15 +23,6 @@ const ActivityDashboard: React.FC = () => {
             </Grid>
             <Grid item md={4} sm={6} xs={12}>
                 <h1>Activity filter</h1>
-                {/* <Box className={classes.rightPanel} zIndex="modal">
-                    {   activity && !editMode && <ActivityDetails />}
-                    {   editMode && 
-                        <ActivityForm 
-                            key={(activity && activity.id) || 0}
-                            activity={activity!}
-                        />
-                    }
-                </Box> */}
             </Grid>
         </Grid>
     );

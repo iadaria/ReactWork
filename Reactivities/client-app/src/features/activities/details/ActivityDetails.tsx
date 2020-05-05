@@ -1,9 +1,13 @@
 import React, { useContext, useEffect } from 'react';
-import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, makeStyles, CardHeader, ButtonGroup } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import ActivityStore from '../../../app/stores/activityStore';
 import { observer } from 'mobx-react-lite';
-import { RouteComponentProps, Link } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
+import ActivityDetailedHeader from './ActivityDetailedHeader';
+import ActivityDetailedInfo from './ActivityDetailedInfo';
+import ActivityDetailedChat from './ActivityDetailedChat';
+import ActivityDetailedSidebar from './ActivityDetailedSidebar';
 
 interface DetailParams {
     id: string;
@@ -12,7 +16,8 @@ interface DetailParams {
 const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
     match,
     history }) => {
-    const classes = useStyles();
+    //console.log(history);
+    //console.log(match);
     const activityStore = useContext(ActivityStore);
     const {activity, loadActivity, loadingInitial} = activityStore;
 
@@ -23,44 +28,17 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
     if(loadingInitial || !activity) return <LoadingComponent content='Loading activity...'/>;
 
     return (
-        <Card>
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    alt="Contemplative Reptile"
-                    //height="140"
-                    image={`/assets/categoryImages/${activity?.category}.jpg`}
-                    title="Contemplative Reptile"
-                />
-                <CardHeader
-                    title={activity?.title}
-                />
-                <CardContent>
-                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                        {activity?.date}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {activity?.description}
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-
-            <CardActions>
-                <ButtonGroup fullWidth>
-                    <Button component={Link} to={`/manage/${activity.id}`}>Edit</Button>
-                    {/* <Button onClick={cancelactivity} color="primary">Cancel</Button> */}
-                    <Button onClick={() => history.push('/activities')} color="primary">Cancel</Button>
-                </ButtonGroup>
-            </CardActions>
-            
-            </Card>
+        <Grid container>
+            <Grid item sm={8} xs={12}>
+                <ActivityDetailedHeader />
+                <ActivityDetailedInfo />
+                <ActivityDetailedChat />
+            </Grid>
+            <Grid item sm={4} xs={12}>
+                <ActivityDetailedSidebar />
+            </Grid>
+        </Grid>
     );
 };
-
-const useStyles = makeStyles({
-    title: {
-        fontSize: 14,
-      },
-  });
 
 export default observer(ActivityDetails);

@@ -1,0 +1,58 @@
+
+.activity-detailed-header {
+    position: relative;
+}
+.activity-detailed-header .group-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.activity-detailed-header .image {
+
+    background-size: 100%;
+    height: 200px;
+    width: auto;
+    filter: brightness(30%);
+}
+
+.activity-detailed-header .header {
+    color: #fff;
+    position: absolute;
+
+    top: 0%;
+    width: 100%;
+    height: auto;
+}
+
+.activity-detailed-header button {
+    font-size: small;
+    text-transform: none;
+    margin-left: 8px;
+}
+
+.activity-detailed-header button.btn-join {
+    background-color: teal;
+    color: #fff;
+}
+
+.activity-detailed-header button.btn-manage {
+    background-color: orangered;
+    color: #fff;
+}
+
+@media(max-width: 400px) {
+    .activity-detailed-header button {
+        display: block;
+        margin: 5px auto 0;
+        width: 90%;
+    }
+    .activity-detailed-header .group-between {
+        flex-direction: column;
+    }    
+    .activity-detailed-header .group-left {
+        width: 100%;
+    }
+    .activity-detailed-header button.btn-manage {
+        margin: 5px auto 0;
+    }
+}

@@ -4,10 +4,10 @@ import ActivityStore from '../../../app/stores/activityStore';
 import { observer } from 'mobx-react-lite';
 import { RouteComponentProps } from 'react-router-dom';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
-import ActivityDetailedHeader from './ActivityDetailedHeader';
-import ActivityDetailedInfo from './ActivityDetailedInfo';
-import ActivityDetailedChat from './ActivityDetailedChat';
-import ActivityDetailedSidebar from './ActivityDetailedSidebar';
+import ActivityDetailedHeader from './activity-detailed-header';
+import ActivityDetailedInfo from './activity-detailed-info';
+import ActivityDetailedChat from './activity-detailed-chat';
+import ActivityDetailedSidebar from './activity-detailed-sidebar';
 
 interface DetailParams {
     id: string;
@@ -16,8 +16,6 @@ interface DetailParams {
 const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
     match,
     history }) => {
-    //console.log(history);
-    //console.log(match);
     const activityStore = useContext(ActivityStore);
     const {activity, loadActivity, loadingInitial} = activityStore;
 
@@ -30,8 +28,8 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
     return (
         <Grid container>
             <Grid item sm={8} xs={12}>
-                <ActivityDetailedHeader />
-                <ActivityDetailedInfo />
+                <ActivityDetailedHeader activity={activity}/>
+                <ActivityDetailedInfo activity={activity}/>
                 <ActivityDetailedChat />
             </Grid>
             <Grid item sm={4} xs={12}>

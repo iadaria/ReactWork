@@ -28,6 +28,7 @@
     font-size: small;
     text-transform: none;
     margin-left: 8px;
+    padding: 3px 18px 3px;
 }
 
 .activity-detailed-header button.btn-join {
@@ -40,7 +41,11 @@
     color: #fff;
 }
 
-@media(max-width: 400px) {
+@media(max-width: 440px) {
+    .activity-detailed-header .image {
+        height: 140px;
+    }
+
     .activity-detailed-header button {
         display: block;
         margin: 5px auto 0;

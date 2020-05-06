@@ -8,26 +8,29 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import { Button } from '@material-ui/core';
+import { IActivity } from '../../../../app/models/activity';
+import { observer } from 'mobx-react-lite';
 
-export const ActivityDetailedHeader = () => {
+export const ActivityDetailedHeader: React.FC<{activity: IActivity}> = ({activity}) => {
     return (
         <Card className="activity-detailed-header">
             <CardMedia
                 className="image"
-                image={`/assets/placeholder.png`}
+                image={`/assets/categoryImages/${activity.category}.jpg`}
                 title="photo"
             />
-            <CardHeader 
-                className="header"
-                title="header"/>
-            <CardContent>
-                <Typography color="textSecondary" component="p">
-                    Date
-                </Typography>
-                <Typography variant="body2" component="p">
-                    Hosted by <strong>Bob</strong>
-                </Typography>
-            </CardContent>
+            <div className="header">
+                <CardHeader 
+                    title={activity.title}/>
+                <CardContent>
+                    <Typography component="p">
+                        {activity.date}
+                    </Typography>
+                    <Typography variant="body2" component="p">
+                        Hosted by <strong>Bob</strong>
+                    </Typography>
+                </CardContent>
+            </div>
   
             <CardActions className="group-between">
                 <div className="group-left">
@@ -52,4 +55,4 @@ export const ActivityDetailedHeader = () => {
     )
 };
 
-export default ActivityDetailedHeader;
+export default observer(ActivityDetailedHeader);

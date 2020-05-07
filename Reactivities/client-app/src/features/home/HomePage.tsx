@@ -1,13 +1,31 @@
-import React from 'react'
-import { Container } from '@material-ui/core';
+import React from 'react';
+import './home-page.sass';
+
+import Container from '@material-ui/core/Container';
 import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 const HomePage = () => {
     return (
-        <Container style={{marginTop: '7em'}}>
-            <h1>Home page</h1>
-            <h3>Go to <Link to='/activities/'>Activities</Link></h3>
+        <Container className="home-page">
+            <Box className="logo-wrapper">
+                <img width="70" src="/assets/logo.png" alt="logo"/>
+                <Typography component="h1">
+                    Reactivities
+                </Typography> 
+            </Box> 
+            <Typography component="h2">
+                Welcome to Reactivities
+            </Typography>  
+            
+            <Typography component="h3">
+                <Link to='/activities/'>
+                    Take me to the activities!
+                </Link>
+            </Typography>
+            
         </Container>
     );
 };

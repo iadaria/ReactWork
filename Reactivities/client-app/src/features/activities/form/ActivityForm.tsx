@@ -1,4 +1,6 @@
 import React, { useState, FormEvent, useContext, useEffect } from 'react';
+import './activity-form.sass';
+
 import ActivityStore from '../../../app/stores/activityStore';
 import { TextField, Button, Box, TextareaAutosize, makeStyles, Theme, createStyles, CircularProgress } from '@material-ui/core';
 import { IActivity } from '../../../app/models/activity';
@@ -6,6 +8,7 @@ import { v4 as uuid} from 'uuid';
 import { green } from '@material-ui/core/colors';
 import { observer } from 'mobx-react-lite';
 import { RouteComponentProps } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
 
 interface DetailParams {
     id: string;
@@ -67,97 +70,101 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     
     const classes = useStyles();
     return (
-        <form className={classes.root} onSubmit={handleSubmit} autoComplete="Off">
-            <TextField 
-                onChange={handleInputChange}
-                name="title"
-                id="activityFormTitle"
-                label="Title"
-                variant="outlined"
-                color="secondary"
-                value={activity.title}
-                fullWidth
-            />
-            <TextareaAutosize
-                onChange={handleInputChange}
-                name="description"
-                id="activityFormDescription"
-                style={{width: '100%'}}
-                placeholder="description"
-                color="secondary"
-                //multiline
-                rows="3"
-                value={activity.description}
-                //fullWidth       
-            />
-            <TextField 
-                onChange={handleInputChange}
-                name="category"            
-                id="activityFormCategory"
-                label="Category"
-                variant="outlined"
-                color="secondary"
-                value={activity.category}
-                fullWidth
-            />
-            <TextField 
-                onChange={handleInputChange}
-                name="date"
-                id="activityFormDate"
-                label="Date"
-                InputLabelProps={{
-                    shrink: true,
-                  }}
-                variant="outlined"
-                type="datetime-local"
-                color="secondary"
-                value={activity.date.length ===0 ? (new Date()).toISOString() : activity.date}
-                fullWidth
-            />
-            <TextField 
-                onChange={handleInputChange}
-                name="city"
-                id="activityFormCity"
-                label="City"
-                variant="outlined"
-                color="secondary"
-                value={activity.city}
-                fullWidth
-            />
-            <TextField 
-                onChange={handleInputChange}
-                name="venue"
-                id="activityFormVenue"
-                label="Venue"
-                variant="outlined"
-                color="secondary"
-                value={activity.venue}
-                fullWidth
-            />
-            <Box className={classes.wrapperForButtons}>
-                <Button 
-                    onClick={() => history.push('/activities')} 
-                    type="button"
-                    variant="outlined" 
-                    size="small"
-                >
-                    Cancel
-                </Button>
+        <Grid className="activity-form" container justify="center">
+            <Grid item sm={10} xs={12}>
+                <form className={classes.root} onSubmit={handleSubmit} autoComplete="Off">
+                    <TextField 
+                        onChange={handleInputChange}
+                        name="title"
+                        id="activityFormTitle"
+                        label="Title"
+                        variant="outlined"
+                        color="secondary"
+                        value={activity.title}
+                        fullWidth
+                    />
+                    <TextareaAutosize
+                        onChange={handleInputChange}
+                        name="description"
+                        id="activityFormDescription"
+                        style={{width: '100%'}}
+                        placeholder="description"
+                        color="secondary"
+                        //multiline
+                        rows="3"
+                        value={activity.description}
+                        //fullWidth       
+                    />
+                    <TextField 
+                        onChange={handleInputChange}
+                        name="category"            
+                        id="activityFormCategory"
+                        label="Category"
+                        variant="outlined"
+                        color="secondary"
+                        value={activity.category}
+                        fullWidth
+                    />
+                    <TextField 
+                        onChange={handleInputChange}
+                        name="date"
+                        id="activityFormDate"
+                        label="Date"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                        type="datetime-local"
+                        color="secondary"
+                        value={activity.date.length ===0 ? (new Date()).toISOString() : activity.date}
+                        fullWidth
+                    />
+                    <TextField 
+                        onChange={handleInputChange}
+                        name="city"
+                        id="activityFormCity"
+                        label="City"
+                        variant="outlined"
+                        color="secondary"
+                        value={activity.city}
+                        fullWidth
+                    />
+                    <TextField 
+                        onChange={handleInputChange}
+                        name="venue"
+                        id="activityFormVenue"
+                        label="Venue"
+                        variant="outlined"
+                        color="secondary"
+                        value={activity.venue}
+                        fullWidth
+                    />
+                    <Box className={classes.wrapperForButtons}>
+                        <Button 
+                            onClick={() => history.push('/activities')} 
+                            type="button"
+                            variant="outlined" 
+                            size="small"
+                        >
+                            Cancel
+                        </Button>
 
 
-                    <Button 
-                        className={classes.success} 
-                        type="submit" 
-                        variant="contained" 
-                        size="small"
-                    >
-                        {submitting && <CircularProgress size='1.3rem'/>}
-                        {!submitting && 'Submit'}
-                    </Button>
+                            <Button 
+                                className={classes.success} 
+                                type="submit" 
+                                variant="contained" 
+                                size="small"
+                            >
+                                {submitting && <CircularProgress size='1.3rem'/>}
+                                {!submitting && 'Submit'}
+                            </Button>
 
-            </Box>
-        </form>
-    );
+                    </Box>
+                </form>
+            </Grid>
+        </Grid>
+        );
 };
 
 const useStyles = makeStyles((theme: Theme) =>

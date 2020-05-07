@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import './activity-detailed-chat.sass';
 
 import Card from '@material-ui/core/Card';

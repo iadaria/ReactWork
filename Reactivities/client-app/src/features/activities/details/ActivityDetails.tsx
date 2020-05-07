@@ -26,7 +26,7 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
     if(loadingInitial || !activity) return <LoadingComponent content='Loading activity...'/>;
 
     return (
-        <Grid container>
+        <Grid container spacing={3}>
             <Grid item sm={8} xs={12}>
                 <ActivityDetailedHeader activity={activity}/>
                 <ActivityDetailedInfo activity={activity}/>

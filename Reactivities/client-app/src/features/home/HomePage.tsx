@@ -9,7 +9,7 @@ import Box from '@material-ui/core/Box';
 
 const HomePage = () => {
     return (
-        <Container className="home-page">
+        <Box className="home-page">
             <Box className="logo-wrapper">
                 <img width="70" src="/assets/logo.png" alt="logo"/>
                 <Typography component="h1">
@@ -26,7 +26,7 @@ const HomePage = () => {
                 </Link>
             </Typography>
             
-        </Container>
+        </Box>
     );
 };
 

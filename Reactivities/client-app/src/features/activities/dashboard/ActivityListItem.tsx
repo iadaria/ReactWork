@@ -39,7 +39,7 @@ export const ActivityListItem: React.FC<{activity: IActivity}> = ({activity}) =>
           </Typography>
         </CardContent>
         <CardActions className={classes.cardButtons}>
-          <Button variant="outlined" size="small">{activity.category}</Button>
+          <Button variant="outlined" size="small">{activity.category || "None"}</Button>
 
           <Box>
             {/* <Button

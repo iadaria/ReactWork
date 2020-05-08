@@ -9,6 +9,8 @@ import ActivityDashboard from '../../features/activities/dashboard/ActivityDashb
 import ActivityForm from '../../features/activities/form/ActivityForm';
 import ActivityDetails from '../../features/activities/details/ActivityDetails';
 
+import NotFound from './not-found';
+
 const App: React.FC<RouteComponentProps> = ({location}) => {
 
 
@@ -26,6 +28,7 @@ const App: React.FC<RouteComponentProps> = ({location}) => {
               path={['/createActivity', '/manage/:id']} 
               component={ActivityForm}
             />
+            <Route component={NotFound} />
           </Container>
         </Fragment>
       )}/>

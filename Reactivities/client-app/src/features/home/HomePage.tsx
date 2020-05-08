@@ -1,7 +1,6 @@
 import React from 'react';
 import './home-page.sass';
 
-import Container from '@material-ui/core/Container';
 import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';

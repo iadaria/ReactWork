@@ -100,11 +100,21 @@ class ActivityStore {
                 activity = await agent.Activities.details(id);
                 runInAction('getting activity', () => {
                     this.activity = activity;
-                    this.loadingInitial = false;
+                    //this.loadingInitial = false;
                 });
             }
-            catch (error) { console.log(error);} 
-            finally { runInAction('get activity finally', () => {this.submitting = false;}); }
+            catch (error) { 
+                //runInAction('get activity error', () => {
+                    console.log(error);
+                //});  
+                //throw error; don't need after add history to router and agent
+            } 
+            finally { 
+                runInAction('get activity finally', () => {
+                    this.submitting = false;
+                    this.loadingInitial = false;
+                }); 
+            }
         }
     };
 

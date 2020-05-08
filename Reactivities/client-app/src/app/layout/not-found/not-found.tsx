@@ -3,7 +3,6 @@ import './not-found.sass';
 
 import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import SearchIcon from '@material-ui/icons/Search';
 import Paper from '@material-ui/core/Paper';
 

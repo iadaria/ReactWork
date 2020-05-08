@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers {
     //method all we're going to do is say return awaits mediator!
     [Route ("api/[controller]")]
-    //[ApiController]
+    [ApiController]
     public class ActivitiesController : ControllerBase {
         private readonly IMediator _mediator;
         public ActivitiesController (IMediator mediator) {

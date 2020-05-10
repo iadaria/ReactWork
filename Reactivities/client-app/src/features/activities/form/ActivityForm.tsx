@@ -12,10 +12,12 @@ import Grid from '@material-ui/core/Grid';
 import { Form as FinalForm, Field } from 'react-final-form';
 import TextInput from '../../../app/common/form/TextInput';
 import TextAreaInput from '../../../app/common/form/TextAreaInput';
-import FormGroup from '@material-ui/core/FormGroup';
 import SelectInput from '../../../app/common/form/SelectInput';
 import { category } from '../../../app/common/options/categoryOptions';
 import DateInput from '../../../app/common/form/DateInput';
+import TimeInput from '../../../app/common/form/TimeInput';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 interface DetailParams {
     id: string;
@@ -36,16 +38,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     } = activityStore;
 
     const [activity, setActivity] = useState(new ActivityFormValues());
-    /* const [activity, setActivity] = useState<IActivity>({
-        id: '',
-        title: '',
-        category: '',
-        description: '',
-        date: '',
-        city: '',
-        venue: ''
-    }); */
-
+    
     useEffect(() => {
         if (match.params.id) {
             loadActivity(match.params.id).then(
@@ -114,7 +107,27 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                                 //label="Category"
                                 value={activity.category}
                             />
-                            <div className="group-line">
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <div style={{display: 'flex'}}>
+                                    <Field 
+                                        component={DateInput}
+                                        name="date"
+                                        placeholder="Date"
+                                        label="Select date"
+                                        value={activity.date}
+                                        //value={new Date()}
+                                    />
+                                    <Field 
+                                        style={{marginLeft: 10}}
+                                        component={TimeInput}
+                                        name="time"
+                                        placeholder="Time"
+                                        label="Select time"
+                                        value={activity.time!}
+                                    />
+                                </div>
+                            </MuiPickersUtilsProvider> 
+                            {/* <div className="group-line">
                                 <Field 
                                     component={DateInput}
                                     date={true}
@@ -131,7 +144,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                                     value={activity.date!}
                                     //fullWidth={true}
                                 />
-                            </div>
+                            </div> */}
                             <TextField 
                                 onChange={handleInputChange}
                                 name="city"

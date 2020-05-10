@@ -3,7 +3,7 @@ import { Card, CardContent, Typography, makeStyles, CardHeader, CardActions, But
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import RoomIcon from '@material-ui/icons/Room';
 import Avatar from '@material-ui/core/Avatar';
-  
+import { format }  from 'date-fns';
 import { Link } from 'react-router-dom';
 import { IActivity } from '../../../app/models/activity';
 
@@ -30,7 +30,7 @@ export const ActivityListItem: React.FC<{activity: IActivity}> = ({activity}) =>
         <CardContent>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
               <AccessTimeIcon color="primary" style={{marginRight: '.5rem'}} fontSize="small"/>
-              {activity.date}
+              {format(activity.date!, 'h:mm a')}
               <RoomIcon style={{marginLeft: '1rem'}} fontSize="small"/>
               {activity.city}, {activity.venue}
           </Typography>

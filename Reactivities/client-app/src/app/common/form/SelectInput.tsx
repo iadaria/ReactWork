@@ -21,8 +21,8 @@ const SelectInput: React.FC<IProps> = (props) => {
         ...rest
     } = props;
     let errorText = "";
-    console.log("props in SelectInput");
-    console.log(props);
+    //console.log("props in SelectInput");
+    //console.log(props);
     return (
         <FormControl
             error={touched && !!error}

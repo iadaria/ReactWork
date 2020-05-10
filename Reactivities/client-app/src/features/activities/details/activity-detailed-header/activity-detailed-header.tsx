@@ -1,13 +1,12 @@
 import React from 'react'
 import './activity-detailed-header.css';
-
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
-//import Link from '@material-ui/core/Link';
+import { format }  from 'date-fns';
 import { Button } from '@material-ui/core';
 import { IActivity } from '../../../../app/models/activity';
 import { observer } from 'mobx-react-lite';
@@ -26,7 +25,7 @@ export const ActivityDetailedHeader: React.FC<{activity: IActivity}> = ({activit
                     title={activity.title}/>
                 <CardContent>
                     <Typography component="p">
-                        {activity.date}
+                        {format(activity.date!, 'eeee do MMMM')}
                     </Typography>
                     <Typography variant="body2" component="p">
                         Hosted by <strong>Bob</strong>

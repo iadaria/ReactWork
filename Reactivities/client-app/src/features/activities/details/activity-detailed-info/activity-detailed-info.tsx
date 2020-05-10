@@ -1,6 +1,6 @@
 import React from 'react';
 import './activity-detailed-info.css';
-
+import { format }  from 'date-fns';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import RoomIcon from '@material-ui/icons/Room';
@@ -15,7 +15,9 @@ export const ActivityDetailedInfo: React.FC<{activity: IActivity}> = ({activity}
             </li>
             <li>
                 <CalendarTodayIcon style={{color: 'teal'}}/>
-                <p>{activity.date}</p>
+                <p>
+                    {format(activity.date!, 'eeee do MMMM')} at {format(activity.date!, 'h:mm a')}
+                </p>
             </li>
             <li>
                 <RoomIcon style={{color: 'teal'}}/>

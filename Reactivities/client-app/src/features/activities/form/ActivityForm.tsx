@@ -2,7 +2,7 @@ import React, { useState, FormEvent, useContext, useEffect } from 'react';
 import './activity-form.sass';
 
 import ActivityStore from '../../../app/stores/activityStore';
-import { TextField, Button, Box, TextareaAutosize, makeStyles, Theme, createStyles, CircularProgress, FormControl } from '@material-ui/core';
+import { TextField, Button, Box, TextareaAutosize, makeStyles, Theme, createStyles, CircularProgress } from '@material-ui/core';
 import { IActivity, ActivityFormValues } from '../../../app/models/activity';
 import { v4 as uuid} from 'uuid';
 import { green } from '@material-ui/core/colors';
@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import { Form as FinalForm, Field } from 'react-final-form';
 import TextInput from '../../../app/common/form/TextInput';
 import TextAreaInput from '../../../app/common/form/TextAreaInput';
+import FormGroup from '@material-ui/core/FormGroup';
 import SelectInput from '../../../app/common/form/SelectInput';
 import { category } from '../../../app/common/options/categoryOptions';
 import DateInput from '../../../app/common/form/DateInput';
@@ -84,7 +85,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     const classes = useStyles();
     return (
         <Grid className="activity-form" container justify="center">
-            <Grid item sm={10} xs={12}>
+            <Grid item sm={8} xs={12}>
                 <FinalForm
                     initialValues={activity}
                     onSubmit={handleFinalFormSubmit}
@@ -113,17 +114,24 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                                 //label="Category"
                                 value={activity.category}
                             />
-                            <Field 
-                                component={DateInput}
-                                name="date"
-                                id="activityFormDate"
-                                label="Date"
-                                /* InputLabelProps={{
-                                    shrink: true,
-                                }} */
-                                //type="datetime-local"
-                                value={activity.date!}//.length ===0 ? (new Date()).toISOString() : activity.date}
-                            />
+                            <div className="group-line">
+                                <Field 
+                                    component={DateInput}
+                                    date={true}
+                                    name="date"
+                                    placeholder="Date"
+                                    value={activity.date!}
+                                    //fullWidth={true}
+                                />
+                                <Field 
+                                    component={DateInput}
+                                    time={true}
+                                    name="time"
+                                    placeholder="Time"
+                                    value={activity.date!}
+                                    //fullWidth={true}
+                                />
+                            </div>
                             <TextField 
                                 onChange={handleInputChange}
                                 name="city"

@@ -2,7 +2,6 @@ import React from 'react';
 import { FieldRenderProps } from 'react-final-form';
 import Select from '@material-ui/core/Select';
 import { SelectInputProps } from '@material-ui/core/Select/SelectInput';
-import { SelectProps} from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText  from '@material-ui/core/FormHelperText';
 import { ICategory } from '../../models/category';

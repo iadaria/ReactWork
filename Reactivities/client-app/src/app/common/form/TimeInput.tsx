@@ -2,7 +2,7 @@ import React from 'react';
 import { FieldRenderProps } from 'react-final-form';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import FormControl from '@material-ui/core/FormControl';
-import FormHelperText  from '@material-ui/core/FormHelperText';
+//import FormHelperText  from '@material-ui/core/FormHelperText';
 import { 
     KeyboardTimePicker, 
     TimePickerViewsProps } from '@material-ui/pickers';
@@ -15,7 +15,7 @@ interface IProps extends
 
 const TimeInput: React.FC<IProps> = (props) => {
     const {
-        input: {value, name, onChange, ...restInput},
+        input: {value, name, onChange/* , ...restInput */},
         placeholder, 
         //date = false,
         //time = false,
@@ -23,7 +23,7 @@ const TimeInput: React.FC<IProps> = (props) => {
         fullWidth = true,
         ...rest
     } = props;
-    let errorText = "";
+    //let errorText = "";
     //console.log("props in SelectInput");
     //console.log(props);
     return (

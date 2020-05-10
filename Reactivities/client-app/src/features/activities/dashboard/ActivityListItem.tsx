@@ -30,7 +30,7 @@ export const ActivityListItem: React.FC<{activity: IActivity}> = ({activity}) =>
         <CardContent>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
               <AccessTimeIcon color="primary" style={{marginRight: '.5rem'}} fontSize="small"/>
-              {format(activity.date!, 'h:mm a')}
+              {format(activity.date, 'h:mm a')}
               <RoomIcon style={{marginLeft: '1rem'}} fontSize="small"/>
               {activity.city}, {activity.venue}
           </Typography>

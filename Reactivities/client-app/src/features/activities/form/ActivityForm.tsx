@@ -2,7 +2,7 @@ import React, { useState, FormEvent, useContext, useEffect } from 'react';
 import './activity-form.sass';
 
 import ActivityStore from '../../../app/stores/activityStore';
-import { TextField, Button, Box, TextareaAutosize, makeStyles, Theme, createStyles, CircularProgress } from '@material-ui/core';
+import { TextField, Button, Box, makeStyles, Theme, createStyles, CircularProgress } from '@material-ui/core';
 import { IActivity, ActivityFormValues } from '../../../app/models/activity';
 import { v4 as uuid} from 'uuid';
 import { green } from '@material-ui/core/colors';
@@ -29,16 +29,16 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     }) => {
     const activityStore = useContext(ActivityStore);
     const {
-        createActivity, 
+        //createActivity, 
         editActivity, 
         submitting,
         activity: initialFormState,
         loadActivity,
-        clearActivity
+        //clearActivity
     } = activityStore;
 
     const [activity, setActivity] = useState(new ActivityFormValues());
-    
+
     useEffect(() => {
         if (match.params.id) {
             loadActivity(match.params.id).then(
@@ -123,7 +123,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                                         name="time"
                                         placeholder="Time"
                                         label="Select time"
-                                        value={activity.time!}
+                                        value={activity.time}
                                     />
                                 </div>
                             </MuiPickersUtilsProvider> 

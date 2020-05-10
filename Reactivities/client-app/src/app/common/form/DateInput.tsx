@@ -1,24 +1,20 @@
 import React from 'react';
 import { FieldRenderProps } from 'react-final-form';
-import { StandardTextFieldProps } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
-import FormHelperText  from '@material-ui/core/FormHelperText';
+//import FormHelperText  from '@material-ui/core/FormHelperText';
 import { 
     KeyboardDatePicker, 
-    BaseDatePickerProps,
     DatePickerViewsProps } from '@material-ui/pickers';
 import './date-input.sass';
 
 interface IProps extends 
     FieldRenderProps<Date, HTMLElement>
-    //,StandardTextFieldProps
-    //,BaseDatePickerProps
     ,DatePickerViewsProps
     {}
 
 const DateInput: React.FC<IProps> = (props) => {
     const {
-        input: {value, name, onChange, ...restInput},
+        input: {value, name, onChange/* , ...restInput */},
         placeholder, 
         //date = false,
         //time = false,
@@ -26,7 +22,7 @@ const DateInput: React.FC<IProps> = (props) => {
         fullWidth = true,
         ...rest
     } = props;
-    let errorText = "";
+    //let errorText = "";
     //console.log("props in SelectInput");
     //console.log(props);
     return (

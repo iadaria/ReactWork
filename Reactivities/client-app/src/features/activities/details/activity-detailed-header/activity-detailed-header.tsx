@@ -25,7 +25,7 @@ export const ActivityDetailedHeader: React.FC<{activity: IActivity}> = ({activit
                     title={activity.title}/>
                 <CardContent>
                     <Typography component="p">
-                        {format(activity.date!, 'eeee do MMMM')}
+                        {format(activity.date, 'eeee do MMMM')}
                     </Typography>
                     <Typography variant="body2" component="p">
                         Hosted by <strong>Bob</strong>

@@ -16,7 +16,7 @@ export const ActivityDetailedInfo: React.FC<{activity: IActivity}> = ({activity}
             <li>
                 <CalendarTodayIcon style={{color: 'teal'}}/>
                 <p>
-                    {format(activity.date!, 'eeee do MMMM')} at {format(activity.date!, 'h:mm a')}
+                    {format(activity.date, 'eeee do MMMM')} at {format(activity.date, 'h:mm a')}
                 </p>
             </li>
             <li>

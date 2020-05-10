@@ -27,8 +27,8 @@
 .activity-detailed-header button {
     font-size: small;
     text-transform: none;
-    margin-left: 8px;
-    padding: 3px 18px 3px;
+    /* margin-left: 8px; */
+    padding: 3px 18px;
 }
 
 .activity-detailed-header button.btn-join {
@@ -36,9 +36,15 @@
     color: #fff;
 }
 
-.activity-detailed-header button.btn-manage {
+.activity-detailed-header .btn-manage {
+    padding: 3px 18px;
+    border-radius: 3px;
     background-color: orangered;
+    text-transform: none;
     color: #fff;
+}
+.activity-detailed-header .btn-manage:hover {
+    color: orangered;
 }
 
 @media(max-width: 440px) {
@@ -46,8 +52,13 @@
         height: 140px;
     }
 
-    .activity-detailed-header button {
+    .activity-detailed-header .btn-manage:not(:first-child) {
+        margin: 5px auto 0;
+    }
+
+    .activity-detailed-header button, .activity-detailed-header a {
         display: block;
+        text-align: center;
         margin: 5px auto 0;
         width: 90%;
     }
@@ -56,8 +67,5 @@
     }    
     .activity-detailed-header .group-left {
         width: 100%;
-    }
-    .activity-detailed-header button.btn-manage {
-        margin: 5px auto 0;
     }
 }

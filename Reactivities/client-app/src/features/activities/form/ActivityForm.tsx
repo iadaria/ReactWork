@@ -2,13 +2,19 @@ import React, { useState, FormEvent, useContext, useEffect } from 'react';
 import './activity-form.sass';
 
 import ActivityStore from '../../../app/stores/activityStore';
-import { TextField, Button, Box, TextareaAutosize, makeStyles, Theme, createStyles, CircularProgress } from '@material-ui/core';
-import { IActivity } from '../../../app/models/activity';
+import { TextField, Button, Box, TextareaAutosize, makeStyles, Theme, createStyles, CircularProgress, FormControl } from '@material-ui/core';
+import { IActivity, ActivityFormValues } from '../../../app/models/activity';
 import { v4 as uuid} from 'uuid';
 import { green } from '@material-ui/core/colors';
 import { observer } from 'mobx-react-lite';
 import { RouteComponentProps } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
+import { Form as FinalForm, Field } from 'react-final-form';
+import TextInput from '../../../app/common/form/TextInput';
+import TextAreaInput from '../../../app/common/form/TextAreaInput';
+import SelectInput from '../../../app/common/form/SelectInput';
+import { category } from '../../../app/common/options/categoryOptions';
+import DateInput from '../../../app/common/form/DateInput';
 
 interface DetailParams {
     id: string;
@@ -28,7 +34,8 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
         clearActivity
     } = activityStore;
 
-    const [activity, setActivity] = useState<IActivity>({
+    const [activity, setActivity] = useState(new ActivityFormValues());
+    /* const [activity, setActivity] = useState<IActivity>({
         id: '',
         title: '',
         category: '',
@@ -36,26 +43,32 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
         date: '',
         city: '',
         venue: ''
-    });
+    }); */
 
     useEffect(() => {
-        if (match.params.id && activity.id.length === 0) {
+        if (match.params.id) {
             loadActivity(match.params.id).then(
-                () => initialFormState && setActivity(initialFormState)
+                //activity => setActivity(activity)
+                (activity) => setActivity(new ActivityFormValues(activity))
             );
         }
-
-        return () => {
+        /* return () => {
             clearActivity();
-        };
-    },[loadActivity, clearActivity, initialFormState, match.params.id, activity.id.length]);
+        }; */
+
+    },[loadActivity, match.params.id]);
     
+    const handleFinalFormSubmit = (values: any) => {
+        console.log(values);
+    }
+
     const handleInputChange = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const {name, value} = event.currentTarget;
-        setActivity({ ...activity, [name]: value });
+        //need to delete
+        /* const {name, value} = event.currentTarget;
+        setActivity({ ...activity, [name]: value }); */
     };
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    /* const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (activity.id.length === 0) {
             let newActivity = {
@@ -66,102 +79,96 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
         } else {
             editActivity(activity).then(() => history.push(`/activities/${activity.id}`));
         }
-    };
+    }; */
     
     const classes = useStyles();
     return (
         <Grid className="activity-form" container justify="center">
             <Grid item sm={10} xs={12}>
-                <form className={classes.root} onSubmit={handleSubmit} autoComplete="Off">
-                    <TextField 
-                        onChange={handleInputChange}
-                        name="title"
-                        id="activityFormTitle"
-                        label="Title"
-                        variant="outlined"
-                        color="secondary"
-                        value={activity.title}
-                        fullWidth
-                    />
-                    <TextareaAutosize
-                        onChange={handleInputChange}
-                        name="description"
-                        id="activityFormDescription"
-                        style={{width: '100%'}}
-                        placeholder="description"
-                        color="secondary"
-                        //multiline
-                        rows="3"
-                        value={activity.description}
-                        //fullWidth       
-                    />
-                    <TextField 
-                        onChange={handleInputChange}
-                        name="category"            
-                        id="activityFormCategory"
-                        label="Category"
-                        variant="outlined"
-                        color="secondary"
-                        value={activity.category}
-                        fullWidth
-                    />
-                    <TextField 
-                        onChange={handleInputChange}
-                        name="date"
-                        id="activityFormDate"
-                        label="Date"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        type="datetime-local"
-                        color="secondary"
-                        value={activity.date.length ===0 ? (new Date()).toISOString() : activity.date}
-                        fullWidth
-                    />
-                    <TextField 
-                        onChange={handleInputChange}
-                        name="city"
-                        id="activityFormCity"
-                        label="City"
-                        variant="outlined"
-                        color="secondary"
-                        value={activity.city}
-                        fullWidth
-                    />
-                    <TextField 
-                        onChange={handleInputChange}
-                        name="venue"
-                        id="activityFormVenue"
-                        label="Venue"
-                        variant="outlined"
-                        color="secondary"
-                        value={activity.venue}
-                        fullWidth
-                    />
-                    <Box className={classes.wrapperForButtons}>
-                        <Button 
-                            onClick={() => history.push('/activities')} 
-                            type="button"
-                            variant="outlined" 
-                            size="small"
-                        >
-                            Cancel
-                        </Button>
+                <FinalForm
+                    initialValues={activity}
+                    onSubmit={handleFinalFormSubmit}
+                    render={({handleSubmit}) => (
+                        <form className={classes.root} onSubmit={handleSubmit} autoComplete="Off">                 
+                            <Field 
+                                component={TextInput}
+                                value={activity.title}
+                                name='title'
+                                placeholder='Title'
+                                label="Title"
+                            />
+                            <Field
+                                component={TextAreaInput} 
+                                value={activity.description}
+                                name="description"
+                                placeholder="Description"
+                                rows="4"
+                            />
+                            <Field 
+                                component={SelectInput}
+                                options={category}
+                                name="category" 
+                                placeholder="Category"           
+                                //id="activityFormCategory"
+                                //label="Category"
+                                value={activity.category}
+                            />
+                            <Field 
+                                component={DateInput}
+                                name="date"
+                                id="activityFormDate"
+                                label="Date"
+                                /* InputLabelProps={{
+                                    shrink: true,
+                                }} */
+                                //type="datetime-local"
+                                value={activity.date!}//.length ===0 ? (new Date()).toISOString() : activity.date}
+                            />
+                            <TextField 
+                                onChange={handleInputChange}
+                                name="city"
+                                id="activityFormCity"
+                                label="City"
+                                variant="outlined"
+                                color="secondary"
+                                value={activity.city}
+                                fullWidth
+                            />
+                            <TextField 
+                                onChange={handleInputChange}
+                                name="venue"
+                                id="activityFormVenue"
+                                label="Venue"
+                                variant="outlined"
+                                color="secondary"
+                                value={activity.venue}
+                                fullWidth
+                            />
+                            <Box className={classes.wrapperForButtons}>
+                                <Button 
+                                    onClick={() => history.push('/activities')} 
+                                    type="button"
+                                    variant="outlined" 
+                                    size="small"
+                                >
+                                    Cancel
+                                </Button>
 
 
-                            <Button 
-                                className={classes.success} 
-                                type="submit" 
-                                variant="contained" 
-                                size="small"
-                            >
-                                {submitting && <CircularProgress size='1.3rem'/>}
-                                {!submitting && 'Submit'}
-                            </Button>
+                                    <Button 
+                                        className={classes.success} 
+                                        type="submit" 
+                                        variant="contained" 
+                                        size="small"
+                                    >
+                                        {submitting && <CircularProgress size='1.3rem'/>}
+                                        {!submitting && 'Submit'}
+                                    </Button>
 
-                    </Box>
-                </form>
+                            </Box>
+                        </form>
+                    )}
+                />
             </Grid>
         </Grid>
         );

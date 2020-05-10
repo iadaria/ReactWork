@@ -7,9 +7,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
+//import Link from '@material-ui/core/Link';
 import { Button } from '@material-ui/core';
 import { IActivity } from '../../../../app/models/activity';
 import { observer } from 'mobx-react-lite';
+import { Link } from 'react-router-dom';
 
 export const ActivityDetailedHeader: React.FC<{activity: IActivity}> = ({activity}) => {
     return (
@@ -47,6 +49,7 @@ export const ActivityDetailedHeader: React.FC<{activity: IActivity}> = ({activit
                 </div>
                 <Button 
                     className="btn-manage"
+                    component={Link} to={`/manage/${activity.id}`}
                     size="small">
                     Manage Event
                 </Button>

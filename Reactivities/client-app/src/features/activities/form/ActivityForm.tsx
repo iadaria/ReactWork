@@ -18,6 +18,7 @@ import DateInput from '../../../app/common/form/DateInput';
 import TimeInput from '../../../app/common/form/TimeInput';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { combineDateAndTime } from '../../../app/common/util';
 
 interface DetailParams {
     id: string;
@@ -53,7 +54,10 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     },[loadActivity, match.params.id]);
     
     const handleFinalFormSubmit = (values: any) => {
-        console.log(values);
+        const dateAndTime = combineDateAndTime(values.date, values.time);
+        const {date, time, ...activity} = values;
+        activity.date = dateAndTime;
+        console.log(activity);
     }
 
     const handleInputChange = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {

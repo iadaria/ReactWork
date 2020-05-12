@@ -1,9 +1,9 @@
-import React, { useState, FormEvent, useContext, useEffect } from 'react';
+import React, { useState, /* FormEvent,  */useContext, useEffect } from 'react';
 import './activity-form.sass';
 
 import ActivityStore from '../../../app/stores/activityStore';
-import { TextField, Button, Box, makeStyles, Theme, createStyles, CircularProgress } from '@material-ui/core';
-import { IActivity, ActivityFormValues } from '../../../app/models/activity';
+import { Button, Box, makeStyles, Theme, createStyles, CircularProgress } from '@material-ui/core';
+import { ActivityFormValues } from '../../../app/models/activity';
 import { v4 as uuid} from 'uuid';
 import { green } from '@material-ui/core/colors';
 import { observer } from 'mobx-react-lite';
@@ -19,6 +19,20 @@ import TimeInput from '../../../app/common/form/TimeInput';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { combineDateAndTime } from '../../../app/common/util';
+import { combineValidators, isRequired, composeValidators, hasLengthGreaterThan } from 'revalidate';
+
+const validate = combineValidators({
+    title: isRequired({message: 'The event title is required'}),
+    category: isRequired('Category'),
+    description: composeValidators(
+        isRequired('Description'),
+        hasLengthGreaterThan(4)({message: 'Description needs to be at least 5 characters'})
+    )(),
+    city: isRequired('City'),
+    venue: isRequired('Venue'),
+    date: isRequired('Date'),
+    time: isRequired('Time')
+});
 
 interface DetailParams {
     id: string;
@@ -30,12 +44,11 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     }) => {
     const activityStore = useContext(ActivityStore);
     const {
-        //createActivity, 
         editActivity, 
         submitting,
-        activity: initialFormState,
+        //activity: initialFormState,
         loadActivity,
-        //clearActivity
+        createActivity
     } = activityStore;
 
     const [activity, setActivity] = useState(new ActivityFormValues());
@@ -50,7 +63,6 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
         /* return () => {
             clearActivity();
         }; */
-
     },[loadActivity, match.params.id]);
     
     const handleFinalFormSubmit = (values: any) => {
@@ -58,26 +70,17 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
         const {date, time, ...activity} = values;
         activity.date = dateAndTime;
         console.log(activity);
-    }
 
-    const handleInputChange = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        //need to delete
-        /* const {name, value} = event.currentTarget;
-        setActivity({ ...activity, [name]: value }); */
-    };
-
-    /* const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (activity.id.length === 0) {
+        if (!activity.id) {
             let newActivity = {
                 ...activity,
                 id: uuid()
             };
-            createActivity(newActivity).then(() => history.push(`/activities/${newActivity.id}`));
+            createActivity(newActivity)
         } else {
-            editActivity(activity).then(() => history.push(`/activities/${activity.id}`));
+            editActivity(activity);
         }
-    }; */
+    }
     
     const classes = useStyles();
     return (
@@ -86,7 +89,8 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                 <FinalForm
                     initialValues={activity}
                     onSubmit={handleFinalFormSubmit}
-                    render={({handleSubmit}) => (
+                    validate={validate}
+                    render={({handleSubmit, invalid, pristine}) => (
                         <form className={classes.root} onSubmit={handleSubmit} autoComplete="Off">                 
                             <Field 
                                 component={TextInput}
@@ -130,48 +134,28 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                                         value={activity.time}
                                     />
                                 </div>
-                            </MuiPickersUtilsProvider> 
-                            {/* <div className="group-line">
-                                <Field 
-                                    component={DateInput}
-                                    date={true}
-                                    name="date"
-                                    placeholder="Date"
-                                    value={activity.date!}
-                                    //fullWidth={true}
-                                />
-                                <Field 
-                                    component={DateInput}
-                                    time={true}
-                                    name="time"
-                                    placeholder="Time"
-                                    value={activity.date!}
-                                    //fullWidth={true}
-                                />
-                            </div> */}
-                            <TextField 
-                                onChange={handleInputChange}
-                                name="city"
-                                id="activityFormCity"
-                                label="City"
-                                variant="outlined"
-                                color="secondary"
+                            </MuiPickersUtilsProvider>
+                            <Field
+                                component={TextInput}
                                 value={activity.city}
-                                fullWidth
-                            />
-                            <TextField 
-                                onChange={handleInputChange}
-                                name="venue"
-                                id="activityFormVenue"
-                                label="Venue"
-                                variant="outlined"
-                                color="secondary"
+                                name="city"
+                                placeholder="City"
+                                label="City"
+                            /> 
+                            <Field
+                                component={TextInput}
                                 value={activity.venue}
-                                fullWidth
-                            />
+                                name="venue"
+                                placeholder="Venue"
+                                label="Venue"
+                            /> 
                             <Box className={classes.wrapperForButtons}>
                                 <Button 
-                                    onClick={() => history.push('/activities')} 
+                                    onClick={
+                                        activity.id 
+                                            ? () => history.push(`/activities/${activity.id}`)
+                                            : () => history.push('/activities')
+                                        } 
                                     type="button"
                                     variant="outlined" 
                                     size="small"
@@ -183,6 +167,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                                     <Button 
                                         className={classes.success} 
                                         type="submit" 
+                                        disabled={submitting || invalid || pristine}
                                         variant="contained" 
                                         size="small"
                                     >
@@ -227,3 +212,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default observer(ActivityForm);
+
+//const handleInputChange = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+//     //need to delete
+//     /* const {name, value} = event.currentTarget;
+//     setActivity({ ...activity, [name]: value }); */
+// };

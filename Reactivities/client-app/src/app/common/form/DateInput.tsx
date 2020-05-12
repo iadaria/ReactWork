@@ -1,7 +1,7 @@
 import React from 'react';
 import { FieldRenderProps } from 'react-final-form';
 import FormControl from '@material-ui/core/FormControl';
-//import FormHelperText  from '@material-ui/core/FormHelperText';
+import FormHelperText  from '@material-ui/core/FormHelperText';
 import { 
     KeyboardDatePicker, 
     DatePickerViewsProps } from '@material-ui/pickers';
@@ -14,15 +14,12 @@ interface IProps extends
 
 const DateInput: React.FC<IProps> = (props) => {
     const {
-        input: {value, name, onChange/* , ...restInput */},
+        input: {value, name, onChange, onBlur/* , ...restInput */},
         placeholder, 
-        //date = false,
-        //time = false,
         meta: {touched, error},
         fullWidth = true,
         ...rest
     } = props;
-    //let errorText = "";
     //console.log("props in SelectInput");
     //console.log(props);
     return (
@@ -35,6 +32,8 @@ const DateInput: React.FC<IProps> = (props) => {
                     name={name}
                     value={value || null}
                     onChange={onChange}
+                    onBlur={onBlur}
+                    onKeyDown={(e) => e.preventDefault()}
                     format="MM/dd/yyyy"
                     //inputProps={restInput}
                     error={touched && !!error}
@@ -45,15 +44,7 @@ const DateInput: React.FC<IProps> = (props) => {
                     
                     {...rest}
                 />
-                {/* <DateTimePicker
-                    placeholder={placeholder}
-                    value={value || null}
-                    onChange={onChange}
-                    date={date}
-                    time={time}
-                    //inputProps={restInput}
-                /> */}
-                {/* <FormHelperText>{errorText}</FormHelperText> */}
+                <FormHelperText>{error}</FormHelperText>
             </FormControl>
     );
 };

@@ -3,6 +3,7 @@ import { FieldRenderProps } from 'react-final-form';
 import { TextareaAutosizeProps } from '@material-ui/core';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 interface IProps extends 
     FieldRenderProps<string, HTMLElement>
@@ -28,6 +29,7 @@ const TextAreaInput: React.FC<IProps> = ({
                 style={{width: '100%'}}
                 color="secondary"       
             />
+            <FormHelperText>{error}</FormHelperText>
         </FormControl>
     );
 };

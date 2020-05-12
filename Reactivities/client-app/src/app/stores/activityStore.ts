@@ -2,6 +2,8 @@ import { observable, action, computed, configure, runInAction } from 'mobx';
 import { createContext, SyntheticEvent } from 'react';
 import { IActivity } from '../models/activity';
 import agent from '../api/agent';
+import { history } from '../..';
+import { toast } from 'react-toastify';
 
 configure({enforceActions: 'always'});
 
@@ -55,8 +57,9 @@ class ActivityStore {
             runInAction('creating activity', () => {
                 this.activityRegistry.set(activity.id, activity);
             });
+            history.push(`/activities/${activity.id}`)
         } 
-        catch (error) { console.log(error);} 
+        catch (error) { console.log(error.response); toast.error('Problem submitting data');} 
         finally { runInAction('create activity finally', () => {this.submitting = false;}); }
     };
 
@@ -68,8 +71,9 @@ class ActivityStore {
                 this.activityRegistry.set(activity.id, activity);
                 this.activity = activity;
             });
+            history.push(`/activities/${activity.id}`)
         }
-        catch (error) { console.log(error);} 
+        catch (error) { console.log(error.response); toast.error('Problem submitting data');} 
         finally { runInAction('edit activity finally', () => {this.submitting = false;}); }
     };
 
@@ -103,13 +107,15 @@ class ActivityStore {
                 runInAction('getting activity', () => {
                     activity.date = new Date(activity.date);
                     this.activity = activity;
+                    this.activityRegistry.set(activity.id, activity);
                     //this.loadingInitial = false;
                 });
                 return activity;
             }
             catch (error) { 
                 //runInAction('get activity error', () => {
-                    console.log(error);
+                    console.log(error.response);
+                    toast.error('Problem submitting data');
                 //});  
                 //throw error; don't need after add history to router and agent
             } 

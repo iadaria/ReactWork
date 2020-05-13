@@ -1,13 +1,14 @@
 import React from 'react'
 import BaseLayout from '../components/layouts/BaseLayout';
+import BasePage from '../components/BasePage';
 
-function blogs() {
+
+export default function Blogs() {
     return (
-        
         <BaseLayout>
-            blogs
+            <BasePage>
+                blogs
+            </BasePage>
         </BaseLayout>
-    )
-}
-
-export default blogs
+    );
+};

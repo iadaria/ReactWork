@@ -1,13 +1,15 @@
 import React from 'react';
 import BaseLayout from '../components/layouts/BaseLayout';
+import BasePage from '../components/BasePage';
 
-const about = () => {
+const About = () => {
     return (
-        <BaseLayout>
-            blog 
-        </BaseLayout>
-        
-    )
-}
+        <BaseLayout>     
+            <BasePage>
+                about
+            </BasePage>
+        </BaseLayout>      
+    );
+};
 
-export default about
+export default About;

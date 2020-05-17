@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Container } from 'reactstrap';
+import Container from 'react-bootstrap/Container';
 import PropTypes from 'prop-types';
 
 const BasePage = ({children, className}) => {

@@ -1,15 +1,21 @@
-import { observable, action, computed, configure, runInAction } from 'mobx';
-import { createContext, SyntheticEvent } from 'react';
+import { observable, action, computed, runInAction } from 'mobx';
+import { SyntheticEvent } from 'react';
 import { IActivity } from '../models/activity';
 import agent from '../api/agent';
 import { history } from '../..';
 import { toast } from 'react-toastify';
+import { RootStore } from './rootStore';
 
-configure({enforceActions: 'always'});
+export default class ActivityStore {
+    rootStore: RootStore;
 
-class ActivityStore {
-    @observable activityRegistry = new Map();
+    constructor(rootStore: RootStore) {
+        this.rootStore = rootStore;
+    }
+
+
     @observable activity: IActivity | null = null;
+    @observable activityRegistry = new Map();
     @observable loadingInitial = false;
     @observable submitting = false;
     @observable target = '';
@@ -148,4 +154,4 @@ class ActivityStore {
     //@action cancelFormOpen = () => this.editMode = false;
 }
 
-export default createContext(new ActivityStore());
+//export default createContext(new ActivityStore());

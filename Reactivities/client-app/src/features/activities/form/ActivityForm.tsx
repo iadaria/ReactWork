@@ -1,7 +1,6 @@
 import React, { useState, /* FormEvent,  */useContext, useEffect } from 'react';
 import './activity-form.sass';
 
-import ActivityStore from '../../../app/stores/activityStore';
 import { Button, Box, makeStyles, Theme, createStyles, CircularProgress } from '@material-ui/core';
 import { ActivityFormValues } from '../../../app/models/activity';
 import { v4 as uuid} from 'uuid';
@@ -20,6 +19,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { combineDateAndTime } from '../../../app/common/util';
 import { combineValidators, isRequired, composeValidators, hasLengthGreaterThan } from 'revalidate';
+import { RootStoreContext } from '../../../app/stores/rootStore';
 
 const validate = combineValidators({
     title: isRequired({message: 'The event title is required'}),
@@ -42,14 +42,14 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     match,
     history 
     }) => {
-    const activityStore = useContext(ActivityStore);
+    const rootStore = useContext(RootStoreContext);
     const {
         editActivity, 
         submitting,
         //activity: initialFormState,
         loadActivity,
         createActivity
-    } = activityStore;
+    } = rootStore.activityStore;
 
     const [activity, setActivity] = useState(new ActivityFormValues());
 

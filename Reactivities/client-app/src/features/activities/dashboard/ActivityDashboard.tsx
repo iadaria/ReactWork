@@ -1,19 +1,20 @@
 import React, { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import ActivityStore from '../../../app/stores/activityStore';
 import ActivityList from './ActivityList';
 import { Grid } from '@material-ui/core';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
+import { RootStoreContext } from '../../../app/stores/rootStore';
 
 
 const ActivityDashboard: React.FC = () => {
-    const activityStore = useContext(ActivityStore);
+    const rootStore = useContext(RootStoreContext);
+    const { loadActivities, loadingInitial } = rootStore.activityStore;
 
     useEffect(() => {
-      activityStore.loadActivities();
-    }, [activityStore]); //activityStore as its dependency
+      loadActivities();
+    }, [loadActivities]); //rootStore as its dependency
   
-    if (activityStore.loadingInitial) 
+    if (loadingInitial) 
       return <LoadingComponent content='Loading activities...'/>
 
     return (
@@ -27,6 +28,8 @@ const ActivityDashboard: React.FC = () => {
         </Grid>
     );
 };
+
+export default observer(ActivityDashboard);
 
 /* const useStyles = makeStyles((theme: Theme) => createStyles({
     title: {
@@ -43,5 +46,3 @@ const ActivityDashboard: React.FC = () => {
     }
   })
 ); */
-
-export default observer(ActivityDashboard);

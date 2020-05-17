@@ -2,6 +2,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Errors;
+using Application.Interface;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -12,7 +13,7 @@ namespace Application.User
 {
     public class Login
     {
-        public class Query : IRequest<AppUser>
+        public class Query : IRequest<User>
         {
             public string Email { get; set; }
             public string Password { get; set; }
@@ -26,18 +27,24 @@ namespace Application.User
                 RuleFor(x => x.Password).NotEmpty();
             }
         }
-        public class Handler : IRequestHandler<Query, AppUser>
+        public class Handler : IRequestHandler<Query, User>
         {
             private readonly UserManager<AppUser> _userManager;
             private readonly SignInManager<AppUser> _signInManager;
-            public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+            private readonly IJwtGenerator _jwtGenerator;
+            public Handler(
+                UserManager<AppUser> userManager,
+                SignInManager<AppUser> signInManager,
+                IJwtGenerator jwtGenerator)
             {
-                _signInManager = signInManager;
                 _userManager = userManager;
-
+                _signInManager = signInManager;
+                _jwtGenerator = jwtGenerator;
             }
 
-            public async Task<AppUser> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<User> Handle(
+                Query request, 
+                CancellationToken cancellationToken)
             {
                 //handler logic goes here
                 var user = await _userManager.FindByEmailAsync(request.Email);
@@ -54,7 +61,14 @@ namespace Application.User
                 if (result.Succeeded)
                 {
                     // TODO: generate token
-                    return user;
+                    //return user;
+                    return new User
+                    {
+                        DisplayName = user.DisplayName,
+                        Token = _jwtGenerator.CreateToken(user),
+                        Username = user.UserName,
+                        Image = null
+                    };
                 }
 
                 throw new RestException(HttpStatusCode.Unauthorized);

@@ -1,30 +1,54 @@
-import React from 'react';
+import React, { useContext, Fragment } from 'react';
 import './home-page.sass';
 
 import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import { RootStoreContext } from '../../app/stores/rootStore';
 
 const HomePage = () => {
+    const rootStore = useContext(RootStoreContext);
+    const { isLoggedIn, user } = rootStore.userStore;
+
     return (
         <Box className="home-page">
             <Box className="logo-wrapper">
-                <img width="70" src="/assets/logo.png" alt="logo"/>
+                <img width="70" src="/assets/logo.png" alt="logo" />
                 <Typography component="h1">
                     Reactivities
-                </Typography> 
-            </Box> 
-            <Typography component="h2">
-                Welcome to Reactivities
-            </Typography>  
-            
-            <Typography component="h3">
-                <Link to='/activities/'>
-                    Take me to the activities!
-                </Link>
-            </Typography>
-            
+                </Typography>
+            </Box>
+
+            {isLoggedIn && user ? (
+                <Fragment>
+                    <Typography component="h2">
+                        {`Welcome back ${user.displayName}`}
+                    </Typography>
+                    <Typography className="btn" component="h3">
+                        <Link to='/activities'>
+                            Go to activities!
+                        </Link>
+                    </Typography>
+                </Fragment>
+            ) : (   
+                <Fragment>
+                    <Typography component="h2">
+                        Welcome to Reactivities
+                    </Typography>
+                    <Typography className="btn" component="h3">
+                        <Link to='/login'>
+                            Login
+                        </Link>
+                    </Typography>
+                    <Typography className="btn" component="h3">
+                        <Link to='/register'>
+                            Register
+                        </Link>
+                    </Typography>
+                </Fragment>
+            )}
+
         </Box>
     );
 };

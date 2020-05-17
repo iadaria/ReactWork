@@ -1,13 +1,13 @@
 import React, { useContext, Fragment } from 'react';
 import { observer } from 'mobx-react-lite';
-import ActivityStore from '../../../app/stores/activityStore';
 import ActivityListItem from '../../activities/dashboard/ActivityListItem';
 import { Chip } from '@material-ui/core';
+import { RootStoreContext } from '../../../app/stores/rootStore';
 
 const ActivityList: React.FC = () => {
 
-    const activityStore = useContext(ActivityStore);
-    const { activitiesByDate, /* deleteActivity, submitting, target */ } = activityStore;
+    const rootStore = useContext(RootStoreContext);
+    const { activitiesByDate } = rootStore.activityStore;
 
     return (
         <Fragment>

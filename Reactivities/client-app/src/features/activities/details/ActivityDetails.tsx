@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
-import ActivityStore from '../../../app/stores/activityStore';
 import { observer } from 'mobx-react-lite';
 import { RouteComponentProps } from 'react-router-dom';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
@@ -8,6 +7,7 @@ import ActivityDetailedHeader from './activity-detailed-header';
 import ActivityDetailedInfo from './activity-detailed-info';
 import ActivityDetailedChat from './activity-detailed-chat';
 import ActivityDetailedSidebar from './activity-detailed-sidebar';
+import { RootStoreContext } from '../../../app/stores/rootStore';
 
 interface DetailParams {
     id: string;
@@ -16,8 +16,8 @@ interface DetailParams {
 const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
     match,
     history }) => {
-    const activityStore = useContext(ActivityStore);
-    const {activity, loadActivity, loadingInitial} = activityStore;
+    const rootStore = useContext(RootStoreContext);
+    const {activity, loadActivity, loadingInitial} = rootStore.activityStore;
 
     useEffect(() => {
         loadActivity(match.params.id);/* .catch(() => {

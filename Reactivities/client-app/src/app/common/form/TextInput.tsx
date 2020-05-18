@@ -24,7 +24,6 @@ const TextInput: React.FC<IProps> = ({
             
             helperText={touched ? error : undefined}
             error={touched && !!error}
-            color="secondary"
             variant="outlined"
             size="small"
             fullWidth

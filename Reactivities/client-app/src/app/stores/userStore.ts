@@ -22,10 +22,40 @@ export default class UserStore {
                 this.user = user;
             })
             console.log(user);
+            this.rootStore.commonStore.setToken(user.token);
+            this.rootStore.modalStore.closeModal();
             history.push('/activities');
         } catch (error) {
             console.log(error);
             throw error; //to catch in login form
         }
-    }
+    };
+
+    @action getUser = async () => {
+        try {
+            const user = await agent.User.current();
+            runInAction(() => {
+                this.user = user;
+            });
+        }
+        catch(error) { console.log(error); }
+    };
+
+    @action logout = () => {
+        //this.rootStore.commonStore.setToken(null);
+        this.rootStore.commonStore.unsetToken();
+        this.user = null;
+        history.push('/');
+    };
+
+    @action register = async (values: IUserFormValues) => {
+        try {
+            const user = await agent.User.register(values);
+            this.rootStore.commonStore.setToken(user.token);
+            this.rootStore.modalStore.closeModal();
+            history.push('/activities');
+        } catch (error) {
+            throw error;
+        }
+    };
 }

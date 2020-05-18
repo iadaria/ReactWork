@@ -21,7 +21,7 @@ function NavBar() {
     const classes = useStyles();
     const rootStore = useContext(RootStoreContext);
     const { openCreateForm } = rootStore.activityStore;
-    const { isLoggedIn, user } = rootStore.userStore;
+    const { user, logout } = rootStore.userStore;
 
     const [anchorE1, setAnchorE1] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorE1);
@@ -98,7 +98,7 @@ function NavBar() {
                                 >
                                     My profile
                                 </MenuItem>
-                                <MenuItem onClick={handleClose}>My account</MenuItem>
+                                <MenuItem onClick={logout}>Logout</MenuItem>
                             </Menu>
                         </div>
                     )}

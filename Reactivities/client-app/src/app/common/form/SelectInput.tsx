@@ -38,7 +38,6 @@ const SelectInput: React.FC<IProps> = (props) => {
                 placeholder={placeholder}
                 {...rest}
                 variant="outlined"
-                color="secondary"
                 fullWidth
             >
                 <option aria-label="None" value="" />

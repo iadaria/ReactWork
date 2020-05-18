@@ -26,8 +26,7 @@ const TextAreaInput: React.FC<IProps> = ({
                 {...rest}
                 value={value}
                 placeholder={placeholder}
-                style={{width: '100%'}}
-                color="secondary"       
+                style={{width: '100%'}}    
             />
             <FormHelperText>{error}</FormHelperText>
         </FormControl>

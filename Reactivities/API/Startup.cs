@@ -3,6 +3,7 @@ using System.Text;
 using API.Middleware;
 using Application.Activities;
 using Application.Interface;
+using AutoMapper;
 using Domain;
 using FluentValidation.AspNetCore;
 using Infrastructure.Security;
@@ -40,6 +41,7 @@ namespace API
             });
 
             services.AddDbContext<DataContext>(opt => {
+                opt.UseLazyLoadingProxies();
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
 
@@ -53,6 +55,8 @@ namespace API
             //we well have lots of handlers but we only need to tell mediator about one and then
             //to use that particular reference to look inside this assembly to locate all of the
             //other handlers
+
+            services.AddAutoMapper(typeof(List.Handler));
 
             services.AddControllers()
                 .AddFluentValidation(cfg => {
@@ -70,6 +74,13 @@ namespace API
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DataContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+            
+            services.AddAuthorization(opt => {
+                opt.AddPolicy("IsActivityHost", policy => {
+                    policy.Requirements.Add(new IsHostRequirement());
+                });
+            });
+            services.AddTransient<IAuthorizationHandler,IsHostRequirementHandler>();
 
             Console.WriteLine($"from startup {Configuration["TokenKey"]}");
             var key =new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import './login-form.sass';
 import { Form as FinalForm, Field } from 'react-final-form';
 import TextInput from '../../../app/common/form/TextInput';
-import { Button, CircularProgress, Typography, makeStyles, createStyles, Theme } from '@material-ui/core';
+import { Button, CircularProgress, Typography } from '@material-ui/core';
 
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import { IUserFormValues } from '../../../app/models/user';
@@ -16,7 +16,6 @@ const validate = combineValidators({
 });
 
 const LoginForm = () => {
-    const classes = useStyles();
     const rootStore = useContext(RootStoreContext);
     const { login } = rootStore.userStore;
 
@@ -77,20 +76,5 @@ const LoginForm = () => {
         </div>
     );
 };
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-        /* display: 'flex',
-        flexWrap: 'wrap',
-        marginTop: '5px',
-        backgroundColor: '#fff',
-        borderRadius: '5px', */
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    }
-}),
-);
 
 export default LoginForm;

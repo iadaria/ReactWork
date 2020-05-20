@@ -27,7 +27,7 @@ const RegisterForm = () => {
                 onSubmit={(values: IUserFormValues) => register(values).catch(error => ({
                     [FORM_ERROR]: error //from axios and store inside const - FORM_ERROR
                 }))}
-                //validate={validate}
+                validate={validate}
                 render={({ 
                     handleSubmit, 
                     submitting, 

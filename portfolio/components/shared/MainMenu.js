@@ -42,7 +42,7 @@ const MainMenu = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav>
+          <Nav className="ml-auto">
             
               <BsLinkClass route="/" title="Home" />
           

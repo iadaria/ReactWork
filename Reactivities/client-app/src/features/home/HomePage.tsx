@@ -29,7 +29,7 @@ const HomePage = () => {
                     <Typography component="h2">
                         {`Welcome back ${user.displayName}`}
                     </Typography>
-                    <Typography className="btn" component="h3">
+                    <Typography component="h3">
                         <Link to='/activities'>
                             Go to activities!
                         </Link>

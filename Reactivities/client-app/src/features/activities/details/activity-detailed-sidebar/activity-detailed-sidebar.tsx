@@ -11,94 +11,78 @@ import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Badge from '@material-ui/core/Badge';
+import { IAttendee } from '../../../../app/models/activity';
+import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
+interface IProps {
+    attendees: IAttendee[]; //Участники мероприятия
+}
 
-const ActivityDetailedSidebar = () => {
+interface IAvatarProps {
+    attendee: IAttendee;
+}
+
+const AttendeeAvatar: React.FC<IAvatarProps> = ({ attendee }) => {
+    return (
+        <Avatar
+            key={attendee.username}
+            alt={attendee.displayName}
+            sizes="(max-width: 35px): 30px"
+            src={attendee.image || '/assets/user.png'}
+        />
+    );
+};
+
+const ActivityDetailedSidebar: React.FC<IProps> = ({ attendees }) => {
     return (
         <Card className="activity-detailed-sidebar">
             <CardHeader
                 className="header"
-                subheader="3 People Going"
+                subheader={`${attendees.length} ${attendees.length === 1 ? 'Person' : 'People'}`}
             />
             <List className="people-list">
-
-                <ListItem 
-                    className="person"
-                    alignItems="flex-start">
-                    <ListItemAvatar>
-                        <Badge
-                            className="badge"
-                            color="primary"
-                            overlap="circle"
-                            badgeContent="Host"
-                            invisible={false}>
-                            <Avatar alt="user" src="/assets/user.png" />
-                        </Badge>
-                    </ListItemAvatar>
-                    <ListItemText 
-                        primary={
-                            <b className="person-name">Bob</b>
-                        }
-                        secondary={
-                            <Typography
-                                component="span"
-                                className="subheader">
-                                Following
-                            </Typography>
-                        }
-                    />
-                </ListItem>
-                
-                <Divider variant="inset" component="li" />
-                
-                <ListItem 
-                    className="person"
-                    alignItems="flex-start">
-                    
-                    <ListItemAvatar>
-                        <Avatar alt="user" src="/assets/user.png" />
-                    </ListItemAvatar>
-                    <ListItemText 
-                        primary={
-                            <b className="person-name">Tom</b>
-                        }
-                        secondary={
-                            <Typography
-                                component="span"
-                                className="subheader">
-                                Following
-                            </Typography>
-                        }
-                    />
-                </ListItem>
-
-                
-                <Divider variant="inset" component="li" />
-
-                <ListItem 
-                    className="person"
-                    alignItems="flex-start">
-                    <ListItemAvatar>
-                        <Avatar alt="user" src="/assets/user.png" />
-                    </ListItemAvatar>
-                    <ListItemText 
-                        primary={
-                            <b className="person-name">Sally</b>
-                        }
-                        secondary={
-                            <Typography
-                                component="span"
-                                className="subheader">
-                                
-                            </Typography>
-                        }
-                    />
-                </ListItem>
-
-
+                {/* attendees - участники мероприятия(встречи) */}
+                {attendees.map((attendee, index) => (
+             
+                    <ListItem
+                        key={attendee.username}
+                        className="person"
+                        alignItems="flex-start">
+                        <ListItemAvatar>
+                            {attendee.isHost 
+                                ? (
+                                    <Badge
+                                        className="badge"
+                                        color="primary"
+                                        overlap="circle"
+                                        badgeContent="Host"
+                                        invisible={false}>
+                                        <AttendeeAvatar attendee={attendee} />
+                                    </Badge>
+                                )
+                                : <AttendeeAvatar attendee={attendee} />
+                            }
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={
+                                <Link to={`/profile/${attendee.username}`}>
+                                    <b className="person-name">{attendee.displayName}</b>
+                                </Link>
+                            }
+                            secondary={
+                                <Typography
+                                    component="span"
+                                    className="subheader">
+                                    Following
+                                </Typography>
+                            }
+                        />
+                    </ListItem>
+                ))}
             </List>
         </Card>
     );
 };
 
-export default ActivityDetailedSidebar;
+export default observer(ActivityDetailedSidebar);

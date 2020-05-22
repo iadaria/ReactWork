@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './activity-detailed-header.css';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -7,12 +7,17 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import { format }  from 'date-fns';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import { IActivity } from '../../../../app/models/activity';
 import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
+import { RootStoreContext } from '../../../../app/stores/rootStore';
 
-export const ActivityDetailedHeader: React.FC<{activity: IActivity}> = ({activity}) => {
+export const ActivityDetailedHeader: React.FC<{activity: IActivity}> = ({
+    activity
+}) => {
+    const rootStore = useContext(RootStoreContext);
+    const { attendActivity, cancelAttendance, loading } = rootStore.activityStore;
     return (
         <Card className="activity-detailed-header">
             <CardMedia
@@ -34,24 +39,34 @@ export const ActivityDetailedHeader: React.FC<{activity: IActivity}> = ({activit
             </div>
   
             <CardActions className="group-between">
-                <div className="group-left">
+                {activity.isHost ? (
                     <Button 
-                        className="btn-join"
+                        className="btn-manage"
+                        component={Link} to={`/manage/${activity.id}`}
                         size="small">
-                        Join Activity
+                        Manage Event
                     </Button>
+                ) : activity.isGoing ? (
                     <Button 
+                        onClick={cancelAttendance}
                         variant="contained"
-                        size="small">
-                            Cancel attendance
+                        size="small"
+                    >
+                        {loading && <CircularProgress size='1.3rem' />}
+                        {!loading && 'Cancel attendance'}
                     </Button>
-                </div>
-                <Button 
-                    className="btn-manage"
-                    component={Link} to={`/manage/${activity.id}`}
-                    size="small">
-                    Manage Event
-                </Button>
+                ) : (
+                    <Button 
+                        onClick={attendActivity}
+                        className="btn-join"
+                        size="small"
+                    >
+                        {loading && <CircularProgress size='1.3rem' />}
+                        {!loading && 'Join Activity'}
+                    </Button>
+                )}
+                {/* <div className="group-left">buttons...</div> */}
+                
             </CardActions>
         </Card>
     )

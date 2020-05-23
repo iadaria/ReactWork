@@ -26,7 +26,7 @@ function TabPanel(props: TabPanelProps) {
         >
             {value === index && (
                 <Box p={3}>
-                    <Typography>{children}</Typography>
+                    <Typography component="div">{children}</Typography>
                 </Box>
             )}
         </div>
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const ProfileContent = () => {
     const classes = useStyles();
-    const [value, setValue] = React.useState(2);
+    const [value, setValue] = React.useState(1);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: any) => {
         setValue(newValue);
@@ -73,9 +73,9 @@ const ProfileContent = () => {
                     aria-label="disabled tabs example"
                 >
                     <Tab label="About" {...Props(0)}/>
-                    <Tab label="Disabled"/*  disabled  */{...Props(1)}/>
-                    <Tab label="Photos" {...Props(2)}/>
-                    <Tab label="Activities" {...Props(3)}/>
+                    <Tab label="Photos" {...Props(1)}/>
+                    <Tab label="Activities" {...Props(2)}/>
+                    <Tab label="Followers" {...Props(3)}/>
                     <Tab label="Following" {...Props(4)}/>
                 </Tabs>
             </AppBar>
@@ -83,13 +83,13 @@ const ProfileContent = () => {
                 Tab About
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Tab Disable
-            </TabPanel>
-            <TabPanel value={value} index={2}>
                 <ProfilePhotos />
             </TabPanel>
+            <TabPanel value={value} index={2}>
+                Activities
+            </TabPanel>
             <TabPanel value={value} index={3}>
-                Tab Activities
+                Followers
             </TabPanel>
             <TabPanel value={value} index={4}>
                 Tab Folllowing

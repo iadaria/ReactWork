@@ -1,0 +1,40 @@
+.profile-photos
+    //border: 1px solid black //grid container
+    > *
+        //border: 1px solid red //item = 12
+    &__header
+        display: flex
+        justify-content: space-between
+        > *
+            //border: 1px solid orange !important
+        .icon-wrapper
+            > *
+                vertical-align: middle
+            h5
+                margin-left: 15px
+    &__cards
+        .card
+            max-wight: 150px
+            &-media
+                height: 200px
+            .buttons
+                display: flex
+                justify-content: space-between
+                .btn-main
+                    color: #388e3c
+                    border-color: #388e3c
+
+@media(max-width: 400px)
+    .profile-photos
+        &__cards
+            .card
+                &-media
+                    height: 120px
+                    width: auto
+            .buttons
+                .btn-main
+                    padding: 0
+                .btn-delete
+                    margin: 0
+                    padding: 0
+                

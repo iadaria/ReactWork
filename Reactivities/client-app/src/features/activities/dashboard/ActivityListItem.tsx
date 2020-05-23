@@ -44,7 +44,8 @@ export const ActivityListItem: React.FC<{activity: IActivity}> = ({activity}) =>
       <Card key={activity.id} className={classes.root}>
         <CardHeader
           avatar={
-            <Avatar 
+            <Avatar
+              style={{minWidth: 90, height: 'auto'}}
               alt="user's avatar"
               src={host.image || `/assets/user.png`}
             />
@@ -57,7 +58,7 @@ export const ActivityListItem: React.FC<{activity: IActivity}> = ({activity}) =>
           subheader={
             <>
               <Typography variant="caption" color="textSecondary">
-                Hosted by <b>{ host.displayName }</b>
+                Hosted by <b><Link to={`/profile/${host.username}`}>{ host.displayName }</Link></b>
               </Typography>
               { isHost }
               { isGoing }

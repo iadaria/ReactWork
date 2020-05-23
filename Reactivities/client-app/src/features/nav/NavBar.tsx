@@ -10,7 +10,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import Menu from '@material-ui/core/Menu';
 import green from '@material-ui/core/colors/green';
 import { NavLink } from 'react-router-dom';
@@ -55,6 +54,7 @@ function NavBar() {
                     </Button>
                     {/* isLoggedIn &&  */user && (
                         <div className="account">
+
                             <IconButton
                                 aria-label="account of current user"
                                 aria-controls="menu-appbar"
@@ -62,20 +62,18 @@ function NavBar() {
                                 onClick={handleMenu}
                                 color="inherit"
                             >
-                                {
-                                    (/* !user ||  */user?.image !== null) 
-                                        ? 
-                                            <Fragment>
-                                                <AccountCircle />
-                                                <Typography component="b">Dasha</Typography>
-                                            </Fragment>
-                                        : 
-                                            <Fragment>
-                                                <Avatar alt="Remy Sharp" src={user!.image || '/assets/user.png'}/>
-                                                <Typography component="b">{user!.displayName}</Typography>
-                                            </Fragment>
-                                }
+                                <Fragment>
+                                    <Avatar  
+                                        alt={user!.displayName}
+                                        sizes="(max-width: 35px): 30px" 
+                                        src={user!.image || '/assets/user.png'}
+                                    />
+                                    <Typography style={{marginLeft: 15}} component="b">
+                                        {user!.displayName}
+                                    </Typography>
+                                </Fragment>
                             </IconButton>
+
                             <Menu
                                 id="menu-appbar"
                                 anchorEl={anchorE1}
@@ -93,7 +91,7 @@ function NavBar() {
                             >
                                 <MenuItem 
                                     component={NavLink}
-                                    to='/profile/username'
+                                    to={`/profile/${user.username}`}
                                     onClick={handleClose}
                                 >
                                     My profile

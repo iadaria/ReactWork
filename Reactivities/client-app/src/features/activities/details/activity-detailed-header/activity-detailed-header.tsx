@@ -6,18 +6,19 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
-import { format }  from 'date-fns';
+import { format } from 'date-fns';
 import { Button, CircularProgress } from '@material-ui/core';
 import { IActivity } from '../../../../app/models/activity';
 import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
 import { RootStoreContext } from '../../../../app/stores/rootStore';
 
-export const ActivityDetailedHeader: React.FC<{activity: IActivity}> = ({
+export const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
     activity
 }) => {
     const rootStore = useContext(RootStoreContext);
     const { attendActivity, cancelAttendance, loading } = rootStore.activityStore;
+    const host = activity.attendees.filter(x => x.isHost)[0];
     return (
         <Card className="activity-detailed-header">
             <CardMedia
@@ -26,28 +27,28 @@ export const ActivityDetailedHeader: React.FC<{activity: IActivity}> = ({
                 title="photo"
             />
             <div className="header">
-                <CardHeader 
-                    title={activity.title}/>
+                <CardHeader
+                    title={activity.title} />
                 <CardContent>
                     <Typography component="p">
                         {format(activity.date, 'eeee do MMMM')}
                     </Typography>
                     <Typography variant="body2" component="p">
-                        Hosted by <strong>Bob</strong>
+                        Hosted by <strong><Link to={`/profile/${host.username}`}>{host.displayName}</Link></strong>
                     </Typography>
                 </CardContent>
             </div>
-  
+
             <CardActions className="group-between">
                 {activity.isHost ? (
-                    <Button 
+                    <Button
                         className="btn-manage"
                         component={Link} to={`/manage/${activity.id}`}
                         size="small">
                         Manage Event
                     </Button>
                 ) : activity.isGoing ? (
-                    <Button 
+                    <Button
                         onClick={cancelAttendance}
                         variant="contained"
                         size="small"
@@ -56,17 +57,17 @@ export const ActivityDetailedHeader: React.FC<{activity: IActivity}> = ({
                         {!loading && 'Cancel attendance'}
                     </Button>
                 ) : (
-                    <Button 
-                        onClick={attendActivity}
-                        className="btn-join"
-                        size="small"
-                    >
-                        {loading && <CircularProgress size='1.3rem' />}
-                        {!loading && 'Join Activity'}
-                    </Button>
-                )}
+                            <Button
+                                onClick={attendActivity}
+                                className="btn-join"
+                                size="small"
+                            >
+                                {loading && <CircularProgress size='1.3rem' />}
+                                {!loading && 'Join Activity'}
+                            </Button>
+                        )}
                 {/* <div className="group-left">buttons...</div> */}
-                
+
             </CardActions>
         </Card>
     )

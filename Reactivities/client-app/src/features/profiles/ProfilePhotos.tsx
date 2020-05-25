@@ -13,11 +13,36 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { RootStoreContext } from '../../app/stores/rootStore';
 import PhotoUploadWidget from '../../app/common/photoUpload/PhotoUploadWidget';
+import { observer } from 'mobx-react-lite';
+import { CircularProgress } from '@material-ui/core';
 
 const ProfilePhotos = () => {
     const rootStore = React.useContext(RootStoreContext);
-    const { profile, isCurrentUser } = rootStore.profileStore;
-    const [addPhotoMode, setAddPhotoMode] = React.useState(true);
+    const { 
+        profile, 
+        isCurrentUser, 
+        uploadPhoto,
+        uploadingPhoto,
+        setMainPhoto,
+        deletePhoto,
+        loading } = rootStore.profileStore;
+    const [addPhotoMode, setAddPhotoMode] = React.useState(false);
+    const [target, setTarget] = React.useState<string | undefined>(undefined);
+    const [deleteTarget, setDeleteTarget] = React.useState<string | undefined>(undefined);
+
+    const handleUploadImage = (photo: Blob) => {
+        uploadPhoto(photo).then(() => setAddPhotoMode(false))
+    };
+
+    const setEnableStyle = {
+        'color': '#388e3c',
+        'borderColor': '#388e3c'
+    };
+
+    const setDisableStyle = {
+        'color': '#eee',
+        'borderColor': '#eee'
+    };
 
     return (
         <Grid className="profile-photos" container spacing={3}>
@@ -40,15 +65,14 @@ const ProfilePhotos = () => {
             </Grid>
             <Grid className="profile-photos__cards" item xs={12}>
                 {addPhotoMode ? (
-                    <PhotoUploadWidget />
+                    <PhotoUploadWidget uploadPhoto={handleUploadImage} loading={uploadingPhoto}/>
                 ) : (
                     <Grid container spacing={3} direction="row">
                         {profile && (
                             profile?.photos.map(photo =>
-                                ( <Grid item lg={2} md={2} sm={4} xs={6}>
+                                ( <Grid key={photo.id} item lg={2} md={2} sm={4} xs={6}>
                                         <Card
                                             className="card"
-                                            key={photo.id}
                                         >
                                             <CardActionArea>
                                                 <CardMedia
@@ -60,16 +84,36 @@ const ProfilePhotos = () => {
                                             { isCurrentUser &&
                                                 <CardActions className="buttons">
                                                     <Button
+                                                        style={ photo.isMain ? {...setDisableStyle} : {...setEnableStyle} }
+                                                        name={photo.id}
+                                                        onClick={(e) => {
+                                                            setMainPhoto(photo);
+                                                            setTarget(e.currentTarget.name);
+                                                        }}
+                                                        disabled={photo.isMain}
                                                         className="btn-main"
                                                         variant="outlined"
                                                     >
-                                                        Main
+                                                        { target === photo.id && loading && <CircularProgress size='1.3rem'/> }
+                                                        { (target !== photo.id || !loading) && 'Main' }
                                                     </Button>
                                                     <IconButton
+                                                        onClick = {(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+                                                            deletePhoto(photo);
+                                                            setDeleteTarget(e.currentTarget.name)
+                                                        }}
+                                                        disabled={photo.isMain}
+                                                        name={photo.id}
                                                         className="btn-delete"
                                                         component="button"
                                                     >
-                                                        <DeleteIcon color="secondary" fontSize="default" />
+                                                        { deleteTarget === photo.id && loading && <CircularProgress size='1.3rem'/> }
+                                                        { (deleteTarget !== photo.id || !loading) && 
+                                                            <DeleteIcon 
+                                                                color={photo.isMain ? "disabled": "secondary"}
+                                                                fontSize="default" 
+                                                            /> 
+                                                        }
                                                     </IconButton>
                                                 </CardActions>
                                             }
@@ -85,4 +129,4 @@ const ProfilePhotos = () => {
     );
 };
 
-export default ProfilePhotos;
+export default observer(ProfilePhotos);

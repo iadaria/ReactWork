@@ -2,14 +2,21 @@ import React from 'react';
 import './photo-upload-widget.sass';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+//import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { observer } from 'mobx-react-lite';
 import PhotoWidgetDropzone from './PhotoWidgetDropzone';
-// import Card from '@material-ui/core/Card';
-// import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardMedia from '@material-ui/core/CardMedia';
+import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
 import PhotoWidgetCropper from './PhotoWidgetCropper';
+import { CircularProgress } from '@material-ui/core';
 
-const PhotoUploadWidget = () => {
+interface IProps {
+    loading: boolean;
+    uploadPhoto: (file: Blob) => void;
+}
+
+const PhotoUploadWidget: React.FC<IProps> = ({loading, uploadPhoto}) => {
     const [files, setFiles] = React.useState<any[]>([]);
     const [image, setImage] = React.useState<Blob | null>(null);
 
@@ -38,15 +45,22 @@ const PhotoUploadWidget = () => {
                 <Typography variant="subtitle1">Step 3 - Preview & Upload</Typography>
                 {files.length > 0 &&
                     <>
-                    <div className='img-preview' style={{minHeight: '200px', overflow: 'hidden'}}/>
-                    {/* <Card className="preview-card">
-                        <CardActionArea>
-                            <CardMedia
-                                className="preview-card__media"
-                                image={files[0].preview}
-                            />
-                        </CardActionArea>
-                    </Card> */}
+                        <div className='img-preview' style={{minHeight: '200px', overflow: 'hidden'}}/>
+                        <>
+                            <IconButton
+                                //style={{border: '1px solid black'}}
+                                onClick={() => uploadPhoto(image!)}
+                            >
+                                { loading && <CircularProgress size='1.3rem'/> }
+                                {!loading && <CheckIcon /> }
+                            </IconButton>
+                            <IconButton
+                                disabled={loading}
+                                onClick={() => setFiles([])}
+                            >
+                                <CloseIcon />
+                            </IconButton>
+                        </>
                     </>
                 }
             </Grid>
@@ -55,3 +69,12 @@ const PhotoUploadWidget = () => {
 };
 
 export default observer(PhotoUploadWidget);
+
+/* <Card className="preview-card">
+    <CardActionArea>
+        <CardMedia
+            className="preview-card__media"
+            image={files[0].preview}
+        />
+    </CardActionArea>
+</Card> */

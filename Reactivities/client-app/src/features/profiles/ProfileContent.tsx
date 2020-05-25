@@ -6,6 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ProfilePhotos from './ProfilePhotos';
+import ProfileDescription from './ProfileDescription';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -51,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const ProfileContent = () => {
     const classes = useStyles();
-    const [value, setValue] = React.useState(1);
+    const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: any) => {
         setValue(newValue);
@@ -80,7 +81,7 @@ const ProfileContent = () => {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                Tab About
+                <ProfileDescription />
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <ProfilePhotos />

@@ -35,7 +35,7 @@ export default class ProfileStore {
         finally { runInAction(() => this.loadingProfile = false); }
     }
 
-    @action uploadPhoto = async(file: Blob) => {
+    @action uploadPhoto = async (file: Blob) => {
         this.uploadingPhoto = true;
         try {
             const photo = await agent.Profiles.uploadPhoto(file);
@@ -48,8 +48,8 @@ export default class ProfileStore {
                     }
                 }
             });
-        } catch(error) { 
-            console.log(error); 
+        } catch (error) {
+            console.log(error);
             toast.error('Problem uploading photo');
         } finally { runInAction(() => this.uploadingPhoto = false); }
     };
@@ -64,26 +64,43 @@ export default class ProfileStore {
                 this.profile!.photos.find(a => a.id === photo.id)!.isMain = true;
                 this.profile!.image = photo.url;
             });
-        } catch (error) { 
-            console.log(error); 
+        } catch (error) {
+            console.log(error);
             toast.error('Problem setting photo as main');
         }
-       finally { runInAction(() => this.loading = false); }
-   };
+        finally { runInAction(() => this.loading = false); }
+    };
 
-   @action deletePhoto = async(photo: IPhoto) => {
-       this.loading = true;
-       try {
-           await agent.Profiles.deletePhoto(photo.id);
-           runInAction(() => {
-               this.profile!.photos = this.profile!.photos.filter(p => p.id !== photo.id);
+    @action deletePhoto = async (photo: IPhoto) => {
+        this.loading = true;
+        try {
+            await agent.Profiles.deletePhoto(photo.id);
+            runInAction(() => {
+                this.profile!.photos = this.profile!.photos.filter(p => p.id !== photo.id);
 
 
-           })
-        } catch (error) { 
-            console.log(error); 
+            })
+        } catch (error) {
+            console.log(error);
             toast.error('Problem deleteing the photo');
         }
-       finally { runInAction(() => this.loading = false); }
-   };
+        finally { runInAction(() => this.loading = false); }
+    };
+
+    @action updateProfile = async (profile: Partial<IProfile>) => {
+        try {
+            await agent.Profiles.updateProfile(profile);
+            runInAction(() => {
+                if (profile.displayName !== this.rootStore.userStore.user!.displayName) {
+                    this.rootStore.userStore.user!.displayName = profile.displayName || "";
+                }
+                this.profile = {...this.profile!, ...profile};
+            });
+
+        } catch (error) {
+            console.log(error);
+            toast.error('Problem deleteing the photo');
+        }
+        finally { runInAction(() => this.loading = false); }
+    }
 }

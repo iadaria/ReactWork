@@ -15,6 +15,7 @@ namespace Persistence
         public DbSet<Activity> Activities { get; set; }
         public DbSet<UserActivity> UserActivities { get; set; }
         public DbSet<Photo> Photos { get; set; } 
+        public DbSet<Comment> Comments { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -38,6 +39,9 @@ namespace Persistence
                 .HasOne(ua => ua.Activity)
                 .WithMany(a => a.UserActivities)
                 .HasForeignKey(ua => ua.ActivityId);
+
+            /* builder.Entity<Activity>
+                .HasOne() */
         }
     }
 }

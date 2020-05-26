@@ -71,9 +71,7 @@ const ProfilePhotos = () => {
                         {profile && (
                             profile?.photos.map(photo =>
                                 ( <Grid key={photo.id} item lg={2} md={2} sm={4} xs={6}>
-                                        <Card
-                                            className="card"
-                                        >
+                                        <Card className="card">
                                             <CardActionArea>
                                                 <CardMedia
                                                     className="card-media"

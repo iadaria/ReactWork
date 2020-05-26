@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ProfilePhotos from './ProfilePhotos';
 import ProfileDescription from './ProfileDescription';
+import ProfileFollowings from './ProfileFollowings';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -50,12 +51,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const ProfileContent = () => {
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+interface IProps {
+    setActiveTab: (activeIndex: number) => void;
+}
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: any) => {
+const ProfileContent: React.FC<IProps> = ({ setActiveTab }) => {
+    const classes = useStyles();
+    const [value, setValue] = React.useState(3);
+
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
+        setActiveTab(newValue);
     };
 
     return (
@@ -64,7 +70,7 @@ const ProfileContent = () => {
                 color="transparent"
                 position="static">
                 <Tabs
-                    
+                    //onChange={(e, data) => setActiveTab(data.activeIndex)}
                     value={value}
                     variant='scrollable'
                     scrollButtons="on"
@@ -90,10 +96,10 @@ const ProfileContent = () => {
                 Activities
             </TabPanel>
             <TabPanel value={value} index={3}>
-                Followers
+                <ProfileFollowings />
             </TabPanel>
             <TabPanel value={value} index={4}>
-                Tab Folllowing
+                <ProfileFollowings />
             </TabPanel>
         </div>
     );

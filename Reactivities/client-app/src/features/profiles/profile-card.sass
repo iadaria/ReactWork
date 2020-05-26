@@ -1,0 +1,19 @@
+.profile-card
+    max-wight: 150px
+    &__media
+        height: 200px
+    &__content
+        padding-bottom: 5px !important
+    &__followers
+        display: flex
+        align-items: center
+        color: grey
+        & > *
+            //border: 1px solid black
+            margin: 10px
+
+@media(max-width: 400px)
+    .profile-card
+        &__media
+            height: 120px
+            width: auto

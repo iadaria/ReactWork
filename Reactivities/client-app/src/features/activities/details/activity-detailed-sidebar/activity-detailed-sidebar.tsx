@@ -43,7 +43,7 @@ const ActivityDetailedSidebar: React.FC<IProps> = ({ attendees }) => {
             />
             <List className="people-list">
                 {/* attendees - участники мероприятия(встречи) */}
-                {attendees.map((attendee, index) => (
+                {attendees.map((attendee: IAttendee, index) => (
              
                     <ListItem
                         key={attendee.username}
@@ -71,11 +71,12 @@ const ActivityDetailedSidebar: React.FC<IProps> = ({ attendees }) => {
                                 </Link>
                             }
                             secondary={
-                                <Typography
-                                    component="span"
-                                    className="subheader">
-                                    Following
-                                </Typography>
+                                attendee.following &&
+                                    <Typography
+                                        component="span"
+                                        className="subheader">
+                                        Following
+                                    </Typography>
                             }
                         />
                     </ListItem>

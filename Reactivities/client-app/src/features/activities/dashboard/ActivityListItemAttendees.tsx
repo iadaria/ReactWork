@@ -8,6 +8,11 @@ interface IProps {
     attendees: IAttendee[];
 }
 
+const styles = {
+    borderColor: 'orange',
+    borderWidth: 2
+}
+
 // Лист участников
 const ActivityListItemAttendees: React.FC<IProps> = ({attendees}) => {
     return (
@@ -19,6 +24,7 @@ const ActivityListItemAttendees: React.FC<IProps> = ({attendees}) => {
                 placement="top"
                >
                    <Avatar  
+                        style={ attendee.following! ? styles : {}}
                         alt={attendee.displayName}
                         sizes="(max-width: 35px): 30px" 
                         src={attendee.image || '/assets/user.png'}

@@ -23,7 +23,7 @@ import { Link } from 'react-router-dom';
 //import { combineValidators, isRequired } from 'revalidate';
 import { Form as FinalForm, Field } from 'react-final-form';
 import TextInput from '../../../../app/common/form/TextInput';
-import { CircularProgress } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { observer } from 'mobx-react-lite';
 import { formatDistance } from 'date-fns';
 

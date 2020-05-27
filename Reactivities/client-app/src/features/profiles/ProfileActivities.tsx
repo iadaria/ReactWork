@@ -1,22 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
 import { IUserActivity } from '../../app/models/profile';
-import { format } from 'date-fns';
-import Divider from '@material-ui/core/Divider';
 import { RootStoreContext } from '../../app/stores/rootStore';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
-import { makeStyles, Theme } from '@material-ui/core';
-
-
+import { makeStyles, Theme, CircularProgress } from '@material-ui/core';
+import ProfileActivity from './ProfileActivity';
+import { observer } from 'mobx-react-lite';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -24,15 +16,15 @@ interface TabPanelProps {
     value: any;
 }
 
-function TabPanel(props: TabPanelProps) {
-    const { children , value, index, ...other} = props;
+/* function TabPanel(props: TabPanelProps) {
+    const { children, value, index, ...other } = props;
 
     return (
         <div
             role="tabpanel"
             hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
+            id={`profile-activities-tabpanel-${index}`}
+            aria-labelledby={`profile-activities-tab-${index}`}
             {...other}
         >
             {value === index && (
@@ -43,11 +35,11 @@ function TabPanel(props: TabPanelProps) {
         </div>
     );
 }
-
-function Props(index: any) {
+ */
+function Props(index: number) {
     return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
+        id: `profile-activities-tab-${index}`,
+        'aria-controls': `profile-activities-tabpanel-${index}`,
     };
 }
 
@@ -60,33 +52,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const panes = [
-    { menuItem: 'Future Events', pane: { key: 'futureEvents' } },
-    { menuItem: 'Past Events', pane: { key: 'pastEvents' } },
-    { menuItem: 'Hosting', pane: { key: 'hosted' } },
-];
+const ProfileActivities = () => {
+    //debugger
+    const classes = useStyles();
+    const [value, setValue] = React.useState(0);
 
-const ProfileEvents = () => {
-    
-    const rootStore = useContext(RootStoreContext);
-    const {
-        loadUserActivities,
-        profile,
-        loadingActivities,
-        userActivities
-    } = rootStore.profileStore!;
-
-
-    useEffect(() => {
-        loadUserActivities(profile!.username);
-    }, [loadUserActivities, profile]);
-
-    /* const handleTabChange = (
-        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        data: TabProps
-    ) => {
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+        setValue(newValue);
         let predicate;
-        switch (data.activeIndex) {
+        switch (newValue) {
             case 1:
                 predicate = 'past';
                 break;
@@ -98,15 +72,23 @@ const ProfileEvents = () => {
                 break;
         }
         loadUserActivities(profile!.username, predicate);
-    }; */
-}
-
-export const ProfileActivities = () => {
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue);
     };
+
+    const rootStore = useContext(RootStoreContext);
+    const {
+        loadUserActivities,
+        profile,
+        loadingActivities,
+        userActivities
+    } = rootStore.profileStore!;
+
+    useEffect(() => {
+        loadUserActivities(profile!.username, 'future');
+    }, [loadUserActivities, profile]);
+
+    if (loadingActivities) return <CircularProgress />
+    /* console.log('user activities');console.log(userActivities);
+    console.log('value'); console.log(value); */
     return (
         <Grid container spacing={3}>
             <Grid item xs={12}>
@@ -116,11 +98,10 @@ export const ProfileActivities = () => {
             </Grid>
             <Grid item xs={12}>
                 <div className={classes.root}>
-                    <AppBar
+                   <AppBar
                         color="transparent"
                         position="static">
                         <Tabs
-                            //onChange={(e, data) => setActiveTab(data.activeIndex)}
                             value={value}
                             variant='scrollable'
                             scrollButtons="on"
@@ -134,44 +115,22 @@ export const ProfileActivities = () => {
                             <Tab label="Hosting" {...Props(2)} />
                         </Tabs>
                     </AppBar>
-                    <TabPanel value={value} index={0}>
-  
+                    {/* <TabPanel value={value} index={0}>
+
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-          
+
                     </TabPanel>
                     <TabPanel value={value} index={2}>
 
-                    </TabPanel>
+                    </TabPanel> */}
                 </div>
                 <br />
                 <Grid container spacing={3} direction="row">
-                    {[].map((activity: IUserActivity) =>
+                    {userActivities.map((activity: IUserActivity) =>
                         (
                             <Grid key={activity.id} item lg={2} md={2} sm={4} xs={6}>
-
-                                <Link to={`/activities/${activity.id}`}>
-                                    <Card className="profile-card">
-                                        <CardActionArea>
-                                            <CardMedia
-                                                className="profile-card__media"
-                                                image={`/assets/categoryImages/${activity.category}.jpg`}
-                                                title="title"
-                                            />
-                                        </CardActionArea>
-                                        <CardContent className="profile-card__content">
-                                            <Typography variant="h5">
-                                                <b>{activity.title}</b>
-                                            </Typography>
-                                            <Divider />
-                                            <div className="profile-card__followers">
-                                                <div>{format(new Date(activity.date), 'do LLL')}</div>
-                                                <div>{format(new Date(activity.date), 'h:mm a')}</div>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                </Link>
-
+                                <ProfileActivity activity={activity} />
                             </Grid>
                         )
                     )}
@@ -181,3 +140,5 @@ export const ProfileActivities = () => {
         </Grid>
     );
 };
+
+export default observer(ProfileActivities);

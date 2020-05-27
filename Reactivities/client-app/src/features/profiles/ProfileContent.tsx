@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import ProfilePhotos from './ProfilePhotos';
 import ProfileDescription from './ProfileDescription';
 import ProfileFollowings from './ProfileFollowings';
-import { ProfileActivities } from './ProfileActivities';
+import ProfileActivities from './ProfileActivities';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -71,7 +71,6 @@ const ProfileContent: React.FC<IProps> = ({ setActiveTab }) => {
                 color="transparent"
                 position="static">
                 <Tabs
-                    //onChange={(e, data) => setActiveTab(data.activeIndex)}
                     value={value}
                     variant='scrollable'
                     scrollButtons="on"

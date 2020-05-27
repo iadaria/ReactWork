@@ -1,4 +1,4 @@
-import { observable, action, computed, runInAction } from 'mobx';
+import { observable, action, computed, runInAction, reaction } from 'mobx';
 import { SyntheticEvent } from 'react';
 import { IActivity } from '../models/activity';
 import agent from '../api/agent';
@@ -8,11 +8,24 @@ import { RootStore } from './rootStore';
 import { setActivityProps, craeteAttendee } from '../common/util/util';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 
+//for pagination
+const LIMIT = 2;
+
 export default class ActivityStore {
     rootStore: RootStore;
 
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
+
+        //if predicates key was change
+        reaction(
+            () => this.predicate.keys(),
+            () => {
+                this.page = 0;
+                this.activityRegistry.clear();
+                this.loadActivities();
+            }
+        )
     }
 
     @observable activity: IActivity | null = null;
@@ -22,6 +35,40 @@ export default class ActivityStore {
     @observable target = '';
     @observable loading = false;
     @observable.ref hubConnection: HubConnection | null = null;
+    //for pagination
+    @observable activityCount = 0;
+    @observable page = 0;
+    //for filter
+    @observable predicate = new Map();
+    //for filter
+    @action setPredicate = (predicate: string, value: string | Date) => {
+        this.predicate.clear();
+        if (predicate !== 'all') {
+            this.predicate.set(predicate, value)
+        }
+    };
+    @computed get axiosParams() {
+        const params = new URLSearchParams();
+        params.append('limit', String(LIMIT));
+        params.append('offset', `${this.page ? this.page * LIMIT : 0}`);
+        this.predicate.forEach((value, key) => {
+            if (key === 'startDate') {
+                params.append(key, value.toISOString());
+            } else {
+                params.append(key, value);
+            }
+        });
+
+        return params;
+    };
+
+    //for pagination
+    @computed get totalPages() {
+        return Math.ceil(this.activityCount / LIMIT);
+    }
+    @action setPage = (page: number) => {
+        this.page = page;
+    };
 
     @action createHubConnection = (activityId: string) => {
         this.hubConnection = new HubConnectionBuilder()
@@ -93,17 +140,19 @@ export default class ActivityStore {
     @action loadActivities = async () => {
         this.loadingInitial = true;
         try {
-            const activities = await agent.Activities.list();
+            const activitiesEnvelope = await agent.Activities.list(this.axiosParams);
+            const { activities, activityCount } = activitiesEnvelope;
             runInAction('loading activities', () => {
                 activities.forEach((activity) => {
                     activity.date = new Date(activity.date);
                     setActivityProps(activity, this.rootStore.userStore.user!); //current user
                     this.activityRegistry.set(activity.id, activity);
                 });
+                this.activityCount = activityCount;
             });
         } 
         catch (error) { console.log(error);} 
-        finally { runInAction('load activities finally', () => {this.loadingInitial= false;}); }
+        finally { runInAction('load activities error', () => {this.loadingInitial= false;}); }
     };
 
     @action createActivity = async (activity: IActivity) => {

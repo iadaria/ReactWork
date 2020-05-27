@@ -1,11 +1,9 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
 
-namespace Application.Profiles {
+namespace Application.Profiles
+{
     public class Details {
         public class Query : IRequest<Profile> {
             public string Username { get; set; }

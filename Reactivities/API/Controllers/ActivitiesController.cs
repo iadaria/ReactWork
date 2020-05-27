@@ -7,6 +7,7 @@ using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static Application.Activities.List;
 
 namespace API.Controllers {
     //method all we're going to do is say return awaits mediator!
@@ -16,8 +17,13 @@ namespace API.Controllers {
         // which is to receive requests and response
 
         [HttpGet]
-        public async Task<ActionResult<List<ActivityDto>>> List() {
-            return await Mediator.Send(new List.Query());
+        //public async Task<ActionResult<List<ActivityDto>>> List() {
+        public async Task<ActionResult<ActivitiesEnvelope>> List(
+            int? limit, int? offset, bool isGoing, bool isHost, DateTime? startDate
+        ) {
+            return await Mediator.Send(
+                new List.Query(limit, offset, isGoing, isHost, startDate)
+            );
         }
 
         [HttpGet("{id}")]

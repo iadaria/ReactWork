@@ -1,4 +1,5 @@
 import React, { Fragment, useContext, useEffect } from 'react';
+import './app.sass';
 import { observer } from 'mobx-react-lite';
 import 'mobx-react-lite/batchingForReactDom';
 import { Container } from '@material-ui/core';
@@ -40,7 +41,7 @@ const App: React.FC<RouteComponentProps> = ({location}) => {
       <Route path={'/(.+)'} render={() => (
         <Fragment>
           <NavBar />
-          <Container style={{marginTop: '5em'}}>
+          <Container className="app" style={{marginTop: '5em'}}>
             <Switch>
               <Route exact path='/activities' component={ActivityDashboard} />
               <Route path='/activities/:id' component={ActivityDetails} />

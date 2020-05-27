@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import ProfilePhotos from './ProfilePhotos';
 import ProfileDescription from './ProfileDescription';
 import ProfileFollowings from './ProfileFollowings';
+import { ProfileActivities } from './ProfileActivities';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -57,7 +58,7 @@ interface IProps {
 
 const ProfileContent: React.FC<IProps> = ({ setActiveTab }) => {
     const classes = useStyles();
-    const [value, setValue] = React.useState(3);
+    const [value, setValue] = React.useState(2);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
@@ -93,7 +94,7 @@ const ProfileContent: React.FC<IProps> = ({ setActiveTab }) => {
                 <ProfilePhotos />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                Activities
+                <ProfileActivities />
             </TabPanel>
             <TabPanel value={value} index={3}>
                 <ProfileFollowings />

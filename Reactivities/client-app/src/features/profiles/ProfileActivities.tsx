@@ -10,32 +10,6 @@ import { makeStyles, Theme, CircularProgress } from '@material-ui/core';
 import ProfileActivity from './ProfileActivity';
 import { observer } from 'mobx-react-lite';
 
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: any;
-    value: any;
-}
-
-/* function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`profile-activities-tabpanel-${index}`}
-            aria-labelledby={`profile-activities-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Typography component="div">{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
- */
 function Props(index: number) {
     return {
         id: `profile-activities-tab-${index}`,
@@ -142,3 +116,30 @@ const ProfileActivities = () => {
 };
 
 export default observer(ProfileActivities);
+
+/* interface TabPanelProps {
+    children?: React.ReactNode;
+    index: any;
+    value: any;
+} */
+
+/* function TabPanel(props: TabPanelProps) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`profile-activities-tabpanel-${index}`}
+            aria-labelledby={`profile-activities-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box p={3}>
+                    <Typography component="div">{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+ */

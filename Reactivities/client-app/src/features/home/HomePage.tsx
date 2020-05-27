@@ -11,6 +11,7 @@ import LoginForm from '../user/login-form';
 import RegisterForm from '../user/register-form';
 
 const HomePage = () => {
+    const token = window.localStorage.getItem('jwt');
     const rootStore = useContext(RootStoreContext);
     const { isLoggedIn, user } = rootStore.userStore;
     const { openModal } = rootStore.modalStore;
@@ -24,7 +25,7 @@ const HomePage = () => {
                 </Typography>
             </Box>
 
-            {isLoggedIn && user ? (
+            {isLoggedIn && user && token ? (
                 <Fragment>
                     <Typography component="h2">
                         {`Welcome back ${user.displayName}`}

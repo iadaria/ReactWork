@@ -21,12 +21,12 @@ export default class UserStore {
             runInAction(() => {
                 this.user = user;
             })
-            console.log(user);
+            //console.log(user);
             this.rootStore.commonStore.setToken(user.token);
             this.rootStore.modalStore.closeModal();
             history.push('/activities');
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             throw error; //to catch in login form
         }
     };

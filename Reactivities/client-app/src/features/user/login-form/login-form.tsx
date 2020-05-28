@@ -2,13 +2,15 @@ import React, { useContext } from 'react';
 import './login-form.sass';
 import { Form as FinalForm, Field } from 'react-final-form';
 import TextInput from '../../../app/common/form/TextInput';
-import { Button, CircularProgress, Typography } from '@material-ui/core';
+import { Button, CircularProgress, Typography, Divider } from '@material-ui/core';
 
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import { IUserFormValues } from '../../../app/models/user';
 import { FORM_ERROR } from 'final-form';
 import { combineValidators, isRequired } from 'revalidate';
 import ErrorMessage from '../../../app/common/form/ErrorMessage';
+import SocialLogin from '../SocialLogin';
+import { observer } from 'mobx-react-lite';
 
 const validate = combineValidators({
     email: isRequired('email'),
@@ -17,7 +19,7 @@ const validate = combineValidators({
 
 const LoginForm = () => {
     const rootStore = useContext(RootStoreContext);
-    const { login } = rootStore.userStore;
+    const { login, fbLogin, loading } = rootStore.userStore;
 
     return (
         <div className="login-form">
@@ -67,6 +69,10 @@ const LoginForm = () => {
                             {submitting && <CircularProgress size='1.3rem' />}
                             {!submitting && 'Login'}
                         </Button>
+
+                        <Divider />
+                        
+                        <SocialLogin loading={loading} fbCallback={fbLogin}/>
                         {/* <pre>{JSON.stringify(form.getState())}</pre> */}
                         {/* Cleare to read */}
                         {/* <pre>{JSON.stringify(form.getState(), null, 2)}</pre> */}
@@ -77,4 +83,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+export default observer(LoginForm);

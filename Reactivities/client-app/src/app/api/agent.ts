@@ -88,7 +88,10 @@ const Activities = {
 const User = {
     current: (): Promise<IUser> => requests.get('/user'),
     login: (user: IUserFormValues): Promise<IUser> => requests.post(`/user/login`, user),
-    register: (user: IUserFormValues): Promise<IUser> => requests.post(`/user/register`, user)
+    register: (user: IUserFormValues): Promise<IUser> => requests.post(`/user/register`, user),
+    fbLogin: (accessToken: string) =>  {//pass a assecc_token 
+        return requests.post(`/user/facebook`, {accessToken})
+    }
 };
 
 const Profiles = {

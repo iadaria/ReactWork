@@ -1,4 +1,6 @@
- 
+#data for login
+/server/config/dev.js
+
 .DS_STORE
 node_modules
 scripts/flow/*/.flowconfig

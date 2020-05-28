@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import BaseLayout from "@/components/layouts/BaseLayout";
 import BasePage from "@/components/BasePage";
 import { useQuery } from '@apollo/react-hooks';
@@ -7,8 +8,18 @@ import { getDataFromTree } from '@apollo/react-ssr';
 
 const PortfolioDetail = ({ query }) => {
 
-  const { data, loading, error } = useQuery(GET_PORTFOLIO, {variables: {id: query.id}});
-  const portfolio = data && data.portfolio || {};
+  const [portfolio, setPortfolio] = useState(null);
+  /* const { loading, error, data} 
+    = useQuery(GET_PORTFOLIO, { variables: { id: query.id } }); */
+  const [ getPortfolio, { loading, data} ] = useLazyQuery(GET_PORTFOLIO);
+
+  useEffect(() => {
+    getPortfolio({variables: {id: query.id}})
+  }, []);
+
+  if (data && !portfolio) setPortfolio(data.portfolio);
+  if (loading || !portfolio) { return 'Loading...'};
+  //const portfolio = data && data.portfolio || {};
 
   return (
     <BaseLayout>
@@ -63,7 +74,31 @@ const PortfolioDetail = ({ query }) => {
 };
 
 PortfolioDetail.getInitialProps = async ({ query }) => {
+    //const portfolio = await fetchPortfolios(query.id);
     return { query };
 };
 
 export default withApollo(PortfolioDetail, {getDataFromTree});
+
+/* const fetchPortfolios = (id) => {
+  const query = `
+    query Portfolio($id: ID) {
+        portfolio (id: $id) {
+            _id
+            title
+            jobTitle
+            description
+            startDate
+            endDate
+            company
+            companyWebsite
+            location
+        }
+      }
+    `;
+  const variables = { id }; //const variables = { id: id }
+  return axios
+    .post("http://localhost:3000/graphql", { query, variables }) //{query: query});
+    .then(({ data: graph }) => graph.data)
+    .then((data) => data.portfolio);
+}; */

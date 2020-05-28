@@ -1,4 +1,4 @@
-const Portfolio = require('../../database/models/portfolio');
+//OLD
 
 const data = {
   portfolios: [
@@ -40,27 +40,34 @@ const data = {
 
 exports.portfolioQueries = {
   portfolio: (root, { id }) => {
-    return Portfolio.findById(id);
+    const portfolio = data.portfolios.find((p) => p._id === id);
+    return portfolio;
   },
   portfolios: () => {
-    return Portfolio.find();
+    return data.portfolios;
   },
 };
 
 exports.portfolioMutations = {
-
-  createPortfolio: async (root, { input }) => {
-    const createdPortfolio = await Portfolio.create(input);
-    return createdPortfolio;
+  createPortfolio: (root, { input }) => {
+    const _id = require("crypto").randomBytes(10).toString("hex");
+    const newPortfolio = { ...input };
+    newPortfolio._id = _id;
+    data.portfolios.push(newPortfolio);
+    return newPortfolio;
   },
 
-  updatePortfolio: async (root, {id, input}) => {
-    const updatedPortfolio = await Portfolio.findOneAndUpdate({_id: id}, input, {new: true});
-    return updatedPortfolio;
+  updatePortfolio: (root, { id, input }) => {
+    const index = data.portfolios.findIndex((p) => p._id === id);
+    const oldPortfolio = data.portfolios[index];
+    const newPortfolio = { ...oldPortfolio, ...input };
+    data.portfolios[index] = newPortfolio;
+    return newPortfolio;
   },
 
-  deletePortfolio: async (root, {id}) => {
-    const deletedPortfolio = await Portfolio.findOneAndRemove({_id: id});
-    return deletedPortfolio._id;
+  deletePortfolio: (root, { id }) => {
+    const index = data.portfolios.findIndex((p) => p._id === id);
+    data.portfolios.splice(index, 1);
+    return id;
   },
 };

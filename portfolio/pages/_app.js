@@ -1,41 +1,20 @@
-import React from 'react';
-import App from 'next/app';
-import MainMenu from '../components/shared/MainMenu';
-
+import React from "react";
+import { ApolloProvider } from "@apollo/react-hooks";
+import MainMenu from "../components/shared/MainMenu";
 
 // Styless
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/main.scss';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/main.scss";
 
-const MyApp = ({Component, pageProps}) =>  {
-    return (
-        <div className="portfolio-app">
-            <MainMenu />
-            <div>
-                <Component {...pageProps} />
-            </div>
-        </div>
-    );
+const MyApp = ({ Component, pageProps }) => {
+  return (
+    <div className="portfolio-app">
+      <MainMenu />
+      <div>
+        <Component {...pageProps} />
+      </div>
+    </div>
+  );
 };
 
 export default MyApp;
-
-/* export default class MyApp extends App {
-    static async getInitialProps({ Component, router, ctx }) {
-        let pageProps = {};
-
-        if (Component.getInitialProps) {
-            pageProps = await Component.getInitialProps(ctx);
-        }
-
-        return { pageProps: pageProps };
-    }
-
-    render() {
-        const { Component, pageProps } = this.props;
-
-        return (
-            <Component {...pageProps} />
-        );
-    };
-}; */

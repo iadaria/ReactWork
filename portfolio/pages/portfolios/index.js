@@ -1,131 +1,25 @@
-import React, { useState } from  'react';
+import React, { useState, useEffect } from  'react';
 import BaseLayout from "../../components/layouts/BaseLayout";
 import BasePage from "../../components/BasePage";
 import PortfolioCard from "../../components/portfolios/PortfolioCard";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
-//import { withRouter } from 'next/router';
-import axios from "axios";
+import withApollo from '@/hoc/withApollo';
+import { getDataFromTree } from '@apollo/react-ssr';
+import { 
+  useGetPortfolios,
+  useUpdatePortfolio,
+  useCreatePortfolio,
+  useDeletePortfolio } from '@/apollo/actions';
 
-const graphDeletePortfolio = (id) => {
-  const query = `
-    mutation DeletePortfolio {
-      deletePortfolio(id: "${id}")
-    }
-  `;
-  return axios
-    .post("http://localhost:3000/graphql", { query }) //{query: query});
-    .then(({ data: graph }) => graph.data)
-    .then((data) => data.deletePortfolio);
-}
+const Portfolios = () => {
+  const { data } = useGetPortfolios();
+  const [updatePortfolio] = useUpdatePortfolio();
+  const [createPortfolio] = useCreatePortfolio();
+  const [deletePortfolio] = useDeletePortfolio();
 
-const graphUpdatePortfolio = (id) => {
-  const query = `
-    mutation UpdatePortfolio {
-      updatePortfolio(id: "${id}", input:{
-        title: "Update Work in USA",
-        company: "Update WhoKnows",
-        companyWebsite: "Update www.google.com",
-        location: "Update USA, Montana",
-        jobTitle: "Update Housekeeping",
-        description: "Update So much responsibility....Overloaaaaaad",
-        startDate: "01/01/2010",
-        endDate: "01/01/2011",
-      }) {
-        _id
-        title
-        jobTitle
-        description
-        startDate
-        endDate
-        company
-        companyWebsite
-      }  
-    }
-  `;
-  return axios
-    .post("http://localhost:3000/graphql", { query }) //{query: query});
-    .then(({ data: graph }) => graph.data)
-    .then((data) => data.updatePortfolio);
-};
-
-const graphCreatePortfolio = () => {
-  const query = `
-    mutation CreatePortfolio {
-      createPortfolio(input:{
-        title: "Work in USA",
-        company: "WhoKnows",
-        companyWebsite: "www.google.com",
-        location: "USA, Montana",
-        jobTitle: "Housekeeping",
-        description: "So much responsibility....Overloaaaaaad",
-        startDate: "01/01/2010",
-        endDate: "01/01/2011",
-      }) {
-        _id
-        title
-        jobTitle
-        description
-        startDate
-        endDate
-        company
-        companyWebsite
-      }  
-    }
-  `;
-  return axios
-    .post("http://localhost:3000/graphql", { query }) //{query: query});
-    .then(({ data: graph }) => graph.data)
-    .then((data) => data.createPortfolio);
-};
-
-const fetchPortfolios = () => {
-  const query = `
-    query Portfolios {
-        portfolios {
-            _id
-            title
-            jobTitle
-            description
-            startDate
-            endDate
-            company
-            companyWebsite
-        }
-      }
-    `;
-  return axios
-    .post("http://localhost:3000/graphql", { query }) //{query: query});
-    .then(({ data: graph }) => graph.data)
-    .then((data) => data.portfolios);
-};
-
-const Portfolios = ({data}) => {
-  const [portfolios, setPortfolios] = useState(data.portfolios);
-
-  const createPortfolio = async () => {
-    const newPortfolio = await graphCreatePortfolio();
-    const newPortfolios = [...portfolios, newPortfolio];
-    setPortfolios(newPortfolios);
-  };
-
-  const updatePortfolio = async (id) => {
-    const updatePortfolio = await graphUpdatePortfolio(id);
-    const index = portfolios.findIndex(p => p._id === id);
-    const newPortfolios = portfolios.slice();
-    newPortfolios[index] = updatePortfolio;
-    setPortfolios(newPortfolios);
-  };
-
-  const deletePortfolio = async (id) => {
-    const deletedId = await graphDeletePortfolio(id);
-    const index = portfolios.findIndex(p => p._id === deletedId);
-    const newPortfolios = portfolios.slice();
-    newPortfolios.splice(index, 1);
-    setPortfolios(newPortfolios);
-  };
-
+  const portfolios = data && data.portfolios || [];
   return (
     <BaseLayout>
       <BasePage>
@@ -147,13 +41,13 @@ const Portfolios = ({data}) => {
               </Link>
               <button
                 className="btn btn-warning"
-                onClick={() => updatePortfolio(portfolio._id)}
+                onClick={() => updatePortfolio( { variables: {id: portfolio._id} })}
               >
                 Update Portfolio
               </button>
               <button
                 className="btn btn-danger"
-                onClick={() => deletePortfolio(portfolio._id)}
+                onClick={() => deletePortfolio( { variables: {id: portfolio._id} }) }
               >
                 Delete Portfolio
               </button>
@@ -169,27 +63,4 @@ const Portfolios = ({data}) => {
   );
 };
 
-Portfolios.getInitialProps = async () => {
-  //debugger
-  const portfolios = await fetchPortfolios();
-  return { data: { portfolios } };
-};
-
-export default Portfolios;
-
-//export default withRouter(Portfolios);
-
-/* const apiCall = () => {
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      res({
-        post: {
-          title: "title",
-          body: "body",
-          id: 1,
-        },
-      });
-    }, 200);
-  });
-};
- */
+export default withApollo(Portfolios, {getDataFromTree});

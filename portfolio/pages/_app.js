@@ -1,4 +1,5 @@
 import React from "react";
+import BaseLayout from "@/components/layouts/BaseLayout";
 import { ApolloProvider } from "@apollo/react-hooks";
 import MainMenu from "../components/shared/MainMenu";
 
@@ -8,12 +9,14 @@ import "../styles/main.scss";
 
 const MyApp = ({ Component, pageProps }) => {
   return (
-    <div className="portfolio-app">
-      <MainMenu />
-      <div>
-        <Component {...pageProps} />
+    <BaseLayout>
+      <div className="portfolio-app">
+        <MainMenu />
+        <div>
+          <Component {...pageProps} />
+        </div>
       </div>
-    </div>
+    </BaseLayout>
   );
 };
 

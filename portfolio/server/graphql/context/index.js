@@ -1,7 +1,7 @@
 const passport = require('passport');
 
 //options = { email, password }
-const authenticateUser = (request, options) => {
+const authenticateUser = (req, options) => {
 
     return new Promise((resolver, reject) => {
         const done = (error, user) => {
@@ -10,7 +10,7 @@ const authenticateUser = (request, options) => {
             }
     
             if (user) {
-                request.login(user, (error) => {
+                req.login(user, (error) => {
                     if (error) { return reject(new Error(error)); }
                     return resolver(user);
                 });

@@ -4,6 +4,7 @@ const { ApolloServer, gql } = require("apollo-server-express");
 const { 
   portfolioQueries, 
   portfolioMutations,
+  userQueries,
   userMutations } = require("./resolvers");
 const { portfolioTypes, userTypes } = require("./types");
 const { buildAuthContext } = require('./context');
@@ -20,6 +21,8 @@ exports.createApolloServer = () => {
     type Query {
       portfolio(id: ID): Portfolio
       portfolios: [Portfolio]
+
+      user: User
     }
 
     type Mutation {
@@ -37,6 +40,7 @@ exports.createApolloServer = () => {
   const resolvers = {
     Query: {
       ...portfolioQueries,
+      ...userQueries,
     },
     Mutation: {
       ...portfolioMutations,

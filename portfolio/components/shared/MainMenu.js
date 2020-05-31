@@ -1,32 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 //import { Link as RoutesLink } from "../../routes";
-//import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-//import NavDropdown from "react-bootstrap/NavDropdown";
+import withApollo from "@/hoc/withApollo";
+import { useLazyGetUser } from "@/apollo/actions";
 
-const BsLinkClass = ({ route, title }) => {
+const BsLinkClass = ({ route, title, className }) => {
   return (
     <Link href={route}>
-      <a className="nav-link"> {title}</a>
+      <a className={`${className} nav-link`}> {title}</a>
     </Link>
   );
 };
 
-const Login = () => {
-  return (
-    <span className="nav-link">Login</span>
-  );
-};
-
-const Logout = () => {
-  return (
-    <span className="nav-link">Logout</span>
-  );
-};
-
 const MainMenu = () => {
+  const [user, setUser] = useState(null);
+  const [getUser, { data, error }] = useLazyGetUser();
+
+  useEffect(() => {
+    getUser(); ///to update date from mongo db
+    data && setUser(data.user);
+  }, [data]);
+
 
   return (
     <div className="header">
@@ -37,29 +33,23 @@ const MainMenu = () => {
         variant="dark"
         expand="lg"
       >
-        <Navbar.Brand className="nav-brand" href="#home">
+        <Navbar.Brand className="nav-brand" href="/">
           Daria Iakimova
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="ml-auto">
-            
-              <BsLinkClass route="/" title="Home" />
-          
-    
-              <BsLinkClass route="/about" title="About" />
-     
-     
-              <BsLinkClass route="/portfolios" title="Portfolios" />
- 
-    
-              <BsLinkClass route="/blogs" title="Blogs" />
+          <Nav className="mr-auto">
+            <BsLinkClass className="dasha" route="/" title="Home" />
 
-              <BsLinkClass route="/cv" title="CV" />
+            <BsLinkClass route="/about" title="About" />
 
-              <Login />
+            <BsLinkClass route="/portfolios" title="Portfolios" />
 
-              <Logout />
+            <BsLinkClass route="/blogs" title="Blogs" />
+
+            <BsLinkClass route="/cv" title="CV" />
+
+            {/* <Logout /> */}
 
             {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -73,6 +63,35 @@ const MainMenu = () => {
               </NavDropdown.Item>
             </NavDropdown> */}
           </Nav>
+
+          <Nav className="ml-auto">
+            {user && (
+              <>
+                <span className="mr-4">Welcom {user.username}</span>
+                <BsLinkClass
+                  className="btn btn-danger"
+                  route="/logout"
+                  title="Sign Out"
+                />
+              </>
+            )}
+            {(error || !user) && (
+              <>
+                <BsLinkClass
+                  className="mr-3"
+                  style={{ cursor: "pointer" }}
+                  route="/login"
+                  title="Sign In"
+                />
+                <BsLinkClass
+                  className="mr-3 style={{cursor: 'pointer'}} btn btn-success bg-green-2"
+                  route="/register"
+                  title="Sign Up"
+                />
+              </>
+            )}
+          </Nav>
+
           {/*  <Nav>
             <Nav.Link href="#deets">More deets</Nav.Link>
             <Nav.Link eventKey={2} href="#memes">
@@ -85,4 +104,4 @@ const MainMenu = () => {
   );
 };
 
-export default MainMenu;
+export default withApollo(MainMenu);

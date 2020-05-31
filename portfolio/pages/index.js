@@ -1,13 +1,15 @@
 import React from 'react';
 import BaseLayout from '../components/layouts/BaseLayout';
 import Typed from 'react-typed';
+import { getDataFromTree } from '@apollo/react-ssr';
+import withApollo from '@/hoc/withApollo';
 
 import { Container, Row, Col } from 'react-bootstrap';
 
-class Index extends React.Component {
+const Index = () => {
 
-    roles = ['Developer', 'Tech Lover', 'Team Player', 'Course Creater', 'React.js', 'ASP.NET'];
-    render() {
+    const roles = ['Developer', 'Tech Lover', 'Team Player', 'Course Creater', 'React.js', 'ASP.NET'];
+    
         return (
             <BaseLayout className="cover">
                 <div className="main-section">
@@ -48,7 +50,7 @@ class Index extends React.Component {
                                     loop
                                     typeSpeed={70}
                                     backSpeed={70}
-                                    strings={this.roles}
+                                    strings={roles}
                                     //strings={["welcome to react-typed", "This is a react component that wraps up the <a hre…", "If you like the project add a star in <a href='htt…"]}
                                     smartBackspace
                                     shuffle={false}
@@ -70,8 +72,6 @@ class Index extends React.Component {
                 </div>
             </BaseLayout>
         );
-    }
-    
-};
+    };
 
-export default Index;
+export default withApollo(Index, { getDataFromTree });

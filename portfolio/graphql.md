@@ -37,3 +37,27 @@ mutation UpdatePortfolio {
     description
   }  
 }
+
+mutation SignUp {
+  signUp(input:{
+    avatar:"https://cdn5.vectorstock.com/i/1000x1000/51/99/icon-of-user-avatar-for-web-site-or-mobile-app-vector-3125199.jpg"
+    username:"TestTestTest"
+    email:"testTest@test.com"
+    password:"testtest"
+    passwordConfirmation:"testtest"
+  })
+}
+
+mutation SignIn {
+  signIn(input:{
+    email:"test@gmail.com"
+    password:"testtest"
+  }) {
+    _id
+    username
+  }
+}
+
+mutation SignOut {
+  signOut
+}

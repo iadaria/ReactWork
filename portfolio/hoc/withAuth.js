@@ -18,5 +18,5 @@ export default (WrappedComponent, role) => (props) => {
   if (user && (!isMatchOfRole || isOther) ) return <Redirect to="/login" />
   if (user && isMatchOfRole) return <WrappedComponent {...props}/>;
 
-  return <p>Authenticating...</p>;
+  return <p>Authenticating....</p>;
 }

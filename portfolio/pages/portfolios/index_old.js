@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from  'react';
 import BaseLayout from "../../components/layouts/BaseLayout";
-import BasePage from "../../components/BasePage";
 import PortfolioCard from "../../components/portfolios/PortfolioCard";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -91,7 +90,6 @@ const Portfolios = () => {
 
   return (
     <BaseLayout>
-      <BasePage>
         <h1>Portfolios</h1>
         <button
           onClick={createPortfolio}
@@ -127,7 +125,6 @@ const Portfolios = () => {
           Fetch data
         </button> */}
         {/* {JSON.stringify(portfolios)} */}
-      </BasePage>
     </BaseLayout>
   );
 };

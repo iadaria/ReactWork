@@ -8,15 +8,15 @@ export default (WrappedComponent, role) => (props) => {
     data: { user } = {}, 
     loading, 
     error } = useGetUser({fetchPolicy: 'network-only'});
-  console.log(user);
 
-  debugger
-  const isMatchOfRole = (!!user && user.role === role);
+  const isMatchOfRole = (!!user && role.includes(user.role));
   const isOther = !loading && (!user || error) && typeof window !== 'undefined'; //is a browser
 
   //TODO: ????
   if (user && (!isMatchOfRole || isOther) ) return <Redirect to="/login" />
   if (user && isMatchOfRole) return <WrappedComponent {...props}/>;
-
-  return <p>Authenticating....</p>;
+  
+  //if (props) return <WrappedComponent {...props}/>;
+  
+  return <div>Authenticating....</div>;
 }

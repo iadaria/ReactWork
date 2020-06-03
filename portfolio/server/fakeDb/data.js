@@ -25,6 +25,7 @@ const data = {
       username: "TestTest2",
       info: "Hello I am Test and I am a test!",
       password: "testtest",
+      role: "admin"
     },
   ],
   portfolios: [

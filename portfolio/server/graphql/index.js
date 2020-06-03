@@ -21,6 +21,7 @@ exports.createApolloServer = () => {
     type Query {
       portfolio(id: ID): Portfolio
       portfolios: [Portfolio]
+      userPortfolios: [Portfolio]
 
       user: User
     }
@@ -54,7 +55,7 @@ exports.createApolloServer = () => {
     context: ({req}) => ({
       ...buildAuthContext(req),
       models: {
-        Portfolio: new Portfolio(mongoose.model("Portfolio")),
+        Portfolio: new Portfolio(mongoose.model("Portfolio"), req.user),
         User: new User(mongoose.model("User")),
       },
     }),

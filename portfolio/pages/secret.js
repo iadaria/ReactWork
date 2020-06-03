@@ -2,7 +2,7 @@ import withApollo from '@/hoc/withApollo';
 import withAuth from '@/hoc/withAuth';
 import BaseLayout from '@/components/layouts/BaseLayout';
 
-const Secret = withAuth(({}) => {
+const Secret = withAuth(() => {
   return (
     <BaseLayout>
       <div className="bwm-form mt-5">
@@ -15,6 +15,6 @@ const Secret = withAuth(({}) => {
       </div>
     </BaseLayout>
   )
-}, 'admin');
+}, ['admin']);
 
 export default withApollo(Secret);

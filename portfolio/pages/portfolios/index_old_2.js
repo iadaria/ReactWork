@@ -7,16 +7,27 @@ import Link from 'next/link';
 import withApollo from '@/hoc/withApollo';
 import { getDataFromTree } from '@apollo/react-ssr';
 import { 
-  useGetPortfolios } from '@/apollo/actions';
+  useGetPortfolios,
+  useUpdatePortfolio,
+  useCreatePortfolio,
+  useDeletePortfolio } from '@/apollo/actions';
 
 const Portfolios = () => {
   const { data } = useGetPortfolios();
+  const [updatePortfolio] = useUpdatePortfolio();
+  const [createPortfolio] = useCreatePortfolio();
+  const [deletePortfolio] = useDeletePortfolio();
 
   const portfolios = data && data.portfolios || [];
   return (
     <BaseLayout>
-     
         <h1>Portfolios</h1>
+        <button
+          onClick={createPortfolio}
+          className="btn btn-primary"
+        >
+          Create Portfolio
+        </button>
         <Row>
           {portfolios.map((portfolio) => (
             <Col style={{marginTop: 10}} key={portfolio._id} lg={4} md={6} xs={12}>
@@ -26,6 +37,18 @@ const Portfolios = () => {
               >
                 <a className="card-link" ><PortfolioCard portfolio={portfolio} /></a>
               </Link>
+              <button
+                className="btn btn-warning"
+                onClick={() => updatePortfolio( { variables: {id: portfolio._id} })}
+              >
+                Update Portfolio
+              </button>
+              <button
+                className="btn btn-danger"
+                onClick={() => deletePortfolio( { variables: {id: portfolio._id} }) }
+              >
+                Delete Portfolio
+              </button>
             </Col>
           ))}
         </Row>
@@ -33,7 +56,6 @@ const Portfolios = () => {
           Fetch data
         </button> */}
         {/* {JSON.stringify(portfolios)} */}
- 
     </BaseLayout>
   );
 };

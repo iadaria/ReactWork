@@ -3,16 +3,17 @@ import Link from "next/link";
 //import { Link as RoutesLink } from "../../routes";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
 import withApollo from "@/hoc/withApollo";
 import { useLazyGetUser } from "@/apollo/actions";
 
-const BsLinkClass = ({ route, title, className }) => {
-  return (
-    <Link href={route}>
-      <a className={`${className} nav-link`}> {title}</a>
-    </Link>
-  );
-};
+const AppLink = ({ children, className, href, as, ...props }) => (
+  <Link href={href} as={as}>
+    <a className={className} {...props}>{children}</a>
+
+    {/* <NavDropdown.Item href={href}>{children}</NavDropdown.Item> */}
+  </Link>
+);
 
 const MainMenu = () => {
   const [user, setUser] = useState(null);
@@ -23,7 +24,6 @@ const MainMenu = () => {
     data && setUser(data.user);
   }, [data]);
 
-
   return (
     <div className="header">
       <Navbar
@@ -33,61 +33,71 @@ const MainMenu = () => {
         variant="dark"
         expand="lg"
       >
-        <Navbar.Brand className="nav-brand" href="/">
+        {/* <Navbar.Brand className="nav-brand" href="/">
           Daria Iakimova
-        </Navbar.Brand>
+        </Navbar.Brand> */}
+        <AppLink href="/" className="navbar-brand mr-3 font-weight-bold">
+          Daria Iakimova
+        </AppLink>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <BsLinkClass className="dasha" route="/" title="Home" />
-
-            <BsLinkClass route="/about" title="About" />
-
-            <BsLinkClass route="/portfolios" title="Portfolios" />
-
-            <BsLinkClass route="/blogs" title="Blogs" />
-
-            <BsLinkClass route="/cv" title="CV" />
-
-            {/* <Logout /> */}
-
-            {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
+            <AppLink href="/" className="nav-link mr-3">
+              Home
+            </AppLink>
+            <AppLink href="/about" className="nav-link mr-3">
+              About
+            </AppLink>
+            <AppLink href="/portfolios" className="nav-link mr-3">
+              Portfolios
+            </AppLink>
+            <AppLink href="/forum/categories" className="nav-link mr-3">
+              Forum
+            </AppLink>
+            <AppLink href="/cv" className="mr-3 nav-link">
+              Cv
+            </AppLink>
           </Nav>
 
           <Nav className="ml-auto">
             {user && (
               <>
                 <span className="mr-4">Welcom {user.username}</span>
-                <BsLinkClass
-                  className="btn btn-danger"
-                  route="/logout"
-                  title="Sign Out"
-                />
+                <NavDropdown className="mr-2" title="Manage" id="nav-dropdown">
+                  {(user.role === "admin" || user.role === "instructor") && (
+                    <>
+                      <AppLink href="/portfolios/new" className="dropdown-item">
+                        Create Portfolio
+                      </AppLink>
+                      <AppLink 
+                        href="instructor/[id]/dashboard" 
+                        as={`instructor/${user._id}/dashboard`}
+                        className="dropdown-item">
+                        Dashboard
+                      </AppLink>
+                    </>
+                  )}
+                  {/* <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item> */}
+                  {/* <NavDropdown.Divider /> */}
+                </NavDropdown>
+
+                <AppLink className="nav-link btn btn-danger" href="/logout">
+                  Sign Out
+                </AppLink>
               </>
             )}
+
             {(error || !user) && (
               <>
-                <BsLinkClass
-                  className="mr-3"
-                  style={{ cursor: "pointer" }}
-                  route="/login"
-                  title="Sign In"
-                />
-                <BsLinkClass
-                  className="mr-3 style={{cursor: 'pointer'}} btn btn-success bg-green-2"
-                  route="/register"
-                  title="Sign Up"
-                />
+                <AppLink href="/login" className="mr-3 nav-link">
+                  Sign In
+                </AppLink>
+                <AppLink
+                  href="/register"
+                  className="mr-3 btn btn-success bg-green-2 bright"
+                >
+                  Sign Up
+                </AppLink>
               </>
             )}
           </Nav>

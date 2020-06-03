@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import BaseLayout from "@/components/layouts/BaseLayout";
-import BasePage from "@/components/BasePage";
 import { useQuery } from '@apollo/react-hooks';
 import { GET_PORTFOLIO } from '@/apollo/queries';
 import withApollo from '@/hoc/withApollo';
@@ -23,7 +22,6 @@ const PortfolioDetail = ({ query }) => {
 
   return (
     <BaseLayout>
-      <BasePage>
         <div className="portfolio-detail">
           <div className="container">
             <div className="jumbotron">
@@ -68,7 +66,6 @@ const PortfolioDetail = ({ query }) => {
             </div>
           </div>
         </div>
-      </BasePage>
     </BaseLayout>
   );
 };

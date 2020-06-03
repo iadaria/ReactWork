@@ -1,18 +1,16 @@
 import BaseLayout from "@/components/layouts/BaseLayout";
-import BasePage from "@/components/BasePage";
 import { useQuery } from '@apollo/react-hooks';
-import { GET_PORTFOLIO } from '@/apollo/queries';
+import { useGetPortfolio } from '@/apollo/actions';
 import withApollo from '@/hoc/withApollo';
 import { getDataFromTree } from '@apollo/react-ssr';
 
 const PortfolioDetail = ({ query }) => {
 
-  const { data, loading, error } = useQuery(GET_PORTFOLIO, {variables: {id: query.id}});
+  const { data } = useGetPortfolio({variables: {id: query.id}})
   const portfolio = data && data.portfolio || {};
 
   return (
     <BaseLayout>
-      <BasePage>
         <div className="portfolio-detail">
           <div className="container">
             <div className="jumbotron">
@@ -57,7 +55,6 @@ const PortfolioDetail = ({ query }) => {
             </div>
           </div>
         </div>
-      </BasePage>
     </BaseLayout>
   );
 };

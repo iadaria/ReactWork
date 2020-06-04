@@ -10,13 +10,7 @@ const Register = () => {
   const errorMessage = (error) => 
     (error.graphQLErrors && error.graphQLErrors[0].message) || 
     'Oooops somthing went wrong...';
-  /* 
-    const router = useRouter();
-    const redirect = () => {
-    router.push('/login');
-    return null; //because Promise
-  }
- */
+
   return (
     <BaseLayout>
       <div className="bwm-form mt-5">
@@ -33,7 +27,7 @@ const Register = () => {
                         signUpUser({ variables: registerData });
                       }}
                     />
-                    {data && data.signUp && <Redirect to="/login" />}
+                    {data && data.signUp && <Redirect to="/login" query={{message: 'LOGGED_IN'}}/>}
                     {error && (
                       <div className="alert alert-danger mt-3">
                         {errorMessage(error)}

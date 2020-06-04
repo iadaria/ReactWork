@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { useGetPortfolio } from '@/apollo/actions';
 import withApollo from '@/hoc/withApollo';
 import { getDataFromTree } from '@apollo/react-ssr';
+import { formatDate } from '@/utils/functions';
 
 const PortfolioDetail = ({ query }) => {
 
@@ -33,18 +34,16 @@ const PortfolioDetail = ({ query }) => {
                 <p className="text">{portfolio.location}</p>
 
                 <h4 className="title">Start Date</h4>
-                {/* <p className="text">{formatDate(portfolio.startDate)}</p> */}
+                <p className="text">{formatDate(portfolio.startDate)}</p>
               </div>
 
               <div className="col-lg-6">
-                {/* TODO: days later... */}
                 <h4 className="title">Days</h4>
                 <p className="text">{portfolio.daysOfExperience}</p>
 
                 <h4 className="title">End Date</h4>
                 <p className="text">
-               {/*  {(portfolio.endDate && formatDate(portfolio.endDate)) || 
-                    "Present"} */}
+                {(portfolio.endDate && formatDate(portfolio.endDate)) || "Present"}
                 </p>
               </div>
               <div className="col-md-12">

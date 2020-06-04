@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import { useGetUserPortfolios, useDeletePortfolio } from "@/apollo/actions";
 import { getDataFromTree } from "@apollo/react-ssr";
 import Link from "next/link";
-//import { formatDate } from '@/utils/functions';
+import { formatDate } from '@/utils/functions';
 
 const InstructorDashboard = () => {
   const { data } = useGetUserPortfolios();
@@ -28,9 +28,7 @@ const InstructorDashboard = () => {
                 <Card.Body>
                   <Card.Title>{p.title}</Card.Title>
                   <Card.Text>
-                    {p.startDate} - {p.endDate}
-                    {/* {formatDate(p.startDate)} -{" "}
-                  {(p.endDate && formatDate(p.endDate)) || "Present"} */}
+                    {formatDate(p.startDate)} - {" "} {(p.endDate && formatDate(p.endDate)) || "Present"}
                   </Card.Text>
 
                   <Link
@@ -58,6 +56,6 @@ const InstructorDashboard = () => {
 };
 
 export default withApollo(
-  withAuth(InstructorDashboard, ["admin", "instructor"]),
+  withAuth(InstructorDashboard, ["admin", "instructor"], {ssr: true}),
   { getDataFromTree }
 );

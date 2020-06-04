@@ -1,6 +1,6 @@
-import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import { formatDate } from '@/utils/functions';
 //import ListGroup from 'react-bootstrap/ListGroup';
 
 const PortfolioCard = ({ portfolio }) => {
@@ -14,8 +14,6 @@ const PortfolioCard = ({ portfolio }) => {
         <Card.Subtitle className="text-muted">{portfolio.jobTitle}</Card.Subtitle>
         <Card.Text>
           {portfolio.description}
-          {/* Some quick example text to build on the card title and make up the
-          bulk of the card's content. */}
         </Card.Text>
         <Button variant="primary">Go somewhere</Button>
         {/* <Card.Link href="/">Home</Card.Link> */}
@@ -26,8 +24,9 @@ const PortfolioCard = ({ portfolio }) => {
         <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
       </ListGroup> */}
       <Card.Footer>
-        {/* <small className="text-muted">Last updated 3 mins ago</small> */}
-        <small className="text-muted">{portfolio.startDate} - {portfolio.endDate}</small>
+        <small className="text-muted">
+          {formatDate(portfolio.startDate)} - {" "} {(portfolio.endDate && formatDate(portfolio.endDate)) || "Present"}
+        </small>
       </Card.Footer>
     </Card>
   );

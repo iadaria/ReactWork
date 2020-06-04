@@ -2,6 +2,7 @@ import React from 'react';
 import './base-layout.scss';
 import Container from "react-bootstrap/Container";
 import MainMenu from "@/components/shared/MainMenu";
+import { ToastContainer } from 'react-toastify';
 
 const BaseLayout = (props) => {
     const { className, children } = props;
@@ -13,6 +14,7 @@ const BaseLayout = (props) => {
                     {children}
                 </Container>
             </main>
+            <ToastContainer />
         </div>
     );
 };

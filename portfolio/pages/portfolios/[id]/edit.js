@@ -5,7 +5,7 @@ import withAuth from '@/hoc/withAuth';
 import BaseLayout from '@/components/layouts/BaseLayout';
 import { useRouter } from 'next/router';
 import { useGetPortfolio, useUpdatePortfolio } from '@/apollo/actions';
-//import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const PortfolioEdit = () => {
   const router = useRouter();
@@ -19,7 +19,7 @@ const PortfolioEdit = () => {
 
   const handlePortfolioUpdate = async (data) => {
     await updatePortfolio({variables: {id, ...data}});
-    //toast.success('Portfolio has been updated!', {autoClose: 2000});
+    toast.success('Portfolio has been updated!', {autoClose: 2000});
   }
 
   return (

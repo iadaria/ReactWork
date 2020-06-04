@@ -6,13 +6,13 @@ import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
 import withApollo from '@/hoc/withApollo';
 import { getDataFromTree } from '@apollo/react-ssr';
-import { 
-  useGetPortfolios } from '@/apollo/actions';
+import { useGetPortfolios } from '@/apollo/actions';
+import { formatDate } from '@/utils/functions';
 
 const Portfolios = () => {
   const { data } = useGetPortfolios();
-
   const portfolios = data && data.portfolios || [];
+  
   return (
     <BaseLayout>
      
@@ -24,16 +24,14 @@ const Portfolios = () => {
                 href='/portfolios/[id]'
                 as={`/portfolios/${portfolio._id}`}
               >
-                <a className="card-link" ><PortfolioCard portfolio={portfolio} /></a>
+                <a className="card-link">
+                  <PortfolioCard portfolio={portfolio} />
+                </a>
               </Link>
             </Col>
           ))}
         </Row>
-        {/* <button className="btn btn-primary" onClick={fetchPortfolios}>
-          Fetch data
-        </button> */}
         {/* {JSON.stringify(portfolios)} */}
- 
     </BaseLayout>
   );
 };

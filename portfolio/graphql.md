@@ -61,3 +61,19 @@ mutation SignIn {
 mutation SignOut {
   signOut
 }
+
+query TopicsByCategory {
+    topicsByCategory(category: "5ed9200053199c2a10a48a9b") {
+      _id
+      slug
+      title
+      content
+    	user {
+        username
+        avatar
+      }
+    	forumCategory {
+        slug
+      }
+    }
+  }  

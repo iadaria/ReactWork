@@ -1,0 +1,32 @@
+$gray-80: #343a40 !default;
+
+.fj-topic-list {
+    table {
+      font-size: 18px;
+    }
+    thead {
+      color: $gray-80;
+      th {
+        font-size: 14px;
+      }
+    }
+  
+    td, th {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+  
+    tbody {
+      color: $gray-80;
+  
+      th {
+        font-weight: bold;
+      }
+  
+      tr {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }

@@ -55,16 +55,18 @@ export const CREATE_PORTFOLIO = gql`
     $startDate: String
     $endDate: String
   ) {
-    createPortfolio( input: {
-      title: $title
-      company: $company
-      companyWebsite: $companyWebsite
-      location: $location
-      jobTitle: $jobTitle
-      description: $description
-      startDate: $startDate
-      endDate: $endDate
-    }) {
+    createPortfolio(
+      input: {
+        title: $title
+        company: $company
+        companyWebsite: $companyWebsite
+        location: $location
+        jobTitle: $jobTitle
+        description: $description
+        startDate: $startDate
+        endDate: $endDate
+      }
+    ) {
       _id
       title
       jobTitle
@@ -85,69 +87,68 @@ export const DELETE_PORTFOLIO = gql`
 `;
 
 export const UPDATE_PORTFOLIO = gql`
-    mutation UpdatePortfolio(
-          $id: ID
-          $title: String
-          $company: String
-          $companyWebsite: String
-          $location: String
-          $jobTitle: String
-          $description: String
-          $startDate: String
-          $endDate: String
-        ) {
-          updatePortfolio(id: $id, input: {
-            title: $title
-            company: $company
-            companyWebsite: $companyWebsite
-            location: $location
-            jobTitle: $jobTitle
-            description: $description
-            startDate: $startDate
-            endDate: $endDate
-          }) {
-            _id
-            title
-            jobTitle
-            description
-            startDate
-            endDate
-            company
-            companyWebsite
-            location
-          }
-        }
+  mutation UpdatePortfolio(
+    $id: ID
+    $title: String
+    $company: String
+    $companyWebsite: String
+    $location: String
+    $jobTitle: String
+    $description: String
+    $startDate: String
+    $endDate: String
+  ) {
+    updatePortfolio(
+      id: $id
+      input: {
+        title: $title
+        company: $company
+        companyWebsite: $companyWebsite
+        location: $location
+        jobTitle: $jobTitle
+        description: $description
+        startDate: $startDate
+        endDate: $endDate
+      }
+    ) {
+      _id
+      title
+      jobTitle
+      description
+      startDate
+      endDate
+      company
+      companyWebsite
+      location
+    }
+  }
 `;
 
 // AUTH QUERITES START -----------------------------------------------------
 
 export const SIGN_UP = gql`
-    mutation SignUp(
-      $avatar: String
-      $username: String!
-      $email: String!
-      $password: String!
-      $passwordConfirmation: String!
-    ) {
-      signUp(input: {
+  mutation SignUp(
+    $avatar: String
+    $username: String!
+    $email: String!
+    $password: String!
+    $passwordConfirmation: String!
+  ) {
+    signUp(
+      input: {
         avatar: $avatar
         username: $username
         email: $email
         password: $password
         passwordConfirmation: $passwordConfirmation
-      })
-    }
+      }
+    )
+  }
 `;
 
 export const SIGN_IN = gql`
-  mutation SignIn(
-    $email: String!
-    $password: String!
-  ) {
-    signIn(input: {
-      email: $email
-      password: $password
-    }) {
+  mutation SignIn($email: String!, $password: String!) {
+    signIn(input: { email: $email, password: $password }) {
       _id
       username
       role
@@ -156,7 +157,11 @@ export const SIGN_IN = gql`
   }
 `;
 
-export const SIGN_OUT = gql`mutation SignOut { signOut }`;
+export const SIGN_OUT = gql`
+  mutation SignOut {
+    signOut
+  }
+`;
 
 export const GET_USER = gql`
   query User {
@@ -168,3 +173,63 @@ export const GET_USER = gql`
   }
 `;
 // AUTH QUERITES END -------------------------------------------------------
+
+// FORUM QUERITES START ----------------------------------------------------
+
+export const GET_FORUM_CATEGORIES = gql`
+  query ForumCategories {
+    forumCategories {
+      slug
+      title
+      subTitle
+    }
+  }
+`;
+
+export const GET_TOPICS_BY_CATEGORY = gql`
+  query TopicsByCategory($category: String) {
+    topicsByCategory(category: $category) {
+      _id
+      slug
+      title
+      content
+      user {
+        username
+        avatar
+      }
+      forumCategory {
+        _id
+        title
+        slug
+      }
+    }
+  }
+`;
+
+export const CREATE_TOPIC = gql`
+  mutation CreateTopic(
+    $title: String
+    $content: String
+    $forumCategory: String
+  ) {
+    createTopic(
+      input: { title: $title, content: $content, forumCategory: $forumCategory }
+    ) {
+      _id
+      title
+      content
+      slug
+      user {
+        username
+        avatar
+      }
+      forumCategory {
+        _id
+        title
+        slug
+      }
+    }
+  }
+`;
+
+// FORUM QUERITES END ------------------------------------------------------

@@ -2,6 +2,7 @@
 /server/config/dev.js
 
 /test/demo
+/test/click-counter
 
 .DS_STORE
 node_modules

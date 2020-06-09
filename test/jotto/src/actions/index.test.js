@@ -12,7 +12,7 @@ describe('getSecretWord action creator', () => {
 
   test('adds response word to state', () => {
     const secretWord = 'party';
-    const store = storeFactory();
+    const store = storeFactory(undefined);
 
     moxios.wait(() => {
       //самый последний

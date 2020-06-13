@@ -1,0 +1,27 @@
+{
+  "name": "puppeteer-project",
+  "version": "1.0.0",
+  "description": "Automated software testing with Puppeteer",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --timeout=30000 ./tests",
+    "test:example": "mocha --timeout=30000 ./tests/example.test.js",
+    "test:device": "mocha --timeout=30000 ./tests/device.test.js",
+    "test:e2e": "mocha --timeout=30000 ./tests/e2e/*.test.js",
+    "test:snapshot": "jest --config=jest.config.js --detectOpenHandles --forceExit",
+    "test:snapshot:update": "jest --config=jest.config.js --updateSnapshot --detectOpenHandles --forceExit"
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "jest": "^26.0.1",
+    "jest-image-snapshot": "^4.0.2",
+    "mocha": "^8.0.1",
+    "prettier": "^2.0.5",
+    "puppeteer": "^3.3.0"
+  },
+  "devDependencies": {}
+}

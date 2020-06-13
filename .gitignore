@@ -1,8 +1,11 @@
 #data for login
 /server/config/dev.js
 
+node.txt
+
 /test/demo
 /test/click-counter
+/test/puppeteer
 
 .DS_STORE
 node_modules

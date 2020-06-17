@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Navbar } from "./src/Navbar";
 import { AddTodo } from "./src/AddTodo";
 import { Todo } from "./src/Todo";
 
 export default function App() {
-    const [todos, setTodos] = useState([]);
+    const [todos, setTodos] = React.useState([]);
 
     const addTodo = (title) => {
         setTodos(prev => [
@@ -20,9 +20,9 @@ export default function App() {
     return (
         <View>
             <Navbar title="Todo App" />
-            <View style={styles.container}>
+            <View style={styles.container} testID="app">
                 <AddTodo onSubmit={addTodo}/>
-                <View>
+                <View testID="todo-list">
                     { todos.map(todo => {
                         console.log(todo);
                         return <Todo key={todo.id} todo={todo} />

@@ -2,14 +2,17 @@ import React from "react";
 import { shallow } from "enzyme";
 import { findByTestAttr, checkProps } from "../tests/testUtils";
 
-/* import Enzyme from "enzyme";
+import { Todo } from "./Todo";
+
+/******************  Enzyme  ***************************/
+import Enzyme from "enzyme";
 import EnzymeAdapter from "enzyme-adapter-react-16";
+
 Enzyme.configure({ 
     adapter: new EnzymeAdapter(),
     disableLifecycleMethods: true,
-}); */
-
-import { Todo } from "./Todo";
+});
+/******************  Enzyme end  ***************************/
 
 const defaultProps = {
     todo: { id: "1", title: 'default_title' }

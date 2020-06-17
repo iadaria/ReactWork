@@ -3,33 +3,42 @@ import PropTypes from 'prop-types';
 import { View, StyleSheet, TextInput, Button } from 'react-native';
 
 export const AddTodo = ({ onSubmit }) => {
-    const [value, setValue] = React.useState('');
+    const [value, setValue] = React.useState("");
 
     const pressHandler = () => {
-        if (value.trim()) {
+        console.log(`type=${typeof value} of value = '${value}'`);
+        if (value && value.trim()) {
             onSubmit(value);
             setValue("");
         }
     };
 
     return (
-        <View style={styles.block} testID="component-addtodo">
+        <View style={styles.block} testID="addtodo-component">
             <TextInput
                 style={styles.input}
-                onChangeText={setValue}
+                onChangeText={(text) => {
+                    setValue(text);
+                }}
                 value={value}
                 placeholder="Введите название дела..."
+                testID="addtodo-input"
             />
             <Button 
                 title="Добавить"
-                onPress={pressHandler}
+                onPress={() => {
+                    pressHandler();
+                    console.log(`after onPress(setValue) current value = '${value}'`);
+                }}
+                testID="addtodo-button"
             />
         </View>
     );
 };
 
 AddTodo.propTypes = {
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    testID: PropTypes.string
 };
 
 const styles = StyleSheet.create({

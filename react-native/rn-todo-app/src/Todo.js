@@ -1,6 +1,18 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from "react-native";
+import Enzyme from "enzyme";
+import EnzymeAdapter from "enzyme-adapter-react-16";
+
+console.log("executing setupTest.js....");
+/**
+ * Set up Enzyme to mount to DOM, simulate events,
+ * and inspect the DOM in tests.
+ */
+Enzyme.configure({ 
+    adapter: new EnzymeAdapter(),
+    disableLifecycleMethods: true,
+});
 
 export const Todo = ({ todo }) => {
 

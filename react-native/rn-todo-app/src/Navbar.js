@@ -3,8 +3,8 @@ import { View, Text, StyleSheet } from 'react-native';
 
 export const Navbar = ({ title }) => {
     return (
-        <View style={styles.navbar}>
-            <Text style={styles.text}>{title}</Text>
+        <View style={styles.navbar} testID="navbar">
+            <Text style={styles.text} testID="navbar-title">{title}</Text>
         </View>
     );
 };

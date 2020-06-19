@@ -1,118 +1,55 @@
-import React from "react";
-import { mount, shallow } from "enzyme";
-/*import { findByTestAttr, checkProps, getCount } from "./tests/testUtils";
-import toJson from "enzyme-to-json"; */
+import React from 'react';
+import { Button, Text, TextInput, View } from 'react-native';
+import { fireEvent, render, wait } from '@testing-library/react-native';
+require('snapshot-diff/extend-expect');
+//const snapshotDiff = require('snapshot-diff');
 
-// Testing components
 import App from "./App";
-/* import { Todo } from "./src/Todo";
-import { AddTodo } from "./src/AddTodo";
-import { waitFor } from "react-native-testing-library";
- */
-/*************** FOR MOUNT  ***********************/
-//>install jsdom
-//>react-test-renderre
-const { JSDOM } = require('jsdom');
-const jsdom = new JSDOM(/* ``, { url: "http://localhost"} */);
-const { window } = jsdom;
+import toJson from 'enzyme-to-json';
 
-function copyProps(src, target) {
-  Object.defineProperties(target, {
-    ...Object.getOwnPropertyDescriptors(src),
-    ...Object.getOwnPropertyDescriptors(target),
-  });
-}
+test("test entering todos", async () => {
+    const { getByTestId, queryAllByTestId, asJSON, debug, getAllByTestId} = render(<App />);
+    const firstRender = asJSON();
+    const todoStrings = ["todow one", "todo two", "todo three"];
 
-global.window = window;
-global.document = window.document;
-global.navigator = {
-  userAgent: 'node.js',
-};
-copyProps(window, global);
-/*************** END MOUNT  ***********************/
+    const input = getByTestId('addtodo-input');
+    expect(input).not.toBeNull();
 
-//const onSubmit = jest.fn();
-const setup = () => {
-    //onSubmit.mockClear();
-    return /* shallow */mount(<App />); //console.log(wrapper.debug());
-};
+    const button = getByTestId('addtodo-button');
+    expect(input).not.toBeNull();
 
-describe("test renders after enter todos", () => {
-    let wrapper;
-    
-    beforeEach(() => {
-        //wrapper = setup();
+    todoStrings.forEach(todoString => {
+        fireEvent.changeText(input, todoString);
+        fireEvent.press(button);
     });
 
-    test("success count of todos", () => {
-        const wrapper = mount(<App />);
-        
-        const todos = ["todo one", "todo two"];
+    const seachedTodos = getAllByTestId('todo-title');
+    expect(seachedTodos.length).toBe(3);
 
-        const addTodoInput = wrapper
-            .find('TextInput')
-            .findWhere(node => node.prop('testID') === 'addtodo-input')
-            .first();
-        expect(addTodoInput.exists()).toBe(true);
-        
-        const addTodoButton = wrapper
-            .find('Button')
-            .findWhere(node => node.prop('testID') === 'addtodo-button')
-            .first();;
-        expect(addTodoButton.exists()).toBe(true);
-        
-        addTodoInput.props().onChangeText("todo one");
-        wrapper.update();
-        addTodoButton.props().onPress();
-        /* todos.map(todo => {
-            addTodoInput.props().onChangeText(todo);
-            addTodoButton.props().onPress();
-        }); */
-
-        const todoComponents = wrapper
-            .findWhere(node => node.prop('testID') === 'todo-list')
-            .first();
-        //console.log('count = ', todoComponents.length);
-        console.log('addTodos debug', todoComponents.debug());
-        //console.log(toJson(wrapper, { noKey: false, mode: 'deep'}));
-    });
+    todoStrings.forEach((todoString, index) => 
+        expect(seachedTodos[index].props.children).toBe(todoStrings[index])
+    );
+    //console.log(debug());
+    //const lastRender = asJSON();
+    //expect(firstRender).toMatchDiffSnapshot(lastRender);
 });
-/* 
-describe("test entered words", () => {
-    let wrapper;
-    let setTodosMock = jest.fn();
 
-    beforeEach(() => {
-        setTodosMock.mockClear();
-        React.useState[0] = jest.fn(() => [ [], setTodosMock ]);
-        wrapper = setup();
-        //let count = getCount(wrapper);
-        //console.log(`count = ${count}`);
+/* test("test entering todos", async () => {
+    const setTodosMock = jest.fn();
+    const { getByTestId, queryAllByTestId, asJSON, debug, getAllByTestId } = render(<App />);
+    const todoStrings = ["todow one", "todo two", "todo three"];
+
+    const input = getByTestId('addtodo-input');
+    expect(input).not.toBeNull();
+
+    const button = getByTestId('addtodo-button');
+    expect(input).not.toBeNull();
+
+    todoStrings.forEach(todoString => {
+        fireEvent.changeText(input, todoString);
+        fireEvent.press(button);
     });
 
-    test("success execute `onSumbmit`", () => {
-        let todos = ["todo one", "todo two"];
+    expect(setTodosMock).toBeCalledTimes(3);
 
-        const addTodoInput = wrapper
-            .find('TextInput')
-            .findWhere(node => node.prop('testID') === 'addtodo-input')
-            .first();
-        expect(addTodoInput.exists()).toBe(true);
-        
-        const addTodoButton = wrapper
-            .find('Button')
-            .findWhere(node => node.prop('testID') === 'addtodo-button')
-            .first();;
-        expect(addTodoButton.exists()).toBe(true);
-        
-        todos.map(todo => {
-            addTodoInput.props().onChangeText(todo);
-            addTodoButton.props().onPress();
-        });
-
-        expect(setTodosMock).toBeCalledWith({
-            '1': { id: "", title: "todo one" },
-            '2': { id: "", title: "todo two" }
-        }); 
-    });
 }); */

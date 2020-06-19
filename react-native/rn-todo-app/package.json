@@ -11,11 +11,16 @@
         "test:addtodo2": "jest --watchAll --coverage=false src/AddTodo/AddTodo2.test.js",
         "test:addtodo3": "jest --watchAll --coverage=false src/AddTodo/AddTodo3.test.js",
         "test:app": "jest --watchAll --coverage=false App.test.js",
+        "test:app2": "jest --watchAll --coverage=false App2.test.js",
         "testDebug": "jest -o --watch --coverage=false",
         "testFinal": "jest",
-        "updateSnapshots": "jest -u --coverage=false"
+        "updateSnapshots": "jest -u --coverage=false",
+        "test:image": "jest --detectOpenHandles --forceExit tests/snapshots/ ",
+        "test:image:app": "jest --watchAll --detectOpenHandles --forceExit --updateSnapshot tests/snapshots/App.browser.test.ts",
+        "test:image:update": "jest --watchAll --detectOpenHandles --forceExit --updateSnapshot tests/snapshots/App.browser.test.ts"
     },
     "dependencies": {
+        "@testing-library/react-native": "^5.0.3",
         "expo": "~37.0.3",
         "prop-types": "^15.7.2",
         "react": "~16.9.0",
@@ -31,16 +36,18 @@
         "enzyme-adapter-react-16": "^1.15.2",
         "enzyme-to-json": "^3.5.0",
         "jest-expo": "^37.0.0",
+        "jest-image-snapshot": "^4.0.2",
         "jsdom": "^16.2.2",
+        "puppeteer": "^4.0.0",
+        "react-native-mock-render": "^0.1.9",
         "react-native-testing-library": "^2.1.0",
-        "react-test-renderer": "^16.13.1"
+        "react-test-renderer": "^16.13.1",
+        "snapshot-diff": "^0.8.0"
     },
     "private": true,
     "jest": {
-        "preset": "jest-expo",
-        /* "setupFilesAfterEnv": [
-            "<rootDir>/setupTests.js"
-        ], */
+        "preset": "react-native",
+        "rootDir": "./tests/snapshots",
         "snapshotSerializers": [
             "enzyme-to-json/serializer"
         ],

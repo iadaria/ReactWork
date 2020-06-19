@@ -6,7 +6,7 @@ export const AddTodo = ({ onSubmit }) => {
     const [value, setValue] = React.useState("");
 
     const pressHandler = () => {
-        console.log(`type=${typeof value} of value = '${value}'`);
+        //console.log(`type=${typeof value} of value = '${value}'`);
         if (value && value.trim()) {
             onSubmit(value);
             setValue("");
@@ -28,7 +28,7 @@ export const AddTodo = ({ onSubmit }) => {
                 title="Добавить"
                 onPress={() => {
                     pressHandler();
-                    console.log(`after onPress(setValue) current value = '${value}'`);
+                    //console.log(`after onPress(setValue) current value = '${value}'`);
                 }}
                 testID="addtodo-button"
             />

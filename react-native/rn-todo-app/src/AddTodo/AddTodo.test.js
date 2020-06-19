@@ -63,6 +63,10 @@ describe("state controlled input field", () => {
         wrapper = setup();
     });
 
+    afterAll(() => {
+        
+    });
+
     test("state updates with value of input box upon change", () => {
         const addTodoInput = wrapper.find('TextInput').first();
         //console.log(addTodoInput.debug());

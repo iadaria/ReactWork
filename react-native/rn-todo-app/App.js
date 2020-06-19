@@ -24,7 +24,7 @@ export default function App() {
                 <AddTodo onSubmit={addTodo}/>
                 <View testID="todo-list">
                     { todos.map(todo => {
-                        console.log(todo);
+                        //console.log(todo);
                         return <Todo key={todo.id} todo={todo} />
                     })}
                 </View>

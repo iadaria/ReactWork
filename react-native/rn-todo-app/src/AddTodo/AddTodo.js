@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet, TextInput, Button } from 'react-native';
+import { View, StyleSheet, TextInput, Button, Alert } from 'react-native';
 
 export const AddTodo = ({ onSubmit }) => {
     const [value, setValue] = React.useState("");
@@ -10,6 +10,8 @@ export const AddTodo = ({ onSubmit }) => {
         if (value && value.trim()) {
             onSubmit(value);
             setValue("");
+        } else {
+            Alert.alert('Название не должно быть пустым');
         }
     };
 

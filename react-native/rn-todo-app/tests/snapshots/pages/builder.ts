@@ -1,4 +1,5 @@
 import puppeteer, { defaultArgs } from 'puppeteer';
+import Page from "puppeteer";
 
 export default class Builder {
     page = null;
@@ -6,8 +7,8 @@ export default class Builder {
 
     static async build(viewport: string) {
         const launchOptions = {
-            headless: true,
-            slowMo: 0,
+            headless: false,
+            slowMo: 50,
             args: [
                 "--no-sandbox",
                 "--disable-setui-sandbox",
@@ -35,11 +36,13 @@ export default class Builder {
                 throw new Error("Supported devices are only Mobile | Tablet | Desktop");
         }
 
-        return new Proxy(extendedPage, {
+        return page;
+
+        /* return new Proxy(extendedPage, {
             get: function(_target, property) {
                 return extendedPage[property] || browser[property] || page[property];
             }
-        });
+        }); */
     }
 
     close = async () => await this.page.close();

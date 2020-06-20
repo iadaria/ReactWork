@@ -1,27 +1,31 @@
-import Page from "./pages/builder";
+//import Page from "puppeteer";
+//import Builder from "../snapshots/pages/builder";
 import AppPage from "./pages/components/AppPage";
 
 const { toMatchImageSnapshot } = require('jest-image-snapshot');
 expect.extend({ toMatchImageSnapshot });
 
 describe("Should success added 3 dotos", () => {
-    let page: Page;
     let appPage: AppPage;
 
     beforeAll(async () => {
-        console.warn('Executed before each...')
-        page = await Page.build("Mobile");
-        appPage = new AppPage(page);
+        appPage = new AppPage();
+        await appPage.init("Mobile");
     });
 
-    /* afterAll(async () => await page.close());
+    afterAll(async () => {
+        const page = appPage.page;
+        const browser = page.browser();
+        await appPage.close();
+        await browser.close();
+    });
 
     test("start page should work", async () => {
         await appPage.visit();
         const image = await appPage.screenshot();
         expect(image).toMatchImageSnapshot({});
     });
-
+    
     test("AppPage should be displayed", async () => {
         expect(await appPage.isAddTodoDisplayed()).toBeTruthy();
         expect(await appPage.isNavbarDisplayed()).toBeTruthy();
@@ -32,7 +36,7 @@ describe("Should success added 3 dotos", () => {
         expect(title).toEqual("Todo App");
     });
 
-    test("add 3 todo `success`", async () => {
+    test("add 3 todo `success`", async (done) => {
         const todos = ["the first todo", "the second todo", "the third todo"];
 
         await appPage.addTodo(todos[0]);
@@ -48,32 +52,33 @@ describe("Should success added 3 dotos", () => {
 
         const image = await appPage.screenshot();
         expect(image).toMatchImageSnapshot({});
-    }); */
+        
+        done();
+    }, 30000);
 });
 
-/* describe("Should fail added todos", () => {
-    let page: Page;
+describe("Should fail added todos", () => {
     let appPage: AppPage;
 
     beforeAll(async () => {
-        console.warn('Executed before each...')
-        page = await Page.build("Mobile");
-        appPage = new AppPage(page);
+        appPage = new AppPage();
+        await appPage.init("Mobile");
+        await appPage.visit();
     });
 
-    afterAll(async () => await page.close());
-
-    test("start page should work", async () => {
-        await appPage.visit();
-        const image = await appPage.screenshot();
-        expect(image).toMatchImageSnapshot({});
+    afterAll(async () => {
+        const page = appPage.page;
+        const browser = page.browser();
+        await appPage.close();
+        await browser.close();
     });
 
     test("enter empty string and click 'Add'", async () => {
         await appPage.clickAddTodoButton();
-        expect(await appPage.getLengthOfTodos()).toBe(0);
+        expect(await appPage.isEmptyTodos()).toBeTruthy();
+
+        expect(await appPage.screenshot()).toMatchImageSnapshot({});
     });
 
 
 });
- */

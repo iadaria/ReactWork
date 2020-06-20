@@ -1,20 +1,13 @@
 import BasePage from "../BasePage";
-import { START_PAGE_URL } from "../../../../config";
 
-export default class AppPage extends BasePage{
-    constructor(page) {
-        super(page);
-        this.visit();
-    }
-
-    visit = async (html: string = START_PAGE_URL) => await this.page.goto(html);
-
+export default class AppPage extends BasePage {
+    
     async isAddTodoDisplayed(): Promise<boolean> {
         const isInputDisplayed = await this.isXPathVisible("//input[@data-testid='addtodo-input']");
         const isButtonDisplayed = await this.isXPathVisible("//div[@data-testid='addtodo-button']");
         return isInputDisplayed && isButtonDisplayed;
-    }  
-    
+    }
+
     clickAddTodoButton = async (): Promise<any> =>
         await this.waitAndClick('div[data-testid=addtodo-button]');
 
@@ -26,11 +19,9 @@ export default class AppPage extends BasePage{
         return await this.getText('div[data-testid=navbar-title]');
     }
 
-    async addTodo(todo: string) {//: Promise<boolean> {
-        console.log(`Adding todo = '${todo}'...`);
+    async addTodo(todo: string) {
         await this.waitAndType('input[data-testid=addtodo-input]', todo);
         await this.waitAndClick('div[data-testid=addtodo-button]');
-        //return await this.isAddedTodoDisplayed(todo);
     }
 
     async addTodos(todos: Array<string>) {
@@ -41,12 +32,15 @@ export default class AppPage extends BasePage{
         });
     }
 
-    getLengthOfTodos = async () => 
+    async isAddedTodoDisplayed(todo: string): Promise<boolean> {
+        return await this.isXPathVisible(`//div[@data-testid="todo-title"][text()="${todo}"]`);
+    }
+
+    getLengthOfTodos = async () =>
         await this.getCount(`[data-testid="todo-title"]`);
 
-    isAddedTodoDisplayed = async (todo: string): Promise<boolean> =>
-        await this.isXPathVisible(`//div[@data-testid="todo-title"][text()="${todo}"]`);
-
+    isEmptyTodos = async (): Promise<boolean> =>
+        await this.shouldNotXPathExist(`//div[@data-testid="todo-title"]`);
 
     async test() {
         return await this.page.$eval("div[data-testid=navbar-title]", (items) => items.textContent);

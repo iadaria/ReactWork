@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "@testing-library/react-native": "^5.0.3",
+        "@types/puppeteer": "^3.0.0",
         "expo": "~37.0.3",
         "prop-types": "^15.7.2",
         "react": "~16.9.0",

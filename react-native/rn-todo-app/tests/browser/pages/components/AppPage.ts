@@ -32,6 +32,13 @@ export default class AppPage extends BasePage {
         });
     }
 
+    async removeTodo(todo: string){
+        await this.waitAndClick(
+            `div[data-testid=todo-title]`,
+            { delay: 3000 }
+        );
+    }
+
     async isAddedTodoDisplayed(todo: string): Promise<boolean> {
         return await this.isXPathVisible(`//div[@data-testid="todo-title"][text()="${todo}"]`);
     }
@@ -39,6 +46,9 @@ export default class AppPage extends BasePage {
     getLengthOfTodos = async () =>
         await this.getCount(`[data-testid="todo-title"]`);
 
+    isEmptyOneTodo = async (todo: string): Promise<boolean> =>
+        await this.shouldNotXPathExist(`//div[@data-testid="todo-title"][text()="${todo}"]`);
+        
     isEmptyTodos = async (): Promise<boolean> =>
         await this.shouldNotXPathExist(`//div[@data-testid="todo-title"]`);
 

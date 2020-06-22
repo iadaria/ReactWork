@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet, TextInput, Button, Alert } from 'react-native';
+import { View, StyleSheet, TextInput, Keyboard, Alert} from 'react-native';
+import { THEME } from '../../theme';
+import { AntDesign } from '@expo/vector-icons';
 
 export const AddTodo = ({ onSubmit }) => {
     const [value, setValue] = React.useState("");
@@ -10,6 +12,7 @@ export const AddTodo = ({ onSubmit }) => {
         if (value && value.trim()) {
             onSubmit(value);
             setValue("");
+            Keyboard.dismiss();
         } else {
             Alert.alert('Название не должно быть пустым');
         }
@@ -26,14 +29,12 @@ export const AddTodo = ({ onSubmit }) => {
                 placeholder="Введите название дела..."
                 testID="addtodo-input"
             />
-            <Button 
-                title="Добавить"
-                onPress={() => {
-                    pressHandler();
-                    //console.log(`after onPress(setValue) current value = '${value}'`);
-                }}
-                testID="addtodo-button"
-            />
+            <AntDesign.Button
+                onPress={pressHandler}
+                name='pluscircleo'
+            >
+                Добавить
+            </AntDesign.Button>
         </View>
     );
 };
@@ -51,11 +52,11 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     input: {
-        width: '70%',
+        width: '60%',
         padding: 10,
         borderStyle: 'solid',
         borderBottomWidth: 2,
-        borderBottomColor: '#3949ab'
+        borderBottomColor: THEME.MAIN_COLOR
     }
 });
   

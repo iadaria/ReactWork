@@ -7,7 +7,7 @@ import Enzyme from "enzyme";
 import EnzymeAdapter from "enzyme-adapter-react-16";
 
 // Testing components
-import App from "./App";
+import App from "../../App";
 /* import { Todo } from "./src/Todo";
 import { AddTodo } from "./src/AddTodo";
 import { waitFor } from "react-native-testing-library";
@@ -38,7 +38,7 @@ Enzyme.configure({
     disableLifecycleMethods: true,
 });
 
-require("react-native-mock-render/mock");
+//require("react-native-mock-render/mock");
 
 /*************** END MOUNT  ***********************/
 

@@ -8,7 +8,7 @@ export default class BasePage {
 
         const launchOptions = {
             headless: false,
-            slowMo: 100,
+            slowMo: 0,
             args: [
                 "--no-sandbox",
                 "--disable-setui-sandbox",
@@ -62,10 +62,11 @@ export default class BasePage {
         return await this._page.url();
     }
 
-    async waitAndClick(selector): Promise<any> {
+    async waitAndClick(selector, options = {}): Promise<any> {
         const elementHandler = await this._page.waitForSelector(selector); //need catch - handle himself
         if (elementHandler === null) new Error(`cannot find selector: ${selector}`);
-        return await this._page.click(selector);
+        console.log('options', options);
+        return await this._page.click(selector, options);
     }
 
     async waitAndType(selector: string, text: string): Promise<any> {

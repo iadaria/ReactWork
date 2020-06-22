@@ -1,8 +1,8 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { findByTestAttr, checkProps } from "../tests/testUtils";
+import { findByTestAttr, checkProps } from "../testUtils";
 
-import { Todo } from "./Todo";
+import { Todo } from "../../src/components/Todo";
 
 /******************  Enzyme  ***************************/
 import Enzyme from "enzyme";

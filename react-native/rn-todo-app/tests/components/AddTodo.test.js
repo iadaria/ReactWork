@@ -2,7 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import { findByTestAttr, checkProps } from "../../tests/testUtils";
 
-import { AddTodo } from "./AddTodo";
+import { AddTodo } from "../../src/components/AddTodo/AddTodo";
 
 /* import Enzyme from "enzyme";
 import EnzymeAdapter from "enzyme-adapter-react-16";

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
+//import { Button, Text, TextInput, View } from 'react-native';
 import { fireEvent, render, wait } from '@testing-library/react-native';
 require('snapshot-diff/extend-expect');
 //const snapshotDiff = require('snapshot-diff');
 
-import App from "./App";
+import App from "../../App";
 import toJson from 'enzyme-to-json';
 
 test("test entering todos", async () => {
@@ -27,8 +27,10 @@ test("test entering todos", async () => {
     expect(seachedTodos.length).toBe(3);
 
     todoStrings.forEach((todoString, index) => 
-        expect(seachedTodos[index].props.children).toBe(todoStrings[index])
+        expect(seachedTodos[index].props.children).toBe(todoString)
     );
+
+    
     //console.log(debug());
     //const lastRender = asJSON();
     //expect(firstRender).toMatchDiffSnapshot(lastRender);

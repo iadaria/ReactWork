@@ -36,7 +36,7 @@ describe("Should success added 3 dotos", () => {
         expect(title).toEqual("Todo App");
     });
 
-    test("add 3 todo `success`", async (done) => {
+    /* test("add 3 todo `success`", async (done) => {
         const todos = ["the first todo", "the second todo", "the third todo"];
 
         await appPage.addTodo(todos[0]);
@@ -54,7 +54,7 @@ describe("Should success added 3 dotos", () => {
         expect(image).toMatchImageSnapshot({});
         
         done();
-    }, 30000);
+    }, 30000); */
 });
 
 describe("Should fail added todos", () => {
@@ -73,12 +73,37 @@ describe("Should fail added todos", () => {
         await browser.close();
     });
 
-    test("enter empty string and click 'Add'", async () => {
+    /* test("enter empty string and click 'Add'", async () => {
         await appPage.clickAddTodoButton();
         expect(await appPage.isEmptyTodos()).toBeTruthy();
 
         expect(await appPage.screenshot()).toMatchImageSnapshot({});
-    });
+    }); */
+
+    test("add 3 and remove 1 todo `success`", async (done) => {
+        const todos = ["the first todo", "the second todo", "the third todo"];
+
+        await appPage.addTodo(todos[0]);
+        expect(await appPage.isAddedTodoDisplayed(todos[0])).toBeTruthy();
+
+        await appPage.addTodo(todos[1]);
+        expect(await appPage.isAddedTodoDisplayed(todos[1])).toBeTruthy();
+
+        await appPage.addTodo(todos[2]);
+        expect(await appPage.isAddedTodoDisplayed(todos[2])).toBeTruthy();
+
+        expect(await appPage.getLengthOfTodos()).not.toBe(2);
+
+        await appPage.removeTodo(todos[1]);
+        expect(await appPage.getLengthOfTodos()).toBe(1);
+        expect(await appPage.isEmptyOneTodo(todos[2]));
+
+
+        const image = await appPage.screenshot();
+        expect(image).toMatchImageSnapshot({});
+        
+        done();
+    }, 30000);
 
 
 });

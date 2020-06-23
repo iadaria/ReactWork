@@ -16,8 +16,8 @@ export const MainScreen = ({ todos, addTodo, onRemove, openTodo }) => {
             const width = Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2;
             setDeviceWidth(width);
         }
-
-        Dimensions.addEventListener('change', update); //привязываем
+        //привязываем вызов функции при изменение размера экрана
+        Dimensions.addEventListener('change', update); 
 
         return () => {
             Dimensions.removeEventListener('change', update);

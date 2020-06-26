@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import { View, Text, StyleSheet, Button, FlatList, Platform } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { AppHeaderIcon } from "../components/AppHeaderIcon";
@@ -6,19 +7,19 @@ import { DATA } from "../data";
 import { Post } from "../components/Post";
 
 export const BookedScreen = ({ navigation }) => {
+    navigation.setOptions(options);
     const handlerOpenPost = (post) => {
         navigation.navigate("Post", {
             postId: post.id,
             date: post.date,
         });
     };
-
-    navigation.setOptions(options);
+    const bookedPosts = useSelector(state => state.post.bookedPosts);
 
     return (
         <View style={styles.wrapper}>
             <FlatList
-                data={DATA.filter(post => post.booked)}
+                data={bookedPosts}
                 keyExtractor={(post) => post.id.toString()}
                 renderItem={({ item }) => (
                     <Post post={item} onOpen={handlerOpenPost} />

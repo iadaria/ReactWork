@@ -9,6 +9,7 @@ node.txt
 
 .DS_STORE
 node_modules
+package-lock.json
 scripts/flow/*/.flowconfig
 *~
 *.pyc

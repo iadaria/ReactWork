@@ -1,13 +1,23 @@
-import React from "react";
-import { View, Text, StyleSheet, Button, FlatList, Platform } from "react-native";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { View, StyleSheet, FlatList } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { AppHeaderIcon } from "../components/AppHeaderIcon";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-//import { AntDesign } from '@expo/vector-icons';
-import { DATA } from "../data";
 import { Post } from "../components/Post";
+import { loadPosts } from "../store/actions/post";
+//import { AntDesign } from '@expo/vector-icons';
+//import { DATA } from "../data";
 
 export const MainScreen = ({ navigation }) => {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(loadPosts());
+    }, [dispatch]);
+
+    const allPosts = useSelector(state => state.post.allPosts);
+
     const handlerOpenPost = (post) => {
         navigation.navigate("Post", {
             postId: post.id,
@@ -41,7 +51,7 @@ export const MainScreen = ({ navigation }) => {
     return (
         <View style={styles.wrapper}>
             <FlatList
-                data={DATA}
+                data={allPosts}
                 keyExtractor={(post) => post.id.toString()}
                 renderItem={({ item }) => (
                     <Post post={item} onOpen={handlerOpenPost} />

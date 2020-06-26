@@ -19,16 +19,14 @@ export const CreateScreen = ({ navigation }) => {
     });
 
     return (
-        <View style={styles.center}>
+        <View style={styles.wrapper}>
             <Text>CreateScreen</Text>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    center: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+    wrapper: {
+        padding: 10
     }
 });

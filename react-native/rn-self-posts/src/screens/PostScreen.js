@@ -38,7 +38,7 @@ export const PostScreen = ({ navigation, route }) => {
                     text: "Удалить",
                     onPress() {
                         navigation.navigate('Main');
-                        dispatch(removePost(postId));
+                        dispatch(removePost(post.id));
                     },
                 },
             ],
@@ -57,7 +57,7 @@ export const PostScreen = ({ navigation, route }) => {
                         post && post.booked ? "ios-star" : "ios-star-outline"
                     }
                     onPress={() => {
-                        dispatch(toogleBooked(postId));
+                        dispatch(toogleBooked(post));
                     }}
                 />
             </HeaderButtons>

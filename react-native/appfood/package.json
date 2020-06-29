@@ -13,7 +13,7 @@
   "dependencies": {
     "react": "16.11.0",
     "react-native": "^0.62.0-0",
-    "react-native-windows": "^0.62.0-0"
+    "react-native-swiper": "^1.6.0-rc.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -24,7 +24,6 @@
     "eslint-plugin-react-hooks": "^4.0.4",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.58.0",
-    "react-native-swiper": "^1.6.0-nightly.5",
     "react-test-renderer": "16.11.0"
   },
   "jest": {

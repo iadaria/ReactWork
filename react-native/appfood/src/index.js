@@ -24,20 +24,15 @@ export default function App() {
     return (
         <ScrollView>
             <View style={styles.root}>
-            {/* <View
-                style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-            > */}
-                <View style={styles.top}>
-                    <Image style={styles.imageLogo} resizeMode="contain" source={require("../assets/img/foodapp_logo3.png")} />
-                    <Swiper style={styles.bannerContainer} showsButtons={false} autoplay={true} autoplayTimeout={10}>
-                        {
-                            dataBanner.map(banner => (
-                                <Image style={styles.imageBanner} resizeMode="contain" source={{uri: banner}}/>
-                            ))
-                        }
-                    </Swiper>
-                    
-                </View>
+                <Image style={styles.imageLogo} resizeMode="contain" source={require("../assets/img/foodapp_logo3.png")} />
+                <Swiper style={styles.bannerContainer} showsButtons={true} autoplay={true} autoplayTimeout={2}>
+                    {
+                        dataBanner.map((banner, index) => (
+                            <Image key={index} style={styles.imageBanner} source={{ uri: banner }} />
+                        ))
+                    }
+                </Swiper>
+
             </View>
         </ScrollView>
     );
@@ -46,30 +41,30 @@ export default function App() {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
+        alignItems: 'center',
         backgroundColor: '#f2f2f2',
 
         borderWidth: 3,
         borderColor: 'red'
-    },  
-    top: {
-        width: width,
-        alignItems: 'center'
-    },  
+    },
+
     imageLogo: {
-        //borderWidth: 1,
-        //borderColor: 'blue',
         height: 80,
         width: width / 2,
         margin: 10
     },
     bannerContainer: {
-        borderWidth: 1,
+        //backgroundColor: 'blue',
+        //width: '100%',
+        height: width / 2
+        /* borderWidth: 1,
         borderColor: 'green',
-        width: height / 2,
+        width: height / 2, */
     },
     imageBanner: {
         height: width / 2,
         width: width - 40,
         borderRadius: 10,
-    }, 
-  });
+        alignSelf: 'center'
+    },
+});

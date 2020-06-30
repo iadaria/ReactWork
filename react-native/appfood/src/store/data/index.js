@@ -1,4 +1,4 @@
-{
+export const DATA = {
     "banner": [
         "http://tutofox.com/foodapp//banner/banner-1.jpg",
         "http://tutofox.com/foodapp//banner/banner-2.jpg",

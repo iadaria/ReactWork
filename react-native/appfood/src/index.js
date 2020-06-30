@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { Text, View, Dimensions, ScrollView, Image, StyleSheet } from "react-native";
+import {  View, Dimensions, ScrollView, Image, StyleSheet } from "react-native";
 
 import Swiper from 'react-native-swiper';
 import TutofoxService from './services/tutofox-service';
@@ -41,6 +41,7 @@ export default function App() {
             >
                 <View style={styles.root}>
                     <Image
+                        
                         style={styles.imageLogo}
                         resizeMode="contain"
                         source={require("../assets/img/foodapp_logo3.png")}

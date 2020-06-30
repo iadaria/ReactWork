@@ -1,3 +1,5 @@
+import { DATA } from '../store/data';
+
 export default class TutofoxService {
     _apiBase = "http://tutofox.com/foodapp/api.json";
 
@@ -11,7 +13,13 @@ export default class TutofoxService {
         //console.log('result request of json', await res.json());
         return await res.json();   
     }
-    getAllData = async () => await this.getResource();
+    getAllData = async () => {
+        try {
+            await this.getResource();
+        } catch {
+            return DATA;
+        }
+    }
 
     getAllBanners = async () => {
         const res = await this.getResource();

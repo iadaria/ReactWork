@@ -3,7 +3,8 @@ import { Text, View, Dimensions, ScrollView, Image, StyleSheet } from "react-nat
 
 import Swiper from 'react-native-swiper';
 import TutofoxService from './services/tutofox-service';
-import { CategorySwiper } from './components/CategorySwiper';
+import { CategoryList } from './components/CategoryList';
+import { FoodList } from './components/FoodList';
 
 let { height, width } = Dimensions.get("window");
 
@@ -28,21 +29,23 @@ export default function App() {
         loadData();
     }, []);
 
-    console.log(
+    /* console.log(
         `'selectedCategory' after render in ${Date.now()}`,
         selectedCategory
-    );
+    ); */
 
     return (
         <View>
-            <ScrollView>
+            <ScrollView
+                scrollEnabled={true}
+            >
                 <View style={styles.root}>
                     <Image
                         style={styles.imageLogo}
                         resizeMode="contain"
                         source={require("../assets/img/foodapp_logo3.png")}
-
                     />
+
                     <Swiper
                         style={styles.bannerContainer}
                         showsButtons={true}
@@ -55,8 +58,19 @@ export default function App() {
                         }
                     </Swiper>
                 </View>
+                <View style={styles.searchSection}>
+                    <CategoryList 
+                        categories={dataCategories} 
+                        onSelect={setSelectedCategory} 
+                        selectedCategory={selectedCategory}    
+                    />
+                    <FoodList 
+                        food={dataFood} 
+                        selectedCategory={selectedCategory}
+                    />
+                </View>
             </ScrollView>
-            <CategorySwiper categories={dataCategories} onSelect={setSelectedCategory} />
+
         </View>
     );
 }
@@ -71,6 +85,13 @@ const styles = StyleSheet.create({
         borderColor: 'red'
     },
 
+    searchSection: {
+        width: width,
+        paddingVertical: 20,
+        backgroundColor: 'white',//'blue',
+        borderRadius: 20,
+    },
+
     imageLogo: {
         height: 80,
         width: width / 2,
@@ -80,9 +101,9 @@ const styles = StyleSheet.create({
         //backgroundColor: 'blue',
         //width: '100%',
         height: width / 2
-        /* borderWidth: 1,
-        borderColor: 'green',
-        width: height / 2, */
+        //borderWidth: 1,
+        //borderColor: 'green',
+        //width: height / 2,
     },
     imageBanner: {
         height: width / 2,

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React from 'react';
 import {
     Text,
     View,
@@ -11,13 +11,20 @@ import {
 } from "react-native";
 let { height, width } = Dimensions.get("window");
 
-export const CategorySwiper = ({ categories, onSelect }) => {
+
+export const CategoryList = ({ categories, onSelect, selectedCategory }) => {
+    /* console.log(
+        `'selectedCategory from category' after render in ${Date.now()}`,
+        selectedCategory
+    ); */
+
     return (
-        <View style={styles.root}>
-            <Text style={styles.title}>Categories</Text>
+        <View>
+            <Text style={styles.title}>Categories {selectedCategory}</Text>
             <FlatList
                 horizontal={true}
                 data={categories}
+                nestedScrollEnabled={true}
                 renderItem={({item}) => _renderItem(item, onSelect)}
                 keyExtractor={(item, index) => index.toString()}
             />

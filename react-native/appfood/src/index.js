@@ -3,38 +3,61 @@ import { Text, View, Dimensions, ScrollView, Image, StyleSheet } from "react-nat
 
 import Swiper from 'react-native-swiper';
 import TutofoxService from './services/tutofox-service';
+import { CategorySwiper } from './components/CategorySwiper';
 
 let { height, width } = Dimensions.get("window");
 
 export default function App() {
     const [dataBanner, setDataBanner] = React.useState([]);
+    const [dataCategories, setDataCategories] = React.useState([]);
+    const [dataFood, setDataFood] = React.useState([]);
+    const [selectedCategory, setSelectedCategory] = React.useState(null);
     const [loading, setLoading] = React.useState(false);
 
     const tutofoxService = new TutofoxService();
-    const loadBanners = useCallback(async () => {
-        const banners = await tutofoxService.getAllBanners();
-        console.log(banners);
-        setDataBanner(banners);
+    const loadData = useCallback(async () => {
+        setLoading(true);
+        const { banner, categories, food } = await tutofoxService.getAllData();
+        setDataBanner(banner);
+        setDataCategories(categories);
+        setDataFood(food);
+        setLoading(false);
     }, []);
 
     useEffect(() => {
-        loadBanners();
+        loadData();
     }, []);
 
-    return (
-        <ScrollView>
-            <View style={styles.root}>
-                <Image style={styles.imageLogo} resizeMode="contain" source={require("../assets/img/foodapp_logo3.png")} />
-                <Swiper style={styles.bannerContainer} showsButtons={true} autoplay={true} autoplayTimeout={2}>
-                    {
-                        dataBanner.map((banner, index) => (
-                            <Image key={index} style={styles.imageBanner} source={{ uri: banner }} />
-                        ))
-                    }
-                </Swiper>
+    console.log(
+        `'selectedCategory' after render in ${Date.now()}`,
+        selectedCategory
+    );
 
-            </View>
-        </ScrollView>
+    return (
+        <View>
+            <ScrollView>
+                <View style={styles.root}>
+                    <Image
+                        style={styles.imageLogo}
+                        resizeMode="contain"
+                        source={require("../assets/img/foodapp_logo3.png")}
+
+                    />
+                    <Swiper
+                        style={styles.bannerContainer}
+                        showsButtons={true}
+                        autoplay={false}
+                        autoplayTimeout={2}>
+                        {
+                            dataBanner.map((banner, index) => (
+                                <Image key={index} style={styles.imageBanner} source={{ uri: banner }} />
+                            ))
+                        }
+                    </Swiper>
+                </View>
+            </ScrollView>
+            <CategorySwiper categories={dataCategories} onSelect={setSelectedCategory} />
+        </View>
     );
 }
 

@@ -11,9 +11,15 @@ export default class TutofoxService {
         //console.log('result request of json', await res.json());
         return await res.json();   
     }
+    getAllData = async () => await this.getResource();
 
     getAllBanners = async () => {
         const res = await this.getResource();
         return res.banner
     };
+
+    getAllCategories = async() => {
+        const res = await this.getResource();
+        return res.categories;
+    }
 }

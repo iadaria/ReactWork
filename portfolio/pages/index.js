@@ -8,7 +8,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 const Index = () => {
 
-    const roles = ['Developer', 'Tech Lover', 'Team Player', 'Course Creater', 'React.js', 'ASP.NET'];
+    const roles = ['Developer', 'Team Player', 'React.js', 'React Native', 'ASP.NET'];
     
         return (
             <BaseLayout className="cover">
@@ -24,7 +24,7 @@ const Index = () => {
                                     <div className={`flipper`}>
                                     <div className="back">
                                         <div className="hero-section-content">
-                                        <h2> Full Stack Web Developer </h2>
+                                        <h2> Full Stack Developer </h2>
                                         <div className="hero-section-content-intro">
                                             Have a look at my portfolio and job history.
                                         </div>

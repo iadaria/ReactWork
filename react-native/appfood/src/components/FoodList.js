@@ -13,23 +13,21 @@ import {
 
 let { height, width } = Dimensions.get("window");
 
-export const FoodList = ({ food, selectedCategory }) => {
-    const onSelect = () => { };
-
+export const FoodList = ({ food, selectedCategory, addToCart }) => {
     return (
         <View style={styles.root}>
             <FlatList
                 nestedScrollEnabled={true}
                 numColumns={2}
                 data={food}
-                renderItem={({ item }) => _renderItemFood(item, selectedCategory, onSelect)}
+                renderItem={({ item }) => _renderItemFood(item, selectedCategory, addToCart)}
                 keyExtractor={(item, index) => index.toString()}
             />
         </View>
     );
 };
 
-function _renderItemFood(item, selectedCategory, onSelect) {
+function _renderItemFood(item, selectedCategory, addToCart) {
     
     if (selectedCategory && selectedCategory !== item.categorie) 
         return null;
@@ -38,7 +36,7 @@ function _renderItemFood(item, selectedCategory, onSelect) {
 
         <TouchableOpacity
             style={[styles.divFood, { backgroundColor: item.color }]}
-            onPress={onSelect.bind(null, item.id)}
+            onPress={addToCart.bind(null, item)}
         >
             <Image
                 style={styles.imgFood}
@@ -47,14 +45,11 @@ function _renderItemFood(item, selectedCategory, onSelect) {
             />
             <Text style={styles.nameFood}>{item.name}</Text>
             <Text>Descp Food and Details</Text>
-            <Text style={styles.price}>{item.price}</Text>
+            <Text style={styles.price}>$ {item.price}</Text>
         </TouchableOpacity>
 
     );
 }
-
-/* let catg = this.state.selectCatg
-    if(catg==0||catg==item.categorie) */
 
 const styles = StyleSheet.create({
     root: {
@@ -74,9 +69,6 @@ const styles = StyleSheet.create({
         padding: 10,
 
         borderRadius: 5,
-        /* elevation: 8,
-        shadowOpacity: 0.3,
-        shadowRadius: 5, */
     },
     imgFood: {
         //borderWidth: 1,

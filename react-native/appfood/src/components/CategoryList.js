@@ -3,7 +3,6 @@ import {
     Text,
     View,
     Dimensions,
-    ScrollView,
     Image,
     StyleSheet,
     FlatList,
@@ -13,14 +12,11 @@ let { height, width } = Dimensions.get("window");
 
 
 export const CategoryList = ({ categories, onSelect, selectedCategory }) => {
-    /* console.log(
-        `'selectedCategory from category' after render in ${Date.now()}`,
-        selectedCategory
-    ); */
+    const category = categories.find(item => item.id === selectedCategory);
 
     return (
         <View>
-            <Text style={styles.title}>Categories {selectedCategory}</Text>
+            <Text style={styles.title}>Categories '{category?.name}'</Text>
             <FlatList
                 horizontal={true}
                 data={categories}

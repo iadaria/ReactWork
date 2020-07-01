@@ -4,7 +4,7 @@ import {  View, Text, StyleSheet } from "react-native";
 export const AddressScreen = () => {
     const [data, setData] = React.useState("");
     return (
-        <View>
+        <View style={styles.root}>
             <Text>Address</Text>
         </View>
     );

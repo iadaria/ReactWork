@@ -2,9 +2,9 @@ import React from 'react';
 import {  View, Text, StyleSheet } from "react-native";
 
 export const ProfileScreen = () => {
-    const [data, setData] = React.useContext("");
+    const [data, setData] = React.useState("");
     return (
-        <View>
+        <View style={styles.root}>
             <Text>Profile</Text>
         </View>
     );

@@ -1,77 +1,72 @@
-import React, { useEffect, useCallback } from 'react';
-import {  View, Dimensions, ScrollView, Image, StyleSheet } from "react-native";
+import React from 'react';
+import { View, Dimensions, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { Badge } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-import Swiper from 'react-native-swiper';
-import TutofoxService from './services/tutofox-service';
-import { CategoryList } from './components/CategoryList';
-import { FoodList } from './components/FoodList';
+import { FoodScreen } from './screens/FoodScreen';
+import { CartScreen } from './screens/CartScreen';
+import { AddressScreen } from './screens/AddressScreen';
+import { ProfileScreen } from './screens/ProfileScreen';
+
 
 let { height, width } = Dimensions.get("window");
 
+console.disableYellowBox = true;
+
+
 export default function App() {
-    const [dataBanner, setDataBanner] = React.useState([]);
-    const [dataCategories, setDataCategories] = React.useState([]);
-    const [dataFood, setDataFood] = React.useState([]);
-    const [selectedCategory, setSelectedCategory] = React.useState(null);
     const [loading, setLoading] = React.useState(false);
+    const [module, setModule] = React.useState(0);
+    const [selectedCategory, setSelectedCategory] = React.useState(null);
+    const [countFood, setCountFood] = React.useState(0);
 
-    const tutofoxService = new TutofoxService();
-    const loadData = useCallback(async () => {
-        setLoading(true);
-        const { banner, categories, food } = await tutofoxService.getAllData();
-        setDataBanner(banner);
-        setDataCategories(categories);
-        setDataFood(food);
-        setLoading(false);
-    }, []);
-
-    useEffect(() => {
-        loadData();
-    }, []);
-
-    /* console.log(
-        `'selectedCategory' after render in ${Date.now()}`,
-        selectedCategory
-    ); */
+    const screens = [
+        <FoodScreen 
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            setCountFood={setCountFood}
+        />,
+        <CartScreen />,
+        <AddressScreen />,
+        <ProfileScreen />
+    ];
+    const getColor = (curModule) => curModule !== module ? 'gray' : 'limegreen';
 
     return (
-        <View>
-            <ScrollView
-                scrollEnabled={true}
-            >
-                <View style={styles.root}>
-                    <Image
-                        
-                        style={styles.imageLogo}
-                        resizeMode="contain"
-                        source={require("../assets/img/foodapp_logo3.png")}
-                    />
+        <View style={styles.root}>
+            {screens[module]}
+            <View style={styles.bottomTab}>
 
-                    <Swiper
-                        style={styles.bannerContainer}
-                        showsButtons={true}
-                        autoplay={false}
-                        autoplayTimeout={2}>
-                        {
-                            dataBanner.map((banner, index) => (
-                                <Image key={index} style={styles.imageBanner} source={{ uri: banner }} />
-                            ))
+                <TouchableOpacity style={styles.itemTab} onPress={() => setModule(0)}>
+                    <Icon name="md-restaurant" size={30} color={getColor(0)} />
+                    <Text>Food</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.itemTab} onPress={() => setModule(1)}>
+                    <View>
+                        <Icon name="md-basket" size={30} color={getColor(1)} />
+                        {countFood !== 0 && 
+                            <Badge 
+                                status="success" 
+                                value={`${countFood}+`}
+                                containerStyle={{ position: 'absolute', top: -2, right: -7 }}    
+                            />
                         }
-                    </Swiper>
-                </View>
-                <View style={styles.searchSection}>
-                    <CategoryList 
-                        categories={dataCategories} 
-                        onSelect={setSelectedCategory} 
-                        selectedCategory={selectedCategory}    
-                    />
-                    <FoodList 
-                        food={dataFood} 
-                        selectedCategory={selectedCategory}
-                    />
-                </View>
-            </ScrollView>
+                    </View>
+                    <Text>Cart</Text>
+                </TouchableOpacity>
 
+                <TouchableOpacity style={styles.itemTab} onPress={() => setModule(2)}>
+                    <Icon name="md-map" size={30} color={getColor(2)} />
+                    <Text>Address</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.itemTab} onPress={() => setModule(3)}>
+                    <Icon name="md-contact" size={30} color={getColor(3)} />
+                    <Text>Profile</Text>
+                </TouchableOpacity>
+
+            </View>
         </View>
     );
 }
@@ -79,37 +74,23 @@ export default function App() {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#f2f2f2',
 
-        borderWidth: 3,
-        borderColor: 'red'
+        //borderWidth: 2,
+        //borderColor: 'blue'
     },
-
-    searchSection: {
+    bottomTab: {
+        //borderWidth: 2,
+        //borderColor: 'blue',
+        height: 62,
         width: width,
-        paddingVertical: 20,
-        backgroundColor: 'white',//'blue',
-        borderRadius: 20,
+        backgroundColor: 'orange',
+        flexDirection: 'row'
+    },
+    itemTab: {
+        width: width / 4,
+        backgroundColor: 'white',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
 
-    imageLogo: {
-        height: 80,
-        width: width / 2,
-        margin: 10
-    },
-    bannerContainer: {
-        //backgroundColor: 'blue',
-        //width: '100%',
-        height: width / 2
-        //borderWidth: 1,
-        //borderColor: 'green',
-        //width: height / 2,
-    },
-    imageBanner: {
-        height: width / 2,
-        width: width - 40,
-        borderRadius: 10,
-        alignSelf: 'center'
-    },
 });

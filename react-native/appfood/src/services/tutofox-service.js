@@ -5,7 +5,7 @@ export default class TutofoxService {
 
     async getResource(url = "") {
         const res = await fetch(`${this._apiBase}${url}`);
-        //console.log('request', res.ok);
+        console.log('request', res.ok);
 
         if (!res.ok) {
             throw new Error(`Could not fetch ${url}, recieved ${res.status}`);
@@ -15,7 +15,7 @@ export default class TutofoxService {
     }
     getAllData = async () => {
         try {
-            await this.getResource();
+            return await this.getResource();
         } catch {
             return DATA;
         }

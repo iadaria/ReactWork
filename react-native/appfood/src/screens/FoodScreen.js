@@ -34,7 +34,7 @@ export function FoodScreen({ selectedCategory, setSelectedCategory, setCountFood
     const addToCart = (itemForAdd) => {
         const newCount = count + 1;
         setCount(newCount);
-        setCountFood(newCount); console.log('count', count);
+        setCountFood(newCount); //console.log('count', count);
     
         AsyncStorage.getItem('cart').then(dataCart => {
             if (dataCart !== null) {

@@ -16,8 +16,7 @@ console.disableYellowBox = true;
 
 
 export default function App() {
-    const [loading, setLoading] = React.useState(false);
-    const [module, setModule] = React.useState(2);
+    const [module, setModule] = React.useState(3);
     const [selectedCategory, setSelectedCategory] = React.useState(null);
     const [countFood, setCountFood] = React.useState(0);
 

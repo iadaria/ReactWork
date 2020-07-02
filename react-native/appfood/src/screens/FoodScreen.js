@@ -79,7 +79,7 @@ export function FoodScreen({ selectedCategory, setSelectedCategory, setCountFood
 
                 <Swiper
                     style={styles.bannerContainer}
-                    showsButtons={true}
+                    showsButtons={false}
                     autoplay={false}
                     autoplayTimeout={2}>
                     {

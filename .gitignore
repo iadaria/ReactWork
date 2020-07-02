@@ -201,3 +201,4 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+react-native/appfood/android/app/src/main/AndroidManifest.xml

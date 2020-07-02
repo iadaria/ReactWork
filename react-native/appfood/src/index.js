@@ -7,6 +7,7 @@ import { FoodScreen } from './screens/FoodScreen';
 import { CartScreen } from './screens/CartScreen';
 import { AddressScreen } from './screens/AddressScreen';
 import { ProfileScreen } from './screens/ProfileScreen';
+import { THEME } from './theme';
 
 
 let { height, width } = Dimensions.get("window");
@@ -16,7 +17,7 @@ console.disableYellowBox = true;
 
 export default function App() {
     const [loading, setLoading] = React.useState(false);
-    const [module, setModule] = React.useState(0);
+    const [module, setModule] = React.useState(2);
     const [selectedCategory, setSelectedCategory] = React.useState(null);
     const [countFood, setCountFood] = React.useState(0);
 
@@ -81,9 +82,10 @@ const styles = StyleSheet.create({
     bottomTab: {
         //borderWidth: 2,
         //borderColor: 'blue',
-        height: 62,
+        height: THEME.BOTTOM_BAR_HEIGHT,
         width: width,
-        backgroundColor: 'orange',
+        //backgroundColor: 'cadetblue',
+        //opacity: 0.8,
         flexDirection: 'row'
     },
     itemTab: {

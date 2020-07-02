@@ -16,7 +16,7 @@ export const CategoryList = ({ categories, onSelect, selectedCategory }) => {
 
     return (
         <View>
-            <Text style={styles.title}>Categories '{category?.name}'</Text>
+            <Text style={styles.title}>Categories {!!category && `'${category?.name}'`}</Text>
             <FlatList
                 horizontal={true}
                 data={categories}

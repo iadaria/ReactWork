@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { DATA } from '../store/data';
 import { 
     View, 
     //Dimensions, 
@@ -7,55 +8,62 @@ import {
     Text,
     FlatList, 
     Image } from "react-native";
-import { DATA } from '../store/data';
-//import { THEME } from '../theme';
 
-const CityScreen = ({ deviceWidth }) => {
+const CityList = ({ deviceWidth, selectCity }) => {
     const [cities, setCities] = React.useState([]);
-
+    
     useEffect(() => {
         setCities(DATA.cities);
         console.log('set cities');
     }, []);
 
     return (
-        <View style={styles.root}>
+        <>
+            <View style={styles.navbar}>
+                <Text style={styles.navbarText}>Выберите ваш город</Text>
+                <Text style={styles.navbarText}>Help icon</Text>
+            </View>
             <FlatList
                 data={cities}
-                renderItem={({ item }) => _renderCity(item, deviceWidth)}
+                renderItem={({ item }) => _renderCity(item, deviceWidth, selectCity)}
                 keyExtractor={(item, index) => index.toString()}
             />
-        </View>
+        </>
     );
 };
 
-function _renderCity(item, deviceWidth) {
+function _renderCity(item, deviceWidth, selectCity) {
     const tempImg = "../store/data/img/Dnepr.png";
     return (
-        <TouchableOpacity style={[
-            styles.city,
-        ]}>
+        <TouchableOpacity 
+            style={[
+                styles.city,
+            ]}
+            onPress={selectCity.bind(null, item.id)}
+        >
             <Image
 
                 resizeMode="cover"
                 style={[
                     styles.cityImage, 
-                    { width: deviceWidth, height: deviceWidth / 2.2}
+                    { width: deviceWidth - 4, height: deviceWidth / 2.2, overflow: 'visible'}
                 ]}
                 source={require(tempImg)}
             />
+            <Text style={styles.cityHeader}>{item.name}</Text>
         </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
-    root: {
-        flex: 1,
-        //alignContent: 'center',
-        //justifyContent: 'center',
-
-        borderWidth: 2,
-        borderColor: 'blue'
+    navbar: {
+        flexDirection: 'row',
+        justifyContent: 'space-between', 
+        paddingVertical: 5
+    },
+    navbarText: {
+        fontWeight: 'bold',
+        color: 'gray'
     },
     city: {
         borderWidth: 1,
@@ -63,6 +71,9 @@ const styles = StyleSheet.create({
     },
     cityImage: {
         overflow: 'visible',
+        marginTop: 20,
+        marginBottom: 10,
+        borderRadius: 10,
         //width: width - THEME.MARGIN_HORIZONTAL * 2,
         //height: ( width - THEME.MARGIN_HORIZONTAL * 2 ) / 2.5,
         //maxWidth: height,
@@ -70,7 +81,11 @@ const styles = StyleSheet.create({
         
         borderWidth: 1,
         borderColor: 'red'
+    },
+    cityHeader: {
+        fontSize: 15,
+        fontWeight: 'bold'
     }
 });
 
-export default CityScreen;
+export default CityList;

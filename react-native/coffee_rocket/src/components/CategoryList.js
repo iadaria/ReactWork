@@ -9,7 +9,7 @@ import {
     FlatList, 
     Image } from "react-native";
 
-const CategoryList = ({ deviceWidth, city, selectCategory }) => {
+const CategoryList = ({ deviceWidth, city, selectCategory, back }) => {
     const [categories, setCategories] = React.useState([]);
 
     useEffect(() => {
@@ -22,7 +22,9 @@ const CategoryList = ({ deviceWidth, city, selectCategory }) => {
     return (
         <>
             <View style={styles.navbar}>
-                <Text style={styles.navbarText}>Назад</Text>
+                <TouchableOpacity onPress={back}>
+                    <Text style={styles.navbarText}>Назад</Text>
+                </TouchableOpacity>
                 <Text style={styles.navbarText}>Help icon</Text>
             </View>
             <Text style={styles.categoryTitle}>Что желаете?</Text>
@@ -69,8 +71,8 @@ const styles = StyleSheet.create({
         color: 'gray'
     },
     category: {
-        borderWidth: 1,
-        borderColor: 'green'
+        //borderWidth: 1,
+        //borderColor: 'green'
     },
     categoryImage: {
         overflow: 'visible',
@@ -82,8 +84,8 @@ const styles = StyleSheet.create({
         //maxWidth: height,
         //maxHeight: height / 2.5,
         
-        borderWidth: 1,
-        borderColor: 'red'
+        //borderWidth: 1,
+        //borderColor: 'red'
     },
     categoryTitle: {
         fontSize: 22,

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { 
     View, 
-    StyleSheet } from "react-native";
+    StyleSheet,
+    Text } from "react-native";
 
 import CityList from '../components/CityList';
 import CategoryList from '../components/CategoryList';
@@ -13,6 +14,7 @@ const ShopScreen = ({ deviceWidth }) => {
     const [selectedCategory, setSelectedCategory] = React.useState(null);
 
     const resetCategory = () => setSelectedCategory(null);
+    const resetCity = () => setSelectedCity(null);
 
     selectedCity && console.log('selectedCity id = ', selectedCity);
     
@@ -27,6 +29,7 @@ const ShopScreen = ({ deviceWidth }) => {
             deviceWidth={deviceWidth}
             city={selectedCity}
             selectCategory={setSelectedCategory}
+            back={resetCity}
         /> : null;
 
     const goods = selectedCity && selectedCategory ?
@@ -37,11 +40,21 @@ const ShopScreen = ({ deviceWidth }) => {
             back={resetCategory}
         /> : null;
 
+    const cart =  (
+        <View style={{ 
+            height: 60, width: '40%', backgroundColor: 'cadetblue',
+            position: 'absolute'
+            }}>
+            <Text>Заказ X за {123} грн.</Text>
+        </View>
+    );
+
     return (
         <View style={styles.root}>
             {cities}
             {categories}
             {goods}
+            {/* {cart} */}
         </View>
     );
 };
@@ -54,8 +67,8 @@ const styles = StyleSheet.create({
         //alignContent: 'center',
         //justifyContent: 'center',
 
-        borderWidth: 2,
-        borderColor: 'blue'
+        //borderWidth: 2,
+        //borderColor: 'blue'
     }
 });
 

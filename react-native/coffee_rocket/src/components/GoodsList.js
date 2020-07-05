@@ -1,25 +1,34 @@
 import React, { useEffect } from 'react';
 import { DATA } from '../store/data';
-import { 
-    View, 
-    //Dimensions, 
-    StyleSheet, 
-    TouchableOpacity, 
+import {
+    View,
+    StyleSheet,
+    TouchableOpacity,
     Text,
-    FlatList, 
-    Image } from "react-native";
+    FlatList,
+} from "react-native";
+import Product from './Product';
+import AsyncStorage from '@react-native-community/async-storage';
 
-
-const GoodsList = ({deviceWidth, city, category, back }) => {
+const GoodsList = ({ deviceWidth, city, category, back }) => {
     const [goods, setGoods] = React.useState(null);
+    const [sum, setSum] = React.useState(null);
 
     useEffect(() => {
         setGoods(
-            DATA.goods.filter(good => 
+            DATA.goods.filter(good =>
                 good.city_id === city && good.category_id === category)
         );
-
-        console.log('set goods');
+    }, []);
+  
+    useEffect(() => {
+        console.log('lunch useEffect get order');
+        AsyncStorage.getItem('order').then(order => {
+            if (order !== null) {
+                const _sum = Number(JSON.parse(order));
+                setSum(_sum);
+            }
+        });
     }, []);
 
     return (
@@ -31,77 +40,47 @@ const GoodsList = ({deviceWidth, city, category, back }) => {
                 <Text style={styles.navbarText}>Help icon</Text>
             </View>
             <Text style={styles.goodsTitle}>Кофейные напитки</Text>
-            <View style={{ justifyContent: 'space-between'}}>
+            <View style={{ justifyContent: 'space-between' }}>
                 <FlatList
                     numColumns={2}
                     data={goods}
-                    renderItem={({ item }) => _renderProduct(item, deviceWidth)}
+                    renderItem={
+                        ({ item, index }) => <Product item={item} deviceWidth={deviceWidth} setSum={setSum} />
+                    }
                     keyExtractor={(item, index) => index.toString()}
-                    columnWrapperStyle={{justifyContent: 'space-between'}}
+                    columnWrapperStyle={{ justifyContent: 'space-between' }}
                 />
             </View>
+            <View style={{ 
+                height: 60, width: '50%', backgroundColor: 'cadetblue',
+                position: 'absolute', bottom: 20, alignSelf: 'center',
+                borderRadius: 10, opacity: 0.8
+            }}>
+            <View style={{alignContent: 'center'}}>
+                <Text style={{color: 'white', fontWeight: 'bold', padding: 5, textAlign: 'center', marginTop: 12}}>
+                    Заказ X за {sum} грн.
+                </Text>
+            </View>
+        </View>
         </>
     );
 };
 
-function _renderProduct(item, deviceWidth) {
-    const tempImg = "../store/data/img/coffee_americano.png";
-    return (
-        <TouchableOpacity 
-            style={[
-                styles.product,
-            ]}
-            //onPress={selectCategory.bind(null, item.id)}
-        >
-            <Image
-
-                resizeMode="cover"
-                style={[
-                    styles.productImage, 
-                    { width: deviceWidth / 2 - 14, height: deviceWidth / 2.2, overflow: 'visible'}
-                ]}
-                source={require(tempImg)}
-            />
-            <Text style={styles.productName}>{item.name}</Text>
-        </TouchableOpacity>
-    );
-}
 
 const styles = StyleSheet.create({
     navbar: {
         flexDirection: 'row',
-        justifyContent: 'space-between', 
+        justifyContent: 'space-between',
         paddingVertical: 5,
     },
     navbarText: {
         fontWeight: 'bold',
         color: 'gray'
     },
-    product: {
-        borderWidth: 1,
-        borderColor: 'green'
-    },
-    productImage: {
-        overflow: 'visible',
-        marginTop: 20,
-        marginBottom: 10,
-        borderRadius: 10,
-        //width: width - THEME.MARGIN_HORIZONTAL * 2,
-        //height: ( width - THEME.MARGIN_HORIZONTAL * 2 ) / 2.5,
-        //maxWidth: height,
-        //maxHeight: height / 2.5,
-        
-        borderWidth: 1,
-        borderColor: 'red'
-    },
     goodsTitle: {
         fontSize: 22,
         fontWeight: 'bold'
     },
-    productName: {
-        fontSize: 15,
-        fontWeight: 'bold'
-    }
 });
 
 

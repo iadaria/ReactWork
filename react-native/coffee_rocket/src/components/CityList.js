@@ -66,8 +66,8 @@ const styles = StyleSheet.create({
         color: 'gray'
     },
     city: {
-        borderWidth: 1,
-        borderColor: 'green'
+        //borderWidth: 1,
+        //borderColor: 'green'
     },
     cityImage: {
         overflow: 'visible',
@@ -79,8 +79,8 @@ const styles = StyleSheet.create({
         //maxWidth: height,
         //maxHeight: height / 2.5,
         
-        borderWidth: 1,
-        borderColor: 'red'
+        //borderWidth: 1,
+        //borderColor: 'red'
     },
     cityHeader: {
         fontSize: 15,

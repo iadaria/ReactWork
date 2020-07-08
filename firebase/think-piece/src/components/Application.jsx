@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { firestore, auth } from '../firebase';
+import { firestore, auth, createUserProfileDocument } from '../firebase';
 
 import Posts from './Posts';
 import { collectIdsAndDocs } from '../utilities';
@@ -26,8 +26,9 @@ class Application extends Component {
         });
         
         //when logout, login
-        this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-            console.log('user', user);
+        this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+            const user = await createUserProfileDocument(userAuth);
+            console.log('user from unsubscribeFromAuth', user);
             this.setState({ user });
         });
 
@@ -66,7 +67,7 @@ class Application extends Component {
         return (
             <main className="Application">
                 <h1>Think Piece</h1>
-                <Authentication user={user}/>
+                <Authentication user={user} loading={false}/>
                 <Posts 
                     posts={posts} 
                 />

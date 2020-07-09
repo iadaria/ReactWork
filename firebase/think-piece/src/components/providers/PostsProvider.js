@@ -1,27 +1,29 @@
-import React, { Component, createContext, Children  } from 'react';
+import React, { Component, createContext  } from 'react';
 import { firestore } from '../../firebase';
 import { collectIdsAndDocs } from '../../utilities';
 
 export const PostsContext = createContext();
 
 class PostsProvider extends Component {
-    unsubscribeFromFirestore = null;
+    state = { posts: []};
+
+    unsubscribe = null;
 
     componentDidMount = async () => {
-        this.unsubscribeFromFirestore = firestore.collection('posts').onSnapshot(snapshot => {
+        this.unsubscribe = firestore.collection('posts').onSnapshot(snapshot => {
             const posts = snapshot.docs.map(collectIdsAndDocs);
-            console.log('posts', posts);
+            console.log('posts in subscribe', posts);
             this.setState({ posts });
         });
     };
       
     componentWillUnmount = () => {
-        this.unsubscribeFromFirestore();
+        this.unsubscribe();
     }
 
     render() {
         const { posts } = this.state;
-        const { children } = this.state;
+        const { children } = this.props;
 
         return (
             <PostsContext.Provider  value={posts}>

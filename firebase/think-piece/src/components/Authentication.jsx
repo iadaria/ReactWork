@@ -7,7 +7,7 @@ import { UserContext } from './providers/UserProvider';
 const Authentication = () => {
     const user = useContext(UserContext);
     //if (loading) return null;
-    console.log('Authentication user is ', user);
+    //console.log('Authentication user is ', user);
     return <div>{user ? <CurrentUser {...user} /> : <SignIn />}</div>;
 };
 

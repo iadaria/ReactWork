@@ -10,7 +10,7 @@ const Posts = () => {
             <AddPost />
             {/* <PostsContext.Consumer> */}
             { posts.map(post => <Post {...post} key={post.id} />) }
-            {/* </section></PostsContext.Consumer> */}
+            {/*</PostsContext.Consumer> */}
         </section>
     )
 }

@@ -1,41 +1,52 @@
 import React, { useState, useEffect } from "react";
+import './main-menu.scss';
 import Link from "next/link";
 //import { Link as RoutesLink } from "../../routes";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+//import Nav from "react-bootstrap/Nav";
+//import Navbar from "react-bootstrap/Navbar";
+//import NavDropdown from "react-bootstrap/NavDropdown";
 import withApollo from "@/hoc/withApollo";
 import { useLazyGetUser } from "@/apollo/actions";
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const AppLink = ({ children, className, href, as, ...props }) => (
-  <Link href={href} as={as}>
-    <a className={className} {...props}>{children}</a>
-
-    {/* <NavDropdown.Item href={href}>{children}</NavDropdown.Item> */}
-  </Link>
+    <Link href={href} as={as}>
+        <a className={className} {...props}>{children}</a>
+    </Link>
 );
 
 const MainMenu = () => {
-  const [user, setUser] = useState(null);
-  const [getUser, { data, error }] = useLazyGetUser();
+    const [user, setUser] = useState(null);
+    const [getUser, { data, error }] = useLazyGetUser();
 
-  useEffect(() => {
-    getUser(); ///to update date from mongo db
-    data && setUser(data.user);
-  }, [data]);
+    useEffect(() => {
+        getUser(); ///to update date from mongo db
+        data && setUser(data.user);
+    }, [data]);
 
-  return (
-    <div className="header">
+    return (
+        <div className="main-menu">
+            <AppBar>
+                <Toolbar>
+                    <Typography variant="h6" className="brand">Daria Iakimova</Typography>
+                    <Button className="btn-login">Login</Button>
+                </Toolbar>
+                
+            </AppBar>
+        </div>
+/* 
       <Navbar
-        className="nav"
+        className="main-menu nav"
         collapseOnSelect
-        fixed="top"
+        //fixed="top"
         variant="dark"
         expand="lg"
       >
-        {/* <Navbar.Brand className="nav-brand" href="/">
-          Daria Iakimova
-        </Navbar.Brand> */}
         <AppLink href="/" className="navbar-brand mr-3 font-weight-bold">
           Daria Iakimova
         </AppLink>
@@ -77,8 +88,6 @@ const MainMenu = () => {
                       </AppLink>
                     </>
                   )}
-                  {/* <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item> */}
-                  {/* <NavDropdown.Divider /> */}
                 </NavDropdown>
 
                 <AppLink className="nav-link btn btn-danger" href="/logout">
@@ -101,17 +110,9 @@ const MainMenu = () => {
               </>
             )}
           </Nav>
-
-          {/*  <Nav>
-            <Nav.Link href="#deets">More deets</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
-              Dank memes
-            </Nav.Link>
-          </Nav> */}
         </Navbar.Collapse>
       </Navbar>
-    </div>
-  );
+   */);
 };
 
 export default withApollo(MainMenu);

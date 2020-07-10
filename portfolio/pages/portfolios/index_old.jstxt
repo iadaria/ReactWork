@@ -54,7 +54,7 @@ const graphUpdatePortfolio = (id) => {
 const Portfolios = () => {
 
   const [portfolios, setPortfolios] = useState([]);
-  const [ getPortfolios, {loading, data} ] = useLazyQuery(GET_PORTFOLIOS);
+  const [ getPortfolios, {loading/* , data */} ] = useLazyQuery(GET_PORTFOLIOS);
   const [ createPortfolio, {data} ] = useMutation(CREATE_PORTFOLIO);
 
   useEffect(() => {
@@ -66,11 +66,11 @@ const Portfolios = () => {
   }
   if (loading) { return 'Loading...'};
 
-  const createPortfolio = async () => {
+  /* const createPortfolio = async () => {
     const newPortfolio = await graphCreatePortfolio();
     const newPortfolios = [...portfolios, newPortfolio];
     setPortfolios(newPortfolios);
-  };
+  }; */
 
   const updatePortfolio = async (id) => {
     const updatePortfolio = await graphUpdatePortfolio(id);

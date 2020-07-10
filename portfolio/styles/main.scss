@@ -1,19 +1,13 @@
 @import './shared/fonts';
-@import './header';
+// @import './header';
 
 // PAGES
-@import './index';
-@import './base-page';
+//@import './index';
+//@import './base-page';
 
-html, body {
-    font-family: Montserrat, Arial, Helvetica, sans-serif;
-}
-
-html, body {
-    //height:100%;
-    //width:100%;
-    font-family: 'Montserrat', 'Helvetica';
-}
+/* html, body {
+    font-family: Montserrat, Arial, Helvetica, sans-serif !important;
+} */
 
 .self-typed {
     font-size: 31px;
@@ -21,7 +15,3 @@ html, body {
     letter-spacing: 2px;
     color: white;
 }
-
-/* .absolute {
-    position: absolute;
-} */

@@ -12,6 +12,11 @@ class AddPost extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
+    if (!auth.currentUser) {
+        alert('You should authenticate');
+        return null;
+    }
+
     const { title, content } = this.state;
     const { uid, displayName, email, photoURL } = auth.currentUser || {};
 
@@ -27,7 +32,7 @@ class AddPost extends Component {
       favorites: 0,
       comments: 0,
       createdAt: new Date(),
-    }
+    };
 
     firestore.collection('posts').add(post);
 

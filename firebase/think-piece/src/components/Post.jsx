@@ -16,7 +16,10 @@ const Post = ({ id, title, content, user, createdAt, stars, comments }) => {
     const postRef = firestore.doc(`posts/${id}`);
     const remove = () => postRef.delete();
     const star = () => {
-        console.log('postRef', postRef);
+        if (!currentUser) {
+            alert('You should authenticate');
+            return null;
+        }
         postRef.update({ stars: stars + 1 })
     };
 
@@ -44,7 +47,7 @@ const Post = ({ id, title, content, user, createdAt, stars, comments }) => {
                         {comments}
                     </p>
                     <p>Posted by {user.displayName}</p>
-                    <p>{moment(createdAt).calendar()}</p>
+                    <p>{moment(createdAt.toDate()).calendar()}</p>
                 </div>
                 <div>
                     <button className="star" onClick={star}>Star</button>

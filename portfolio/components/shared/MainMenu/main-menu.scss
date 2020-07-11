@@ -1,14 +1,131 @@
 .main-menu {
     flex: 1;
+
+    .menu-icon {
+        display: none;
+    }
+
     .brand {
-        flex-grow: 1;
-        text-transform: uppercase;
         letter-spacing: 1px;
         font-size: 24px;
         font-weight: bold;
     }
 
     .btn-login {
-        color: inherit
+        color: inherit;
+        margin-left: auto
     }
+
+    .nav {
+        display: flex;
+        flex-direction: row;
+
+        padding: 0;
+        margin: 0 0 0 20px;
+        list-style: none;
+
+        text-transform: uppercase;
+
+        .nav-item {
+            margin: 0 30px;
+            .nav-item-icon {
+                display: none;
+            }
+        }
+
+        a {
+            color: white;
+            font-family: Montserrat, Helvetica, sans-serif;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            letter-spacing: 0.8px;
+            opacity: .8;
+
+            &.active {
+                color: #dba919;
+            }
+
+            &:hover,
+            &:focus {
+                color: #dba919;
+            }
+        }
+    }
+
+    .nav-auth {
+        //border: 1px solid red;
+        margin-left: auto;
+    }
+
+    .account {
+        margin-left: auto;
+    }
+
+    @media (max-width: 960px) {
+        .menu-icon {
+            display: block;
+        }
+
+        .brand {
+            font-size: 20px;
+        }
+        .nav.nav-main {
+            display: none;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .brand, .nav a {
+            font-size: 16px;
+        }
+    }
+
+    @media (max-width: 350px) {
+        .brand, .nav a {
+            font-size: 13px;
+        }
+    }
+}
+
+
+.nav-main-drawer {
+    //border: 2px solid yellow;
+
+    .nav.nav-main {
+        //border: 1px solid red;
+        width: 250px;
+
+        padding: 0;
+        margin: 0 0 0 20px;
+        list-style: none;
+
+        //text-transform: uppercase;
+
+        .nav-item {
+            //border: 1px solid brown;
+
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+
+            .nav-item-icon {
+                display: block;
+                margin: 0 20px 0 0;
+                color: rgba(0, 0, 0, 0.60);//#424242;
+            }
+
+            a {
+                font-family: Montserrat, Helvetica, sans-serif;
+                text-decoration: none;
+                color: #424242;
+                font-weight: bold;
+                letter-spacing: 0.7px;
+            }
+        }
+    }
+}    
+
+.nav-link {
+    text-decoration: none;
 }

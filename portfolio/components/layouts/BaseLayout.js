@@ -16,7 +16,7 @@ const BaseLayout = (props) => {
                         <MainMenu />
                     </Container>
                 </header>
-                <main></main>
+                <main style={{height: '200vh'}}></main>
                 <footer></footer>
                 {/* <main className={`cover ${className}`}>
                     <Container className="wrapper">

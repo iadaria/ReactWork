@@ -4,11 +4,13 @@
     border: 1px solid purple
 }
 
-header {
-    background-color: #096fb9 !important;
-    //font-family: Montserrat, Helvetica, sans-serif;
-}
-
-main {
-    border: 1px solid green
+.base-layout {
+    header {
+        background-color: #096fb9 !important;
+        //font-family: Montserrat, Helvetica, sans-serif;
+    }
+    
+    main {
+        border: 1px solid green
+    }
 }

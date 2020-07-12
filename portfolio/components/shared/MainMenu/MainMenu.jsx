@@ -27,35 +27,22 @@ const MainMenu = () => {
         lang: Boolean(anchorE1.lang),
         user: Boolean(anchorE1.user),
     };
-
-    //const [anchorE1, setAnchorE1] = useState(null);
-    //const [anchorLangE1, setLangAnchorE1] = useState(null);
     const [drawerState, setDrawerState] = useState(false);
-    //const open = Boolean(anchorE1);
-    //const langOpen = Boolean(anchorLangE1);
+
     /* useEffect(() => {
         getUser(); ///to update date from mongo db
         data && setUser(data.user);
     }, [data]); */
 
-    const handleMenu = (event, name_anchor) => {
-        setAnchorE1({
+    const handleMenu = (event, name_anchor) => setAnchorE1({
             ...anchorE1,
             [name_anchor]: event.currentTarget
         });
-        console.log('after handlemenu anchoreE1:', anchorE1);
-    }
-    const handleClose = (name_anchor) =>  {
-        setAnchorE1({
+
+    const handleClose = (name_anchor) => setAnchorE1({
             ...anchorE1,
            [name_anchor]: null,
         });
-        console.log('after handleClose anchoreE1:', anchorE1);
-    };
-    /* const handleMenu = (event) => setAnchorE1(event.currentTarget);
-    const handleClose = () => setAnchorE1(null);
-    const handleLangMenu = (event) => setLangAnchorE1(event.currentTarget);
-    const handleLangClose = () => setLangAnchorE1(null); */
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {

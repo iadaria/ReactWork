@@ -21,13 +21,15 @@
         flex-direction: row;
 
         padding: 0;
-        margin: 0 0 0 20px;
         list-style: none;
 
         text-transform: uppercase;
 
         .nav-item {
             margin: 0 30px;
+            &.brand {
+                display: none;
+            }
             .nav-item-icon {
                 display: none;
             }
@@ -53,13 +55,27 @@
         }
     }
 
-    .nav-auth {
-        //border: 1px solid red;
-        margin-left: auto;
+    .nav-main {
+        margin-left: 30px;
     }
 
-    .account {
+    .nav-lang {
+        //border: 1px solid yellow;
         margin-left: auto;
+        &__img {
+            border-radius: 5px;
+        }
+    }
+
+    .nav-auth {
+        //border: 1px solid red;
+        margin: 0;
+    }
+
+    .nav-account {
+        &__name {
+            margin-left: 20px;
+        }
     }
 
     @media (max-width: 960px) {
@@ -73,11 +89,52 @@
         .nav.nav-main {
             display: none;
         }
+
+        .nav-auth {
+            .nav-item {
+                margin-left: 10px
+            }
+        }
     }
 
     @media (max-width: 600px) {
         .brand, .nav a {
             font-size: 16px;
+        }
+
+        .nav-lang {
+            &__img {
+                max-width: 40px;
+                max-height: 27px;
+            }
+        }
+
+        .nav-account {
+            &__img {
+                max-width: 30px;
+                max-height: 30px;
+            }
+        }
+    }
+
+    @media (max-width: 500px) {
+        .nav-account {
+            &__name {
+                display: none;
+            }
+        }
+    }
+
+    @media (max-width: 400px) {
+        .brand {
+            display: none;
+        }
+
+        .nav-lang {
+            &__img {
+                max-width: 35px;
+                max-height: 23px;
+            }
         }
     }
 
@@ -109,6 +166,10 @@
             align-items: center;
             margin: 20px 0;
 
+            &.brand {
+                display: none;
+            }
+
             .nav-item-icon {
                 display: block;
                 margin: 0 20px 0 0;
@@ -121,6 +182,17 @@
                 color: #424242;
                 font-weight: bold;
                 letter-spacing: 0.7px;
+            }
+        } //nav-item
+
+        @media(max-width: 400px) {
+            .nav-item {
+                &.brand {
+                    display: block;
+                    a {
+                        font-weight: normal;
+                    }
+                }
             }
         }
     }

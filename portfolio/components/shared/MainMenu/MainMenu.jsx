@@ -17,19 +17,45 @@ import InfoIcon from '@material-ui/icons/Info';
 import WorkIcon from '@material-ui/icons/Work';
 
 const MainMenu = () => {
-    const [user, setUser] = useState(null);//({ _id: 1, username: "Dasha", role: "admin" }); //null
+    const [user, setUser] = useState({ _id: 1, username: "Dasha", role: "admin" }); //null
     const [getUser, { data, error }] = useLazyGetUser();
+    const [anchorE1, setAnchorE1] = useState({
+        lang: null,
+        user: null,
+    });
+    const open = {
+        lang: Boolean(anchorE1.lang),
+        user: Boolean(anchorE1.user),
+    };
 
-    const [anchorE1, setAnchorE1] = useState(null);
+    //const [anchorE1, setAnchorE1] = useState(null);
+    //const [anchorLangE1, setLangAnchorE1] = useState(null);
     const [drawerState, setDrawerState] = useState(false);
-    const open = Boolean(anchorE1);
+    //const open = Boolean(anchorE1);
+    //const langOpen = Boolean(anchorLangE1);
     /* useEffect(() => {
         getUser(); ///to update date from mongo db
         data && setUser(data.user);
     }, [data]); */
 
-    const handleMenu = (event) => setAnchorE1(event.currentTarget);
+    const handleMenu = (event, name_anchor) => {
+        setAnchorE1({
+            ...anchorE1,
+            [name_anchor]: event.currentTarget
+        });
+        console.log('after handlemenu anchoreE1:', anchorE1);
+    }
+    const handleClose = (name_anchor) =>  {
+        setAnchorE1({
+            ...anchorE1,
+           [name_anchor]: null,
+        });
+        console.log('after handleClose anchoreE1:', anchorE1);
+    };
+    /* const handleMenu = (event) => setAnchorE1(event.currentTarget);
     const handleClose = () => setAnchorE1(null);
+    const handleLangMenu = (event) => setLangAnchorE1(event.currentTarget);
+    const handleLangClose = () => setLangAnchorE1(null); */
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -39,126 +65,191 @@ const MainMenu = () => {
         setDrawerState(open);
     }
 
+    const langMenu = (
+        <div className="nav-lang">
+            <IconButton
+                onClick={(event) => handleMenu(event, "lang")}
+                color="inherit"
+            >
+                <img
+                    className="nav-lang__img"
+                    width={50} height={30}
+                    src="../../../static/images/lang/en.png"
+                    alt="language" />
+            </IconButton>
+            <Menu
+                className="nav-lang-menu"
+                id="menu-lang"
+                anchorEl={anchorE1.lang}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                keepMounted
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={open.lang}
+                onClose={handleClose.bind(null, "lang")}
+            >
+                <MenuItem onClick={handleClose.bind(null, "lang")} style={{padding: 0}}>
+                    <IconButton
+                        onClick={() => { console.log('change language') }}
+                        color="inherit"
+                    >
+                        <img
+                            className="nav-lang__img"
+                            width={50} height={30}
+                            src="../../../static/images/lang/en.png"
+                            alt="language" />
+                    </IconButton>
+                </MenuItem>
+                <MenuItem onClick={handleClose.bind(null, "lang")} style={{padding: 0}}>
+                    <IconButton
+                        onClick={() => { console.log('change language') }}
+                        color="inherit"
+                    >
+                        <img
+                            className="nav-lang__img"
+                            width={50} height={30}
+                            src="../../../static/images/lang/ru.png"
+                            alt="language" />
+                    </IconButton>
+                </MenuItem>
+            </Menu>
+
+        </div>
+    );
+
     const drawerMenu = (wrapped) => {
         return (
-            <Drawer
-                anchor="left"
-                open={drawerState}
-                onClose={toggleDrawer(false)}
-                className="nav-main-drawer"
-            >
-                <div
-                    onClick={toggleDrawer(false)}
-                    onKeyDown={toggleDrawer(false)}
+            <>
+                <IconButton
+                    className="menu-icon"
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={toggleDrawer(true)}
+                    edge="start"
                 >
-                    {wrapped}
-                </div>
-            </Drawer>
+                    <MenuIcon />
+                </IconButton>
+                <Drawer
+                    className="nav-main-drawer"
+                    anchor="left"
+                    open={drawerState}
+                    onClose={toggleDrawer(false)}
+                >
+                    <div
+                        onClick={toggleDrawer(false)}
+                        onKeyDown={toggleDrawer(false)}
+                    >
+                        {wrapped}
+                    </div>
+                </Drawer>
+            </>
         );
     };
 
-    const mainMenu = (
+    const subMainMenu = (
         <ul className="nav nav-main">
+            <li className="nav-item brand">
+                <Link href="/"><a>by Daria Iakimova</a></Link>
+            </li>
             <li className="nav-item">
-                <HomeIcon className="nav-item-icon"/>
+                <HomeIcon className="nav-item-icon" />
                 <Link href="/"><a>Home</a></Link>
             </li>
             <li className="nav-item">
-                <WorkIcon className="nav-item-icon"/>
+                <WorkIcon className="nav-item-icon" />
                 <Link href="/portfolios"><a>Portfolio</a></Link>
             </li>
             <li className="nav-item">
-                <InfoIcon className="nav-item-icon"/>
+                <InfoIcon className="nav-item-icon" />
                 <Link href="/about"><a>About</a></Link>
             </li>
         </ul>
+    );
+
+    const loginMenu = (
+        <ul className="nav nav-auth">
+            <li className="nav-item">
+                <Link href="/login"><a>Sign In</a></Link>
+            </li>
+            {/* <li className="nav-item">
+                    <Link className="btn btn-signup" href="/register">
+                        <a>Sign Up</a>
+                    </Link>
+                </li> */}
+        </ul>
+    );
+
+    const accountMenu = (
+        <div className="nav-account">
+            <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={(event) => handleMenu(event, "user")}
+                color="inherit"
+            >
+                <>
+                    <Avatar
+                        className="nav-account__img"
+                        alt={user?.username}
+                        //sizes="(max-width: 35px): 30px"
+                        src={user?.image || "../../../static/images/user.png"}
+                    />
+                    <Typography className="nav-account__name" component="b">
+                        {user?.username}
+                    </Typography>
+                </>
+            </IconButton>
+
+            <Menu
+                className="nav-user"
+                id="menu-appbar"
+                anchorEl={anchorE1.user}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                keepMounted
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={open.user}
+                onClose={handleClose.bind(null, "user")}
+            >
+                <MenuItem onClick={handleClose.bind(null, "user")}>
+                    <Link href="/portfolios/new">
+                        <a className="nav-link">Create Portfolio</a>
+                    </Link>
+                </MenuItem>
+
+                <MenuItem onClick={handleClose.bind(null, "user")}>
+                    <Link
+                        href="instructor/[id]/dashboard"
+                        as={`instructor/${user?._id}/dashboard`}
+                    >
+                        <a className="nav-link">Dashboard</a>
+                    </Link>
+                </MenuItem>
+
+                <MenuItem onClick={handleClose.bind(null, "user")}>
+                    <Link href="/logout">
+                        <a className="nav-link">Sign out</a>
+                    </Link>
+                </MenuItem>
+            </Menu>
+        </div>
     );
 
     return (
         <div className="main-menu">
             <AppBar>
                 <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={toggleDrawer(true)}
-                        edge="start"
-                        className="menu-icon"
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    {drawerMenu(mainMenu)}
+                    {/* {mobileMenuIcon} */}
+                    {drawerMenu(subMainMenu)}
+
                     <Typography variant="h6" className="brand">Daria Iakimova</Typography>
-                    {mainMenu}
 
-                    {user && (
-                        <div className="account">
+                    {subMainMenu}
 
-                            <IconButton
-                                aria-label="account of current user"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={handleMenu}
-                                color="inherit"
-                            >
-                                <>
-                                    <Avatar
-                                        alt={user?.username}
-                                        sizes="(max-width: 35px): 30px"
-                                        src={user?.image || '/assets/user.png'}
-                                    />
-                                    <Typography style={{ marginLeft: 15 }} component="b">
-                                        {user?.username}
-                                    </Typography>
-                                </>
-                            </IconButton>
+                    {langMenu}
 
-                            <Menu
-                                className="nav-user"
-                                id="menu-appbar"
-                                anchorEl={anchorE1}
-                                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                                keepMounted
-                                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                                open={open}
-                                onClose={handleClose}
-                            >
-                                <MenuItem onClick={handleClose}>
-                                    <Link href="/portfolios/new">
-                                        <a className="nav-link">Create Portfolio</a>
-                                    </Link>
-                                </MenuItem>
+                    {user && accountMenu}
 
-                                <MenuItem onClick={handleClose}>
-                                    <Link
-                                        href="instructor/[id]/dashboard"
-                                        as={`instructor/${user._id}/dashboard`}
-                                    >
-                                        <a className="nav-link">Dashboard</a>
-                                    </Link>
-                                </MenuItem>
-
-                                <MenuItem onClick={handleClose}>
-                                    <Link href="/logout">
-                                        <a className="nav-link">Sign out</a>
-                                    </Link>
-                                </MenuItem>
-                            </Menu>
-                        </div>
-                    )}
-
-                    {(error || !user) && (
-                        <ul className="nav nav-auth">
-                            <li className="nav-item">
-                                <Link href="/login"><a>Sign In</a></Link>
-                            </li>
-                            {/* <li className="nav-item">
-                                <Link className="btn btn-signup" href="/register">
-                                    <a>Sign Up</a>
-                                </Link>
-                            </li> */}
-                        </ul>
-                    )}
+                    {(error || !user) && loginMenu}
                 </Toolbar>
             </AppBar>
         </div>

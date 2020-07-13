@@ -233,3 +233,98 @@ export const CREATE_TOPIC = gql`
 `;
 
 // FORUM QUERITES END ------------------------------------------------------
+
+// WORD BEGIN --------------------------------------------------------------
+const typeWord = `
+    _id
+    kye
+    languageCode
+    part
+    value
+`;
+
+export const GET_WORD = gql`
+  query Word($id: ID) {
+      word(id: $d) {
+          _id
+          key
+          languageCode
+          part
+          value
+      }
+  }
+`;
+
+export const GET_WORDS = gql`
+  query Words {
+      words {
+          _id
+          key
+          languageCode
+          part
+          value
+      }
+  }
+`;
+
+export const GET_WORD_BY_CODE_AND_KEY = gql`
+  query GetWordByCodeAndKey($languageCode: String, $key: String) {
+      wordByCodeAndKey(languageCode: $languageCode, key: $key) {
+        _id
+        key
+        languageCode
+        part
+        value
+      }
+  }
+`;
+
+export const GET_PART_WORDS = gql`
+    query GetPartWords($languageCode: String, $part: String) {
+        partWords(languageCode: $languageCode, part: $part) {
+            _id
+            key
+            languageCode
+            part
+            value
+        }
+    }
+`;
+
+export const GET_WORDS_BY_CODE = gql`
+    query GetWordsByCode($languageCode: String) {
+        codeWords(languageCode: $languageCode) {
+            _id
+            key
+            languageCode
+            part
+            value
+        }
+    }
+`;
+
+export const CREATE_WORD = gql`
+    mutation CreateWord(
+        $key: String
+        $languageCode: String
+        $part: String
+        $value: String
+    ) {
+        createWord(
+            input: {key: $key, languageCode: $languageCode, part: $part, value: $value}
+        ) {
+            _id
+            key
+            languageCode
+            part
+            value
+        }
+    }
+`;
+
+export const DELETE_WORD = gql`
+    mutation DeleteWord($id: ID) {
+        deleteWord(id: $id)
+    }
+`;
+// WORD END ----------------------------------------------------------------

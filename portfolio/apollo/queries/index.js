@@ -268,7 +268,7 @@ export const GET_WORDS = gql`
 `;
 
 export const GET_WORD_BY_CODE_AND_KEY = gql`
-  query GetWordByCodeAndKey($languageCode: String, $key: String) {
+  query WordByCodeAndKey($languageCode: String, $key: String) {
       wordByCodeAndKey(languageCode: $languageCode, key: $key) {
         _id
         key
@@ -280,19 +280,16 @@ export const GET_WORD_BY_CODE_AND_KEY = gql`
 `;
 
 export const GET_PART_WORDS = gql`
-    query GetPartWords($languageCode: String, $part: String) {
+    query PartWords($languageCode: String, $part: String) {
         partWords(languageCode: $languageCode, part: $part) {
-            _id
             key
-            languageCode
-            part
             value
         }
     }
 `;
 
 export const GET_WORDS_BY_CODE = gql`
-    query GetWordsByCode($languageCode: String) {
+    query WordsByCode($languageCode: String) {
         codeWords(languageCode: $languageCode) {
             _id
             key

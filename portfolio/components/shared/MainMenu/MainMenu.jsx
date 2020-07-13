@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import './main-menu.scss';
 import Link from "next/link";
 import withApollo from "@/hoc/withApollo";
-import { useLazyGetUser } from "@/apollo/actions";
+import { useLazyGetUser, useGetPartWords } from "@/apollo/actions";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -29,12 +29,21 @@ const MainMenu = ({setLanguage}) => {
         user: Boolean(anchorE1.user),
     };
     const [drawerState, setDrawerState] = useState(false);
-    const language = React.useContext(languageContext);
+    
+    const languageCode = React.useContext(languageContext);
+    console.log(`languageCode = ${languageCode}`);
 
-    /* useEffect(() => {
+    const { data: dataWords } = useGetPartWords({ variables: {languageCode, part: "mainMenu"} });
+    //Create one object with many keys
+    const words = dataWords && dataWords.partWords.reduce( (prevWords, currentWord) => (
+        { ...prevWords, ...{  [currentWord.key]: currentWord.value } }
+    ) ) || [];
+    console.log('MainMenu -> data.partWords:', words);
+
+    useEffect(() => {
         getUser(); ///to update date from mongo db
         data && setUser(data.user);
-    }, [data]); */
+    }, [data]);
 
     const handleMenu = (event, name_anchor) => setAnchorE1({
             ...anchorE1,
@@ -63,7 +72,7 @@ const MainMenu = ({setLanguage}) => {
                 <img
                     className="nav-lang__img"
                     width={50} height={30}
-                    src={`../../../static/images/lang/${language}.png`}
+                    src={`../../../static/images/lang/${languageCode}.png`}
                     alt="language" />
             </IconButton>
             <Menu
@@ -85,7 +94,7 @@ const MainMenu = ({setLanguage}) => {
                             className="nav-lang__img"
                             width={50} height={30}
                             src="../../../static/images/lang/en.png"
-                            alt="language" />
+                            alt="the English language" />
                     </IconButton>
                 </MenuItem>
                 <MenuItem onClick={handleClose.bind(null, "lang")} style={{padding: 0}}>
@@ -97,7 +106,7 @@ const MainMenu = ({setLanguage}) => {
                             className="nav-lang__img"
                             width={50} height={30}
                             src="../../../static/images/lang/ru.png"
-                            alt="language" />
+                            alt="the Russian language" />
                     </IconButton>
                 </MenuItem>
             </Menu>
@@ -140,15 +149,15 @@ const MainMenu = ({setLanguage}) => {
             </li>
             <li className="nav-item">
                 <HomeIcon className="nav-item-icon" />
-                <Link href="/"><a>Home</a></Link>
+                <Link href="/"><a>{words?.home || "Home"}</a></Link>
             </li>
             <li className="nav-item">
                 <WorkIcon className="nav-item-icon" />
-                <Link href="/portfolios"><a>Portfolio</a></Link>
+                <Link href="/portfolios"><a>{words?.portfolio || "Portfolio"}</a></Link>
             </li>
             <li className="nav-item">
                 <InfoIcon className="nav-item-icon" />
-                <Link href="/about"><a>About</a></Link>
+                <Link href="/about"><a>{words?.about || "About"}</a></Link>
             </li>
         </ul>
     );

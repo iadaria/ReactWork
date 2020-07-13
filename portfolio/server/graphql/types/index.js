@@ -74,3 +74,20 @@ exports.forumTypes = `
         forumCategory: String
     }
 `;
+
+exports.wordTypes = `
+    type Word {
+        _id: ID,
+        key: String
+        languageCode: String
+        part: String
+        value: String
+    }
+
+    input WordInput {
+        key: String
+        languageCode: String
+        part: String
+        value: String
+    }
+`;

@@ -77,3 +77,32 @@ query TopicsByCategory {
       }
     }
   }  
+
+
+# Write your query or mutation here
+# query Word {
+#   word(id:"5f0b9c25c582f32c8c68acc2") {
+#     part
+#   }
+# }
+
+# query Words {
+#   words {
+#     key,
+#     languageCode
+#   }
+# }
+
+# query PartWords {
+#   partWords(languageCode: "en", part:"mainMenu") {
+#     key
+#     languageCode
+#     value
+#   }
+# }
+
+# query WordByCodeAndKey{
+#   wordByCodeAndKey(languageCode:"en", key:"about") {
+#     value
+#   }
+# }

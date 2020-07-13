@@ -7,15 +7,18 @@ const {
   userQueries,
   userMutations,
   forumQueries,
-  forumMutations } = require("./resolvers");
+  forumMutations,
+  wordQueries,
+  wordMutations } = require("./resolvers");
 
-const { portfolioTypes, userTypes, forumTypes } = require("./types");
+const { portfolioTypes, userTypes, forumTypes, wordTypes } = require("./types");
 const { buildAuthContext } = require('./context');
 
 const Portfolio = require("./models/Portfolio");
 const User = require("./models/User");
 const ForumCategory = require("./models/ForumCategory");
 const Topic = require("./models/Topic");
+const Word = require("./models/Word");
 
 exports.createApolloServer = () => {
 
@@ -23,6 +26,7 @@ exports.createApolloServer = () => {
     ${portfolioTypes}
     ${userTypes}
     ${forumTypes}
+    ${wordTypes}
 
     type Query {
       portfolio(id: ID): Portfolio
@@ -35,6 +39,12 @@ exports.createApolloServer = () => {
 
       topics: [Topic]
       topicsByCategory(category: String): [Topic]
+
+      word(id: ID): Word
+      wordByCodeAndKey(languageCode: String, key: String): Word
+      words: [Word]
+      partWords(languageCode: String, part: String): [Word]
+      codeWords(languageCode: String): [Word]
     }
 
     type Mutation {
@@ -47,6 +57,9 @@ exports.createApolloServer = () => {
       signUp(input: SignUpInput): String
       signIn(input: SignInInput): User
       signOut: String
+
+      createWord(input: WordInput): Word
+      deleteWord(id: ID): ID
     }
   `;
 
@@ -56,11 +69,13 @@ exports.createApolloServer = () => {
       ...portfolioQueries,
       ...userQueries,
       ...forumQueries,
+      ...wordQueries,
     },
     Mutation: {
       ...portfolioMutations,
       ...userMutations,
       ...forumMutations,
+      ...wordMutations,
     },
   };
 
@@ -74,6 +89,7 @@ exports.createApolloServer = () => {
         User: new User(mongoose.model("User")),
         ForumCategory: new ForumCategory(mongoose.model("ForumCategory")),
         Topic: new Topic(mongoose.model("Topic"), req.user),
+        Word: new Word(mongoose.model("Word")),
       },
     }),
   });

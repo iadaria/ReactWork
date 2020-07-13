@@ -1,5 +1,4 @@
 
-
 class Portfolio {
 
     constructor(model, user) {

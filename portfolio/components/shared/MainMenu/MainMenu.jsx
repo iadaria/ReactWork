@@ -15,9 +15,10 @@ import Drawer from '@material-ui/core/Drawer';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import WorkIcon from '@material-ui/icons/Work';
+import languageContext from '../../../contexts/languageContext';
 
-const MainMenu = () => {
-    const [user, setUser] = useState({ _id: 1, username: "Dasha", role: "admin" }); //null
+const MainMenu = ({setLanguage}) => {
+    const [user, setUser] = useState(null);//{ _id: 1, username: "Dasha", role: "admin" }); //null
     const [getUser, { data, error }] = useLazyGetUser();
     const [anchorE1, setAnchorE1] = useState({
         lang: null,
@@ -28,6 +29,7 @@ const MainMenu = () => {
         user: Boolean(anchorE1.user),
     };
     const [drawerState, setDrawerState] = useState(false);
+    const language = React.useContext(languageContext);
 
     /* useEffect(() => {
         getUser(); ///to update date from mongo db
@@ -61,7 +63,7 @@ const MainMenu = () => {
                 <img
                     className="nav-lang__img"
                     width={50} height={30}
-                    src="../../../static/images/lang/en.png"
+                    src={`../../../static/images/lang/${language}.png`}
                     alt="language" />
             </IconButton>
             <Menu
@@ -76,7 +78,7 @@ const MainMenu = () => {
             >
                 <MenuItem onClick={handleClose.bind(null, "lang")} style={{padding: 0}}>
                     <IconButton
-                        onClick={() => { console.log('change language') }}
+                        onClick={setLanguage.bind(null, "en")}
                         color="inherit"
                     >
                         <img
@@ -88,7 +90,7 @@ const MainMenu = () => {
                 </MenuItem>
                 <MenuItem onClick={handleClose.bind(null, "lang")} style={{padding: 0}}>
                     <IconButton
-                        onClick={() => { console.log('change language') }}
+                        onClick={setLanguage.bind(null, "ru")}
                         color="inherit"
                     >
                         <img
@@ -99,7 +101,6 @@ const MainMenu = () => {
                     </IconButton>
                 </MenuItem>
             </Menu>
-
         </div>
     );
 
@@ -178,7 +179,6 @@ const MainMenu = () => {
                     <Avatar
                         className="nav-account__img"
                         alt={user?.username}
-                        //sizes="(max-width: 35px): 30px"
                         src={user?.image || "../../../static/images/user.png"}
                     />
                     <Typography className="nav-account__name" component="b">
@@ -225,9 +225,7 @@ const MainMenu = () => {
         <div className="main-menu">
             <AppBar>
                 <Toolbar>
-                    {/* {mobileMenuIcon} */}
                     {drawerMenu(subMainMenu)}
-
                     <Typography variant="h6" className="brand">Daria Iakimova</Typography>
 
                     {subMainMenu}

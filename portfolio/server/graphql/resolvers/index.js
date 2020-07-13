@@ -64,4 +64,35 @@ exports.forumMutations = {
     const topic = await ctx.models.Topic.create(input);
     return topic;
   }
+};
+
+exports.wordQueries = {
+    word: (root, { id }, ctx) => {
+        return ctx.models.Word.getById(id);
+    },
+    wordByCodeAndKey: (root, { languageCode, key}, ctx) => {
+        return ctx.models.Word.getWordByCodeAndKey(languageCode, key);
+    },
+    words: (root, args, ctx) => {
+        return ctx.models.Word.getAll();
+    },
+    partWords: (root, { languageCode, part }, ctx) => {
+        return ctx.models.Word.getAllByPart(languageCode, part);
+    },
+    codeWords: (root, { languageCode }, ctx) => {
+        return ctx.models.Word.getAllByCode(languageCode);
+    },
+};
+
+exports.wordMutations = {
+    createWord: async (root, { input }, ctx) => {
+        return await ctx.models.Word.create(input);
+    },
+    /* updateWord: async (root, {id, input}, ctx) => {
+        return await ctx.models.Word.findAndUpdate(id, input);
+    }, */
+    deleteWord: async (root, { id }, ctx) => {
+        const deletedWord = await ctx.models.Word.findAndDelete(id);
+        return deletedWord._id;
+    }
 }

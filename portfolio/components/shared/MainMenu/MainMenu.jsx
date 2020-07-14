@@ -16,6 +16,8 @@ import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import WorkIcon from '@material-ui/icons/Work';
 import languageContext from '../../../contexts/languageContext';
+import Skeleton from '@material-ui/lab/Skeleton';
+import LangMenu from "./subMenu/LangMenu";
 
 const MainMenu = ({setLanguage}) => {
     const [user, setUser] = useState(null);//{ _id: 1, username: "Dasha", role: "admin" }); //null
@@ -33,11 +35,11 @@ const MainMenu = ({setLanguage}) => {
     const languageCode = React.useContext(languageContext);
     console.log(`languageCode = ${languageCode}`);
 
-    const { data: dataWords } = useGetPartWords({ variables: {languageCode, part: "mainMenu"} });
-    //Create one object with many keys
+    const { loading, data: dataWords } = useGetPartWords({ variables: {languageCode, part: "mainMenu"} });
+    /* Create one object with many keys */
     const words = dataWords && dataWords.partWords.reduce( (prevWords, currentWord) => (
         { ...prevWords, ...{  [currentWord.key]: currentWord.value } }
-    ) ) || [];
+    ), {} ) || [];
     console.log('MainMenu -> data.partWords:', words);
 
     useEffect(() => {
@@ -145,19 +147,19 @@ const MainMenu = ({setLanguage}) => {
     const subMainMenu = (
         <ul className="nav nav-main">
             <li className="nav-item brand">
-                <Link href="/"><a>{words?.byName || "by Daria Iakimova"}</a></Link>
+                <Link href="/"><a>{words?.byName}</a></Link>
             </li>
             <li className="nav-item">
                 <HomeIcon className="nav-item-icon" />
-                <Link href="/"><a>{words?.home || "Home"}</a></Link>
+                <Link href="/"><a>{words?.home}</a></Link>
             </li>
             <li className="nav-item">
                 <WorkIcon className="nav-item-icon" />
-                <Link href="/portfolios"><a>{words?.portfolio || "Portfolio"}</a></Link>
+                <Link href="/portfolios"><a>{words?.portfolio}</a></Link>
             </li>
             <li className="nav-item">
                 <InfoIcon className="nav-item-icon" />
-                <Link href="/about"><a>{words?.about || "About"}</a></Link>
+                <Link href="/about"><a>{words?.about}</a></Link>
             </li>
         </ul>
     );
@@ -230,16 +232,23 @@ const MainMenu = ({setLanguage}) => {
         </div>
     );
 
+    const test_loading = true;
     return (
         <div className="main-menu">
             <AppBar>
                 <Toolbar>
                     {drawerMenu(subMainMenu)}
-                    <Typography variant="h6" className="brand">Daria Iakimova</Typography>
+
+                    {test_loading ? (
+                        <Skeleton width="10%" component="h1"/>                    
+                    ): (
+                        <Typography variant="h6" className="brand">Daria Iakimova</Typography>
+                    )}
+                    
 
                     {subMainMenu}
 
-                    {langMenu}
+                    <LangMenu languageCode={languageCode} setLanguage={setLanguage}/>
 
                     {user && accountMenu}
 

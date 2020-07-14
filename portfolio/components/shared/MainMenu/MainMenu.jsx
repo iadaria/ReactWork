@@ -1,261 +1,66 @@
 import React, { useState, useEffect } from "react";
 import './main-menu.scss';
-import Link from "next/link";
 import withApollo from "@/hoc/withApollo";
 import { useLazyGetUser, useGetPartWords } from "@/apollo/actions";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Avatar from '@material-ui/core/Avatar';
-import MenuIcon from '@material-ui/icons/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import Drawer from '@material-ui/core/Drawer';
-import HomeIcon from '@material-ui/icons/Home';
-import InfoIcon from '@material-ui/icons/Info';
-import WorkIcon from '@material-ui/icons/Work';
 import languageContext from '../../../contexts/languageContext';
 import Skeleton from '@material-ui/lab/Skeleton';
 import LangMenu from "./subMenu/LangMenu";
+import AccountMenu from "./subMenu/AccountMenu";
+import LoginMenu from "./subMenu/LoginMenu";
+import NavMenu from "./subMenu/NavMenu";
+import DrawerMenu from "./subMenu/DrawerMenu/DrawerMenu";
 
-const MainMenu = ({setLanguage}) => {
+const MainMenu = ({ setLanguage }) => {
     const [user, setUser] = useState(null);//{ _id: 1, username: "Dasha", role: "admin" }); //null
     const [getUser, { data, error }] = useLazyGetUser();
-    const [anchorE1, setAnchorE1] = useState({
-        lang: null,
-        user: null,
-    });
-    const open = {
-        lang: Boolean(anchorE1.lang),
-        user: Boolean(anchorE1.user),
-    };
-    const [drawerState, setDrawerState] = useState(false);
-    
-    const languageCode = React.useContext(languageContext);
-    console.log(`languageCode = ${languageCode}`);
-
-    const { loading, data: dataWords } = useGetPartWords({ variables: {languageCode, part: "mainMenu"} });
-    /* Create one object with many keys */
-    const words = dataWords && dataWords.partWords.reduce( (prevWords, currentWord) => (
-        { ...prevWords, ...{  [currentWord.key]: currentWord.value } }
-    ), {} ) || [];
-    console.log('MainMenu -> data.partWords:', words);
-
     useEffect(() => {
         getUser(); ///to update date from mongo db
         data && setUser(data.user);
     }, [data]);
 
-    const handleMenu = (event, name_anchor) => setAnchorE1({
-            ...anchorE1,
-            [name_anchor]: event.currentTarget
-        });
-
-    const handleClose = (name_anchor) => setAnchorE1({
-            ...anchorE1,
-           [name_anchor]: null,
-        });
-
-    const toggleDrawer = (open) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-            return;
-        }
-
-        setDrawerState(open);
-    }
-
-    const langMenu = (
-        <div className="nav-lang">
-            <IconButton
-                onClick={(event) => handleMenu(event, "lang")}
-                color="inherit"
-            >
-                <img
-                    className="nav-lang__img"
-                    width={50} height={30}
-                    src={`../../../static/images/lang/${languageCode}.png`}
-                    alt="language" />
-            </IconButton>
-            <Menu
-                className="nav-lang-menu"
-                id="menu-lang"
-                anchorEl={anchorE1.lang}
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                keepMounted
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                open={open.lang}
-                onClose={handleClose.bind(null, "lang")}
-            >
-                <MenuItem onClick={handleClose.bind(null, "lang")} style={{padding: 0}}>
-                    <IconButton
-                        onClick={setLanguage.bind(null, "en")}
-                        color="inherit"
-                    >
-                        <img
-                            className="nav-lang__img"
-                            width={50} height={30}
-                            src="../../../static/images/lang/en.png"
-                            alt="the English language" />
-                    </IconButton>
-                </MenuItem>
-                <MenuItem onClick={handleClose.bind(null, "lang")} style={{padding: 0}}>
-                    <IconButton
-                        onClick={setLanguage.bind(null, "ru")}
-                        color="inherit"
-                    >
-                        <img
-                            className="nav-lang__img"
-                            width={50} height={30}
-                            src="../../../static/images/lang/ru.png"
-                            alt="the Russian language" />
-                    </IconButton>
-                </MenuItem>
-            </Menu>
-        </div>
-    );
-
-    const drawerMenu = (wrapped) => {
-        return (
-            <>
-                <IconButton
-                    className="menu-icon"
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={toggleDrawer(true)}
-                    edge="start"
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Drawer
-                    className="nav-main-drawer"
-                    anchor="left"
-                    open={drawerState}
-                    onClose={toggleDrawer(false)}
-                >
-                    <div
-                        onClick={toggleDrawer(false)}
-                        onKeyDown={toggleDrawer(false)}
-                    >
-                        {wrapped}
-                    </div>
-                </Drawer>
-            </>
-        );
-    };
-
-    const subMainMenu = (
-        <ul className="nav nav-main">
-            <li className="nav-item brand">
-                <Link href="/"><a>{words?.byName}</a></Link>
-            </li>
-            <li className="nav-item">
-                <HomeIcon className="nav-item-icon" />
-                <Link href="/"><a>{words?.home}</a></Link>
-            </li>
-            <li className="nav-item">
-                <WorkIcon className="nav-item-icon" />
-                <Link href="/portfolios"><a>{words?.portfolio}</a></Link>
-            </li>
-            <li className="nav-item">
-                <InfoIcon className="nav-item-icon" />
-                <Link href="/about"><a>{words?.about}</a></Link>
-            </li>
-        </ul>
-    );
-
-    const loginMenu = (
-        <ul className="nav nav-auth">
-            <li className="nav-item">
-                <Link href="/login"><a>Sign In</a></Link>
-            </li>
-            {/* <li className="nav-item">
-                    <Link className="btn btn-signup" href="/register">
-                        <a>Sign Up</a>
-                    </Link>
-                </li> */}
-        </ul>
-    );
-
-    const accountMenu = (
-        <div className="nav-account">
-            <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={(event) => handleMenu(event, "user")}
-                color="inherit"
-            >
-                <>
-                    <Avatar
-                        className="nav-account__img"
-                        alt={user?.username}
-                        src={user?.image || "../../../static/images/user.png"}
-                    />
-                    <Typography className="nav-account__name" component="b">
-                        {user?.username}
-                    </Typography>
-                </>
-            </IconButton>
-
-            <Menu
-                className="nav-user"
-                id="menu-appbar"
-                anchorEl={anchorE1.user}
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                keepMounted
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                open={open.user}
-                onClose={handleClose.bind(null, "user")}
-            >
-                <MenuItem onClick={handleClose.bind(null, "user")}>
-                    <Link href="/portfolios/new">
-                        <a className="nav-link">Create Portfolio</a>
-                    </Link>
-                </MenuItem>
-
-                <MenuItem onClick={handleClose.bind(null, "user")}>
-                    <Link
-                        href="instructor/[id]/dashboard"
-                        as={`instructor/${user?._id}/dashboard`}
-                    >
-                        <a className="nav-link">Dashboard</a>
-                    </Link>
-                </MenuItem>
-
-                <MenuItem onClick={handleClose.bind(null, "user")}>
-                    <Link href="/logout">
-                        <a className="nav-link">Sign out</a>
-                    </Link>
-                </MenuItem>
-            </Menu>
-        </div>
-    );
+    const languageCode = React.useContext(languageContext);
+    const { loading, data: dataWords } = useGetPartWords({ variables: { languageCode, part: "mainMenu" } });
+    /* Create one object with many keys */
+    const words = dataWords && dataWords.partWords.reduce((prevWords, currentWord) => (
+        { ...prevWords, ...{ [currentWord.key]: currentWord.value } }
+    ), {}) || [];
+    console.log('MainMenu -> data.partWords:', words);
 
     const test_loading = true;
     return (
-        <div className="main-menu">
-            <AppBar>
-                <Toolbar>
-                    {drawerMenu(subMainMenu)}
+        <AppBar>
+            <Toolbar>
+                <DrawerMenu loading={test_loading} words={words} />
 
-                    {test_loading ? (
-                        <Skeleton width="10%" component="h1"/>                    
-                    ): (
-                        <Typography variant="h6" className="brand">Daria Iakimova</Typography>
-                    )}
-                    
+                {test_loading ? (
+                    <Skeleton width="10%" component="h1"/>
+                ) : (
+                    <Typography variant="h6" className="brand">{words?.byName}</Typography>
+                )}
+                
+                {test_loading ? (
+                    <Skeleton width="70%" component="h1" style={{marginLeft: "3%"}} />
+                ): <NavMenu words={words} /> }
 
-                    {subMainMenu}
+                <LangMenu languageCode={languageCode} setLanguage={setLanguage} />
 
-                    <LangMenu languageCode={languageCode} setLanguage={setLanguage}/>
+                {user && <AccountMenu user={user} words={words}/>}
 
-                    {user && accountMenu}
+                {(error || !user) && (
+                    test_loading 
+                    ? <Skeleton width="10%" component="h1"/>
+                    : <LoginMenu words={words}/>
+                )}
+            </Toolbar>
+        </AppBar>
+    );
+};
 
-                    {(error || !user) && loginMenu}
-                </Toolbar>
-            </AppBar>
-        </div>
+export default withApollo(MainMenu);
+
 /* 
 
     const AppLink = ({ children, className, href, as, ...props }) => (
@@ -335,7 +140,5 @@ const MainMenu = ({setLanguage}) => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-   */);
-};
-
-export default withApollo(MainMenu);
+   );
+};*/

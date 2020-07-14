@@ -121,13 +121,13 @@ const data = {
         // NavBar
         {
             part: "mainMenu",
-            key: "name",
+            key: "brand",
             languageCode: "en",
             value: "Daria Iakimova"
         },
         {
             part: "mainMenu",
-            key: "byName",
+            key: "brand",
             languageCode: "ru",
             value: "Дарья Якимова"
         },
@@ -179,11 +179,30 @@ const data = {
             part: "mainMenu",
             value: "Обо мне"
         },
-        /* {
+        { part: "mainMenu", key: "singIn", languageCode: "ru", value: "Войти"},
+        { part: "mainMenu", key: "singIn", languageCode: "en", value: "Sign In"},
+
+        { part: "mainMenu", key: "singOut", languageCode: "ru", value: "Выйти"},
+        { part: "mainMenu", key: "singOut", languageCode: "en", value: "Sign Out"},
+
+        { part: "mainMenu", key: "createPortfolio", languageCode: "ru", value: "Создать портфолио"},
+        { part: "mainMenu", key: "createPortfolio", languageCode: "en", value: "Create portfolio"},
+
+        { part: "mainMenu", key: "dashboard", languageCode: "ru", value: "Панель"},
+        { part: "mainMenu", key: "dashboard", languageCode: "en", value: "Dashboard"},
+
+        /*
+            { part: "mainMenu", key: "", languageCode: "ru", value: ""},
+            { part: "mainMenu", key: "", languageCode: "en", value: ""},
+         
+        { part: "", key: "", languageCode: "", value: ""},
+        {
+            part: "",
             key: "",
             languageCode: "",
             value: ""
-        }, */
+        },
+        */
     ],
 };
 

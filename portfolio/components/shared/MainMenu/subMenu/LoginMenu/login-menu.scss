@@ -1,0 +1,10 @@
+.login-menu {
+    //border: 1px solid red;
+    margin: 0;
+
+    @media (max-width: 960px) {
+        .nav-item {
+            margin-left: 10px
+        }
+    }
+}

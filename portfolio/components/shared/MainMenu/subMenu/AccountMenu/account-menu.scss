@@ -1,0 +1,27 @@
+//.nav-account {
+.account-menu {
+    &__name {
+        margin-left: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .account-menu {
+        &__img {
+            max-width: 30px;
+            max-height: 30px;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .account-menu {
+        &__name {
+            display: none;
+        }
+    }
+}
+
+.nav-link {
+    text-decoration: none;
+}

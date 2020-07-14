@@ -1,0 +1,7 @@
+.nav-menu {
+    margin-left: 30px;
+
+    @media(max-width: 960px) {
+        display: none !important;
+    }
+}

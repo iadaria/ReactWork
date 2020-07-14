@@ -7,7 +7,6 @@ import './lang-menu.scss';
 
 const LangMenu = ({ languageCode, setLanguage }) => {
     const [anchorE1, setAnchorE1] = useState(null);
-    
     const open =  Boolean(anchorE1);
 
     const handleMenu = (event) => 

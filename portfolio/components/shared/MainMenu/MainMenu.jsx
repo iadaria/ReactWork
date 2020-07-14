@@ -145,7 +145,7 @@ const MainMenu = ({setLanguage}) => {
     const subMainMenu = (
         <ul className="nav nav-main">
             <li className="nav-item brand">
-                <Link href="/"><a>by Daria Iakimova</a></Link>
+                <Link href="/"><a>{words?.byName || "by Daria Iakimova"}</a></Link>
             </li>
             <li className="nav-item">
                 <HomeIcon className="nav-item-icon" />

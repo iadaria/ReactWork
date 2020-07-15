@@ -16,19 +16,19 @@ app.prepare().then(() => {
     require('./middlewares').init(server, db);
 
     const apolloServer = require('./graphql').createApolloServer();
-    apolloServer.applyMiddleware({app: server})
+    apolloServer.applyMiddleware({ app: server })
 
     server.all("*", (req, res) => {
-      return handle(req, res);
+        return handle(req, res);
     });
 
     server.listen(port, (err) => {
-      if (err) throw err;
-      console.log(`> Ready on http://localhost:${port}`);
+        if (err) throw err;
+        console.log(`> Ready on http://localhost:${port}`);
     });
 
-  })
-  .catch((ex) => {
-    console.error(ex.stack);
-    process.exit(1);
-  });
+})
+    .catch((ex) => {
+        console.error(ex.stack);
+        process.exit(1);
+    });

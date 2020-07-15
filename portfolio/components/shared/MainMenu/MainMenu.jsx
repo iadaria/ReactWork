@@ -16,12 +16,13 @@ import DrawerMenu from "./subMenu/DrawerMenu/DrawerMenu";
 const MainMenu = ({ setLanguage }) => {
     const [user, setUser] = useState(null);//{ _id: 1, username: "Dasha", role: "admin" }); //null
     const [getUser, { data, error }] = useLazyGetUser();
+    const languageCode = React.useContext(languageContext);
+
     useEffect(() => {
         getUser(); ///to update date from mongo db
         data && setUser(data.user);
     }, [data]);
 
-    const languageCode = React.useContext(languageContext);
     const { loading, data: dataWords } = useGetPartWords({ variables: { languageCode, part: "mainMenu" } });
     /* Create one object with many keys */
     const words = dataWords && dataWords.partWords.reduce((prevWords, currentWord) => (
@@ -29,19 +30,18 @@ const MainMenu = ({ setLanguage }) => {
     ), {}) || [];
     console.log('MainMenu -> data.partWords:', words);
 
-    const test_loading = true;
     return (
-        <AppBar>
+        <AppBar className="main-menu">
             <Toolbar>
-                <DrawerMenu loading={test_loading} words={words} />
+                <DrawerMenu loading={loading} words={words} />
 
-                {test_loading ? (
+                {loading ? (
                     <Skeleton width="10%" component="h1"/>
                 ) : (
-                    <Typography variant="h6" className="brand">{words?.byName}</Typography>
+                    <Typography variant="h6" className="brand">{words?.brand}</Typography>
                 )}
                 
-                {test_loading ? (
+                {loading ? (
                     <Skeleton width="70%" component="h1" style={{marginLeft: "3%"}} />
                 ): <NavMenu words={words} /> }
 
@@ -50,7 +50,7 @@ const MainMenu = ({ setLanguage }) => {
                 {user && <AccountMenu user={user} words={words}/>}
 
                 {(error || !user) && (
-                    test_loading 
+                    loading 
                     ? <Skeleton width="10%" component="h1"/>
                     : <LoginMenu words={words}/>
                 )}

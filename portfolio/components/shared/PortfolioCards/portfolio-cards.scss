@@ -1,13 +1,11 @@
-.cards {
+.portfolio-cards {
     .card {
         width: 100%;
         position: relative;
         //border: 3px solid blue;
 
-        //max-width: 100%;
-        //max-height: auto;
         &-media, &-media__wrapper, .card-content {
-            width: 500px;
+            width: 490px;
             height: 300px;   
         }
 
@@ -33,11 +31,8 @@
             z-index: 1;
             padding: 0 !important;
             margin: 0 !important;
-
-            p {
-                color: red;
-                opacity: 1;
-            }
+            
+            color: #fff;
 
             .content {
                 //border: 3px solid orange;
@@ -46,22 +41,24 @@
                 bottom: 0;
                 left: 0;
 
-                width: 500px;
+                width: 490px;
                 height: 300px; 
                 z-index: 2;
-                opacity: 1;
+
+                padding: 15px;
+                box-sizing: border-box;
             }
 
             .content__wrapper {
                 //border: 3px solid yellow;   
-                background-color: blue;
-                opacity: .3;
+                background-color: #303030;
+                opacity: .6;
 
                 position: absolute;
                 bottom: 0;
                 left: 0;
 
-                width: 500px;
+                width: 490px;
                 height: 300px; 
                 z-index: 1;
             }

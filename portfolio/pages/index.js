@@ -5,7 +5,7 @@ import BaseLayout from '../components/layouts/BaseLayout';
 import Grid from '@material-ui/core/Grid';
 import Hero from '../components/shared/Hero';
 import Services from '../components/shared/Services';
-import Cards from '../components/shared/Cards';
+import PortfolioCards from '../components/shared/PortfolioCards';
 
 import { getDataFromTree } from '@apollo/react-ssr';
 import withApollo from '@/hoc/withApollo';
@@ -25,7 +25,7 @@ const Index = () => {
                 </Grid> 
 
                 <Grid className="row" item xs={12}>
-                    <Cards />
+                    <PortfolioCards />
                 </Grid>
 
             </Grid>

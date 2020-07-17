@@ -46,6 +46,24 @@ const data = {
             startDate: "2012-12-12T23:59Z",
             endDate: "2012-12-12T23:59Z",
             user: user1Id,
+
+            /* "repository": "github.com/iadaria",
+            "deploy": null,
+            "img": "test1.png",
+            technologies: [
+                "C#"
+            ] */
+        },
+        /* {
+            title: "Job in Netcentric",
+            company: "Netcentric",
+            companyWebsite: "www.google.com",
+            location: "Spain, Barcelona",
+            jobTitle: "Engineer",
+            description: "Doing something, programing....",
+            startDate: "2012-12-12T23:59Z",
+            endDate: "2012-12-12T23:59Z",
+            user: user1Id,
         },
         {
             title: "Job in Siemens",
@@ -68,7 +86,7 @@ const data = {
             startDate: "2012-12-12T23:59Z",
             endDate: "2012-12-12T23:59Z",
             user: user1Id,
-        },
+        }, */
     ],
     forumCategories: [
         {

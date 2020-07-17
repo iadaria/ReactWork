@@ -28,7 +28,7 @@ const MainMenu = ({ setLanguage }) => {
     const words = dataWords && dataWords.partWords.reduce((prevWords, currentWord) => (
         { ...prevWords, ...{ [currentWord.key]: currentWord.value } }
     ), {}) || [];
-    console.log('MainMenu -> data.partWords:', words);
+    //console.log('MainMenu -> data.partWords:', words);
 
     return (
         <AppBar className="main-menu">

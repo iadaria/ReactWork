@@ -16,11 +16,11 @@ const data = {
             _id: user1Id,
             avatar:
                 "https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-512.png",
-            email: "filip@gmail.com",
-            name: "Filip Jerga",
-            username: "TestTest1",
+            email: "jadarya@mail.ru",
+            name: "Daria Iakimova",
+            username: "iadaria",
             info: "Hello I am Filip and I am a developer!",
-            password: "filipfilip",
+            password: "mysunmitia090708",
             role: "admin",
         },
         {

@@ -18,7 +18,7 @@ const BaseLayout = (props) => {
                             <MainMenu setLanguage={setLanguage} />
                         {/* </Container> */}
                     </header>
-                    <main style={{ height: '200vh' }}>
+                    <main style={{ height: '500vh' }}>
                         {children}
                     </main>
                     <footer></footer>

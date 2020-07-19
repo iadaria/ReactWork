@@ -46,6 +46,8 @@
             z-index: 2;
             padding: 15px;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
 
             /* &__lists {
                 border: 1px solid orangered;
@@ -68,12 +70,25 @@
             } */
  
             .technology_list {
+                //max-width: 80%;
+                width: auto;
+                //height: 35%;
+                max-height: 110px;
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
                 //border: 1px solid orangered;
-                columns: 3;
-                margin-top: 8px;
+                //max-height: 130px;
+                //columns: 3;
+                margin: 8px 0 0 20px;
+                padding: 0;
+                li {
+                    margin-bottom: 5px;
+                }
 
-                li:not(:first-child) {
-                    margin-top: 5px;
+                li {
+                    //width: max-content;
+                    //border: 1px solid green;
                 }
             }
         }

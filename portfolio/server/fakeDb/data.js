@@ -57,67 +57,62 @@ const data = {
             deploy: null,
             taskDocument: "https://drive.google.com/file/d/0B6RuRX0jvwvCU2oyQ3pCa21KejA/view?usp=sharing",
 
-            deploy: null,
-            img: "test1.png",
-            technologies: [
-                "C#", "UnitTest", "WebApi", "WebSocket", "C#", "UnitTest", "WebApi", "WebSocket", "C#", "UnitTest", "WebApi", "WebSocket"
-            ],
-            languagues: [
-                "C#"
-            ],
-            technologyImgs: [
-                "csharp"
-            ]
+            imgName: "test1.png",
+            technologies: "C#; UnitTest; WebApi; WebSocket; C#; UnitTest; C#; UnitTest; WebApi; WebSocket; C#; UnitTest",
+            languages: "C#",
+            technologyImgs: "csharp"
         },
         {
-            title: "Job in Netcentric 1",
-            company: "Netcentric",
-            companyWebsite: "www.google.com",
-            location: "Spain, Barcelona",
+            title: "Бот",
+            company: "Freelance",
+            companyWebsite: "www.fl.ru",
+            location: "Ukrain",
             jobTitle: "Engineer",
-            description: "Doing something, programing....",
+            description: `
+                Разработка ботов для букмекерских сайтов под существующий интерфейс заказчика.
+                Тесты для проверки корректности всех комбинаций ставок. 
+            `,
             startDate: "2012-12-12T23:59Z",
             endDate: "2012-12-12T23:59Z",
             user: user1Id,
 
             category: "work",
-            repository: null,
+
+
+            repository: "https://github.com/iadaria",
             deploy: null,
-            img: "test1.png",
-            technologies: [
-                "C#", "UnitTest", "WebApi", "WebSocket", "C#", "UnitTest", "WebApi", "WebSocket", "C#", "UnitTest", "WebApi", "WebSocket"
-            ],
-            languagues: [
-                "C#"
-            ],
-            technologyImgs: [
-                "csharp"
-            ]
+            taskDocument: "https://drive.google.com/file/d/0B6RuRX0jvwvCU2oyQ3pCa21KejA/view?usp=sharing",
+
+            imgName: "test1.png",
+            technologies: "WebApi; WebSocket; C#; UnitTest",
+            languages: "C#",
+            technologyImgs: "csharp"
         },
         {
-            title: "Job in Netcentric 2",
-            company: "Netcentric",
-            companyWebsite: "www.google.com",
-            location: "Spain, Barcelona",
+            title: "Бот",
+            company: "Freelance",
+            companyWebsite: "www.fl.ru",
+            location: "Ukrain",
             jobTitle: "Engineer",
-            description: "Doing something, programing....",
+            description: `
+                Разработка ботов для букмекерских сайтов под существующий интерфейс заказчика.
+                Тесты для проверки корректности всех комбинаций ставок. 
+            `,
             startDate: "2012-12-12T23:59Z",
             endDate: "2012-12-12T23:59Z",
             user: user1Id,
 
             category: "work",
-            repository: "github.com/iadaria",
+
+
+            repository: "https://github.com/iadaria",
             deploy: null,
-            img: "test1.png",
-            technologies: [
-                "C#", "UnitTest", "WebApi", "WebSocket", "C#", "UnitTest", "WebApi", "WebSocket", "C#", "UnitTest", "WebApi", "WebSocket"
-            ],
-            languagues: [
-                "C#"
-            ],
-            technologyImgs: [
-                "csharp"
-            ]
+            taskDocument: "https://drive.google.com/file/d/0B6RuRX0jvwvCU2oyQ3pCa21KejA/view?usp=sharing",
+
+            imgName: "test1.png",
+            technologies: "C#; UnitTest; C#; UnitTest; WebApi; WebSocket; C#; UnitTest",
+            languages: "C#",
+            technologyImgs: "csharp"
         },
         /* {
             title: "Job in Netcentric",

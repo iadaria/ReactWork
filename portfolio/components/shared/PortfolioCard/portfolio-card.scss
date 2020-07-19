@@ -1,3 +1,92 @@
 .portfolio-card {
+    //border: 3px solid blue;
+    position: relative;
+
+    &__header {
+        padding: 5px 10px !important;
+        &_git {
+            //@extend: 5px;
+            color: black;
+        }
+    }
+
+    &__media, &__media_wrapper, &__content, .content, .content__wrapper {
+        width: 450px;
+        height: 280px;
+        //background-position-x: 0 !important;
+        //background-position-y: 0 !important;
+        //background-size: contain !important;
+    }
+
+    &__media_wrapper {
+        //border: 1px solid red;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 3;
+        background-color: transparent;
+    }
     
+    &__content {
+        //border: 1px solid yellow;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        padding: 0 !important;
+        margin: 0 !important;
+        color: #fff;
+
+        .content {
+            //border: 3px solid orange;
+            
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 2;
+            padding: 15px;
+            box-sizing: border-box;
+
+            /* &__lists {
+                border: 1px solid orangered;
+                
+                // display: flex;
+                // flex-wrap: wrap;
+                // max-height: 120px;
+                columns: 2;    
+
+                margin: 0; padding: 0;
+                list-style: none;
+
+                li {
+                    border: 1px solid blueviolet;
+                }
+
+                a {
+                    color: blueviolet;
+                }
+            } */
+ 
+            .technology_list {
+                //border: 1px solid orangered;
+                columns: 3;
+                margin-top: 8px;
+
+                li:not(:first-child) {
+                    margin-top: 5px;
+                }
+            }
+        }
+
+        .content__wrapper {
+            //border: 3px solid yellow;   
+            background-color: #303030;
+            opacity: .6;
+
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
+        }
+    }   
 }

@@ -1,13 +1,10 @@
 import React from 'react';
-import './cards.scss';
+import './portfolio-cards.scss';
 import Grid from '@material-ui/core/Grid';
 import PortfolioCard from '../PortfolioCard';
+import data from '@/server/fakeDb/data';
 
 const PortfolioCards = () => {
-    const [expanded, setExpanded] = React.useState(false);
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    }
 
     return (
         <Grid className="portfolio-cards" container justify="center" style={{ border: '1px solid black' }}>
@@ -17,9 +14,17 @@ const PortfolioCards = () => {
                 </h1>
             </Grid>
 
-            <Grid /*className="item"*/ container item md={3} xs={11}>
-                <PortfolioCard />
-            </Grid>
+            {data.portfolios.map(portfolio => (
+                <Grid key={portfolio.title} className="item" container item md={3} xs={11}>
+                    <PortfolioCard portfolio={portfolio} />
+                </Grid>
+            ))}
+
+            {/* {data.portfolios.map(portfolio => (
+                <Grid key={portfolio.title} className="item" container item md={4} xs={11} justify="center">
+                    <PortfolioCard card={portfolio} />
+                </Grid>
+            ))} */}
 
         </Grid>
     );

@@ -1,67 +1,7 @@
 .portfolio-cards {
-    .card {
-        width: 100%;
-        position: relative;
-        //border: 3px solid blue;
-
-        &-media, &-media__wrapper, .card-content {
-            width: 490px;
-            height: 300px;   
-        }
-
-        &-media {
-            position: relative;
-        }
-
-        &-media__wrapper {
-            border: 1px solid red;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            z-index: 3;
-            background-color: transparent;
-        }
-        
-        //.content {
-        &-content {
-            //border: 1px solid yellow;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            z-index: 1;
-            padding: 0 !important;
-            margin: 0 !important;
-            
-            color: #fff;
-
-            .content {
-                //border: 3px solid orange;
-
-                position: absolute;
-                bottom: 0;
-                left: 0;
-
-                width: 490px;
-                height: 300px; 
-                z-index: 2;
-
-                padding: 15px;
-                box-sizing: border-box;
-            }
-
-            .content__wrapper {
-                //border: 3px solid yellow;   
-                background-color: #303030;
-                opacity: .6;
-
-                position: absolute;
-                bottom: 0;
-                left: 0;
-
-                width: 490px;
-                height: 300px; 
-                z-index: 1;
-            }
-        }   
+    .item {
+    
+        padding: 10px;
     }
+
 }

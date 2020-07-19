@@ -37,7 +37,40 @@ const data = {
     ],
     portfolios: [
         {
-            title: "Job in Netcentric",
+            title: "Бот",
+            company: "Freelance",
+            companyWebsite: "www.fl.ru",
+            location: "Ukrain",
+            jobTitle: "Engineer",
+            description: `
+                Разработка ботов для букмекерских сайтов под существующий интерфейс заказчика.
+                Тесты для проверки корректности всех комбинаций ставок. 
+            `,
+            startDate: "2012-12-12T23:59Z",
+            endDate: "2012-12-12T23:59Z",
+            user: user1Id,
+
+            category: "work",
+
+
+            repository: "https://github.com/iadaria",
+            deploy: null,
+            taskDocument: "https://drive.google.com/file/d/0B6RuRX0jvwvCU2oyQ3pCa21KejA/view?usp=sharing",
+
+            deploy: null,
+            img: "test1.png",
+            technologies: [
+                "C#", "UnitTest", "WebApi", "WebSocket", "C#", "UnitTest", "WebApi", "WebSocket", "C#", "UnitTest", "WebApi", "WebSocket"
+            ],
+            languagues: [
+                "C#"
+            ],
+            technologyImgs: [
+                "csharp"
+            ]
+        },
+        {
+            title: "Job in Netcentric 1",
             company: "Netcentric",
             companyWebsite: "www.google.com",
             location: "Spain, Barcelona",
@@ -47,12 +80,44 @@ const data = {
             endDate: "2012-12-12T23:59Z",
             user: user1Id,
 
-            /* "repository": "github.com/iadaria",
-            "deploy": null,
-            "img": "test1.png",
+            category: "work",
+            repository: null,
+            deploy: null,
+            img: "test1.png",
             technologies: [
+                "C#", "UnitTest", "WebApi", "WebSocket", "C#", "UnitTest", "WebApi", "WebSocket", "C#", "UnitTest", "WebApi", "WebSocket"
+            ],
+            languagues: [
                 "C#"
-            ] */
+            ],
+            technologyImgs: [
+                "csharp"
+            ]
+        },
+        {
+            title: "Job in Netcentric 2",
+            company: "Netcentric",
+            companyWebsite: "www.google.com",
+            location: "Spain, Barcelona",
+            jobTitle: "Engineer",
+            description: "Doing something, programing....",
+            startDate: "2012-12-12T23:59Z",
+            endDate: "2012-12-12T23:59Z",
+            user: user1Id,
+
+            category: "work",
+            repository: "github.com/iadaria",
+            deploy: null,
+            img: "test1.png",
+            technologies: [
+                "C#", "UnitTest", "WebApi", "WebSocket", "C#", "UnitTest", "WebApi", "WebSocket", "C#", "UnitTest", "WebApi", "WebSocket"
+            ],
+            languagues: [
+                "C#"
+            ],
+            technologyImgs: [
+                "csharp"
+            ]
         },
         /* {
             title: "Job in Netcentric",
@@ -197,17 +262,17 @@ const data = {
             part: "mainMenu",
             value: "Обо мне"
         },
-        { part: "mainMenu", key: "singIn", languageCode: "ru", value: "Войти"},
-        { part: "mainMenu", key: "singIn", languageCode: "en", value: "Sign In"},
+        { part: "mainMenu", key: "singIn", languageCode: "ru", value: "Войти" },
+        { part: "mainMenu", key: "singIn", languageCode: "en", value: "Sign In" },
 
-        { part: "mainMenu", key: "singOut", languageCode: "ru", value: "Выйти"},
-        { part: "mainMenu", key: "singOut", languageCode: "en", value: "Sign Out"},
+        { part: "mainMenu", key: "singOut", languageCode: "ru", value: "Выйти" },
+        { part: "mainMenu", key: "singOut", languageCode: "en", value: "Sign Out" },
 
-        { part: "mainMenu", key: "createPortfolio", languageCode: "ru", value: "Создать портфолио"},
-        { part: "mainMenu", key: "createPortfolio", languageCode: "en", value: "Create portfolio"},
+        { part: "mainMenu", key: "createPortfolio", languageCode: "ru", value: "Создать портфолио" },
+        { part: "mainMenu", key: "createPortfolio", languageCode: "en", value: "Create portfolio" },
 
-        { part: "mainMenu", key: "dashboard", languageCode: "ru", value: "Панель"},
-        { part: "mainMenu", key: "dashboard", languageCode: "en", value: "Dashboard"},
+        { part: "mainMenu", key: "dashboard", languageCode: "ru", value: "Панель" },
+        { part: "mainMenu", key: "dashboard", languageCode: "en", value: "Dashboard" },
 
         /*
             { part: "mainMenu", key: "", languageCode: "ru", value: ""},

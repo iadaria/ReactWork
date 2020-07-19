@@ -13,14 +13,19 @@ const portfolioSchema = new Schema({
     createdAt: { type: Date, default: Date.now },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
 
-    category: { type: String, require: true, maxlength: 50 },
+    category: {
+        enum: ["work", "learn"],
+        type: String,
+        required: true,
+        default: "learn"
+    },
     repository: String,
     deploy: String,
     taskDocument: String,
     imgName: String,
     technologies: String,
     languages: String,
-    technologyImgs: ""
+    technologyImgs: String,
 });
 
 module.exports = mongoose.model('Portfolio', portfolioSchema);

@@ -7,6 +7,14 @@ const portfolioFields = `
     description: String
     startDate: String
     endDate: String
+    category: String!
+    repository: String
+    deploy: String
+    taskDocument: String
+    imgName: String
+    technologies: String
+    languages: String
+    technologyImgs: String
 `;
 
 exports.portfolioTypes = `

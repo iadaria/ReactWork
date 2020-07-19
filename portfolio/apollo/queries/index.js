@@ -13,6 +13,14 @@ export const GET_PORTFOLIO = gql`
       company
       companyWebsite
       location
+      category
+      repository
+      deploy
+      taskDocument
+      imgName
+      technologies
+      languages
+      technologyImgs
     }
   }
 `;
@@ -28,6 +36,14 @@ export const GET_PORTFOLIOS = gql`
       endDate
       company
       companyWebsite
+      category
+      repository
+      deploy
+      taskDocument
+      imgName
+      technologies
+      languages
+      technologyImgs
     }
   }
 `;
@@ -40,6 +56,14 @@ export const GET_USER_PORTFOLIOS = gql`
       jobTitle
       startDate
       endDate
+      category
+      repository
+      deploy
+      taskDocument
+      imgName
+      technologies
+      languages
+      technologyImgs
     }
   }
 `;
@@ -54,6 +78,14 @@ export const CREATE_PORTFOLIO = gql`
     $description: String
     $startDate: String
     $endDate: String
+    $category: String
+    $repository: String
+    $deploy: String
+    $taskDocument: String
+    $imgName: String
+    $technologies: String
+    $languages: String
+    $technologyImgs: String
   ) {
     createPortfolio(
       input: {
@@ -65,6 +97,14 @@ export const CREATE_PORTFOLIO = gql`
         description: $description
         startDate: $startDate
         endDate: $endDate
+        category: $category
+        repository: $repository
+        deploy: $deploy
+        taskDocument: $taskDocument
+        imgName: $imgName
+        technologies: $technologies
+        languages: $languages
+        technologyImgs: $technologyImgs
       }
     ) {
       _id
@@ -76,6 +116,14 @@ export const CREATE_PORTFOLIO = gql`
       company
       companyWebsite
       location
+      category
+      repository
+      deploy
+      taskDocument
+      imgName
+      technologies
+      languages
+      technologyImgs
     }
   }
 `;
@@ -97,6 +145,14 @@ export const UPDATE_PORTFOLIO = gql`
     $description: String
     $startDate: String
     $endDate: String
+    $category: String
+    $repository: String
+    $deploy: String
+    $taskDocument: String
+    $imgName: String
+    $technologies: String
+    $languages: String
+    $technologyImgs: String
   ) {
     updatePortfolio(
       id: $id
@@ -109,6 +165,14 @@ export const UPDATE_PORTFOLIO = gql`
         description: $description
         startDate: $startDate
         endDate: $endDate
+        category: $category
+        repository: $repository
+        deploy: $deploy
+        taskDocument: $taskDocument
+        imgName: $imgName
+        technologies: $technologies
+        languages: $languages
+        technologyImgs: $technologyImgs
       }
     ) {
       _id
@@ -120,6 +184,14 @@ export const UPDATE_PORTFOLIO = gql`
       company
       companyWebsite
       location
+      category
+      repository
+      deploy
+      taskDocument
+      imgName
+      technologies
+      languages
+      technologyImgs
     }
   }
 `;

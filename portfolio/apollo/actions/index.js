@@ -23,6 +23,7 @@ export const useGetUserPortfolios = () => useQuery(GET_USER_PORTFOLIOS);
 export const useUpdatePortfolio = () => useMutation(UPDATE_PORTFOLIO);
 export const useCreatePortfolio = () => useMutation(CREATE_PORTFOLIO, {
     update(cache, { data: { createPortfolio } }) {
+        console.log('actions -> createPortfolio', createPortfolio);
         const { portfolios } = cache.readQuery({ query: GET_PORTFOLIOS })
         cache.writeQuery({
             query: GET_PORTFOLIOS,

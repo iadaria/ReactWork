@@ -8,7 +8,7 @@ const LoginMenu = ({ words }) => {
         // <ul className="nav nav-auth">
         <ul className="sub-menu login-menu">
             <li className="nav-item">
-                <Link href="/login"><a>{words.singIn}</a></Link>
+                <Link href="/login"><a>{words.signIn}</a></Link>
             </li>
             {/* <li className="nav-item">
                 <Link className="btn btn-signup" href="/register">

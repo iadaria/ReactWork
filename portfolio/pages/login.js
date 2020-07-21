@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import '../styles/pages/login.scss';
 import BaseLayout from "@/components/layouts/BaseLayout";
 import LoginForm from "@/components/forms/LoginForm";
 import withApollo from "@/hoc/withApollo";
@@ -34,7 +35,7 @@ const Login = () => {
 
   return (
     <BaseLayout>
-      <div className="bwm-form mt-5">
+      <div className="login bwm-form mt-5">
         <div className="row">
           <div className="col-md-5 mx-auto">
             <h1 className="page-title">Login</h1>

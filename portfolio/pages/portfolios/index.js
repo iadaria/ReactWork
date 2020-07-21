@@ -1,14 +1,27 @@
 import React from 'react';
+import BaseLayout from "../../components/layouts/BaseLayout";
+import PortfolioCards from '../../components/shared/PortfolioCards';
+
+const Portfolios = () => {
+    return (
+        <BaseLayout>
+            <PortfolioCards />
+        </BaseLayout>
+    );
+};
+
+export default Portfolios;
+
+/* 
 import Grid from '@material-ui/core/Grid';
 import PortfolioCard from '../../components/shared/PortfolioCard';
-import BaseLayout from "../../components/layouts/BaseLayout";
 import Link from 'next/link';
 import withApollo from '@/hoc/withApollo';
 import { getDataFromTree } from '@apollo/react-ssr';
-import { useGetPortfolios } from '@/apollo/actions';
+import { useGetPortfolios } from '@/apollo/actions'; */
 //import { formatDate } from '@/utils/functions';
 
-const Portfolios = () => {
+/* const Portfolios = () => {
     const { data } = useGetPortfolios();
     const portfolios = data && data.portfolios || [];
 
@@ -39,7 +52,7 @@ const Portfolios = () => {
     );
 };
 
-export default withApollo(Portfolios, { getDataFromTree });
+export default withApollo(Portfolios, { getDataFromTree }); */
 
 /* 
 import PortfolioCard from "../../components/portfolios/PortfolioCard";

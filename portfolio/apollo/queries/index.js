@@ -60,6 +60,7 @@ export const GET_USER_PORTFOLIOS = gql`
       repository
       deploy
       taskDocument
+      description
       imgName
       technologies
       languages

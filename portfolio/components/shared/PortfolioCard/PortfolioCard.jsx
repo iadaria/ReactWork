@@ -13,16 +13,13 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import LaunchIcon from '@material-ui/icons/Launch';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Tooltip from '@material-ui/core/Tooltip';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-//import { formatDate } from '@/utils/functions';
+import { formatDate } from '@/utils/functions';
 
 const PortfolioCard = ({ portfolio }) => {
     const [expanded, setExpanded] = React.useState(true);
 
-    const technologyImgs = portfolio.technologyImgs.split(';');
-    const technologies = portfolio.technologies.split(';');
+    const technologyImgs = portfolio.technologyImgs?.split(';');
+    const technologies = portfolio.technologies?.split(';');
 
     const isRepository = portfolio.repository ? true : false;
     const isDeploy = portfolio.deploy ? true : false;
@@ -34,7 +31,7 @@ const PortfolioCard = ({ portfolio }) => {
                     <AvatarGroup max={5}>
                         <Avatar
                             style={{width: 30, height: 30}}
-                            src={`/static/images/technology/${technologyImgs[0]}.svg`}
+                            src={`/static/images/technology/${technologyImgs && technologyImgs[0]}.svg`}
                             size="small"
                         />
                     </AvatarGroup>
@@ -69,7 +66,8 @@ const PortfolioCard = ({ portfolio }) => {
                     </>
                 }
                 title={portfolio.title}
-                subheader={`${portfolio.startDate} - ${portfolio.endDate || "Present"}`}
+                //subheader={`${portfolio.startDate} - ${portfolio.endDate || "Present"}`}
+                subheader={`${formatDate(portfolio.startDate)} - ${(portfolio.endDate && formatDate(portfolio.endDate)) || "Present"}`}
             />
             <div
                 className="portfolio-card__media_wrapper"
@@ -78,7 +76,7 @@ const PortfolioCard = ({ portfolio }) => {
             />
             <CardMedia
                 className="portfolio-card__media"
-                image={`../../../static/images/portfolios/${portfolio.imgName}`}
+                image={`../../../static/images/portfolios/${portfolio.imgName || "default.png"}`}
             />
             <Slide direction="up" in={expanded}>
                 <CardContent className="portfolio-card__content">
@@ -91,7 +89,7 @@ const PortfolioCard = ({ portfolio }) => {
                         <div className="test">
                             <b>Технологии:</b>
                             <ul className="technology_list">
-                                {technologies.map((technology, index) => (
+                                {technologies?.map((technology, index) => (
                                     <li key={index}>{technology}</li>
                                 ))}
                             </ul>

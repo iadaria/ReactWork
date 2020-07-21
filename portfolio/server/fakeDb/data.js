@@ -42,10 +42,7 @@ const data = {
             companyWebsite: "www.fl.ru",
             location: "Ukrain",
             jobTitle: "Engineer",
-            description: `
-                Разработка ботов для букмекерских сайтов под существующий интерфейс заказчика.
-                Тесты для проверки корректности всех комбинаций ставок. 
-            `,
+            description: "Разработка ботов для букмекерских сайтов под существующий интерфейс заказчика. Тесты для проверки корректности всех комбинаций ставок. ",
             startDate: "2012-12-12T23:59Z",
             endDate: "2012-12-12T23:59Z",
             user: user1Id,
@@ -57,7 +54,7 @@ const data = {
             deploy: null,
             taskDocument: "https://drive.google.com/file/d/0B6RuRX0jvwvCU2oyQ3pCa21KejA/view?usp=sharing",
 
-            imgName: "test1.png",
+            imgName: "default2.png",
             technologies: "C#; UnitTest; WebApi; WebSocket; C#; UnitTest; C#; UnitTest; WebApi; WebSocket; C#; UnitTest",
             languages: "C#",
             technologyImgs: "csharp"
@@ -68,10 +65,7 @@ const data = {
             companyWebsite: "www.fl.ru",
             location: "Ukrain",
             jobTitle: "Engineer",
-            description: `
-                Разработка ботов для букмекерских сайтов под существующий интерфейс заказчика.
-                Тесты для проверки корректности всех комбинаций ставок. 
-            `,
+            description: "Разработка ботов для букмекерских сайтов под существующий интерфейс заказчика. Тесты для проверки корректности всех комбинаций ставок. ",
             startDate: "2012-12-12T23:59Z",
             endDate: "2012-12-12T23:59Z",
             user: user1Id,
@@ -83,7 +77,7 @@ const data = {
             deploy: null,
             taskDocument: "https://drive.google.com/file/d/0B6RuRX0jvwvCU2oyQ3pCa21KejA/view?usp=sharing",
 
-            imgName: "test1.png",
+            imgName: "default2.png",
             technologies: "WebApi; WebSocket; C#; UnitTest",
             languages: "C#",
             technologyImgs: "csharp"
@@ -109,7 +103,7 @@ const data = {
             deploy: null,
             taskDocument: "https://drive.google.com/file/d/0B6RuRX0jvwvCU2oyQ3pCa21KejA/view?usp=sharing",
 
-            imgName: "test1.png",
+            imgName: "default2.png",
             technologies: "C#; UnitTest; C#; UnitTest; WebApi; WebSocket; C#; UnitTest",
             languages: "C#",
             technologyImgs: "csharp"
@@ -257,11 +251,11 @@ const data = {
             part: "mainMenu",
             value: "Обо мне"
         },
-        { part: "mainMenu", key: "singIn", languageCode: "ru", value: "Войти" },
-        { part: "mainMenu", key: "singIn", languageCode: "en", value: "Sign In" },
+        { part: "mainMenu", key: "signIn", languageCode: "ru", value: "Войти" },
+        { part: "mainMenu", key: "signIn", languageCode: "en", value: "Sign In" },
 
-        { part: "mainMenu", key: "singOut", languageCode: "ru", value: "Выйти" },
-        { part: "mainMenu", key: "singOut", languageCode: "en", value: "Sign Out" },
+        { part: "mainMenu", key: "signOut", languageCode: "ru", value: "Выйти" },
+        { part: "mainMenu", key: "signOut", languageCode: "en", value: "Sign Out" },
 
         { part: "mainMenu", key: "createPortfolio", languageCode: "ru", value: "Создать портфолио" },
         { part: "mainMenu", key: "createPortfolio", languageCode: "en", value: "Create portfolio" },

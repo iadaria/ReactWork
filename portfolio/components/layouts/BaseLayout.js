@@ -14,19 +14,12 @@ const BaseLayout = (props) => {
             <languageContext.Provider value={lang}>
                 <div className="base-layout"> {/* It's need for provider */}
                     <header>
-                        {/* <Container>  don't work */}
-                            <MainMenu setLanguage={setLanguage} />
-                        {/* </Container> */}
+                        <MainMenu setLanguage={setLanguage} />
                     </header>
                     <main style={{ height: '500vh' }}>
                         {children}
                     </main>
                     <footer></footer>
-                    {/* <main className={`cover ${className}`}>
-                    <Container className="wrapper">
-                        {children}
-                    </Container>
-                </main> */}
                     <ToastContainer />
                 </div>
             </languageContext.Provider>

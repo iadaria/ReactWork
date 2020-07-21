@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 
 const Services = () => {
     return (
-        <Grid className="services" container justify="center" style={{ border: '1px solid black' }}>
+        <Grid className="services" container justify="center">
 
             <Grid className="services-header" container item xs={11} justify="center">
                 <h1>

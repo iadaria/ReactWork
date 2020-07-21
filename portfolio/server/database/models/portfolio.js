@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const portfolioSchema = new Schema({
-    title: { type: String, require: true, maxlength: 128 },
-    jobTitle: { type: String, require: true },
-    description: { type: String, require: true },
-    company: { type: String, require: true, maxlength: 128 },
-    companyWebsite: { type: String, require: true, maxlength: 128 },
-    location: { type: String, require: true, maxlength: 128 },
-    startDate: { type: Date, require: true },
+    title: { type: String, maxlength: 128 },
+    jobTitle: { type: String },
+    description: { type: String },
+    company: { type: String, maxlength: 128 },
+    companyWebsite: { type: String, maxlength: 128 },
+    location: { type: String, maxlength: 128 },
+    startDate: { type: Date },
     endDate: Date,
     createdAt: { type: Date, default: Date.now },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -22,7 +22,10 @@ const portfolioSchema = new Schema({
     repository: String,
     deploy: String,
     taskDocument: String,
-    imgName: String,
+    imgName: {
+        type: String,
+        default: "default.png"
+    },
     technologies: String,
     languages: String,
     technologyImgs: String,

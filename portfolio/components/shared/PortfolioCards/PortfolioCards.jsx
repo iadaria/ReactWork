@@ -38,4 +38,4 @@ const PortfolioCards = () => {
     );
 };
 
-export default PortfolioCards;
+export default withApollo(PortfolioCards, {getDataFromTree });

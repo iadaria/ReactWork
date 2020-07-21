@@ -64,7 +64,7 @@ const AccountMenu = ({ user, words }) => {
 
                 <MenuItem onClick={handleClose}>
                     <Link href="/logout">
-                        <a className="nav-link">{words?.signOut}</a>
+                        <a className="nav-link">{words?.signOut || "Sign Out"}</a>
                     </Link>
                 </MenuItem>
             </Menu>

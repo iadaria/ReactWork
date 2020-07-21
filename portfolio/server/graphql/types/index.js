@@ -7,7 +7,7 @@ const portfolioFields = `
     description: String
     startDate: String
     endDate: String
-    category: String!
+    category: String
     repository: String
     deploy: String
     taskDocument: String

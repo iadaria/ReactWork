@@ -12,7 +12,7 @@ const PortfolioCards = () => {
     //const { portfolios } = data;
     const { data } = useGetPortfolios();
     const portfolios = data && data.portfolios || [];
-    console.log('portfolios', portfolios);
+    //console.log('portfolios', portfolios);
 
     return (
         <Grid className="portfolio-cards" container justify="center" style={{ border: '1px solid black' }}>

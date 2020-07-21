@@ -20,10 +20,10 @@ const PortfolioNew = () => {
 
     const handleCreatePortfolio = async (data) => {
         //let portfolioForCreate = {...data};
-        const files = data.imgName;
-        console.log('new -> handleCretePortfolio -> incoming data', data);
+        const files = data.files;
+        //console.log('new -> handleCretePortfolio -> incoming data', data);
         if (files) {
-            console.log('imgName is true', files);
+            //console.log('imgName is true', files);
             await upload(files[0]);
         }
         await createPortfolio({ variables: {...data, imgName: files[0]?.name} });
@@ -34,7 +34,7 @@ const PortfolioNew = () => {
         const data = new FormData();
         data.append('file', file);
         const res = await axios.post("http://localhost:3000/upload", data);
-        console.log('res upload', res.statusText);
+        //console.log('res upload', res.statusText);
     }
 
     function Alert(props) {

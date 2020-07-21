@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import './portfolio-form.scss';
 import { useForm } from 'react-hook-form';
-import InputBase from '@material-ui/core/InputBase';
-import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 //import DataPicker from 'react-datepicker';
 
@@ -79,7 +76,7 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
                 onChange={(event) => handleDateChange('startDate', setStartDate)(event.target.value)}
                 label="Start Date"
                 InputLabelProps={{ shrink: true }}
-                //ref={register} 
+                //inputRef={register} 
                 variant="filled" fullWidth
             />
 
@@ -88,7 +85,7 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
                 onChange={(event) => handleDateChange('endDate', setEndDate)(event.target.value)}
                 label="End Date"
                 InputLabelProps={{ shrink: true }}
-                //ref={register} 
+                //inputRef={register} 
                 variant="filled" fullWidth
             />
 
@@ -130,12 +127,6 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
                 inputRef={register} variant="filled" fullWidth
             />
 
-            {/* <TextField
-                name="imgName"
-                label="Image name"
-                inputRef={register} variant="filled" fullWidth
-            /> */}
-
             <TextField
                 name="technologies"
                 label="Technologies"
@@ -149,8 +140,15 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
             />
 
             <TextField
+                disabled
                 name="imgName"
-                label="imgage"
+                label="Image name"
+                inputRef={register} variant="filled" fullWidth
+            />
+
+            <TextField
+                name="files"
+                label="Imgage for load"
                 type="file"
                 InputLabelProps={{ shrink: true }}
                 inputRef={register} variant="filled" fullWidth

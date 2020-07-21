@@ -5,6 +5,7 @@ import Menu from '@material-ui/core/Menu';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Link from "next/link";
+import withAuth from '@/hoc/withAuth';
 import './account-menu.scss';
 
 const AccountMenu = ({ user, words }) => {
@@ -31,7 +32,7 @@ const AccountMenu = ({ user, words }) => {
                         alt={user?.username}
                         src={user?.image || "../../../static/images/user.png"}
                     />
-                    <Typography className="account-menu__name" component="b">
+                    <Typography className="account-menu__name" component="p">
                         {user?.username}
                     </Typography>
                 </>
@@ -55,8 +56,8 @@ const AccountMenu = ({ user, words }) => {
 
                 <MenuItem onClick={handleClose}>
                     <Link
-                        href="instructor/[id]/dashboard"
-                        as={`instructor/${user?._id}/dashboard`}
+                        href="/instructor/[id]/dashboard"
+                        as={`/instructor/${user?._id}/dashboard`}
                     >
                         <a className="nav-link">{words?.dashboard}</a>
                     </Link>
@@ -72,4 +73,4 @@ const AccountMenu = ({ user, words }) => {
     );
 };
 
-export default AccountMenu;
+export default withAuth(AccountMenu, ['admin', 'instructor']);

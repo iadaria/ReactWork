@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from "next/link";
-import './login-menu.scss';
-import '../sub-menu.scss';
+//import './login-menu.scss';
+//import '../sub-menu.scss';
 
 const LoginMenu = ({ words }) => {
     return (

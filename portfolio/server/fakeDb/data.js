@@ -37,7 +37,7 @@ const data = {
     ],
     portfolios: [
         {
-            title: "Бот",
+            title: "Бот2",
             company: "Freelance",
             companyWebsite: "www.fl.ru",
             location: "Ukrain",
@@ -60,7 +60,7 @@ const data = {
             technologyImgs: "csharp"
         },
         {
-            title: "Бот",
+            title: "Бот3",
             company: "Freelance",
             companyWebsite: "www.fl.ru",
             location: "Ukrain",
@@ -83,7 +83,7 @@ const data = {
             technologyImgs: "csharp"
         },
         {
-            title: "Бот",
+            title: "Бот4",
             company: "Freelance",
             companyWebsite: "www.fl.ru",
             location: "Ukrain",

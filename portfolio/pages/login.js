@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import '../styles/pages/login.scss';
+import './../public/static/styles/pages/login.scss'
 import BaseLayout from "@/components/layouts/BaseLayout";
 import LoginForm from "@/components/forms/LoginForm";
 import withApollo from "@/hoc/withApollo";

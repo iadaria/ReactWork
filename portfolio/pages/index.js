@@ -1,7 +1,6 @@
 import React from 'react';
-import '../styles/pages/index.scss';
+import './../public/static/styles/pages/index.scss';
 import BaseLayout from '../components/layouts/BaseLayout';
-//import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Hero from '../components/shared/Hero';
 import Services from '../components/shared/Services';
@@ -24,7 +23,7 @@ const Index = () => {
                     <Services /> 
                 </Grid> 
 
-                <Grid className="row" item xs={12}>
+                <Grid className="row" item xs={12} wrap="wrap" justify="center">
                     <PortfolioCards />
                 </Grid>
 

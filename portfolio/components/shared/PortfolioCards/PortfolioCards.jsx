@@ -16,17 +16,21 @@ const PortfolioCards = () => {
 
     return (
         <Grid className="portfolio-cards" container justify="center" style={{ border: '1px solid black' }}>
-            <Grid className="portfolios-header" container item xs={11} justify="center">
+            <Grid className="portfolios-header" container item xs={12} justify="center">
                 <h1>
                     Portfolios
                 </h1>
+                
             </Grid>
-
-            {portfolios.map((portfolio, index) => (
-                <Grid key={index} className="item" container item md={3} xs={11}>
-                    <PortfolioCard portfolio={portfolio} />
-                </Grid>
-            ))}
+            <Grid className="test1" container item lg={11} md={12} xs={12} justify="center">
+                {portfolios.map((portfolio, index) => (
+                    <>
+                    {/* <Grid key={index} className="item" container item md={3} xs={11} justify="center"> */}
+                        <PortfolioCard key={index} portfolio={portfolio} />
+                    {/* </Grid> */}
+                    </>
+                ))}
+            </Grid>
 
             {/* {data.portfolios.map(portfolio => (
                 <Grid key={portfolio.title} className="item" container item md={4} xs={11} justify="center">

@@ -16,7 +16,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { formatDate } from '@/utils/functions';
 
 const PortfolioCard = ({ portfolio }) => {
-    const [expanded, setExpanded] = React.useState(true);
+    const [expanded, setExpanded] = React.useState(false);
 
     const technologyImgs = portfolio.technologyImgs?.split(';');
     const technologies = portfolio.technologies?.split(';');

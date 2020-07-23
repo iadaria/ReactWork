@@ -6,7 +6,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Link from "next/link";
 import withAuth from '@/hoc/withAuth';
-import './account-menu.scss';
+//import './account-menu.scss';
 
 const AccountMenu = ({ user, words }) => {
     const [anchorE1, setAnchorE1] = useState(null);

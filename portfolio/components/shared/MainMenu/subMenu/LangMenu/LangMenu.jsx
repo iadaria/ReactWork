@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import './lang-menu.scss';
+//import './lang-menu.scss';
 
 
 const LangMenu = ({ languageCode, setLanguage }) => {

@@ -1,6 +1,6 @@
 import React from 'react';
-import './nav-menu.scss';
-import '../sub-menu.scss';
+//import './nav-menu.scss';
+// '../sub-menu.scss';
 import Link from "next/link";
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';

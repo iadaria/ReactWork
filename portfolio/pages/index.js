@@ -19,13 +19,13 @@ const Index = () => {
                     <Hero />
                 </Grid>
 
-                <Grid className="row" item xs={12}>
+                {/* <Grid className="row" item xs={12}>
                     <Services /> 
                 </Grid> 
 
-                <Grid className="row" item xs={12} wrap="wrap" justify="center">
+                <Grid className="row" item xs={12}>
                     <PortfolioCards />
-                </Grid>
+                </Grid> */}
 
             </Grid>
 

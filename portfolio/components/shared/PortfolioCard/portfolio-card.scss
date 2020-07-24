@@ -107,11 +107,35 @@
     }   
 }
 
-/* @media(max-width: 500px) {
+@media(max-width: 500px) {
     .portfolio-card {
+        width: 100%;
+        margin: 10px 5px;
+
         &__media, &__media_wrapper, &__content, .content, .content__wrapper {
-            width: 400px;
-            height: 200px;
+            width: 100%;
+            height: 230px;
+            //height: 200px;
         }
     }
-} */
+}
+
+@media(max-width: 360px) {
+    .portfolio-card {
+        &__content {
+            .content {
+                font-size: 12px;
+
+                &__title, &__description {
+                    //color: red;
+                    font-size: 12px;
+                }
+
+                p {
+                    margin: 3px 0px;
+                }
+            }
+        }
+        
+    }
+}

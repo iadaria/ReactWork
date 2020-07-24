@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import './main-menu.scss';
 import withApollo from "@/hoc/withApollo";
 import { useLazyGetUser, useGetPartWords } from "@/apollo/actions";
+import languageContext from '../../../contexts/languageContext';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import languageContext from '../../../contexts/languageContext';
 import Skeleton from '@material-ui/lab/Skeleton';
 import LangMenu from "./subMenu/LangMenu";
 import AccountMenu from "./subMenu/AccountMenu";

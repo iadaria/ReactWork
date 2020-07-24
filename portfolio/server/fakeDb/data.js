@@ -275,6 +275,32 @@ const data = {
             value: ""
         },
         */
+
+        { part: "hero", key: "welcom", languageCode: "ru", value: `
+            <p>
+                Здравствуйте, Вы зашли на сайт Якимовой Дарьи.
+            </p>
+            <p>
+                У меня Вы можете заказать мобильное приложение
+                под Android/Ios, сайт и др. приложение с использованием различных технологий.
+            </p>
+            <p>
+                Я отвественно подхожу к выполнению задач, имею несколько лет опыта коммерческой разработки.
+            </p>
+        `.replace(/[ ]{2}|[\r\n\t]/g, "")},
+        
+        { part: "hero", key: "welcom", languageCode: "en", value: `
+            <p>
+                <b>Welcome</b> to the portfolio website of Iakimova Daria.
+            </p>
+            <p>
+                Get informed, collaborate and discover projects I was working on through the years!
+            </p>
+            <p>
+                I create Corss-Platform(Android/IOS) Hybrid Mobile App, web-app and others applications.
+            </p>
+        `.replace(/[ ]{2}|[\r\n\t]/g, "")},
+
     ],
 };
 

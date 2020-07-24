@@ -3,20 +3,30 @@ import './hero.scss';
 import Typed from 'react-typed';
 import Grid from '@material-ui/core/Grid';
 
+import withApollo from "@/hoc/withApollo";
+import { useLazyGetUser, useGetPartWords } from "@/apollo/actions";
+import languageContext from '../../../contexts/languageContext';
+
 const Hero = () => {
+    const languageCode = React.useContext(languageContext);
+
+    const { loading, data: dataWords } = useGetPartWords({ variables: { languageCode, part: "hero" } });
+    /* Create one object with many keys */
+    const words = dataWords && dataWords.partWords.reduce((prevWords, currentWord) => (
+        { ...prevWords, ...{ [currentWord.key]: currentWord.value } }
+    ), {}) || [];
+    
     const roles = [
-        'Разработка гибридных мобильных приложений под Android/IOS на React Native',
-        '',
-        'Developer', 
-        'Team Player', 
+        'Разработка мобильных приложений под Android/IOS на React Native',
+        'Web-приложения, бэкэнд на ASP.NET',
         'React.js', 
         'React Native', 
         'ASP.NET'
     ];
     return (
-        <Grid className="hero" container justify="center" style={{ border: '1px solid black' }}>
+        <Grid className="hero" container justify="center">
 
-            <Grid className="item" container item md={5} xs={11} justify="flex-end">
+            <Grid className="item" container item lg={5} md={6} xs={12} justify="flex-end">
                 <section className="hero-section">
                     <div className="hero-section-content">
                         <h2> Full Stack Developer </h2>
@@ -31,25 +41,9 @@ const Hero = () => {
                 </section>
             </Grid>
 
-            <Grid className="item" container item md={5} xs={11}>
+            <Grid className="item" container item lg={5} md={6} xs={12}>
                 <section className="welcom-section">
-                    <div className="hero-welcome-text">
-                        <p>
-                            <b>Welcome</b> to the portfolio website of Iakimova Daria.
-                                        Get informed, collaborate and discover projects I was working on through the years!
-                            </p>
-                        <>
-                            <p>
-                                Здравствуйте, Вы зашли на сайт Якимовой Дарьи.
-                            </p>
-                            <p>
-                                У меня Вы можете заказать мобильное приложение
-                                под Android/Ios, сайт и др. приложение с использованием различных технологий.
-                            </p>
-                            <p>
-                                Я отвественно подхожу к выполнению задач, имею несколько лет опыта коммерческой разработки.
-                            </p>
-                        </>
+                    <div className="hero-welcome-text" dangerouslySetInnerHTML={{__html: words.welcom}}>
                     </div>
                     <Typed
                         //typedRef={typedRef()}
@@ -80,4 +74,4 @@ const Hero = () => {
     );
 };
 
-export default Hero;
+export default withApollo(Hero);

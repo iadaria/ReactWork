@@ -11,15 +11,15 @@ class FakeDb {
         //await Portfolio.deleteMany({});
         //await ForumCategory.deleteMany({});
         //await Topic.deleteMany({});
-        //await Word.deleteMany({});
+        await Word.deleteMany({});
     }
 
     async addData() {
         //await User.create(users);
-        await Portfolio.create(portfolios);
+        //await Portfolio.create(portfolios);
         //await ForumCategory.create(forumCategories);
         //await Topic.create(topics);
-        //await Word.create(words);
+        await Word.create(words);
     }
 
     async populate() {

@@ -1,10 +1,19 @@
 .portfolio-cards {
+
     .item {
     
         //padding: 5px;
     }
 
-    .test1 {
+    .portfolios-list {
         border: 2px solid white;
+    }
+}
+
+@media(max-width: 400px) {
+    .portfolio-cards {
+        h1 {
+            font-size: 24px;
+        }
     }
 }

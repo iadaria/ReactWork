@@ -22,13 +22,9 @@ const PortfolioCards = () => {
                 </h1>
                 
             </Grid>
-            <Grid className="test1" container item lg={11} md={12} xs={12} justify="center">
+            <Grid className="portfolios-list" container item lg={11} md={12} xs={12} justify="center">
                 {portfolios.map((portfolio, index) => (
-                    <>
-                    {/* <Grid key={index} className="item" container item md={3} xs={11} justify="center"> */}
-                        <PortfolioCard key={index} portfolio={portfolio} />
-                    {/* </Grid> */}
-                    </>
+                    <PortfolioCard key={index} portfolio={portfolio} />
                 ))}
             </Grid>
 

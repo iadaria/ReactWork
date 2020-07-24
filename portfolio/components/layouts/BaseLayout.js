@@ -16,7 +16,7 @@ const BaseLayout = (props) => {
                     <header>
                         <MainMenu setLanguage={setLanguage} />
                     </header>
-                    <main style={{ height: '500vh' }}>
+                    <main> 
                         {children}
                     </main>
                     <footer></footer>
@@ -39,3 +39,5 @@ const theme = createMuiTheme({
 });
 
 export default BaseLayout;
+
+//style={{ height: '500vh' }}

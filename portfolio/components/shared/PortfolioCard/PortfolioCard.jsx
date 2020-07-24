@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import './portfolio-card.scss';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-//import CardActions from '@material-ui/core/CardActions';
 import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
@@ -14,15 +13,27 @@ import LaunchIcon from '@material-ui/icons/Launch';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Tooltip from '@material-ui/core/Tooltip';
 import { formatDate } from '@/utils/functions';
+//import useWindowDimensions from '@/hoc/useWindowDimensions';
 
 const PortfolioCard = ({ portfolio }) => {
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = React.useState(window.innerWidth <= 400);
 
     const technologyImgs = portfolio.technologyImgs?.split(';');
     const technologies = portfolio.technologies?.split(';');
 
     const isRepository = portfolio.repository ? true : false;
     const isDeploy = portfolio.deploy ? true : false;
+
+    useEffect(() => {
+        function handleResize() {
+            const { innerWidth: width } = window; console.log('width', width);
+            //setWidth(width);
+            width < 400 ? setExpanded(true) : setExpanded(false);
+        }
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <Card className="portfolio-card">  
             <CardHeader
@@ -38,7 +49,6 @@ const PortfolioCard = ({ portfolio }) => {
                 }
                 action={
                     <>
-
                         <Tooltip title="repository/Исходный код"> 
                             <span>
                                 <IconButton href={portfolio.repository} target="_blank" disabled={!isRepository}>
@@ -62,7 +72,6 @@ const PortfolioCard = ({ portfolio }) => {
                                 </IconButton>
                             </span>
                         </Tooltip>
-
                     </>
                 }
                 title={portfolio.title}
@@ -82,8 +91,14 @@ const PortfolioCard = ({ portfolio }) => {
                 <CardContent className="portfolio-card__content">
                     <div className="content__wrapper" />                    
                     <div className="content">
-                        <Typography paragraph>{portfolio.title}:</Typography>
-                        <Typography paragraph>{portfolio.description}</Typography>
+                        <Typography 
+                            className="content__title"
+                            paragraph>{portfolio.title}:</Typography>
+                        
+                        <Typography 
+                            className="content__description" 
+                            paragraph
+                        >{portfolio.description}</Typography>
                         {/* <ul className="content__lists"> */}
                             {/* <li className="content__list"> */}
                         <div className="test">

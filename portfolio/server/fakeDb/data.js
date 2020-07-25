@@ -276,7 +276,7 @@ const data = {
         },
         */
 
-        { part: "hero", key: "welcom", languageCode: "ru", value: `
+        { part: "mainPage", key: "welcom", languageCode: "ru", value: `
             <p>
                 Здравствуйте, Вы зашли на сайт Якимовой Дарьи.
             </p>
@@ -289,7 +289,7 @@ const data = {
             </p>
         `.replace(/[ ]{2}|[\r\n\t]/g, "")},
         
-        { part: "hero", key: "welcom", languageCode: "en", value: `
+        { part: "mainPage", key: "welcom", languageCode: "en", value: `
             <p>
                 <b>Welcome</b> to the portfolio website of Iakimova Daria.
             </p>
@@ -301,11 +301,42 @@ const data = {
             </p>
         `.replace(/[ ]{2}|[\r\n\t]/g, "")},
 
-        { part: "hero", key: "look", languageCode: "ru", value: "Здесь можно посомтреть на мои работы"},
-        { part: "hero", key: "look", languageCode: "en", value: "Let's take a look on my work."},
+        { part: "mainPage", key: "look", languageCode: "ru", value: "Здесь можно посомтреть на мои работы"},
+        { part: "mainPage", key: "look", languageCode: "en", value: "Let's take a look on my work."},
 
-        { part: "hero", key: "roles", languageCode: "en", value: "Creating Cross-Platform(Android/IOS) Hybrid Mobile Apps;Web-apps, back-end with ASP.NET;React.js;React Native;ASP.NET"},
-        { part: "hero", key: "roles", languageCode: "ru", value: "Разработка мобильных приложений под Android/IOS;Web-приложения, бэкэнд на ASP.NET;React.js;React Native;ASP.NET"},
+        { part: "mainPage", key: "roles", languageCode: "en", value: "Creating Cross-Platform(Android/IOS) Hybrid Mobile Apps;Web-apps, back-end with ASP.NET;React.js;React Native;ASP.NET"},
+        { part: "mainPage", key: "roles", languageCode: "ru", value: "Разработка мобильных приложений под Android/IOS;Web-приложения, бэкэнд на ASP.NET;React.js;React Native;ASP.NET"},
+        
+        { part: "mainPage", key: "services_title", languageCode: "ru", value: "Услуги"},
+        { part: "mainPage", key: "services_title", languageCode: "en", value: "Services"},
+
+        { part: "mainPage", key: "service_mobile_title", languageCode: "ru", value: "Создание мобильных приложений на React Native"},
+        { part: "mainPage", key: "service_mobile_title", languageCode: "en", value: "Create Cross-Platform Hybrid Mobile Apps"},   
+        { part: "mainPage", key: "service_mobile_description", languageCode: "ru", value: `
+            Разработка гибридных мобильных приложений под IOS/Android на React Native.
+            Составление ТЗ, прототипа, бэкэнда и развертывание, а также дальнейшая техническая
+            поддержка.
+        `.replace(/[ ]{2}|[\r\n\t]/g, "")},
+        { part: "mainPage", key: "service_mobile_description", languageCode: "en", value: `
+            Creating Cross-Platform Hybrid Mobile Apps(Android/IOS) with React Native.
+            Writing  technical specifications, prototypes, back-ends and deploy, and will tecnical support.
+        `.replace(/[ ]{2}|[\r\n\t]/g, "")},
+        
+        { part: "mainPage", key: "service_site_title", languageCode: "ru", value: "Создание web-сайтов"},
+        { part: "mainPage", key: "service_site_title", languageCode: "ru", value: "Создание web-сайтов"},
+        { part: "mainPage", key: "service_site_description", languageCode: "ru", value: `
+            Применяемые технологии ASP.NET, React, Node.
+            Регистрация доменов и хостингов, администрирование VPN, также развертывание.
+        `.replace(/[ ]{2}|[\r\n\t]/g, "")},
+        { part: "mainPage", key: "service_site_description", languageCode: "en", value: `
+            With ASP.NET, React, Node.
+            Registering domens and hostings, administrating VPN and deploying.
+        `.replace(/[ ]{2}|[\r\n\t]/g, "")},
+
+        { part: "mainPage", key: "service_bug_title", languageCode: "ru", value: "Доработка или исправление ошибок готового ПО"},
+        { part: "mainPage", key: "service_bug_title", languageCode: "en", value: "Completion(finalize) others and figure out bugs of apps"},
+        { part: "mainPage", key: "service_bug_description", languageCode: "ru", value: "Приемущественно React Native, ASP.NET, React, C#"},
+        { part: "mainPage", key: "service_bug_description", languageCode: "en", value: "With React Native, ASP.NET, React, C#"},
 
 
         /* { part: "hero", key: "roles", languageCode: "ru", value: `

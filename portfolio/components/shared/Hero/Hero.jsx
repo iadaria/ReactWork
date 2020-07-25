@@ -3,19 +3,8 @@ import './hero.scss';
 import Typed from 'react-typed';
 import Grid from '@material-ui/core/Grid';
 
-import withApollo from "@/hoc/withApollo";
-import { useLazyGetUser, useGetPartWords } from "@/apollo/actions";
-import languageContext from '../../../contexts/languageContext';
+const Hero = ({words}) => {
 
-const Hero = () => {
-    const languageCode = React.useContext(languageContext);
-
-    const { loading, data: dataWords } = useGetPartWords({ variables: { languageCode, part: "hero" } });
-    /* Create one object with many keys */
-    const words = dataWords && dataWords.partWords.reduce((prevWords, currentWord) => (
-        { ...prevWords, ...{ [currentWord.key]: currentWord.value } }
-    ), {}) || [];
-    
     const roles = words.roles?.split(';');
     console.log('roles', roles);
     return (
@@ -71,4 +60,4 @@ const Hero = () => {
     );
 };
 
-export default withApollo(Hero);
+export default Hero;

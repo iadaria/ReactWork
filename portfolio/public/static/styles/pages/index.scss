@@ -8,6 +8,17 @@
         //border: 3px solid peru
     }
 
+    .row-hero {
+        background: linear-gradient(45deg,#00aeef 0%,#096fb9 100%);
+        //background-image: url('/static/images/background-index.png');
+    }
+
+    .row-services {
+        background: url('/static/images/background-index.png'), #e3f2fd ; //#1975d2;
+        
+        
+    }
+
 } //.index
 
 /* .background-image {

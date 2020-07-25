@@ -19,15 +19,15 @@ body {
     
     main {
         //border: 2px solid lawngreen;
-        padding-top: 80px;
-        background-image: linear-gradient(45deg,#00aeef 0%,#096fb9 100%);
+        //padding-top: 80px;
+        //background-image: linear-gradient(45deg,#00aeef 0%,#096fb9 100%);
     }
 }
 
 @media(max-width: 600px) {
     .base-layout {
         main {
-            padding-top: 60px;
+            //padding-top: 60px;
         }
     }
 }

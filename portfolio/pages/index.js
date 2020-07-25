@@ -15,15 +15,15 @@ const Index = () => {
 
             <Grid className="index" container>
 
-                <Grid className="row" item xs={12}>
+                <Grid className="row-hero" item xs={12}>
                     <Hero />
                 </Grid>
 
-                {/* <Grid className="row" item xs={12}>
+                <Grid className="row-services" item xs={12}>
                     <Services /> 
                 </Grid> 
 
-                <Grid className="row" item xs={12}>
+                {/* <Grid className="row" item xs={12}>
                     <PortfolioCards />
                 </Grid> */}
 

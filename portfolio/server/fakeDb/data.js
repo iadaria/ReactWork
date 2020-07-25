@@ -282,7 +282,7 @@ const data = {
             </p>
             <p>
                 У меня Вы можете заказать мобильное приложение
-                под Android/Ios, сайт и др. приложение с использованием различных технологий.
+                под Android/Ios, веб-сайт и др. приложение с использованием различных технологий.
             </p>
             <p>
                 Я отвественно подхожу к выполнению задач, имею несколько лет опыта коммерческой разработки.
@@ -297,9 +297,19 @@ const data = {
                 Get informed, collaborate and discover projects I was working on through the years!
             </p>
             <p>
-                I create Corss-Platform(Android/IOS) Hybrid Mobile App, web-app and others applications.
+                I create Cross-Platform(Android/IOS) Hybrid Mobile App, web-app and others applications.
             </p>
         `.replace(/[ ]{2}|[\r\n\t]/g, "")},
+
+        { part: "hero", key: "look", languageCode: "ru", value: "Здесь можно посомтреть на мои работы"},
+        { part: "hero", key: "look", languageCode: "en", value: "Let's take a look on my work."},
+
+        { part: "hero", key: "roles", languageCode: "en", value: "Creating Cross-Platform(Android/IOS) Hybrid Mobile Apps;Web-apps, back-end with ASP.NET;React.js;React Native;ASP.NET"},
+        { part: "hero", key: "roles", languageCode: "ru", value: "Разработка мобильных приложений под Android/IOS;Web-приложения, бэкэнд на ASP.NET;React.js;React Native;ASP.NET"},
+
+
+        /* { part: "hero", key: "roles", languageCode: "ru", value: `
+        `.replace(/[ ]{2}|[\r\n\t]/g, "")}, */
 
     ],
 };

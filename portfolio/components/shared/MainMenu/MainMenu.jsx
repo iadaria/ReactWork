@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import './main-menu.scss';
-import withApollo from "@/hoc/withApollo";
-import { useLazyGetUser, useGetPartWords } from "@/apollo/actions";
-import languageContext from '../../../contexts/languageContext';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Skeleton from '@material-ui/lab/Skeleton';
 import LangMenu from "./subMenu/LangMenu";
 import AccountMenu from "./subMenu/AccountMenu";
 import LoginMenu from "./subMenu/LoginMenu";
 import NavMenu from "./subMenu/NavMenu";
 import DrawerMenu from "./subMenu/DrawerMenu/DrawerMenu";
+import Skeleton from '@material-ui/lab/Skeleton';
+
+import withApollo from "@/hoc/withApollo";
+import { useLazyGetUser, useGetPartWords } from "@/apollo/actions";
+import languageContext from '../../../contexts/languageContext';
+
 
 const MainMenu = ({ setLanguage }) => {
     const [user, setUser] = useState(null);//{ _id: 1, username: "Dasha", role: "admin" }); //null

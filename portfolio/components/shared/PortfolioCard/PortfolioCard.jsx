@@ -15,24 +15,14 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { formatDate } from '@/utils/functions';
 //import useWindowDimensions from '@/hoc/useWindowDimensions';
 
-const PortfolioCard = ({ portfolio }) => {
-    const [expanded, setExpanded] = React.useState(window.innerWidth <= 400);
+const PortfolioCard = ({ portfolio, show }) => {
+    const [expanded, setExpanded] = React.useState(show);
 
     const technologyImgs = portfolio.technologyImgs?.split(';');
     const technologies = portfolio.technologies?.split(';');
 
     const isRepository = portfolio.repository ? true : false;
     const isDeploy = portfolio.deploy ? true : false;
-
-    useEffect(() => {
-        function handleResize() {
-            const { innerWidth: width } = window; console.log('width', width);
-            //setWidth(width);
-            width < 400 ? setExpanded(true) : setExpanded(false);
-        }
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
 
     return (
         <Card className="portfolio-card">  

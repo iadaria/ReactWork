@@ -1,8 +1,10 @@
 import React from 'react';
 import './base-layout.scss';
 import MainMenu from "@/components/shared/MainMenu";
+import Footer from '../shared/Footer';
 import { ToastContainer } from 'react-toastify';
 import { createMuiTheme } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 import { ThemeProvider } from '@material-ui/styles';
 import languageContext from '../../contexts/languageContext';
 
@@ -13,13 +15,19 @@ const BaseLayout = (props) => {
         <ThemeProvider theme={theme}>
             <languageContext.Provider value={lang}>
                 <div className="base-layout"> {/* It's need for provider */}
-                    <header>
-                        <MainMenu setLanguage={setLanguage} />
-                    </header>
+                    {/* header */}
+                    <MainMenu setLanguage={setLanguage} />
+                    
                     <main> 
                         {children}
                     </main>
-                    <footer></footer>
+
+                    <footer>
+                        <Container>
+                            <Footer />
+                        </Container>
+                    </footer>
+
                     <ToastContainer />
                 </div>
             </languageContext.Provider>

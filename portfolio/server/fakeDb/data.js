@@ -305,7 +305,7 @@ const data = {
         { part: "mainPage", key: "look", languageCode: "en", value: "Let's take a look on my work."},
 
         { part: "mainPage", key: "roles", languageCode: "en", value: "Creating Cross-Platform(Android/IOS) Hybrid Mobile Apps;Web-apps, back-end with ASP.NET;React.js;React Native;ASP.NET"},
-        { part: "mainPage", key: "roles", languageCode: "ru", value: "Разработка мобильных приложений под Android/IOS;Web-приложения, бэкэнд на ASP.NET;React.js;React Native;ASP.NET"},
+        { part: "mainPage", key: "roles", languageCode: "ru", value: "Creating Cross-Platform(Android/IOS) Hybrid Mobile Apps;Web-apps, back-end with ASP.NET;React.js;React Native;ASP.NET"},
         
         { part: "mainPage", key: "services_title", languageCode: "ru", value: "Услуги"},
         { part: "mainPage", key: "services_title", languageCode: "en", value: "Services"},
@@ -322,8 +322,8 @@ const data = {
             Writing  technical specifications, prototypes, back-ends and deploy, and will tecnical support.
         `.replace(/[ ]{2}|[\r\n\t]/g, "")},
         
-        { part: "mainPage", key: "service_site_title", languageCode: "ru", value: "Создание web-сайтов"},
-        { part: "mainPage", key: "service_site_title", languageCode: "ru", value: "Создание web-сайтов"},
+        { part: "mainPage", key: "service_site_title", languageCode: "ru", value: "Создание web-приложений (сайты, backend, frontend)"},
+        { part: "mainPage", key: "service_site_title", languageCode: "en", value: "Creating web-apps(sites, back, front)"},
         { part: "mainPage", key: "service_site_description", languageCode: "ru", value: `
             Применяемые технологии ASP.NET, React, Node.
             Регистрация доменов и хостингов, администрирование VPN, также развертывание.
@@ -335,9 +335,13 @@ const data = {
 
         { part: "mainPage", key: "service_bug_title", languageCode: "ru", value: "Доработка или исправление ошибок готового ПО"},
         { part: "mainPage", key: "service_bug_title", languageCode: "en", value: "Completion(finalize) others and figure out bugs of apps"},
+        
         { part: "mainPage", key: "service_bug_description", languageCode: "ru", value: "Приемущественно React Native, ASP.NET, React, C#"},
         { part: "mainPage", key: "service_bug_description", languageCode: "en", value: "With React Native, ASP.NET, React, C#"},
 
+        //Portfolios
+        { part: "portfolios", key: "portfolios_header", languageCode: "en", value: "Portfolios"},
+        { part: "portfolios", key: "portfolios_header", languageCode: "ru", value: "Работы"},
 
         /* { part: "hero", key: "roles", languageCode: "ru", value: `
         `.replace(/[ ]{2}|[\r\n\t]/g, "")}, */

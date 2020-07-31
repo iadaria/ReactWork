@@ -1,12 +1,31 @@
 .portfolio-cards {
+    margin: 100px 0;
+    //border: 1px solid red;
+
+    &:before {
+        border: 1px solid #096fb9;//royalblue;
+        //display: block;
+        content: "";
+        width: 20%;
+        transform: translateY(-10px);
+    }
 
     .item {
-    
-        //padding: 5px;
+    }
+
+    h1 {
+        //border: 1px solid blue;
+        color: #096fb9;
+    }
+
+    .portfolios-header {
+        //border: 1px solid red;
     }
 
     .portfolios-list {
-        border: 2px solid white;
+        //border: 2px solid purple;
+
+        margin-top: 20px;
     }
 }
 

@@ -1,0 +1,41 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+
+    .footer-contacts, .icon-contacts {
+        //display: inline-block;
+        margin: 0;
+        padding: 40px 0;
+        list-style: none;
+    }
+
+    &-contacts {
+        border: 1px solid lightcoral;
+
+        color: #fff;
+    
+        li {
+            border: 1px solid red;
+            
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+    
+            svg {
+                margin-right: 10px;
+            }
+        }
+    }
+
+    .icon-contacts {
+        border: 1px solid white;
+        vertical-align: top;
+        text-align: right;
+        li {
+            display: inline-block;
+            border: 1px solid blue;
+            //margin: 10px;
+        }
+    }
+   
+}

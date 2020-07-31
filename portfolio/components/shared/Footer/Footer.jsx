@@ -1,44 +1,38 @@
 import React from 'react';
 import './footer.scss';
 
-import IconButton from '@material-ui/core/IconButton';
 import TelegramIcon from '@material-ui/icons/Telegram';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import Link from "next/link";
+import IconContacts from '@/components/shared/IconContacts';
+
 //import svgTelegram from '/static/images/contacts/telegram_logo.svg';
 
 const Footer = () => {
     return (
         <div className="footer">
-            <ul className="footer-contacts">
-                <li><TelegramIcon /> jadarya</li>
-                <li><WhatsAppIcon /> +7 (914) 352 8288</li>
-                <li><MailOutlineIcon /> iakim.daria@gmail.com</li>
-                <li>skype: iakim.daria@gmail.com</li>
-            </ul>
+            <div class="contacts">
 
-            <ul className="icon-contacts">
-                <li>
-                    <IconButton>
-                        <a href="https://t.me/jadarya" target="_blank" title="https://t.me/jadarya">
-                            <img
-                                width={40} height={40}
-                                src='/static/images/contacts/telegram_logo.svg'
-                                alt="@jadarya"
-                            />
-                        </a>
-                    </IconButton>
-                </li>
-                <li>
-                    <IconButton>
-                        <a href="https://github.com/iadaria" target="_blank" title="https://github.com/iadaria">
-                            <GitHubIcon style={{width: 40, height: 40, color: 'white'}}/>
-                        </a>
-                    </IconButton>
-                </li>
-            </ul>
+                <ul className="footer-contacts">
+                    <li><TelegramIcon /> jadarya</li>
+                    <li><WhatsAppIcon /> +7 (914) 352 8288</li>
+                    <li><MailOutlineIcon /> iakim.daria@gmail.com</li>
+                    <li> 
+                        <img
+                            style={{color: 'white'}}
+                            width={30} height={30}
+                            src='/static/images/contacts/icons8-skype.svg'
+                            alt="@jadarya"
+                        />
+                        iakim.daria@gmail.com
+                    </li>
+                </ul>
+
+                <IconContacts />
+            </div>
+            <p className="copyright">
+                &copy; 2020 Freelancer Iakimova Daria
+            </p>
         </div>
     );
 };

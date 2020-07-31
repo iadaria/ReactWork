@@ -21,10 +21,10 @@ const NavMenu = ({ words }) => {
                 <WorkIcon className="nav-item-icon" />
                 <Link href="/portfolios"><a>{words.portfolio}</a></Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
                 <InfoIcon className="nav-item-icon" />
                 <Link href="/about"><a>{words.about}</a></Link>
-            </li>
+            </li> */}
         </ul>
     );
 };

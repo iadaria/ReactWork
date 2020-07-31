@@ -9,6 +9,7 @@ import AccountMenu from "./subMenu/AccountMenu";
 import LoginMenu from "./subMenu/LoginMenu";
 import NavMenu from "./subMenu/NavMenu";
 import DrawerMenu from "./subMenu/DrawerMenu/DrawerMenu";
+import IconContacts from '@/components/shared/IconContacts';
 import Skeleton from '@material-ui/lab/Skeleton';
 
 import withApollo from "@/hoc/withApollo";
@@ -47,6 +48,8 @@ const MainMenu = ({ setLanguage }) => {
                 {loading ? (
                     <Skeleton width="70%" component="h1" style={{marginLeft: "3%"}} />
                 ): <NavMenu words={words} /> }
+
+                <IconContacts />
 
                 <LangMenu languageCode={languageCode} setLanguage={setLanguage} />
 

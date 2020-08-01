@@ -15,6 +15,7 @@ const portfolioFields = `
     technologies: String
     languages: String
     technologyImgs: String
+    languageCode: String
 `;
 
 exports.portfolioTypes = `

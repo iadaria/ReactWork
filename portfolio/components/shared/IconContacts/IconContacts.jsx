@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const IconContacts = ({color = 'white'}) => {
     return (
-        <ul className="icon-contacts">
+        <ul style={{maxHeight: 40, verticalAlign: 'center'}} className="icon-contacts">
             <li>
                 <IconButton>
                     <a href="https://t.me/jadarya" target="_blank" title="@jadarya">

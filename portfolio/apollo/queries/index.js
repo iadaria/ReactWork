@@ -21,6 +21,32 @@ export const GET_PORTFOLIO = gql`
       technologies
       languages
       technologyImgs
+      languageCode
+    }
+  }
+`;
+
+export const GET_LANG_PORTFOLIOS = gql`
+  query LangPortfolios($languageCode: String) {
+    langPortfolios(languageCode: $languageCode) {
+      _id
+      title
+      jobTitle
+      description
+      startDate
+      endDate
+      company
+      companyWebsite
+      location
+      category
+      repository
+      deploy
+      taskDocument
+      imgName
+      technologies
+      languages
+      technologyImgs
+      languageCode
     }
   }
 `;
@@ -44,6 +70,7 @@ export const GET_PORTFOLIOS = gql`
       technologies
       languages
       technologyImgs
+      languageCode
     }
   }
 `;
@@ -65,6 +92,7 @@ export const GET_USER_PORTFOLIOS = gql`
       technologies
       languages
       technologyImgs
+      languageCode
     }
   }
 `;
@@ -87,6 +115,7 @@ export const CREATE_PORTFOLIO = gql`
     $technologies: String
     $languages: String
     $technologyImgs: String
+    $languageCode: String
   ) {
     createPortfolio(
       input: {
@@ -106,6 +135,7 @@ export const CREATE_PORTFOLIO = gql`
         technologies: $technologies
         languages: $languages
         technologyImgs: $technologyImgs
+        languageCode: $languageCode
       }
     ) {
       _id
@@ -125,6 +155,7 @@ export const CREATE_PORTFOLIO = gql`
       technologies
       languages
       technologyImgs
+      languageCode
     }
   }
 `;
@@ -154,6 +185,7 @@ export const UPDATE_PORTFOLIO = gql`
     $technologies: String
     $languages: String
     $technologyImgs: String
+    $languageCode: String
   ) {
     updatePortfolio(
       id: $id
@@ -174,6 +206,7 @@ export const UPDATE_PORTFOLIO = gql`
         technologies: $technologies
         languages: $languages
         technologyImgs: $technologyImgs
+        languageCode: $languageCode
       }
     ) {
       _id
@@ -193,6 +226,7 @@ export const UPDATE_PORTFOLIO = gql`
       technologies
       languages
       technologyImgs
+      languageCode
     }
   }
 `;

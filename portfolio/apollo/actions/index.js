@@ -2,6 +2,7 @@ import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
 
 import {
     GET_PORTFOLIOS,
+    GET_LANG_PORTFOLIOS,
     GET_PORTFOLIO,
     GET_USER_PORTFOLIOS,
     CREATE_PORTFOLIO,
@@ -19,6 +20,7 @@ import {
 
 export const useGetPortfolios = () => useQuery(GET_PORTFOLIOS);
 export const useGetPortfolio = (options) => useQuery(GET_PORTFOLIO, options);
+export const useGetLangPortfolios = (options) => useQuery(GET_LANG_PORTFOLIOS, options);
 export const useGetUserPortfolios = () => useQuery(GET_USER_PORTFOLIOS);
 export const useUpdatePortfolio = () => useMutation(UPDATE_PORTFOLIO);
 export const useCreatePortfolio = () => useMutation(CREATE_PORTFOLIO, {

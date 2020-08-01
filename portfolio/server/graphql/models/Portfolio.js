@@ -12,6 +12,10 @@ class Portfolio {
         return this.Model.find({});
     }
 
+    getByLanguage(languageCode) {
+        return this.Model.find({ languageCode });
+    }
+
     getAllByUser() {
         return this.Model.find({user: this.user._id}).sort({startDate: 'desc'});
     }

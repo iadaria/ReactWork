@@ -32,6 +32,7 @@ exports.createApolloServer = () => {
       portfolio(id: ID): Portfolio
       portfolios: [Portfolio]
       userPortfolios: [Portfolio]
+      langPortfolios(languageCode: String): [Portfolio]
 
       user: User
 

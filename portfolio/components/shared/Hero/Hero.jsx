@@ -29,8 +29,8 @@ const Hero = () => {
                         <img width={400} height={500}/>
                     </Skeleton>
                 ) : (
-                    /* <section style={{width: 400, height: 500}} className="hero-section">  */
-                    <section className="hero-section">       
+                    <section style={{width: 400, height: 500}} className="hero-section">
+                    {/* <section className="hero-section">        */}
                         <div style={{maxWidth: 400}} className="hero-section-content">
                             <h2>Full Stack Developer</h2>
                             <div className="hero-section-content-intro">

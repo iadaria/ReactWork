@@ -6,18 +6,15 @@
     //border: 1px solid white;
     vertical-align: top;
     text-align: right;
+    //display: flex;
 
     li {
         display: inline-block;
     }
-}
 
-@media(max-width: 450px) {
-    .icon-contacts {
-        svg, img {
-            width: 35px !important;
-            height: 35px !important;
-        }
+    button {
+        padding: 5px;
+        margin-left: 15px;
     }
 }
 

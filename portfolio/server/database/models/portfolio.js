@@ -29,6 +29,11 @@ const portfolioSchema = new Schema({
     technologies: String,
     languages: String,
     technologyImgs: String,
+    languageCode: {
+        enum: ["ru", "en"],
+        type: String,
+        default: "ru"
+    }
 });
 
 module.exports = mongoose.model('Portfolio', portfolioSchema);

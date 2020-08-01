@@ -11,7 +11,7 @@ import IconContacts from '@/components/shared/IconContacts';
 const Footer = () => {
     return (
         <div className="footer">
-            <div class="contacts">
+            <div className="contacts">
 
                 <ul className="footer-contacts">
                     <li><TelegramIcon /> jadarya</li>

@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import './portfolio-card.scss';
+
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -13,7 +14,6 @@ import LaunchIcon from '@material-ui/icons/Launch';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Tooltip from '@material-ui/core/Tooltip';
 import { formatDate } from '@/utils/functions';
-//import useWindowDimensions from '@/hoc/useWindowDimensions';
 
 const PortfolioCard = ({ portfolio, show }) => {
     const [expanded, setExpanded] = React.useState(show);

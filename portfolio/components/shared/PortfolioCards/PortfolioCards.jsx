@@ -5,16 +5,16 @@ import PortfolioCard from '../PortfolioCard';
 
 import withApollo from '@/hoc/withApollo';
 import { getDataFromTree } from '@apollo/react-ssr';
-import { useGetPortfolios } from '@/apollo/actions';
-import { useLazyGetUser, useGetPartWords } from "@/apollo/actions";
+import { useGetLangPortfolios } from '@/apollo/actions';
+import { useGetPartWords } from "@/apollo/actions";
 import languageContext from '../../../contexts/languageContext';
 
 const PortfolioCards = () => {
     const [show, setShow] = React.useState(false);
-    const { data } = useGetPortfolios();
-    const portfolios = data && data.portfolios || [];
     const languageCode = React.useContext(languageContext);
- 
+    const { data } = useGetLangPortfolios({ variables: {languageCode} });
+    const portfolios = data && data.langPortfolios || [];
+
     useEffect(() => {
         setShow(window.innerWidth < 400); //default
         function handleResize() {

@@ -87,11 +87,6 @@
                 li {
                     margin-bottom: 5px;
                 }
-
-                li {
-                    //width: max-content;
-                    //border: 1px solid green;
-                }
             }
         }
 
@@ -118,6 +113,38 @@
             height: 230px;
             //height: 200px;
         }
+
+        &__content {
+            .content {
+                font-size: 14px;
+                padding: 10px 15px;
+
+                &__title, &__description {
+                    //color: red;
+                    font-size: 14px;
+                }
+
+                p {
+                    margin: 3px 0px;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 410px) {
+    .portfolio-card {
+        &__content {
+            .content {
+                &__title, &__description {
+                    font-size: 13px;
+                }
+                .technology_list {
+                    max-height: 95px;
+                    font-size: 13px;
+                }
+            }
+        }
     }
 }
 
@@ -128,15 +155,9 @@
                 font-size: 12px;
 
                 &__title, &__description {
-                    //color: red;
                     font-size: 12px;
-                }
-
-                p {
-                    margin: 3px 0px;
                 }
             }
         }
-        
     }
 }

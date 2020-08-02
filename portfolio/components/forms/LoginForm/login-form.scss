@@ -1,0 +1,30 @@
+.login-form {
+    //border: 1px solid black;
+
+    display: flex;
+    flex-direction: column;
+    
+    width: 20%;
+    min-width: 320px;
+    margin: 0 auto;
+
+    vertical-align: middle;
+    transform: translateY(50%);
+
+    * {
+        margin: 5px;
+    }
+
+    .btn-login {
+        margin: 5px;
+        background-color: green;
+        color: white;
+    }
+}
+
+@media(max-width: 500px) {
+    .login-form {
+        width: 60%;
+        transform: translateY(30%);
+    }
+}

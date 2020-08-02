@@ -1,4 +1,4 @@
-import './loader.scss';
+//import './spinning-loader.scss';
 
 const SpinningLoader = ({variant = 'normal'}) => 
     <div className={`spinner ${variant}`}>

@@ -1,5 +1,6 @@
 import React from 'react';
 import './base-layout.scss';
+
 import MainMenu from "@/components/shared/MainMenu";
 import Footer from '../shared/Footer';
 import { ToastContainer } from 'react-toastify';

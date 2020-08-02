@@ -34,7 +34,7 @@ const PortfolioNew = () => {
         const data = new FormData();
         data.append('file', file);
         const res = await axios.post("http://localhost:3000/upload", data);
-        //console.log('res upload', res.statusText);
+        console.log('res upload', res.statusText);
     }
 
     function Alert(props) {

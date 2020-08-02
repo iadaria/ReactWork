@@ -3,6 +3,10 @@ import './portfolio-form.scss';
 import { useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 //import DataPicker from 'react-datepicker';
 
 const PortfolioForm = ({ onSubmit, initialData = {} }) => {
@@ -23,36 +27,56 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
     }, [initialData]);
 
     const handleDateChange = (dateType, setDate) => date => {
-        let newDate = new Date(date);
-        setValue(dateType, (newDate && new Date(newDate.setHours(0, 0, 0, 0)).toISOString()) || newDate); //to register
+        let newDate = undefined;
+        console.log('date', date);
+        if (date) {
+            newDate = new Date(date);
+            setValue(dateType, (newDate && new Date(newDate.setHours(0, 0, 0, 0)).toISOString()) || newDate); //to register
+
+        }
+        console.log('newDate', newDate);
         setDate(newDate);
     };
 
-    console.log('startDate', startDate);
+    //console.log('startDate', startDate);
+    //console.log('endDate', endDate);
     return (
         <form className="portfolio-form" onSubmit={handleSubmit(onSubmit)}>
+            <FormControl className="form-control">
+                <InputLabel id="language-label">Language</InputLabel>
+                <Select
+                    labelId="language-label"
+                    name="languageCode"
+                    defaultValue="ru"
+                    inputRef={register} variant="filled"
+                >
+                    <MenuItem value="ru">Russian</MenuItem>
+                    <MenuItem value="en">English</MenuItem>
+                </Select>
+            </FormControl>
+
             <TextField
                 name="title"
                 label="Title"
-                inputRef={register} fullWidth variant="filled"
+                inputRef={register} variant="filled"
             />
 
             <TextField
                 name="company"
                 label="Company"
-                inputRef={register} fullWidth variant="filled"
+                inputRef={register} variant="filled"
             />
 
             <TextField
                 name="companyWebsite"
                 label="Company Website"
-                inputRef={register} fullWidth variant="filled"
+                inputRef={register} variant="filled"
             />
 
             <TextField
                 name="jobTitle"
                 label="Job Title"
-                inputRef={register} fullWidth variant="filled"
+                inputRef={register} variant="filled"
             />
 
             <TextField
@@ -60,38 +84,53 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
                 label="Description"
                 multiline
                 rowsMax={4}
-                inputRef={register} fullWidth variant="filled"
+                inputRef={register} variant="filled"
             />
 
-            <TextField
-                //onChange={(event) => console.log('onChange from category', event.target.value)}
+            {/* <TextField
                 name="category"
                 label="Category"
-                inputRef={register} variant="filled" fullWidth
-            />
+                inputRef={register} variant="filled"
+            /> */}
+
+            <FormControl className="form-control">
+                <InputLabel id="category-label">Category</InputLabel>
+                <Select
+                    labelId="category-label"
+                    name="category"
+                    defaultValue="learn"
+                    inputRef={register} variant="filled"
+                >
+                    <MenuItem value="learn">Learn</MenuItem>
+                    <MenuItem value="work">Work</MenuItem>
+                </Select>
+            </FormControl>
 
             <TextField
                 type="date"
-                //onChange={handleDateChange('startDate', setStartDate)}
+                //name="startDate"
                 onChange={(event) => handleDateChange('startDate', setStartDate)(event.target.value)}
                 label="Start Date"
                 InputLabelProps={{ shrink: true }}
                 //inputRef={register} 
-                variant="filled" fullWidth
+                variant="filled"
             />
 
             <TextField
                 type="date"
+                //value={endDate}
+                //name="endDate"
                 onChange={(event) => handleDateChange('endDate', setEndDate)(event.target.value)}
                 label="End Date"
                 InputLabelProps={{ shrink: true }}
                 //inputRef={register} 
-                variant="filled" fullWidth
+                variant="filled"
             />
 
             {endDate &&
                 <Button
-                    onClick={() => handleDateChange('endDate', setEndDate)(undefined)}
+                    className="btn-no_end_date"
+                    onClick={() => handleDateChange('endDate', setEndDate)(null)}
                     color="secondary"
                     variant="outlined"
                 >
@@ -101,7 +140,7 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
 
             {!endDate &&
                 <Button
-                    style={{ color: '#fff', marginTop: 10 }}
+                    className="btn-end_date"
                     onClick={() => handleDateChange('endDate', setEndDate)(new Date())}
                     variant="outlined"
                 >
@@ -112,38 +151,38 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
             <TextField
                 name="repository"
                 label="Repository"
-                inputRef={register} variant="filled" fullWidth
+                inputRef={register} variant="filled"
             />
 
             <TextField
                 name="deploy"
                 label="Deploy"
-                inputRef={register} variant="filled" fullWidth
+                inputRef={register} variant="filled"
             />
 
             <TextField
                 name="taskDocument"
                 label="Task Document"
-                inputRef={register} variant="filled" fullWidth
+                inputRef={register} variant="filled"
             />
 
             <TextField
                 name="technologies"
                 label="Technologies"
-                inputRef={register} variant="filled" fullWidth
+                inputRef={register} variant="filled"
             />
 
             <TextField
                 name="technologyImgs"
                 label="Technology images"
-                inputRef={register} variant="filled" fullWidth
+                inputRef={register} variant="filled"
             />
 
             <TextField
                 disabled
                 name="imgName"
                 label="Image name"
-                inputRef={register} variant="filled" fullWidth
+                inputRef={register} variant="filled"
             />
 
             <TextField
@@ -151,9 +190,9 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
                 label="Imgage for load"
                 type="file"
                 InputLabelProps={{ shrink: true }}
-                inputRef={register} variant="filled" fullWidth
+                inputRef={register} variant="filled"
             />
-            
+
             {/* <input 
                     name="imgName"
                     type="file"
@@ -170,6 +209,7 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
             </Button> */}
 
             <Button
+                className="btn-create"
                 color="primary"
                 variant="outlined"
                 type="submit"

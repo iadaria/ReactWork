@@ -12,11 +12,13 @@ import FormControl from '@material-ui/core/FormControl';
 const PortfolioForm = ({ onSubmit, initialData = {} }) => {
     const [startDate, setStartDate] = useState(undefined);
     const [endDate, setEndDate] = useState(undefined);
+    //const [languageCode, setLanguageCode] = useState("ru");
     const { handleSubmit, register, setValue } = useForm({ defaultValues: initialData });
 
     useEffect(() => {
         register({ name: 'startDate' });
         register({ name: 'endDate' });
+        register({ name: "languageCode" });
     }, [register]);
 
     useEffect(() => {
@@ -45,10 +47,20 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
             <FormControl className="form-control">
                 <InputLabel id="language-label">Language</InputLabel>
                 <Select
+                    onChange={e => setValue("languageCode", e.target.value)}
+                    // inputProps={{
+                    //     name: "languageCode",
+                    //     inputRef: (ref) => {
+                    //         if (!ref) return;
+                    //         register({name: "languageCode", value: ref.value})
+                    //     }
+                    // }}
+                    //value={undefined}
                     labelId="language-label"
                     name="languageCode"
-                    defaultValue="ru"
-                    inputRef={register} variant="filled"
+                    defaultValue=""
+                    //inputRef={register} 
+                    variant="filled"
                 >
                     <MenuItem value="ru">Russian</MenuItem>
                     <MenuItem value="en">English</MenuItem>

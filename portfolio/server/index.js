@@ -21,7 +21,7 @@ app.prepare().then(() => {
 
     const storage = multer.diskStorage({
         destination: function (req, file, cb) {
-            cb(null, 'static/images/portfolios');
+            cb(null, 'public/static/images/portfolios');
         },
         filename: function(req, file, cb) {
             cb(null, file.originalname);

@@ -22,6 +22,7 @@ const PortfolioEdit = () => {
     }
 
     const handlePortfolioUpdate = async (data) => {
+        console.log('data', data);
         const portfolioForUpdate = {...data};
         const files = data.files;
         if (files) {

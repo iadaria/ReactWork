@@ -30,11 +30,14 @@ const PortfolioCard = ({ portfolio, show }) => {
                 className="portfolio-card__header"
                 avatar={
                     <AvatarGroup max={5}>
-                        <Avatar
-                            style={{width: 30, height: 30}}
-                            src={`/static/images/technology/${technologyImgs && technologyImgs[0]}.svg`}
-                            size="small"
-                        />
+                        {technologyImgs.map(imgName => (
+                            <Avatar
+                                key={imgName}
+                                style={{width: 30, height: 30}}
+                                src={`/static/images/technology/${imgName}.svg`}
+                                size="small"
+                            />
+                        ))}       
                     </AvatarGroup>
                 }
                 action={
@@ -81,9 +84,9 @@ const PortfolioCard = ({ portfolio, show }) => {
                 <CardContent className="portfolio-card__content">
                     <div className="content__wrapper" />                    
                     <div className="content">
-                        <Typography 
+                        {/* <Typography 
                             className="content__title"
-                            paragraph>{portfolio.title}:</Typography>
+                            paragraph>{portfolio.title}:</Typography> */}
                         
                         <Typography 
                             className="content__description" 

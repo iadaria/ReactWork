@@ -19,6 +19,7 @@ const PortfolioNew = () => {
         'Oooops somthing went wrong...';
 
     const handleCreatePortfolio = async (data) => {
+        console.log('data', data);
         //let portfolioForCreate = {...data};
         const files = data.files;
         //console.log('new -> handleCretePortfolio -> incoming data', data);

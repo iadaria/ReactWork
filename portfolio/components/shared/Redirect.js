@@ -5,7 +5,7 @@ const Redirect = ({to, query}) => {
     const router = useRouter();
 
     useEffect(() => {
-        router.push({pathname: to, query, shallow: false})
+        router.push({ pathname: to, query })
     }, []);
 
     return null;

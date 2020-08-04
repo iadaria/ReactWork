@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
 import { useForm } from "react-hook-form";
 
 const RegisterForm = ({onSubmit}) => {
@@ -66,12 +65,12 @@ const RegisterForm = ({onSubmit}) => {
           id="passwordConfirmation"
         />
       </div>
-      <Button 
+      {/* <Button 
         type="submit"
         variant="secondary"
       >
         Submit
-      </Button>
+      </Button> */}
     </form>
   );
 };

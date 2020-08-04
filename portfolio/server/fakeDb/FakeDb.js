@@ -8,7 +8,7 @@ const Word = require('../database/models/word');
 class FakeDb {
     async clean() {
         //await User.deleteMany({});
-        await Portfolio.deleteMany({});
+        //await Portfolio.deleteMany({});
         //await ForumCategory.deleteMany({});
         //await Topic.deleteMany({});
         await Word.deleteMany({});
@@ -16,7 +16,7 @@ class FakeDb {
 
     async addData() {
         //await User.create(users);
-        await Portfolio.create(portfolios);
+        //await Portfolio.create(portfolios);
         //await ForumCategory.create(forumCategories);
         //await Topic.create(topics);
         await Word.create(words);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './main-menu.scss';
 
+import Link from "next/link";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -42,7 +43,12 @@ const MainMenu = ({ setLanguage }) => {
                 {loading ? (
                     <Skeleton width="10%" component="h1"/>
                 ) : (
-                    <Typography variant="h6" className="brand">{words?.brand}</Typography>
+                    <Typography variant="h6" className="brand">
+                    {words?.brand}
+                        {/* <Link href="/"> 
+                            <a className="brand">{words?.brand} </a>
+                        </Link> */}
+                    </Typography>
                 )}
                 
                 {loading ? (

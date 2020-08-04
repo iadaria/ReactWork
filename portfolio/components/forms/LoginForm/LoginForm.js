@@ -1,5 +1,5 @@
-import React from "react";
-import './login-form.scss';
+import React, { useEffect } from "react";
+//import './login-form.scss';
 
 import { useForm } from "react-hook-form";
 import TextField from '@material-ui/core/TextField';
@@ -7,6 +7,10 @@ import Button from '@material-ui/core/Button';
 
 const LoginForm = ({ onSubmit, loading }) => {
     const { handleSubmit, register } = useForm();
+
+    useEffect(() => {
+        require('./login-form.scss');
+    }, []);
 
     return (
         <form 

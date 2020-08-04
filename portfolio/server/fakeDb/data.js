@@ -313,6 +313,9 @@ const data = {
         { part: "portfolios", key: "portfolios_header", languageCode: "en", value: "Portfolios"},
         { part: "portfolios", key: "portfolios_header", languageCode: "ru", value: "Работы"},
 
+        { part: "portfolios", key: "technologies", languageCode: "en", value: "Technologies"},
+        { part: "portfolios", key: "technologies", languageCode: "ru", value: "Технологии"},
+
         /* { part: "hero", key: "roles", languageCode: "ru", value: `
         `.replace(/[ ]{2}|[\r\n\t]/g, "")}, */
 

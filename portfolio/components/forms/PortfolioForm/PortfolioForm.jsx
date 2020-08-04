@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import './portfolio-form.scss';
-import { useForm } from 'react-hook-form';
+//import { makeStyles } from '@material-ui/core/styles';
+import { useForm, Controller } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
@@ -12,13 +13,12 @@ import FormControl from '@material-ui/core/FormControl';
 const PortfolioForm = ({ onSubmit, initialData = {} }) => {
     const [startDate, setStartDate] = useState(undefined);
     const [endDate, setEndDate] = useState(undefined);
-    //const [languageCode, setLanguageCode] = useState("ru");
-    const { handleSubmit, register, setValue } = useForm({ defaultValues: initialData });
+    const { handleSubmit, register, setValue, control } = useForm({ defaultValues: initialData });
 
     useEffect(() => {
         register({ name: 'startDate' });
         register({ name: 'endDate' });
-        register({ name: "languageCode" });
+        //register({ name: "languageCode" });
     }, [register]);
 
     useEffect(() => {
@@ -44,27 +44,34 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
     //console.log('endDate', endDate);
     return (
         <form className="portfolio-form" onSubmit={handleSubmit(onSubmit)}>
-            <FormControl className="form-control">
+            {/* <FormControl className="form-control">
                 <InputLabel id="language-label">Language</InputLabel>
                 <Select
+
                     onChange={e => setValue("languageCode", e.target.value)}
-                    // inputProps={{
-                    //     name: "languageCode",
-                    //     inputRef: (ref) => {
-                    //         if (!ref) return;
-                    //         register({name: "languageCode", value: ref.value})
-                    //     }
-                    // }}
-                    //value={undefined}
                     labelId="language-label"
                     name="languageCode"
-                    defaultValue=""
-                    //inputRef={register} 
-                    variant="filled"
+                    defaultValue="ru"
+                    inputRef={register}
                 >
                     <MenuItem value="ru">Russian</MenuItem>
                     <MenuItem value="en">English</MenuItem>
                 </Select>
+            </FormControl> */}
+            <FormControl className="form-control">
+                <InputLabel id="language-label">Language</InputLabel>
+                <Controller
+                    as={
+                        <Select>
+                            <MenuItem value="ru">Russian</MenuItem>
+                            <MenuItem value="en">English</MenuItem>
+                        </Select>
+                    }
+                    control={control}
+                    name="languageCode"
+                    defaultValue="ru"
+                    labelId="language-label"
+                />
             </FormControl>
 
             <TextField
@@ -99,23 +106,20 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
                 inputRef={register} variant="filled"
             />
 
-            {/* <TextField
-                name="category"
-                label="Category"
-                inputRef={register} variant="filled"
-            /> */}
-
             <FormControl className="form-control">
                 <InputLabel id="category-label">Category</InputLabel>
-                <Select
+                <Controller
+                    as={
+                        <Select>
+                            <MenuItem value="learn">Learn</MenuItem>
+                            <MenuItem value="work">Work</MenuItem>
+                        </Select>
+                    }
+                    control={control}
                     labelId="category-label"
                     name="category"
                     defaultValue="learn"
-                    inputRef={register} variant="filled"
-                >
-                    <MenuItem value="learn">Learn</MenuItem>
-                    <MenuItem value="work">Work</MenuItem>
-                </Select>
+                />
             </FormControl>
 
             <TextField

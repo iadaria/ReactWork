@@ -43,7 +43,7 @@ const PortfolioCards = () => {
             </Grid>
             <Grid className="portfolios-list" container item lg={11} md={12} xs={12} justify="center">
                 {portfolios.map((portfolio, index) => (
-                    <PortfolioCard key={index} portfolio={portfolio} show={show} />
+                    <PortfolioCard key={index} portfolio={portfolio} show={show} words={words} />
                 ))}
             </Grid>
 

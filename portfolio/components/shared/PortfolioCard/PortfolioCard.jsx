@@ -15,7 +15,7 @@ import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Tooltip from '@material-ui/core/Tooltip';
 import { formatDate } from '@/utils/functions';
 
-const PortfolioCard = ({ portfolio, show }) => {
+const PortfolioCard = ({ portfolio, show, words }) => {
     const [expanded, setExpanded] = React.useState(show);
 
     const technologyImgs = portfolio.technologyImgs?.split(';');
@@ -84,9 +84,6 @@ const PortfolioCard = ({ portfolio, show }) => {
                 <CardContent className="portfolio-card__content">
                     <div className="content__wrapper" />                    
                     <div className="content">
-                        {/* <Typography 
-                            className="content__title"
-                            paragraph>{portfolio.title}:</Typography> */}
                         
                         <Typography 
                             className="content__description" 
@@ -95,7 +92,7 @@ const PortfolioCard = ({ portfolio, show }) => {
                         {/* <ul className="content__lists"> */}
                             {/* <li className="content__list"> */}
                         <div className="test">
-                            <b>Технологии:</b>
+                            <b>{words.technologies}:</b>
                             <ul className="technology_list">
                                 {technologies?.map((technology, index) => (
                                     <li key={index}>{technology}</li>

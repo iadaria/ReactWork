@@ -6,6 +6,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Link from "next/link";
 import withAuth from '@/hoc/withAuth';
+//import {Link as MaterialLink} from '@material-ui/core';
+import {Link as RouterLink, NavLink} from 'react-router-dom';
 //import './account-menu.scss';
 
 const AccountMenu = ({ user, words }) => {

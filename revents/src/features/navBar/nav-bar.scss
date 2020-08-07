@@ -1,0 +1,16 @@
+.nav-bar {
+    .btn-user-action {
+        margin-left: auto;
+        button {
+            margin: 0 10px;
+            color: white;
+            border-color: white;
+        }
+    }
+
+    .account {
+        position: absolute;
+        right: 0;
+        //border: 1px solid black
+    }
+}

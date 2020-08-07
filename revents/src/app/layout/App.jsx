@@ -1,29 +1,22 @@
-import React from 'react';
-//import logo from './logo.svg';
-import './App.css';
+import './app.scss';
+import React, { useState } from 'react';
 import EventDashboard from '../../features/events/eventDashaboard';
+import NavBar from '../../features/navBar/NavBar';
+import Container from '@material-ui/core/Container';
 
-function App() {
+export default function App() {
+    const [formOpen, setFormOpen] = useState(false);
+
     return (
-        <div className="App">
-            <EventDashboard />
+        <div className="app">
+            <NavBar setFormOpen={setFormOpen}/>
+            <Container className="app-content">
+                <EventDashboard formOpen={formOpen} setFormOpen={setFormOpen}/>
+            </Container>
         </div>
     );
 }
-
-export default App;
-
-/* <header className="App-header">
-    <img src={logo} className="App-logo" alt="logo" />
-    <p>
-        Edit <code>src/App.js</code> and save to reload.
-        </p>
-    <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-    >
-        Learn React d
-        </a>
-</header> */
+/*
+    import logo from './logo.svg';
+    <img src={logo} className="App-logo" alt="logo" /> 
+*/

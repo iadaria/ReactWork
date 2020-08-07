@@ -1,0 +1,9 @@
+.event-dashboard {
+
+}
+
+@media(max-width: 600px) {
+    .event-dashboard {
+        flex-direction: column-reverse;
+    }
+}

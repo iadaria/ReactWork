@@ -1,18 +1,19 @@
 import React from 'react';
 //import logo from './logo.svg';
 import './App.css';
+import EventDashboard from '../../features/events/eventDashaboard';
 
 function App() {
     return (
         <div className="App">
-            Re-vents
+            <EventDashboard />
         </div>
     );
 }
 
 export default App;
 
-{/* <header className="App-header">
+/* <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
     <p>
         Edit <code>src/App.js</code> and save to reload.
@@ -25,4 +26,4 @@ export default App;
     >
         Learn React d
         </a>
-</header> */}
+</header> */

@@ -1,15 +1,19 @@
 .event-form {
     //border: 2px solid blue;
+    margin: 0 auto;
+
     .item {
         //border: 1px solid orange; 
     }
 
     .card-event {
         //border: 1px solid black;
-        position: fixed;
+        /* position: fixed;
         top: 15%;
         //max-width: 400px;
-        width: 25%;
+        width: 25%; */
+        width: 100%;
+        margin: 0 auto;
 
         h3 {
             //border: 1px solid red;
@@ -43,7 +47,7 @@
 
 }
 
-@media(max-width: 1200px) {
+/* @media(max-width: 1200px) {
     .event-form {
         .card-event {
             width: 30%;
@@ -62,8 +66,8 @@
 @media(max-width: 600px) {
     .event-form {
         .card-event {
-            position: relative;
+            //position: relative;
             width: 100%;
         }
     }
-}
+} */

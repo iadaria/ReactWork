@@ -44,94 +44,96 @@ export default function EventForm({ setFormOpen, setEvents, createEvent, selecte
     };
 
     return (
-        <Grid className="event-form" container justify="center" direction="column">
-            <div className="card-event">
-                <h3>{selectedEvent ? "Edit the event" : "Create new event"}</h3>
-                <form onSubmit={handleFormSubmit} className="form" noValidate autoComplete="off">
-
-                    <TextField
-                        name="title"
-                        label="Event Title"
-                        value={values.title}
-                        onChange={handleInputChange}
-                        variant="filled"
-                    />
-
-                    <TextField
-                        name="category"
-                        label="Category"
-                        value={values.category}
-                        onChange={handleInputChange}
-                        variant="filled"
-                    />
-
-                    <TextField
-                        name="date"
-                        type="date"
-                        label="Event Date"
-                        value={values.date}
-                        onChange={handleInputChange}
-                        InputLabelProps={{ shrink: true }}
-                        variant="filled"
-                    />
-
-                    <TextField
-                        name="city"
-                        label="City event is taking place"
-                        value={values.city}
-                        onChange={handleInputChange}
-                        variant="filled"
-                    />
-
-                    <TextField
-                        name="venue"
-                        label="Enter the Venue of the event"
-                        value={values.venue}
-                        onChange={handleInputChange}
-                        variant="filled"
-                    />
-
-                    <TextField
-                        name="hostedBy"
-                        label="Enter the name of person hosting"
-                        value={values.hostedBy}
-                        onChange={handleInputChange}
-                        variant="filled"
-                    />
-
-                    <Box className="event-buttons">
-                        <Button
-                            // onClick={
-                            //     activity.id 
-                            //         ? () => history.push(`/activities/${activity.id}`)
-                            //         : () => history.push('/activities')
-                            //     } 
-                            //onClick={setFormOpen.bind(null, false)}
-                            onClick={ () => setFormOpen(false)}
-                            type="button"
-                            variant="outlined"
-                            color="secondary"
-                            size="small"
-                        >
-                            Cancel
-                        </Button>
-
-
-                        <Button
-                            className="btn-success"
-                            type="submit"
-                            //disabled={submitting || invalid || pristine}
-                            variant="contained"
-                            size="small"
-                        >
-                            Submit
-                                            {/* {submitting && <CircularProgress size='1.3rem'/>}
-                                            {!submitting && 'Submit'} */}
-                        </Button>
-
-                    </Box>
-                </form>
-            </div>
+        <Grid container justify="center">
+            <Grid className="event-form" item md={7} sm={10} xs={12} direction="column">
+                <div className="card-event">
+                    <h3>{selectedEvent ? "Edit the event" : "Create new event"}</h3>
+                    <form onSubmit={handleFormSubmit} className="form" noValidate autoComplete="off">
+    
+                        <TextField
+                            name="title"
+                            label="Event Title"
+                            value={values.title}
+                            onChange={handleInputChange}
+                            variant="filled"
+                        />
+    
+                        <TextField
+                            name="category"
+                            label="Category"
+                            value={values.category}
+                            onChange={handleInputChange}
+                            variant="filled"
+                        />
+    
+                        <TextField
+                            name="date"
+                            type="date"
+                            label="Event Date"
+                            value={values.date}
+                            onChange={handleInputChange}
+                            InputLabelProps={{ shrink: true }}
+                            variant="filled"
+                        />
+    
+                        <TextField
+                            name="city"
+                            label="City event is taking place"
+                            value={values.city}
+                            onChange={handleInputChange}
+                            variant="filled"
+                        />
+    
+                        <TextField
+                            name="venue"
+                            label="Enter the Venue of the event"
+                            value={values.venue}
+                            onChange={handleInputChange}
+                            variant="filled"
+                        />
+    
+                        <TextField
+                            name="hostedBy"
+                            label="Enter the name of person hosting"
+                            value={values.hostedBy}
+                            onChange={handleInputChange}
+                            variant="filled"
+                        />
+    
+                        <Box className="event-buttons">
+                            <Button
+                                // onClick={
+                                //     activity.id 
+                                //         ? () => history.push(`/activities/${activity.id}`)
+                                //         : () => history.push('/activities')
+                                //     } 
+                                //onClick={setFormOpen.bind(null, false)}
+                                onClick={ () => setFormOpen(false)}
+                                type="button"
+                                variant="outlined"
+                                color="secondary"
+                                size="small"
+                            >
+                                Cancel
+                            </Button>
+    
+    
+                            <Button
+                                className="btn-success"
+                                type="submit"
+                                //disabled={submitting || invalid || pristine}
+                                variant="contained"
+                                size="small"
+                            >
+                                Submit
+                                                {/* {submitting && <CircularProgress size='1.3rem'/>}
+                                                {!submitting && 'Submit'} */}
+                            </Button>
+    
+                        </Box>
+                    </form>
+                </div>
+            </Grid>
         </Grid>
     );
 };

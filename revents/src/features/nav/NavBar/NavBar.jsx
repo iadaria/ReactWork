@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './nav-bar.scss';
 
 import { makeStyles } from '@material-ui/core';
@@ -8,13 +8,20 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import Container from '@material-ui/core/Container';
 import green from '@material-ui/core/colors/green';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import SignedOutMenu from '../SignedOutMenu';
 import SignedInMenu from '../SignedInMenu';
 
 export default function NavBar({ setFormOpen }) {
+    const history = useHistory();
+    const [authenticated, setAuthenticated] = useState(false);
 
-    const user = { displayName: "Dasha"};
+    function handleSignOut() {
+        setAuthenticated(false);
+        history.push('/');
+    }
+
+    const user = { displayName: "Dasha" };
     const classes = useStyles();
     return (
         <AppBar position="fixed" className="menu nav-bar">
@@ -27,31 +34,33 @@ export default function NavBar({ setFormOpen }) {
                             style={{ height: 50, marginRight: '10px' }} />
                         Re-vents
                     </MenuItem>
-                    
-                    <MenuItem
-                        component={NavLink} to='/events'
-                    >
+
+                    <MenuItem component={NavLink} to='/events'>
                         Events
                     </MenuItem>
 
-                    <MenuItem>
-                        <Button
-                            component={NavLink} to='/createForm'
-                            onClick={ setFormOpen.bind(null, true) }
-                            color="inherit" className={classes.successButton}
-                        >
-                            Create event
-                        </Button>
-                    </MenuItem>
+                    {authenticated && (
+                        <MenuItem>
+                            <Button
+                                component={NavLink} to='/createEvent'
+                                onClick={setFormOpen.bind(null, true)}
+                                color="inherit" className={classes.successButton}
+                            >
+                                Create event
+                            </Button>
+                        </MenuItem>
+                    )}
 
-                    { !user && <SignedOutMenu />}
+                    {authenticated 
+                        ? <SignedInMenu user={user} signOut={handleSignOut} /> 
+                        : <SignedOutMenu setAuthenticated={setAuthenticated} />
+                    }
 
-                    {/* isLoggedIn &&  */user && <SignedInMenu user={user} />}
                 </Toolbar>
             </Container>
         </AppBar>
-    )
-};
+    );
+}
 
 const useStyles = makeStyles({
     successButton: {

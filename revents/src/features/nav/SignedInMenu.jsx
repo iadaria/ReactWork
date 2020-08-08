@@ -1,13 +1,13 @@
 import React, { useState, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
-import { makeStyles, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
-export default function SignedInMenu({ user }) {
+export default function SignedInMenu({ user, signOut }) {
     const [anchorE1, setAnchorE1] = useState(null);
     const open = Boolean(anchorE1);
 
@@ -18,6 +18,12 @@ export default function SignedInMenu({ user }) {
     const handleClose = () => {
         setAnchorE1(null);
     };
+
+    function logout() {
+        handleClose();
+        signOut(); 
+    }
+
     return (
         <div className="account">
             <IconButton
@@ -70,10 +76,7 @@ export default function SignedInMenu({ user }) {
                     My profile
                 </MenuItem>
 
-                <MenuItem
-                    //onClick={logout}
-                    onClick={handleClose}
-                >
+                <MenuItem onClick={logout}>
                     Logout
                 </MenuItem>
             </Menu>

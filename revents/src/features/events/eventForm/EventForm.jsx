@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
 import './event-form.scss';
-
+import React, { useState, useEffect } from 'react';
 //import { makeStyles, createStyles,} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 //import CircularProgress from '@material-ui/core/CircularProgress';
 //import { ActivityFormValues } from '../../../app/models/activity';
 //import { green } from '@material-ui/core/colors';
-
 import Grid from '@material-ui/core/Grid';
+import cuid from 'cuid';
 
 // import { Form as FinalForm, Field } from 'react-final-form';
 // import TextInput from '../../../app/common/form/TextInput';
@@ -22,96 +21,101 @@ import Grid from '@material-ui/core/Grid';
 // import { combineDateAndTime } from '../../../app/common/util';
 // import { combineValidators, isRequired, composeValidators, hasLengthGreaterThan } from 'revalidate';
 
-class EventForm extends Component {
+export default function EventForm({ setFormOpen, setEvents, createEvent, selectedEvent, updateEvent }) {
+    const initialValues = selectedEvent ?? {
+        title: '',
+        category: '',
+        description: '',
+        city: '',
+        venue: '',
+        date: '',
+        hostedBy: ''
+    };
+    const [values, setValues] = useState(initialValues);
 
-    state = {
-        id: '', title: '', date: '', city: '', venue: '', hostedBy: ''
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setValues({ ...values, [name]: value });
+    }
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+
+        selectedEvent 
+            ? updateEvent({...selectedEvent, ...values})
+            : (
+                createEvent({
+                    ...values,
+                    id: cuid(),
+                    hostedBy: 'Bob',
+                    attendees: [],
+                    hostPhotoURL: '/assets/user.png'
+                })
+            );
+        setFormOpen(false);
     };
 
-    componentDidMount() {
-        if (this.props.selelectedEvent !== null) {
-            this.setState({...this.props.selectedEvent});
-        }
-    }
+    return (
+        <Grid className="event-form" container justify="center">
+            <Grid item sm={8} xs={12}>
+                <h3>{selectedEvent ? "Edit the event" : "Create new event"}</h3>
+                <form onSubmit={handleFormSubmit} className="form" noValidate autoComplete="off">
+                    <div>
+                        <label>Event Title</label>
+                        <input value={values.title} onChange={handleInputChange} name="title" placeholder="First Name" />
 
-    handleFormSubmit = event => {
-        event.preventDefault();
-        if (this.state.id) {
-            this.props.updateEvent(this.state);
-        } else {
-            this.props.createEvent(this.state);
-        }
-    }
+                        <label>Category</label>
+                        <input value={values.category} onChange={handleInputChange} name="category" placeholder="Category" />
 
-    handleInputChange = ({target: {name, value}}) => {
-        this.setState({ [name] : value });
-    }
+                        <label>Event Date</label>
+                        <input value={values.date} onChange={handleInputChange} name="date" type="date" placeholder="Event Date" />
 
-    render() {
-        const { setFormOpen } = this.props;
-        const { title, date, city, venue, hostedBy, category } = this.state;
-        return (
-            <Grid className="event-form" container justify="center">
-                <Grid item sm={8} xs={12}>
-                    <h3>Create new event</h3>
-                    <form onSubmit={this.handleFormSubmit} className="form" noValidate autoComplete="off">
-                        <div>
-                            <label>Event Title</label>
-                            <input value={title} onChange={this.handleInputChange} name="title" placeholder="First Name" />
+                        <label>City</label>
+                        <input value={values.city} onChange={handleInputChange} name="city" placeholder="City event is taking place" />
 
-                            <label>Category</label>
-                            <input value={category} onChange={this.handleInputChange} name="Category" placeholder="Category" />
+                        <label>Venue</label>
+                        <input value={values.venue} onChange={handleInputChange} name="venue" placeholder="Enter the Venue of the event" />
 
-                            <label>Event Date</label>
-                            <input value={date} onChange={this.handleInputChange} name="date" type="date" placeholder="Event Date" />
+                        <label>Hosted By</label>
+                        <input value={values.hostedBy} onChange={handleInputChange} name="hostedBy" placeholder="Enter the name of person hosting" />
 
-                            <label>City</label>
-                            <input value={city} onChange={this.handleInputChange} name="city" placeholder="City event is taking place" />
-
-                            <label>Venue</label>
-                            <input value={venue} onChange={this.handleInputChange} name="vanue" placeholder="Enter the Venue of the event" />
-
-                            <label>Hosted By</label>
-                            <input value={hostedBy} onChange={this.handleInputChange} name="hostedBy" placeholder="Enter the name of person hosting" />
-
-                            <Box className="event-buttons">
-                                <Button
-                                    // onClick={
-                                    //     activity.id 
-                                    //         ? () => history.push(`/activities/${activity.id}`)
-                                    //         : () => history.push('/activities')
-                                    //     } 
-                                    onClick={setFormOpen.bind(null, false)}
-                                    type="button"
-                                    variant="outlined"
-                                    size="small"
-                                >
-                                    Cancel
+                        <Box className="event-buttons">
+                            <Button
+                                // onClick={
+                                //     activity.id 
+                                //         ? () => history.push(`/activities/${activity.id}`)
+                                //         : () => history.push('/activities')
+                                //     } 
+                                onClick={setFormOpen.bind(null, false)}
+                                type="button"
+                                variant="outlined"
+                                size="small"
+                            >
+                                Cancel
                                 </Button>
 
 
-                                <Button
-                                    className="btn-success"
-                                    type="submit"
-                                    //disabled={submitting || invalid || pristine}
-                                    variant="contained"
-                                    size="small"
-                                >
-                                    Submit
+                            <Button
+                                className="btn-success"
+                                type="submit"
+                                //disabled={submitting || invalid || pristine}
+                                variant="contained"
+                                size="small"
+                            >
+                                Submit
                                         {/* {submitting && <CircularProgress size='1.3rem'/>}
                                         {!submitting && 'Submit'} */}
-                                </Button>
+                            </Button>
 
-                            </Box>
-                        </div>
-                    </form>
-                </Grid>
+                        </Box>
+                    </div>
+                </form>
             </Grid>
-        )
-    }
+        </Grid>
+    );
 };
 
-export default EventForm;
+//export default EventForm;
 
 /* const useStyles = makeStyles((theme) =>
     createStyles({

@@ -64,14 +64,14 @@ export default function EventListItem({ event, selectEvent, deleteEvent }) {
 
                 <Box>
                     <Button
-                        onClick={() => deleteEvent(event.id)}
+                        onClick={deleteEvent.bind(null, event.id)}
                         size="small"
                         color="secondary"
                     >
                         Delete
                         </Button>
                     <Button
-                        onClick={() => selectEvent(event)}
+                        onClick={selectEvent.bind(null, event)}
                         //component={Link} to={`/activities/${activity.id}`}
                         size="small"
                         color="primary"

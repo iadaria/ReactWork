@@ -11,7 +11,7 @@ import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 import green from '@material-ui/core/colors/green';
-//import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function NavBar({ setFormOpen }) {
 
@@ -32,21 +32,22 @@ export default function NavBar({ setFormOpen }) {
             <Container>
                 <Toolbar>
                     <MenuItem
-                    //component={NavLink} exact to='/'
+                        component={NavLink} exact to='/'
                     >
                         <img className="menu-item-img" src="/assets/logo.png" alt="logo"
                             style={{ height: 50, marginRight: '10px' }} />
-                        Reactivities
+                        Re-vents
                     </MenuItem>
+                    
                     <MenuItem
-                    //component={NavLink} to='/activities'
+                        component={NavLink} to='/events'
                     >
-                        Activiteis
+                        Events
                     </MenuItem>
 
                     <MenuItem>
                         <Button
-                            //omponent={NavLink} to='/createActivity'
+                            component={NavLink} to='/createForm'
                             onClick={ setFormOpen.bind(null, true) }
                             color="inherit" className={classes.successButton}
                         >

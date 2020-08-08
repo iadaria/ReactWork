@@ -2,7 +2,7 @@ import './app.scss';
 import React, { useState, useEffect } from 'react';
 import { Route } from 'react-router-dom';
 
-import NavBar from '../../features/navBar/NavBar';
+import NavBar from '../../features/nav/NavBar';
 import Container from '@material-ui/core/Container';
 import EventForm from '../../features/events/eventForm/EventForm';
 import EventDashboard from '../../features/events/eventDashaboard';

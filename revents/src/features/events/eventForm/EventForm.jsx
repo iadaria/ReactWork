@@ -106,7 +106,8 @@ export default function EventForm({ setFormOpen, setEvents, createEvent, selecte
                             //         ? () => history.push(`/activities/${activity.id}`)
                             //         : () => history.push('/activities')
                             //     } 
-                            onClick={setFormOpen.bind(null, false)}
+                            //onClick={setFormOpen.bind(null, false)}
+                            onClick={ () => setFormOpen(false)}
                             type="button"
                             variant="outlined"
                             color="secondary"

@@ -26,10 +26,10 @@ export default function EventDashboard({ formOpen, setFormOpen, selectEvent, sel
 
     return (
         <Grid className="event-dashboard" container>
-            <Grid style={{ border: '1px solid black' }} item md={8} sm={7} xs={12}>
+            <Grid className="item" item md={8} sm={7} xs={12}>
                 <EventList events={events} selectEvent={selectEvent} deleteEvent={handleDeleteEvent}/>
             </Grid>
-            <Grid style={{ border: '1px solid black' }} item md={4} sm={5} xs={12}>
+            <Grid className="item" item md={4} sm={5} xs={12}>
                 {
                     formOpen && (
                         <EventForm

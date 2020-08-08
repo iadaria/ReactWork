@@ -1,3 +1,69 @@
 .event-form {
+    //border: 2px solid blue;
+    .item {
+        //border: 1px solid orange; 
+    }
+
+    .card-event {
+        //border: 1px solid black;
+        position: fixed;
+        top: 15%;
+        //max-width: 400px;
+        width: 25%;
+
+        h3 {
+            //border: 1px solid red;
+            margin-top: 0;
+            text-align: center;
+        }
+        
+        .form {
+            //border: 1px solid red;
+            display: flex;
+            flex-direction: column;    
     
+            * {
+                margin: 2px;
+            }
+    
+            .btn-success {
+                background-color: teal;
+                color: #fff;
+                &:hover {
+                    color: teal;
+                }
+            }
+    
+            .event-buttons {
+                margin-top: 7px;
+                margin-left: auto;
+            }
+        }
+    }
+
+}
+
+@media(max-width: 1200px) {
+    .event-form {
+        .card-event {
+            width: 30%;
+        }
+    }
+}
+
+@media(max-width: 960px) {
+    .event-form {
+        .card-event {
+            width: 40%;
+        }
+    }
+}
+
+@media(max-width: 600px) {
+    .event-form {
+        .card-event {
+            position: relative;
+            width: 100%;
+        }
+    }
 }

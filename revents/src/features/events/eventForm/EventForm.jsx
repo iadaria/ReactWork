@@ -1,25 +1,13 @@
 import './event-form.scss';
-import React, { useState, useEffect } from 'react';
-//import { makeStyles, createStyles,} from '@material-ui/core';
-import Button from '@material-ui/core/Button';
+import React, { useState } from 'react';
 import Box from '@material-ui/core/Box';
-//import CircularProgress from '@material-ui/core/CircularProgress';
-//import { ActivityFormValues } from '../../../app/models/activity';
-//import { green } from '@material-ui/core/colors';
 import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+//import Select from '@material-ui/core/Select';
+//import InputLabel from '@material-ui/core/InputLabel';
+//import FormControl from '@material-ui/core/FormControl';
 import cuid from 'cuid';
-
-// import { Form as FinalForm, Field } from 'react-final-form';
-// import TextInput from '../../../app/common/form/TextInput';
-// import TextAreaInput from '../../../app/common/form/TextAreaInput';
-// import SelectInput from '../../../app/common/form/SelectInput';
-// import { category } from '../../../app/common/options/categoryOptions';
-// import DateInput from '../../../app/common/form/DateInput';
-// import TimeInput from '../../../app/common/form/TimeInput';
-// import DateFnsUtils from '@date-io/date-fns';
-// import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-// import { combineDateAndTime } from '../../../app/common/util';
-// import { combineValidators, isRequired, composeValidators, hasLengthGreaterThan } from 'revalidate';
 
 export default function EventForm({ setFormOpen, setEvents, createEvent, selectedEvent, updateEvent }) {
     const initialValues = selectedEvent ?? {
@@ -41,8 +29,8 @@ export default function EventForm({ setFormOpen, setEvents, createEvent, selecte
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
-        selectedEvent 
-            ? updateEvent({...selectedEvent, ...values})
+        selectedEvent
+            ? updateEvent({ ...selectedEvent, ...values })
             : (
                 createEvent({
                     ...values,
@@ -56,61 +44,93 @@ export default function EventForm({ setFormOpen, setEvents, createEvent, selecte
     };
 
     return (
-        <Grid className="event-form" container justify="center">
-            <Grid item sm={8} xs={12}>
+        <Grid className="event-form" container justify="center" direction="column">
+            <div className="card-event">
                 <h3>{selectedEvent ? "Edit the event" : "Create new event"}</h3>
                 <form onSubmit={handleFormSubmit} className="form" noValidate autoComplete="off">
-                    <div>
-                        <label>Event Title</label>
-                        <input value={values.title} onChange={handleInputChange} name="title" placeholder="First Name" />
 
-                        <label>Category</label>
-                        <input value={values.category} onChange={handleInputChange} name="category" placeholder="Category" />
+                    <TextField
+                        name="title"
+                        label="Event Title"
+                        value={values.title}
+                        onChange={handleInputChange}
+                        variant="filled"
+                    />
 
-                        <label>Event Date</label>
-                        <input value={values.date} onChange={handleInputChange} name="date" type="date" placeholder="Event Date" />
+                    <TextField
+                        name="category"
+                        label="Category"
+                        value={values.category}
+                        onChange={handleInputChange}
+                        variant="filled"
+                    />
 
-                        <label>City</label>
-                        <input value={values.city} onChange={handleInputChange} name="city" placeholder="City event is taking place" />
+                    <TextField
+                        name="date"
+                        type="date"
+                        label="Event Date"
+                        value={values.date}
+                        onChange={handleInputChange}
+                        InputLabelProps={{ shrink: true }}
+                        variant="filled"
+                    />
 
-                        <label>Venue</label>
-                        <input value={values.venue} onChange={handleInputChange} name="venue" placeholder="Enter the Venue of the event" />
+                    <TextField
+                        name="city"
+                        label="City event is taking place"
+                        value={values.city}
+                        onChange={handleInputChange}
+                        variant="filled"
+                    />
 
-                        <label>Hosted By</label>
-                        <input value={values.hostedBy} onChange={handleInputChange} name="hostedBy" placeholder="Enter the name of person hosting" />
+                    <TextField
+                        name="venue"
+                        label="Enter the Venue of the event"
+                        value={values.venue}
+                        onChange={handleInputChange}
+                        variant="filled"
+                    />
 
-                        <Box className="event-buttons">
-                            <Button
-                                // onClick={
-                                //     activity.id 
-                                //         ? () => history.push(`/activities/${activity.id}`)
-                                //         : () => history.push('/activities')
-                                //     } 
-                                onClick={setFormOpen.bind(null, false)}
-                                type="button"
-                                variant="outlined"
-                                size="small"
-                            >
-                                Cancel
-                                </Button>
+                    <TextField
+                        name="hostedBy"
+                        label="Enter the name of person hosting"
+                        value={values.hostedBy}
+                        onChange={handleInputChange}
+                        variant="filled"
+                    />
+
+                    <Box className="event-buttons">
+                        <Button
+                            // onClick={
+                            //     activity.id 
+                            //         ? () => history.push(`/activities/${activity.id}`)
+                            //         : () => history.push('/activities')
+                            //     } 
+                            onClick={setFormOpen.bind(null, false)}
+                            type="button"
+                            variant="outlined"
+                            color="secondary"
+                            size="small"
+                        >
+                            Cancel
+                        </Button>
 
 
-                            <Button
-                                className="btn-success"
-                                type="submit"
-                                //disabled={submitting || invalid || pristine}
-                                variant="contained"
-                                size="small"
-                            >
-                                Submit
-                                        {/* {submitting && <CircularProgress size='1.3rem'/>}
-                                        {!submitting && 'Submit'} */}
-                            </Button>
+                        <Button
+                            className="btn-success"
+                            type="submit"
+                            //disabled={submitting || invalid || pristine}
+                            variant="contained"
+                            size="small"
+                        >
+                            Submit
+                                            {/* {submitting && <CircularProgress size='1.3rem'/>}
+                                            {!submitting && 'Submit'} */}
+                        </Button>
 
-                        </Box>
-                    </div>
+                    </Box>
                 </form>
-            </Grid>
+            </div>
         </Grid>
     );
 };

@@ -1,9 +1,15 @@
 .event-dashboard {
-
+    .item {
+        padding: 0px 7px;
+    }
 }
 
 @media(max-width: 600px) {
     .event-dashboard {
         flex-direction: column-reverse;
+
+        .item {
+            padding: 0;
+        }
     }
 }

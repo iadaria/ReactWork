@@ -16,34 +16,24 @@ export default function App() {
 
     useEffect(() => {
         console.log('selectedEvent', selectedEvent);
-    })
-
-    function handleSelectEvent(event) {
-        setSelectedEvent(event);
-        setFormOpen(true);
-    }
-
-    function handleCreateFormOpen() {
-        setSelectedEvent(null);
-        setFormOpen(true);
-    }
+    });
 
     return (
         <div className="app">
             <Route exact path='/' component={HomePage} />
             <Route path={'/(.+)'} render={() => (
                 <>
-                    <NavBar setFormOpen={handleCreateFormOpen} />
+                    <NavBar />
                     <Container className="app-content">
                         <Route exact path='/events' component={EventDashboard} />
                         <Route path='/events/:id' component={EventDetailedPage} />
-                        <Route path='/createEvent' component={EventForm} />
+                        <Route path={['/createEvent', '/manage/:id']} component={EventForm} />
                         {/* <EventDashboard 
-                    formOpen={formOpen} 
-                    setFormOpen={setFormOpen} 
-                    selectEvent={handleSelectEvent}
-                    selectedEvent={selectedEvent}               
-                /> */}
+                            formOpen={formOpen} 
+                            setFormOpen={setFormOpen} 
+                            selectEvent={handleSelectEvent}
+                            selectedEvent={selectedEvent}               
+                        /> */}
                     </Container>
                 </>
             )} />
@@ -54,3 +44,13 @@ export default function App() {
     import logo from './logo.svg';
     <img src={logo} className="App-logo" alt="logo" />
 */
+
+/* function handleSelectEvent(event) {
+    setSelectedEvent(event);
+    setFormOpen(true);
+} */
+
+/* function handleCreateFormOpen() {
+    setSelectedEvent(null);
+    setFormOpen(true);
+} */

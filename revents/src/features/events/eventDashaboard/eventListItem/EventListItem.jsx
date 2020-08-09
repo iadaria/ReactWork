@@ -1,5 +1,6 @@
 import './event-list-item.scss';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
@@ -14,7 +15,6 @@ import Avatar from '@material-ui/core/Avatar';
 import EventListAttendees from '../eventListAttendees';
 //import Chip from '@material-ui/core/Chip';
 //import { format } from 'date-fns';
-//import { Link } from 'react-router-dom';
 
 export default function EventListItem({ event, selectEvent, deleteEvent }) {
     const classes = useStyles();
@@ -73,8 +73,8 @@ export default function EventListItem({ event, selectEvent, deleteEvent }) {
                         </Button>
                     <Button
                         //onClick={selectEvent.bind(null, event)}
-                        onClick={ () => selectEvent(event) }
-                        //component={Link} to={`/activities/${activity.id}`}
+                        //onClick={ () => selectEvent(event) }
+                        component={Link} to={`/events/${event.id}`}
                         size="small"
                         color="primary"
                         variant="outlined"

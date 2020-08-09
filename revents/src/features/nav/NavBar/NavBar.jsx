@@ -12,7 +12,7 @@ import { NavLink, useHistory } from 'react-router-dom';
 import SignedOutMenu from '../SignedOutMenu';
 import SignedInMenu from '../SignedInMenu';
 
-export default function NavBar({ setFormOpen }) {
+export default function NavBar() {
     const history = useHistory();
     const [authenticated, setAuthenticated] = useState(false);
 
@@ -43,7 +43,6 @@ export default function NavBar({ setFormOpen }) {
                         <MenuItem>
                             <Button
                                 component={NavLink} to='/createEvent'
-                                onClick={setFormOpen.bind(null, true)}
                                 color="inherit" className={classes.successButton}
                             >
                                 Create event

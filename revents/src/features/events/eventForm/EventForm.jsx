@@ -1,5 +1,7 @@
 import './event-form.scss';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -108,7 +110,8 @@ export default function EventForm({ setFormOpen, setEvents, createEvent, selecte
                                 //         : () => history.push('/activities')
                                 //     } 
                                 //onClick={setFormOpen.bind(null, false)}
-                                onClick={ () => setFormOpen(false)}
+                                //onClick={ () => setFormOpen(false)}
+                                component={Link} to='/events'
                                 type="button"
                                 variant="outlined"
                                 color="secondary"

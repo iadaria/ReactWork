@@ -10,7 +10,7 @@ export default function EventListAttendees({ attendees }) {
             {attendees.map(attendee => (
                 <Tooltip
                     key={attendee.id}
-                    title={attendee.name}
+                    title={attendee.displayName}
                     placement="top"
                 >
                     <Avatar

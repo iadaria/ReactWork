@@ -10,8 +10,15 @@ import Button from '@material-ui/core/Button';
 //import InputLabel from '@material-ui/core/InputLabel';
 //import FormControl from '@material-ui/core/FormControl';
 import cuid from 'cuid';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateEvent, createEvent } from '../eventActions';
 
-export default function EventForm({ setFormOpen, setEvents, createEvent, selectedEvent, updateEvent }) {
+export default function EventForm({ match, history }) {
+    const dispatch = useDispatch();
+    const selectedEvent = useSelector(state =>
+        state.event.events.find(event => event.id === match.params.id)
+    );
+
     const initialValues = selectedEvent ?? {
         title: '',
         category: '',
@@ -32,26 +39,27 @@ export default function EventForm({ setFormOpen, setEvents, createEvent, selecte
         e.preventDefault();
 
         selectedEvent
-            ? updateEvent({ ...selectedEvent, ...values })
-            : (
-                createEvent({
-                    ...values,
-                    id: cuid(),
-                    hostedBy: 'Bob',
-                    attendees: [],
-                    hostPhotoURL: '/assets/user.png'
-                })
-            );
-        setFormOpen(false);
+            ? dispatch(updateEvent({ ...selectedEvent, ...values }))
+            : dispatch(createEvent({
+                ...values,
+                id: cuid(),
+                hostedBy: 'Bob',
+                attendees: [],
+                hostPhotoURL: '/assets/user.png'
+            }));
+
+            history.push('/events');
+
+        //setFormOpen(false);
     };
 
     return (
         <Grid container justify="center">
-            <Grid className="event-form" item md={7} sm={10} xs={12} direction="column">
+            <Grid className="event-form" container item md={7} sm={10} xs={12} direction="column">
                 <div className="card-event">
                     <h3>{selectedEvent ? "Edit the event" : "Create new event"}</h3>
                     <form onSubmit={handleFormSubmit} className="form" noValidate autoComplete="off">
-    
+
                         <TextField
                             name="title"
                             label="Event Title"
@@ -59,7 +67,7 @@ export default function EventForm({ setFormOpen, setEvents, createEvent, selecte
                             onChange={handleInputChange}
                             variant="filled"
                         />
-    
+
                         <TextField
                             name="category"
                             label="Category"
@@ -67,7 +75,7 @@ export default function EventForm({ setFormOpen, setEvents, createEvent, selecte
                             onChange={handleInputChange}
                             variant="filled"
                         />
-    
+
                         <TextField
                             name="date"
                             type="date"
@@ -77,7 +85,7 @@ export default function EventForm({ setFormOpen, setEvents, createEvent, selecte
                             InputLabelProps={{ shrink: true }}
                             variant="filled"
                         />
-    
+
                         <TextField
                             name="city"
                             label="City event is taking place"
@@ -85,7 +93,7 @@ export default function EventForm({ setFormOpen, setEvents, createEvent, selecte
                             onChange={handleInputChange}
                             variant="filled"
                         />
-    
+
                         <TextField
                             name="venue"
                             label="Enter the Venue of the event"
@@ -93,7 +101,7 @@ export default function EventForm({ setFormOpen, setEvents, createEvent, selecte
                             onChange={handleInputChange}
                             variant="filled"
                         />
-    
+
                         <TextField
                             name="hostedBy"
                             label="Enter the name of person hosting"
@@ -101,7 +109,7 @@ export default function EventForm({ setFormOpen, setEvents, createEvent, selecte
                             onChange={handleInputChange}
                             variant="filled"
                         />
-    
+
                         <Box className="event-buttons">
                             <Button
                                 // onClick={
@@ -119,8 +127,8 @@ export default function EventForm({ setFormOpen, setEvents, createEvent, selecte
                             >
                                 Cancel
                             </Button>
-    
-    
+
+
                             <Button
                                 className="btn-success"
                                 type="submit"
@@ -129,10 +137,10 @@ export default function EventForm({ setFormOpen, setEvents, createEvent, selecte
                                 size="small"
                             >
                                 Submit
-                                                {/* {submitting && <CircularProgress size='1.3rem'/>}
-                                                {!submitting && 'Submit'} */}
+                                {/* {submitting && <CircularProgress size='1.3rem'/>}
+                                {!submitting && 'Submit'} */}
                             </Button>
-    
+
                         </Box>
                     </form>
                 </div>

@@ -7,28 +7,11 @@ import { useSelector } from 'react-redux';
 
 export default function EventDashboard() {
     const { events } = useSelector(state => state.event);
-    //const [events, setEvents] = useState(sampleData);
-
-    /* function handleCreateEvent(event) {
-        setEvents([...events, event]);
-        console.log('events', events);
-    }
- */
-    /* function handleUpdateEvent(updatedEvent) {
-        setEvents(events.map(event => event.id === updatedEvent.id ? updatedEvent : event));
-        //selectEvent(null);
-        //setFormOpen(false);
-    } */
-
-    function handleDeleteEvent(id) {
-        //const newEvents = events.filter(event => event.id !== id);
-        //setEvents(newEvents);
-    }
 
     return (
         <Grid className="event-dashboard" container>
             <Grid className="item" item md={8} sm={7} xs={12}>
-                <EventList events={events} selectEvent={() => {}} deleteEvent={handleDeleteEvent}/>
+                <EventList events={events} />
             </Grid>
             <Grid className="item" item md={4} sm={5} xs={12}>
                 <h2>Event Filters</h2>
@@ -50,3 +33,21 @@ export default function EventDashboard() {
         {selectedEvent ? selectedEvent.id : null} 
     />
 ) */
+
+/* const [events, setEvents] = useState(sampleData);
+
+function handleCreateEvent(event) {
+    setEvents([...events, event]);
+    console.log('events', events);
+}
+
+function handleUpdateEvent(updatedEvent) {
+    setEvents(events.map(event => event.id === updatedEvent.id ? updatedEvent : event));
+    //selectEvent(null);
+    //setFormOpen(false);
+}
+
+function handleDeleteEvent(id) {
+    const newEvents = events.filter(event => event.id !== id);
+    setEvents(newEvents);
+} */

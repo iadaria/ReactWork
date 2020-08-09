@@ -18,6 +18,8 @@ export default function EventDetailedPage({ match }) {
                 <EventDetailedHeader event={event}/>
                 <EventDetailedInfo event={event}/>
                 <EventDetailedChat />
+                <EventDetailedChat />
+                <EventDetailedChat />
             </Grid>
             <Grid item md={4} xs={12}>
                 <EventDetailedSidebar attendees={event.attendees}/>

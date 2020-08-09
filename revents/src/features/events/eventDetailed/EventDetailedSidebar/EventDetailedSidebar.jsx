@@ -3,7 +3,6 @@ import './event-detailed-sidebar.sass';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-//import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
@@ -20,15 +19,12 @@ const AttendeeAvatar = ({ attendee }) => {
             key={attendee.username}
             alt={attendee.displayName}
             sizes="(max-width: 35px): 30px"
-            //src={attendee.image || '/assets/user.png'}
             src={attendee.photoURL || '/assets/user.png'}
         />
     );
 };
 
 export default function EventDetailedSidebar({ attendees }) {
-
-    //const attendees = [{displayName: "dasha", isHost: true}, {}];
 
     return (
         <Card className="event-detailed-sidebar">
@@ -39,9 +35,8 @@ export default function EventDetailedSidebar({ attendees }) {
             <List className="people-list">
                 {/* attendees - участники мероприятия(встречи) */}
                 {attendees.map((attendee, index) => (
-             
                     <ListItem
-                        key={attendee.username}
+                        key={attendee.displayName}
                         className="person"
                         alignItems="flex-start">
                         <ListItemAvatar>

@@ -18,7 +18,7 @@ import { deleteEvent } from '../../eventActions';
 //import Chip from '@material-ui/core/Chip';
 //import { format } from 'date-fns';
 
-export default function EventListItem({ event, selectEvent }) {
+export default function EventListItem({ event }) {
     const dispatch = useDispatch();
 
     const classes = useStyles();

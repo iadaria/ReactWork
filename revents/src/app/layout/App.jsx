@@ -1,6 +1,6 @@
 import './app.scss';
-import React, { useState, useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import React from 'react';
+import { Route, useLocation } from 'react-router-dom';
 
 import NavBar from '../../features/nav/NavBar';
 import Container from '@material-ui/core/Container';
@@ -11,12 +11,7 @@ import EventDetailedPage from '../../features/events/eventDetailed';
 
 
 export default function App() {
-    const [formOpen, setFormOpen] = useState(true);
-    const [selectedEvent, setSelectedEvent] = useState(null);
-
-    useEffect(() => {
-        console.log('selectedEvent', selectedEvent);
-    });
+    const {key} = useLocation();
 
     return (
         <div className="app">
@@ -27,13 +22,7 @@ export default function App() {
                     <Container className="app-content">
                         <Route exact path='/events' component={EventDashboard} />
                         <Route path='/events/:id' component={EventDetailedPage} />
-                        <Route path={['/createEvent', '/manage/:id']} component={EventForm} />
-                        {/* <EventDashboard 
-                            formOpen={formOpen} 
-                            setFormOpen={setFormOpen} 
-                            selectEvent={handleSelectEvent}
-                            selectedEvent={selectedEvent}               
-                        /> */}
+                        <Route path={['/createEvent', '/manage/:id']} component={EventForm} key={key}/>
                     </Container>
                 </>
             )} />

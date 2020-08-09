@@ -5,17 +5,22 @@ import EventDetailedHeader from './EventDetailedHeader';
 import EventDetailedSidebar from './EventDetailedSidebar';
 import EventDetailedInfo from './EventDetailedInfo';
 import EventDetailedChat from './EventDetailedChat';
+import { useSelector } from 'react-redux';
 
-export default function EventDetailedPage() {
+export default function EventDetailedPage({ match }) {
+    const event = useSelector(state => 
+        state.event.events.find(e => e.id === match.params.id)
+    );
+
     return (
         <Grid container spacing={3}>
             <Grid item md={8} xs={12}>
-                <EventDetailedHeader />
-                <EventDetailedInfo />
+                <EventDetailedHeader event={event}/>
+                <EventDetailedInfo event={event}/>
                 <EventDetailedChat />
             </Grid>
             <Grid item md={4} xs={12}>
-                <EventDetailedSidebar />
+                <EventDetailedSidebar attendees={event.attendees}/>
             </Grid>
         </Grid>
     );

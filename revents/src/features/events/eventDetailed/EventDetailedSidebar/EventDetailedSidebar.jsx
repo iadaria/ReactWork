@@ -20,14 +20,15 @@ const AttendeeAvatar = ({ attendee }) => {
             key={attendee.username}
             alt={attendee.displayName}
             sizes="(max-width: 35px): 30px"
-            src={attendee.image || '/assets/user.png'}
+            //src={attendee.image || '/assets/user.png'}
+            src={attendee.photoURL || '/assets/user.png'}
         />
     );
 };
 
-export default function EventDetailedSidebar () {
+export default function EventDetailedSidebar({ attendees }) {
 
-    const attendees = [{displayName: "dasha", isHost: true}, {}];
+    //const attendees = [{displayName: "dasha", isHost: true}, {}];
 
     return (
         <Card className="event-detailed-sidebar">

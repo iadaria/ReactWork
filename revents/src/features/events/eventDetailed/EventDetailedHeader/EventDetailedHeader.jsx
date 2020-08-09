@@ -11,11 +11,11 @@ import { Button, CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 //import { RootStoreContext } from '../../../../app/stores/rootStore';
 
-export default function EventDetailedHeader() {
+export default function EventDetailedHeader({ event }) {
     //const rootStore = useContext(RootStoreContext);
     //const { attendActivity, cancelAttendance, loading } = rootStore.activityStore;
     const loading = false;
-    const event = { attendees: []};
+    //const event = { attendees: []};
     const attendActivity = () => {};
     const cancelAttendance = () => {};
     const host = event.attendees.filter(x => x.isHost)[0] || {};
@@ -32,6 +32,7 @@ export default function EventDetailedHeader() {
                     title={event.title} />
                 <CardContent>
                     <Typography component="p">
+                        {event.date}
                         {/* {format(event.date, 'eeee do MMMM')} */}
                     </Typography>
                     <Typography variant="body2" component="p">

@@ -13,10 +13,14 @@ import Typography from '@material-ui/core/Typography';
 import RoomIcon from '@material-ui/icons/Room';
 import Avatar from '@material-ui/core/Avatar';
 import EventListAttendees from '../eventListAttendees';
+import { useDispatch } from 'react-redux';
+import { deleteEvent } from '../../eventActions';
 //import Chip from '@material-ui/core/Chip';
 //import { format } from 'date-fns';
 
-export default function EventListItem({ event, selectEvent, deleteEvent }) {
+export default function EventListItem({ event, selectEvent }) {
+    const dispatch = useDispatch();
+
     const classes = useStyles();
     return (
         <Card key={event.id} className={classes.root}>
@@ -64,8 +68,7 @@ export default function EventListItem({ event, selectEvent, deleteEvent }) {
 
                 <Box>
                     <Button
-                        //onClick={deleteEvent.bind(null, event.id)}
-                        onClick={ () => deleteEvent(event.id) }
+                        onClick={ () => dispatch(deleteEvent(event.id)) }
                         size="small"
                         color="secondary"
                     >

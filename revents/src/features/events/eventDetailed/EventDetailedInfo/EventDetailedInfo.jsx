@@ -5,8 +5,8 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import RoomIcon from '@material-ui/icons/Room';
 
-export default function EventDetailedInfo() {
-    const event = {};
+export default function EventDetailedInfo({ event }) {
+    
     return (
         <ul className="info-list">
             <li>

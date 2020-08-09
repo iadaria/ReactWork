@@ -1,11 +1,13 @@
 import './event-dashboard.scss';
-import React, { useState } from 'react';
+import React from 'react';
+
 import Grid from '@material-ui/core/Grid';
 import EventList from './eventList';
-import { sampleData } from '../../../app/api/sampleData';
+import { useSelector } from 'react-redux';
 
 export default function EventDashboard() {
-    const [events, setEvents] = useState(sampleData);
+    const { events } = useSelector(state => state.event);
+    //const [events, setEvents] = useState(sampleData);
 
     /* function handleCreateEvent(event) {
         setEvents([...events, event]);
@@ -19,7 +21,7 @@ export default function EventDashboard() {
     } */
 
     function handleDeleteEvent(id) {
-        const newEvents = events.filter(event => event.id !== id);
+        //const newEvents = events.filter(event => event.id !== id);
         //setEvents(newEvents);
     }
 

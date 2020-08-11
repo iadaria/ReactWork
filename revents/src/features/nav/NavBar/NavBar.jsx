@@ -38,6 +38,10 @@ export default function NavBar() {
                     <MenuItem component={NavLink} to='/events'>
                         Events
                     </MenuItem>
+                    
+                    <MenuItem component={NavLink} to='/sandbox'>
+                        Sandbox
+                    </MenuItem>
 
                     {authenticated && (
                         <MenuItem>

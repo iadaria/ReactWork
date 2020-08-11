@@ -8,6 +8,8 @@ import EventForm from '../../features/events/eventForm/EventForm';
 import EventDashboard from '../../features/events/eventDashaboard';
 import HomePage from '../../features/home/HomePage';
 import EventDetailedPage from '../../features/events/eventDetailed';
+import ModalManager from '../common/modals/ModalManager';
+import Sandbox from '../../features/sandbox/Sandbox';
 
 
 export default function App() {
@@ -15,6 +17,7 @@ export default function App() {
 
     return (
         <div className="app">
+            <ModalManager />
             <Route exact path='/' component={HomePage} />
             <Route path={'/(.+)'} render={() => (
                 <>
@@ -23,6 +26,7 @@ export default function App() {
                         <Route exact path='/events' component={EventDashboard} />
                         <Route path='/events/:id' component={EventDetailedPage} />
                         <Route path={['/createEvent', '/manage/:id']} component={EventForm} key={key}/>
+                        <Route path='/sandbox' component={Sandbox} />
                     </Container>
                 </>
             )} />

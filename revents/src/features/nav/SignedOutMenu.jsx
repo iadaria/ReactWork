@@ -2,15 +2,17 @@ import React from 'react';
 //import { NavLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../app/common/modals/modalReducer';
 
 export default function SignedOutMenu({ setAuthenticated }) {
+    const dispatch = useDispatch();
+
     return (
         <MenuItem className="btn-user-action">
             <Button
                 variant="outlined"
-                //component={NavLink} to='/createActivity'
-                //onClick={openCreateForm}
-                onClick={ () => setAuthenticated(true) }
+                onClick={ () => dispatch(openModal({ modalType: 'LoginForm' })) }
             >
                 Login
         </Button>

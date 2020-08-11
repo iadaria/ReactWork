@@ -1,0 +1,17 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+
+    > * {
+        //border: 1px solid black !important;
+        margin: 5px !important;
+    }
+
+    .btn-success {
+        background-color: teal;
+        color: #fff;
+        &:hover {
+            color: teal;
+        }
+    }
+}

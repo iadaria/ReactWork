@@ -74,8 +74,8 @@ export default function EventForm({ match, history }) {
                         }}
                     >
                         {({ isSubmitting, dirty, isValid }) => {
+                            
                             const isDisabledSubmit = !isValid || !dirty || isSubmitting;
-
                             return (
                                 <Form className="form ui">
                                     <Field

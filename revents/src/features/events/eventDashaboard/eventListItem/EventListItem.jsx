@@ -15,8 +15,8 @@ import Avatar from '@material-ui/core/Avatar';
 import EventListAttendees from '../eventListAttendees';
 import { useDispatch } from 'react-redux';
 import { deleteEvent } from '../../eventActions';
+import { format } from 'date-fns';
 //import Chip from '@material-ui/core/Chip';
-//import { format } from 'date-fns';
 
 export default function EventListItem({ event }) {
     const dispatch = useDispatch();
@@ -51,8 +51,8 @@ export default function EventListItem({ event }) {
 
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
                     <AccessTimeIcon color="primary" style={{ marginRight: '.5rem' }} fontSize="small" />
-                    {event.date}
-                    {/* {format(activity.date, 'h:mm a')} */}
+                    {/* {format(event.date, 'h:mm a')} */}
+                    {format(event.date, 'MMMM d, yyyy h:mm a')}
                     <RoomIcon style={{ marginLeft: '1rem' }} fontSize="small" />
                     {event.city}, {event.venue}
                 </Typography>

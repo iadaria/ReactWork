@@ -26,8 +26,13 @@
             display: flex;
             flex-direction: column;    
     
-            * {
+            > * { //only the first floor
+                //border: 1px solid green;
                 margin: 2px;
+            }
+
+            .select-label {
+                margin-left: 10px;
             }
     
             .btn-success {

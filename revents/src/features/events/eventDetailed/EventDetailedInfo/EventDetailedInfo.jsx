@@ -1,6 +1,6 @@
 import React from 'react';
 import './event-detailed-info.scss';
-//import { format }  from 'date-fns';
+import { format }  from 'date-fns';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import RoomIcon from '@material-ui/icons/Room';
@@ -16,7 +16,7 @@ export default function EventDetailedInfo({ event }) {
             <li>
                 <CalendarTodayIcon style={{color: 'teal'}}/>
                 <p>
-                    {event.date}
+                    {format(event.date, 'MMMM d, yyyy h:mm a')}
                     {/* {format(event.date, 'eeee do MMMM')} at {format(event.date, 'h:mm a')} */}
                 </p>
             </li>

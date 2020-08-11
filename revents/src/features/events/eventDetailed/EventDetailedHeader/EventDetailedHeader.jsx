@@ -6,9 +6,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
-//import { format } from 'date-fns';
 import { Button, CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
 //import { RootStoreContext } from '../../../../app/stores/rootStore';
 
 export default function EventDetailedHeader({ event }) {
@@ -32,8 +32,8 @@ export default function EventDetailedHeader({ event }) {
                     title={event.title} />
                 <CardContent>
                     <Typography component="p">
-                        {event.date}
                         {/* {format(event.date, 'eeee do MMMM')} */}
+                        {format(event.date, 'MMMM d, yyyy h:mm a')}
                     </Typography>
                     <Typography variant="body2" component="p">
                         Hosted by <strong><Link to={`/profile/${host.username}`}>{host.displayName}</Link></strong>

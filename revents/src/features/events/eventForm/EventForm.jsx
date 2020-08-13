@@ -1,3 +1,4 @@
+/* global google */
 import './event-form.scss';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -9,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Paper from '@material-ui/core/Paper';
 import cuid from 'cuid';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,6 +27,7 @@ import DataFnsUtils from '@date-io/date-fns';
 import * as Yup from 'yup';
 import { categoryData } from '../../../app/api/categoryData';
 import { CircularProgress } from '@material-ui/core';
+import MyPlaceInput from '../../../app/common/form/MyPlaceInput';
 
 export default function EventForm({ match, history }) {
     const dispatch = useDispatch();
@@ -36,25 +39,29 @@ export default function EventForm({ match, history }) {
         title: '',
         category: '',
         description: '',
-        city: '',
-        venue: '',
+        city: { address: '', latLng: null },
+        venue: { address: '', latLng: null },
         date: new Date(),
         hostedBy: ''
     };
 
     const validationSchema = Yup.object({
-        title: Yup.string().required('You must provide a title'),
-        category: Yup.string().required('You must provide a category'),
+        title: Yup.string().required("You must provide a title"),
+        category: Yup.string().required("You must provide a category"),
         description: Yup.string().required(),
-        city: Yup.string().required(),
-        venue: Yup.string().required(),
+        city: Yup.object().shape({
+            address: Yup.string().required("City is required")
+        }),
+        venue: Yup.object().shape({
+            address: Yup.string().required("Venue is required")
+        }),
         date: Yup.string().required(),
     });
 
     return (
         <Grid container justify="center">
             <Grid className="event-form" container item md={7} sm={10} xs={12} direction="column">
-                <div className="card-event">
+                <Paper className="card-event">
                     <h3>{selectedEvent ? "Edit the event" : "Create new event"}</h3>
                     <Formik
                         initialValues={initialValues}
@@ -73,17 +80,19 @@ export default function EventForm({ match, history }) {
                             history.push('/events');
                         }}
                     >
-                        {({ isSubmitting, dirty, isValid }) => {
-                            
+                        {({ isSubmitting, dirty, isValid, values, setFieldValue }) => {
+
                             const isDisabledSubmit = !isValid || !dirty || isSubmitting;
                             return (
                                 <Form className="form ui">
+
                                     <Field
                                         component={TextField}
                                         name="title"
                                         label="Title"
                                         placeholder="Event title"
-                                        variant="filled"
+                                        variant="outlined"
+                                        size="small"
                                     />
 
                                     <FormControl>
@@ -92,7 +101,8 @@ export default function EventForm({ match, history }) {
                                             component={Select}
                                             name="category"
                                             inputProps={{ id: 'category-label' }}
-                                            variant="filled"
+                                            variant="outlined"
+                                            size="small"
                                         >
                                             {categoryData.map(item =>
                                                 <MenuItem key={item.key} value={item.value}>{item.text}</MenuItem>
@@ -105,17 +115,11 @@ export default function EventForm({ match, history }) {
                                             component={DatePicker}
                                             name="date"
                                             label="Event Date"
-                                            InputLabelProps={{ shrink: true }}
-                                            variant="filled"
+                                            //InputLabelProps={{ shrink: true }}
+                                            variant="outlined"
+                                            size="small"
                                         />
                                     </MuiPickersUtilsProvider>
-
-                                    <Field
-                                        component={TextField}
-                                        name="city"
-                                        label="City event is taking place"
-                                        variant="filled"
-                                    />
 
                                     <Field
                                         component={TextField}
@@ -123,21 +127,42 @@ export default function EventForm({ match, history }) {
                                         label="Description"
                                         multiline
                                         rows={3}
-                                        variant="filled"
+                                        variant="outlined"
+                                        size="small"
                                     />
 
-                                    <Field
+                                    <MyPlaceInput
+                                        label="City"
+                                        name="city"
+                                        placeholder="City"
+                                        //setFieldValue={setFieldValue}
+                                    />
+
+                                    <MyPlaceInput
+                                        label="Venue"
+                                        name="venue"
+                                        placeholder="Venue"
+                                        disabled={!values.city.latLng}
+                                        options={{
+                                            location: new google.maps.LatLng(values.city.latLng),
+                                            radius: 1000,
+                                            types: ['establishment']
+                                        }}
+                                    />
+
+                                    {/* <Field
                                         component={TextField}
                                         name="venue"
                                         label="Enter the Venue of the event"
                                         variant="filled"
-                                    />
+                                    /> */}
 
                                     <Field
                                         component={TextField}
                                         name="hostedBy"
                                         label="Enter the name of person hosting"
-                                        variant="filled"
+                                        variant="outlined"
+                                        size="small"
                                     />
 
                                     <Box className="event-buttons">
@@ -174,7 +199,7 @@ export default function EventForm({ match, history }) {
                             )
                         }}
                     </Formik>
-                </div>
+                </Paper>
             </Grid>
         </Grid>
     );

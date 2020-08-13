@@ -1,0 +1,51 @@
+.my-place-input {
+    
+    .error {
+        padding-left: 13px;
+    }
+
+    > input {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+
+        &.error {
+            border: 1px solid red;
+            color: red;
+        }
+    }
+
+    .autocomplete-dropdown-container {
+        margin-top: 0;
+        position: absolute;
+        z-index: 1000;
+        width: 36%;
+        > div {
+           padding: 5px;  
+        }
+    }
+}
+
+@media(max-width: 1500px) {
+    .my-place-input {
+        .autocomplete-dropdown-container {
+            width: 47%;
+        }
+    }
+}
+
+@media(max-width: 1000px) {
+    .my-place-input {
+        .autocomplete-dropdown-container {
+            width: 77%;
+        }
+    }
+}
+@media(max-width: 500px) {
+    .my-place-input {
+        .autocomplete-dropdown-container {
+            width: 85%;
+        }
+    }
+}

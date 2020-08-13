@@ -1,13 +1,19 @@
 import React, { useState, Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 //import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 import { Typography } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { signOutUser } from '../auth/authActions';
 
-export default function SignedInMenu({ user, signOut }) {
+export default function SignedInMenu() {
+    const dispatch = useDispatch();
+    const { currentUser } = useSelector(state => state.auth);
+    const history = useHistory();
+
     const [anchorE1, setAnchorE1] = useState(null);
     const open = Boolean(anchorE1);
 
@@ -21,7 +27,8 @@ export default function SignedInMenu({ user, signOut }) {
 
     function logout() {
         handleClose();
-        signOut(); 
+        dispatch(signOutUser());
+        history.push('/');
     }
 
     return (
@@ -35,12 +42,12 @@ export default function SignedInMenu({ user, signOut }) {
             >
                 <Fragment>
                     <Avatar
-                        //alt={user!.displayName}
+                        alt={currentUser?.email}
                         sizes="(max-width: 35px): 30px"
-                    //src={user!.image || '/assets/user.png'}
+                        src={currentUser.photoURL || '/assets/user.png'}
                     />
                     <Typography style={{ marginLeft: 15 }} component="b">
-                        {user?.displayName}
+                        {currentUser?.email}
                     </Typography>
                 </Fragment>
             </IconButton>
@@ -70,7 +77,7 @@ export default function SignedInMenu({ user, signOut }) {
 
                 <MenuItem
                     //component={NavLink}
-                    //to={`/profile/${user?.username}`}
+                    //to={`/profile/${currentUser?.currentUsername}`}
                     onClick={handleClose}
                 >
                     My profile

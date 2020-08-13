@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
 import { openModal } from '../../app/common/modals/modalReducer';
+import TestPlaceInput from './TestPlaceInput';
 
 export default function Sandbox() {
     const dispatch = useDispatch();
@@ -15,6 +16,10 @@ export default function Sandbox() {
             >
                 Open Modal
             </Button>
+
+            <div style={{marginTop: 15}}>
+                <TestPlaceInput />
+            </div>
         </>
     );
 }

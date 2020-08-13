@@ -4,8 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import { InputLabel, FormControl } from '@material-ui/core';
 
 //Section 7: Forms revisited Lesson 63.Creating a reusable text input
-export default function MyTextInput({label, ...props}) {
-    const [field, meta] = useField(props);
+export default function MyTextInput(props) {
+    const {label} = props;
+    const [field, meta, helpders] = useField(props);
     return (
         <div className="form-control">
             <label>{label}</label>

@@ -5,8 +5,13 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from 'formik-material-ui';
 import { Box, Button, CircularProgress } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { signInUser } from '../authActions';
+import { closeModal } from '../../../app/common/modals/modalReducer';
 
 export default function LoginForm() {
+    const dispatch = useDispatch();
+
     return (
         <ModalWrapper size='xs' header="Sign in to Re-vents">
             <Formik
@@ -18,8 +23,11 @@ export default function LoginForm() {
                     email: Yup.string().required().email(),
                     password: Yup.string().required()
                 })}
-                onSubmit={values => {
-                    console.log('submit loginform', values);
+                onSubmit={(values, { setSubmitting }) => {
+                    //console.log('submit loginform', values);
+                    dispatch(signInUser(values));
+                    setSubmitting(false);
+                    dispatch(closeModal());
                 }}
             >
                 {({ isSubmitting, isValid, dirty }) => {

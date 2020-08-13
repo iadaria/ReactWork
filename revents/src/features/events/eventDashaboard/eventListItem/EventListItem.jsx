@@ -54,7 +54,7 @@ export default function EventListItem({ event }) {
                     {/* {format(event.date, 'h:mm a')} */}
                     {format(event.date, 'MMMM d, yyyy h:mm a')}
                     <RoomIcon style={{ marginLeft: '1rem' }} fontSize="small" />
-                    {event.city}, {event.venue}
+                    {event.city.address}, {event.venue.address}
                 </Typography>
 
                 {event.attendees && <EventListAttendees attendees={event.attendees} />}

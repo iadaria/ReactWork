@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './nav-bar.scss';
 
 import { makeStyles } from '@material-ui/core';
@@ -8,20 +8,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import Container from '@material-ui/core/Container';
 import green from '@material-ui/core/colors/green';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import SignedOutMenu from '../SignedOutMenu';
 import SignedInMenu from '../SignedInMenu';
+import { useSelector } from 'react-redux';
 
 export default function NavBar() {
-    const history = useHistory();
-    const [authenticated, setAuthenticated] = useState(false);
-
-    function handleSignOut() {
-        setAuthenticated(false);
-        history.push('/');
-    }
-
-    const user = { displayName: "Dasha" };
+    
+    const { authenticated } = useSelector(state => state.auth);
     const classes = useStyles();
     return (
         <AppBar position="fixed" className="menu nav-bar">
@@ -54,10 +48,7 @@ export default function NavBar() {
                         </MenuItem>
                     )}
 
-                    {authenticated 
-                        ? <SignedInMenu user={user} signOut={handleSignOut} /> 
-                        : <SignedOutMenu setAuthenticated={setAuthenticated} />
-                    }
+                    { authenticated ? <SignedInMenu /> : <SignedOutMenu /> }
 
                 </Toolbar>
             </Container>

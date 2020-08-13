@@ -22,7 +22,7 @@ export default function EventDetailedInfo({ event }) {
             </li>
             <li>
                 <RoomIcon style={{color: 'teal'}}/>
-                <p>{event.venue}, {event.city}</p>
+                <p>{event.venue.address}, {event.city.address}</p>
             </li>
         </ul>        
     );

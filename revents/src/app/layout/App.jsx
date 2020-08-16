@@ -2,6 +2,8 @@ import './app.scss';
 import React from 'react';
 import { Route, useLocation } from 'react-router-dom';
 
+import 'react-toastify/dist/ReactToastify.min.css';
+
 import NavBar from '../../features/nav/NavBar';
 import Container from '@material-ui/core/Container';
 import EventForm from '../../features/events/eventForm/EventForm';
@@ -10,6 +12,7 @@ import HomePage from '../../features/home/HomePage';
 import EventDetailedPage from '../../features/events/eventDetailed';
 import ModalManager from '../common/modals/ModalManager';
 import Sandbox from '../../features/sandbox/Sandbox';
+import { ToastContainer } from 'react-toastify';
 
 
 export default function App() {
@@ -18,6 +21,7 @@ export default function App() {
     return (
         <div className="app">
             <ModalManager />
+            <ToastContainer position='bottom-right' hideProgressBar/>
             <Route exact path='/' component={HomePage} />
             <Route path={'/(.+)'} render={() => (
                 <>

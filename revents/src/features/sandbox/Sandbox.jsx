@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Button } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, CircularProgress } from '@material-ui/core';
 import { openModal } from '../../app/common/modals/modalReducer';
 import TestPlaceInput from './TestPlaceInput';
 import TestMap from './TestMap';
 
 export default function Sandbox() {
     const dispatch = useDispatch();
+    const { loading } = useSelector(state => state.async);
     const defaultProps = {
         center: { lat: 59.95, lng: 30.33 },
         zoom: 11
@@ -24,7 +25,8 @@ export default function Sandbox() {
                 color="primary"
                 onClick={() => dispatch(openModal({modalType: 'TestModal', modalProps: {data}}))}
             >
-                Open Modal
+                {loading && <CircularProgress size='1.3rem' />}
+                {!loading && "Open Modal"}
             </Button>
 
             <div style={{marginTop: 15}}>

@@ -5,6 +5,10 @@
 /.pnp
 .pnp.js
 
+/public/index.html
+/src/features/events/eventDetailedMap/EventDetailedMap.jsx
+/src/features/sandbox/TestMap.jsx
+
 # testing
 /coverage
 

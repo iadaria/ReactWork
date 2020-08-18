@@ -1,7 +1,7 @@
 /* global google */
 import './event-form.scss';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -11,10 +11,15 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Paper from '@material-ui/core/Paper';
-import cuid from 'cuid';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+//import cuid from 'cuid';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { updateEvent, createEvent } from '../eventActions';
+import { /* updateEvent, createEvent, */ listenToEvents } from '../eventActions';
 
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
@@ -28,12 +33,27 @@ import * as Yup from 'yup';
 import { categoryData } from '../../../app/api/categoryData';
 import { CircularProgress } from '@material-ui/core';
 import MyPlaceInput from '../../../app/common/form/MyPlaceInput';
+import useFirestoreDoc from '../../../app/hooks/useFirestoreDoc';
+import { listenToEventFromFirestore, updateEventInFirestore, addEventToFirestore, cancelEventToggle } from '../../../app/firestore/firestoreService';
+import LoadingComponent from '../../../app/common/components/LoadingComponent';
+import { toast } from 'react-toastify';
 
 export default function EventForm({ match, history }) {
     const dispatch = useDispatch();
+    const [loadingCancel, setLoadingCancel] = useState(false);
+    const [confirmOpen, setConfirmOpen] = useState(false);
     const selectedEvent = useSelector(state =>
         state.event.events.find(event => event.id === match.params.id)
     );
+    const { loading, error } = useSelector((state) => state.async);
+
+
+    useFirestoreDoc({
+        shouldExecute: !!match.params.id,
+        query: () => listenToEventFromFirestore(match.params.id),
+        data: event => dispatch(listenToEvents([event])),
+        deps: [match.params.id, dispatch]
+    });
 
     const initialValues = selectedEvent ?? {
         title: '',
@@ -58,6 +78,24 @@ export default function EventForm({ match, history }) {
         date: Yup.string().required(),
     });
 
+    async function handleCancelToggle(event) {
+        setConfirmOpen(false);
+        setLoadingCancel(false);
+
+        try {
+            await cancelEventToggle(event);
+            setLoadingCancel(false);
+        } catch (error) {
+            setLoadingCancel(true);
+            toast.error(error.message);
+        }
+    }
+
+    if (loading /* || (!selectedEvent && !error) */) {
+        return <LoadingComponent content="Loading event ..." />;
+    }
+    if (error) return <Redirect to='/error' />
+
     return (
         <Grid container justify="center">
             <Grid className="event-form" container item md={7} sm={10} xs={12} direction="column">
@@ -66,18 +104,17 @@ export default function EventForm({ match, history }) {
                     <Formik
                         initialValues={initialValues}
                         validationSchema={validationSchema}
-                        onSubmit={values => {
-                            selectedEvent
-                                ? dispatch(updateEvent({ ...selectedEvent, ...values }))
-                                : dispatch(createEvent({
-                                    ...values,
-                                    id: cuid(),
-                                    hostedBy: 'Bob',
-                                    attendees: [],
-                                    hostPhotoURL: '/assets/user.png'
-                                }));
-
-                            history.push('/events');
+                        onSubmit={async (values, { setSubmitting }) => {
+                            try {
+                                selectedEvent
+                                    ? await updateEventInFirestore(values) //dispatch(updateEvent({ ...selectedEvent, ...values }))
+                                    : addEventToFirestore(values);
+                                setSubmitting(false);
+                                history.push('/events');
+                            } catch (error) {
+                                toast.error(error.message);
+                                setSubmitting(false);
+                            }
                         }}
                     >
                         {({ isSubmitting, dirty, isValid, values, setFieldValue }) => {
@@ -135,7 +172,7 @@ export default function EventForm({ match, history }) {
                                         label="City"
                                         name="city"
                                         placeholder="City"
-                                        //setFieldValue={setFieldValue}
+                                    //setFieldValue={setFieldValue}
                                     />
 
                                     <MyPlaceInput
@@ -166,44 +203,93 @@ export default function EventForm({ match, history }) {
                                     />
 
                                     <Box className="event-buttons">
-                                        <Button
-                                            disabled={isSubmitting}
-                                            // onClick={
-                                            //     event.id 
-                                            //         ? () => history.push(`/events/${event.id}`)
-                                            //         : () => history.push('/events')
-                                            //     } 
-                                            component={Link} to='/events'
-                                            type="button"
-                                            variant="outlined"
-                                            color="secondary"
-                                            size="small"
-                                        >
-                                            Cancel
-                                    </Button>
 
+                                        {selectedEvent &&
+                                            <Button
+                                                className={selectedEvent.isCancelled ? "btn-reactivate" : "btn-cancel"}
+                                                onClick={() => setConfirmOpen(true)}
+                                                type="button"
+                                                variant="contained"
+                                                size="small"
+                                            >
+                                                {loadingCancel && <CircularProgress size="1.3rem" />}
+                                                {!loadingCancel && (selectedEvent.isCancelled ? "Reactivate event" : "Cancel Event")}
+                                            </Button>
+                                        }
 
-                                        <Button
-                                            className={isDisabledSubmit ? "default" : "btn-success"}
-                                            type="submit"
-                                            disabled={isDisabledSubmit}
-                                            variant="contained"
-                                            size="small"
-                                        >
-                                            {isSubmitting && <CircularProgress size='1.3rem' />}
-                                            {!isSubmitting && 'Submit'}
-                                        </Button>
+                                        <div className="right">
+                                            <Button
+                                                disabled={isSubmitting}
+                                                // onClick={
+                                                //     event.id 
+                                                //         ? () => history.push(`/events/${event.id}`)
+                                                //         : () => history.push('/events')
+                                                //     } 
+                                                component={Link} to='/events'
+                                                type="button"
+                                                variant="outlined"
+                                                color="secondary"
+                                                size="small"
+                                            >
+                                                Cancel
+                                            </Button>
+
+                                            <Button
+                                                className={isDisabledSubmit ? "default" : "btn-success"}
+                                                type="submit"
+                                                disabled={isDisabledSubmit}
+                                                variant="contained"
+                                                size="small"
+                                            >
+                                                {isSubmitting && <CircularProgress size='1.3rem' />}
+                                                {!isSubmitting && 'Submit'}
+                                            </Button>
+                                        </div>
 
                                     </Box>
                                 </Form>
                             )
                         }}
                     </Formik>
+                    <Dialog
+                        open={confirmOpen}
+                        //onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                {selectedEvent?.isCancelled
+                                    ? "This will reactivate the event - are you sure?"
+                                    : "This will cancel the event - are you sure?"
+                                }    
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => setConfirmOpen(false)} color="secondary">
+                                Cancel
+                            </Button>
+                            <Button onClick={() => handleCancelToggle(selectedEvent)} color="primary" autoFocus>
+                                Agree
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </Paper>
             </Grid>
         </Grid>
     );
 };
+/**
+ dispatch(createEvent({
+    ...values,
+    id: cuid(),
+    hostedBy: 'Bob',
+    attendees: [],
+    hostPhotoURL: '/assets/user.png'
+    }));
+ */
+
 /* const [values, setValues] = useState(initialValues);
  const useStyles = makeStyles((theme) =>
     createStyles({

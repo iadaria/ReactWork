@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../../app/common/modals/modalReducer';
 
-export default function SignedOutMenu({ setAuthenticated }) {
+export default function SignedOutMenu() {
     const dispatch = useDispatch();
 
     return (

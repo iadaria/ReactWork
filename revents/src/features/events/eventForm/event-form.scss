@@ -26,27 +26,54 @@
             display: flex;
             flex-direction: column;    
     
-            > * { //only the first floor
-                //border: 1px solid green;
+            > * { 
                 margin: 4px;
             }
 
             .select-label {
                 margin-left: 10px;
             }
-    
-            .btn-success {
-                background-color: teal;
-                color: #fff;
-                &:hover {
-                    color: teal;
-                }
-            }
-    
+
             .event-buttons {
+                //border: 1px solid black;
+
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
                 margin-top: 7px;
-                margin-left: auto;
-            }
+
+                .right {
+                    display: inline-block;
+                    //border: 2px solid red;
+                    > * {
+                        margin: 0 10px;
+                    }
+                }
+
+                .btn-reactivate {
+                    background-color: green;
+                    color: #fff;
+                    /* &:hover {
+                        color: green;
+                    } */
+                }
+    
+                .btn-cancel {
+                    background-color: maroon;
+                    color: #fff;
+                    /* &:hover {
+                        color: maroon;
+                    } */
+                }
+                
+                .btn-success {
+                    background-color: teal;
+                    color: #fff;
+                    &:hover {
+                        color: teal;
+                    }
+                }
+            }  
         }
     }
 

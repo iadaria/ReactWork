@@ -1,0 +1,11 @@
+.loading {
+    //border: 4px solid black;
+ 
+    text-align: center;
+    //display: block;
+    margin-top: 30%;
+    &__content {
+        display: block;
+        margin: auto 0;
+    }
+}

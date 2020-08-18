@@ -4,7 +4,7 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText'; */
 
-import { Field, useField } from 'formik';
+import { /* Field,  */useField } from 'formik';
 import FormHelperText from '@material-ui/core/FormHelperText';
 // import MenuItem from '@material-ui/core/MenuItem';
 // import InputLabel from '@material-ui/core/InputLabel';
@@ -52,11 +52,10 @@ export default function MyPlaceInput({ label, options, ...props }) {
             searchOptions={options}
         >
             {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
-                console.log('inputPorps', { ...getInputProps({ name: field.name, ...props }) });
-                console.log('label', { label });
-                console.log('props', { props });
+                
                 return (
-                    <div className="my-place-input">
+                    <div 
+                        className="my-place-input">
 
                         <input
                             {...getInputProps({
@@ -83,15 +82,15 @@ export default function MyPlaceInput({ label, options, ...props }) {
                                 const style = suggestion.active
                                     ? { backgroundColor: '#fafafa', cursor: 'pointer' }
                                     : { backgroundColor: '#ffffff', cursor: 'pointer' };
-
+                
                                 return (
                                     <div
                                         className="suggestion"
-                                        key={suggestion.description}
                                         {...getSuggestionItemProps(suggestion, {
                                             className,
                                             style,
                                         })}
+                                        key={index}
                                     >
                                         <span key={index}>{suggestion.description}</span>
                                     </div>

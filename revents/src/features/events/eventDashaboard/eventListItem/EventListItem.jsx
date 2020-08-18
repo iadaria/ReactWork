@@ -13,13 +13,14 @@ import Typography from '@material-ui/core/Typography';
 import RoomIcon from '@material-ui/icons/Room';
 import Avatar from '@material-ui/core/Avatar';
 import EventListAttendees from '../eventListAttendees';
-import { useDispatch } from 'react-redux';
-import { deleteEvent } from '../../eventActions';
+//import { useDispatch } from 'react-redux';
+//import { deleteEvent } from '../../eventActions';
 import { format } from 'date-fns';
+import { deleteEventInFirestore } from '../../../../app/firestore/firestoreService';
 //import Chip from '@material-ui/core/Chip';
 
 export default function EventListItem({ event }) {
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
 
     const classes = useStyles();
     return (
@@ -33,15 +34,20 @@ export default function EventListItem({ event }) {
                     />
                 }
                 title={
-                    //<Link className={classes.card_title} to={`/activities/${activity.id}`}>
-                    event.title
-                    //</Link>
+                    <Link className={classes.card_title} to={`/events/${event.id}`}>
+                        event.title
+                    </Link>
                 }
                 subheader={
                     <>
                         <Typography variant="caption" color="textSecondary">
                             Hosted by {event.hostedBy}{/* Hosted by <b><Link to={`/profile/${host.hostedBy}`}>{host.displayName}</Link></b> */}
                         </Typography>
+                        {event.isCancelled && (
+                            <Typography color="error" style={{top: "-40px"}}>
+                                This event has been cancelled
+                            </Typography>
+                        )}
                         {/* {isHost}
                             {isGoing} */}
                     </>
@@ -51,7 +57,6 @@ export default function EventListItem({ event }) {
 
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
                     <AccessTimeIcon color="primary" style={{ marginRight: '.5rem' }} fontSize="small" />
-                    {/* {format(event.date, 'h:mm a')} */}
                     {format(event.date, 'MMMM d, yyyy h:mm a')}
                     <RoomIcon style={{ marginLeft: '1rem' }} fontSize="small" />
                     {event.city.address}, {event.venue.address}
@@ -68,7 +73,8 @@ export default function EventListItem({ event }) {
 
                 <Box>
                     <Button
-                        onClick={ () => dispatch(deleteEvent(event.id)) }
+                        //onClick={ () => dispatch(deleteEvent(event.id)) }
+                        onClick={() => deleteEventInFirestore(event.id)}
                         size="small"
                         color="secondary"
                     >
@@ -124,8 +130,6 @@ const useStyles = makeStyles({
         justifyContent: "space-between"
     },
     delete: {
-        //color: red[500],
-        //borderColor: red[500],
         marginRight: 10
     },
 });

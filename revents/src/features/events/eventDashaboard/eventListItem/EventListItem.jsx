@@ -35,7 +35,7 @@ export default function EventListItem({ event }) {
                 }
                 title={
                     <Link className={classes.card_title} to={`/events/${event.id}`}>
-                        event.title
+                        {event.title}
                     </Link>
                 }
                 subheader={

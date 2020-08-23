@@ -21,15 +21,15 @@ const rootElement = document.getElementById('root');
 
 function render() {
     ReactDOM.render(
-        <React.StrictMode>
+        // <React.StrictMode>
             <Provider store={store}>
                 <BrowserRouter>
                     <ScrollToTop />
                     <App />
                 </BrowserRouter>
             </Provider>
-        </React.StrictMode>,
-        rootElement
+        // </React.StrictMode>,
+        ,rootElement
     );
 }
 

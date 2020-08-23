@@ -1,0 +1,29 @@
+.account-page {
+    padding: 1px 15px 15px;
+
+    h2 {
+        text-align: center;
+    }
+
+    h3 {
+        color: teal;
+    }   
+
+    .form {
+        display: flex;
+        flex-direction: column;
+
+        > * {
+            width: 50%;
+            margin: 5px;
+        }
+
+        input {
+            border: 1px bold red !important;
+        }
+    }
+
+    button {
+        width: 20% !important;
+    }
+}

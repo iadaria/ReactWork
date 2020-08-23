@@ -45,33 +45,33 @@ export default function HomePage({ history }) {
                 </Fragment>
             ) : (
                     <Fragment>
-                        <Typography component="h2">
+                        {/* <Typography component="h2">
                             Welcome to Re-vents
-                    </Typography>
+                        </Typography>
+
+                            <Button
+                                className="btn"
+                            //onClick={() => openModal(<LoginForm />)}
+                            >
+                                Login
+                        </Button>
 
                         <Button
-                            className="btn"
-                        //onClick={() => openModal(<LoginForm />)}
-                        >
-                            Login
-                    </Button>
-
-                    <Button
-                            className="btn"
-                        //onClick={() => openModal(<RegisterForm />)}
-                        >
-                            Register
-                    </Button>
-                        {/* <Typography className="btn" component="h3">
-                        <Link to='/login'>
-                            Login
-                        </Link>
-                    </Typography> */}
-                        {/* <Typography component="h3">
-                        <Link to='/register'>
-                            Register
-                        </Link> 
-                    </Typography>*/}
+                                className="btn"
+                            //onClick={() => openModal(<RegisterForm />)}
+                            >
+                                Register
+                        </Button> */}
+                            {/* <Typography className="btn" component="h3">
+                            <Link to='/login'>
+                                Login
+                            </Link>
+                        </Typography> */}
+                            {/* <Typography component="h3">
+                            <Link to='/register'>
+                                Register
+                            </Link> 
+                        </Typography>*/}
                     </Fragment>
                 )}
 

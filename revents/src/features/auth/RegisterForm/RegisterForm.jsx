@@ -1,51 +1,63 @@
-import './login-form.scss';
+import './register-form.scss';
 import React from 'react';
 import ModalWrapper from '../../../app/common/modals/ModalWrapper';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from 'formik-material-ui';
+
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 
 import { useDispatch } from 'react-redux';
-import { closeModal } from '../../../app/common/modals/modalReducer';
-import { signInWithEmail } from '../../../app/firestore/firebaseService';
-import SocialLogin from '../SocialLogin';
 //import { signInUser } from '../authActions';
+import { closeModal } from '../../../app/common/modals/modalReducer';
+import { registerInFirebase } from '../../../app/firestore/firebaseService';
+import SocialLogin from '../SocialLogin';
 
-export default function LoginForm() {
+export default function RegisterForm() {
     const dispatch = useDispatch();
 
     return (
-        <ModalWrapper size='xs' header="Sign in to Re-vents">
+        <ModalWrapper size='xs' header="Register to Re-vents">
             <Formik
                 initialValues={{
+                    displayName: "",
                     email: "",
-                    password: "",
+                    password: ""
                 }}
                 validationSchema={Yup.object({
+                    displayName: Yup.string().required(),
                     email: Yup.string().required().email(),
                     password: Yup.string().required()
                 })}
                 onSubmit={async (values, { setSubmitting, setErrors }) => {
                     try {
-                        await signInWithEmail(values);
+                        await registerInFirebase(values);
                         dispatch(closeModal());
-                    } catch (error) {
-                        //setErrors({ auth: error.message });
-                        //for vulnerability
-                        setErrors({auth: "Problem with username or password"});
-                        console.log(error);
-                    } finally { setSubmitting(false); }
+                    } 
+                    catch (error) { 
+                        setErrors({auth: error.message})
+                        console.log(error); 
+                    } 
+                    finally { setSubmitting(false); }
                 }}
             >
                 {({ isSubmitting, isValid, dirty, errors }) => {
 
                     const isDisabledSubmit = !isValid || !dirty || isSubmitting;
                     return (
-                        <Form className="ui login-form">
+                        <Form className="ui register-form">
+                            <Field
+                                component={TextField}
+                                name="displayName"
+                                label="Display Name"
+                                placeholder="Display Name"
+                                variant="outlined"
+                                size="small"
+                            />
+
                             <Field
                                 component={TextField}
                                 name="email"
@@ -89,8 +101,8 @@ export default function LoginForm() {
                                     fullWidth
                                 >
                                     {isSubmitting && <CircularProgress size='1.3rem' />}
-                                    {!isSubmitting && "Login"}
-                                </Button>                       
+                                    {!isSubmitting && "Register"}
+                                </Button>
 
                                 <SocialLogin />
 

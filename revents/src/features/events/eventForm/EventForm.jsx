@@ -117,7 +117,7 @@ export default function EventForm({ match, history }) {
                             }
                         }}
                     >
-                        {({ isSubmitting, dirty, isValid, values, setFieldValue }) => {
+                        {({ isSubmitting, dirty, isValid, values }) => {
 
                             const isDisabledSubmit = !isValid || !dirty || isSubmitting;
                             return (

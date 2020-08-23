@@ -19,8 +19,7 @@ export default function SignedOutMenu() {
         
         <Button
             variant="outlined"
-            //omponent={NavLink} to='/createActivity'
-            //onClick={openCreateForm}
+            onClick={ () => dispatch(openModal({ modalType: 'RegisterForm' })) }
             >
                 Register
         </Button>

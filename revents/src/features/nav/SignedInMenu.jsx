@@ -1,3 +1,4 @@
+import './signed-in-menu.scss';
 import React, { useState, Fragment } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 //import Button from '@material-ui/core/Button';
@@ -5,12 +6,17 @@ import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
-import { Typography } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { signOutUser } from '../auth/authActions';
+import SettingsIcon from '@material-ui/icons/Settings';
+import Typography from '@material-ui/core/Typography';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { /* useDispatch,  */useSelector } from 'react-redux';
+//import { signOutUser } from '../auth/authActions';
+import { toast } from 'react-toastify';
+import { signOutFirebase } from '../../app/firestore/firebaseService';
 
 export default function SignedInMenu() {
-    const dispatch = useDispatch();
     const { currentUser } = useSelector(state => state.auth);
     const history = useHistory();
 
@@ -25,14 +31,21 @@ export default function SignedInMenu() {
         setAnchorE1(null);
     };
 
-    function logout() {
-        handleClose();
-        dispatch(signOutUser());
-        history.push('/');
+    async function handleSignOut() {
+        try {
+            await signOutFirebase();
+            history.push('/');
+        } catch(error) {
+            toast.error(error.message);
+        } finally { handleClose(); }
     }
 
+    //console.log('currentUser', currentUser);
+
     return (
-        <div className="account">
+        <div 
+            className="signed-in-menu account"
+        >
             <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -42,12 +55,12 @@ export default function SignedInMenu() {
             >
                 <Fragment>
                     <Avatar
-                        alt={currentUser?.email}
+                        alt={currentUser.email || currentUser.displayName}
                         sizes="(max-width: 35px): 30px"
                         src={currentUser.photoURL || '/assets/user.png'}
                     />
                     <Typography style={{ marginLeft: 15 }} component="b">
-                        {currentUser?.email}
+                        {currentUser.email || currentUser.displayName}
                     </Typography>
                 </Fragment>
             </IconButton>
@@ -72,6 +85,7 @@ export default function SignedInMenu() {
                     to="/createEvent"
                     onClick={handleClose}
                 >
+                    <AddCircleOutlineIcon style={{marginRight: 5}} fontSize="small" />
                     Create Event
                 </MenuItem>
 
@@ -80,11 +94,22 @@ export default function SignedInMenu() {
                     //to={`/profile/${currentUser?.currentUsername}`}
                     onClick={handleClose}
                 >
+                    <AccountBoxIcon style={{marginRight: 5}} fontSize="small" />
                     My profile
                 </MenuItem>
 
-                <MenuItem onClick={logout}>
-                    Logout
+                <MenuItem
+                    component={NavLink}
+                    to="/account"
+                    onClick={handleClose}
+                >
+                    <SettingsIcon style={{marginRight: 5}} fontSize="small" />
+                    My account
+                </MenuItem>
+
+                <MenuItem onClick={handleSignOut}>
+                    <ExitToAppIcon style={{marginRight: 5}} fontSize="small"/>
+                    Sign Out
                 </MenuItem>
             </Menu>
         </div>

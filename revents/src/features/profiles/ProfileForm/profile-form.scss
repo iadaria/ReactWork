@@ -1,0 +1,25 @@
+.profile-form {
+    //border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    //margin-top: 20px;
+
+    text-align: right;
+
+    & > * {
+        margin: 5px !important
+        //border: 1px solid orange
+    }
+
+    button {
+        width: max-content;
+    }
+}
+
+@media(max-width: 750px) { 
+    .profile-form {
+        //border: 1px solid black;
+        width: 100%;
+    }
+}

@@ -19,7 +19,7 @@ export default function authReducer(state = initialState, { type, payload }) {
                 ...state,
                 authenticated: true,
                 currentUser: {
-                    email: payload.email,
+                    email: payload.email || "",
                     displayName: payload.displayName,
                     photoURL: payload.photoURL || '/assets/user.png',
                     uid: payload.uid,

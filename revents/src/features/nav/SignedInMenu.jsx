@@ -17,7 +17,8 @@ import { toast } from 'react-toastify';
 import { signOutFirebase } from '../../app/firestore/firebaseService';
 
 export default function SignedInMenu() {
-    const { currentUser } = useSelector(state => state.auth);
+    //const { currentUser } = useSelector(state => state.auth);
+    const { currentUserProfile } = useSelector((state) => state.profile);
     const history = useHistory();
 
     const [anchorE1, setAnchorE1] = useState(null);
@@ -40,7 +41,7 @@ export default function SignedInMenu() {
         } finally { handleClose(); }
     }
 
-    //console.log('currentUser', currentUser);
+    //console.log('currentUserProfile', currentUserProfile);
 
     return (
         <div 
@@ -55,12 +56,12 @@ export default function SignedInMenu() {
             >
                 <Fragment>
                     <Avatar
-                        alt={currentUser.email || currentUser.displayName}
+                        alt={currentUserProfile?.email || currentUserProfile?.displayName}
                         sizes="(max-width: 35px): 30px"
-                        src={currentUser.photoURL || '/assets/user.png'}
+                        src={currentUserProfile?.photoURL || '/assets/user.png'}
                     />
                     <Typography style={{ marginLeft: 15 }} component="b">
-                        {currentUser.email || currentUser.displayName}
+                        {currentUserProfile?.email || currentUserProfile?.displayName}
                     </Typography>
                 </Fragment>
             </IconButton>
@@ -90,8 +91,8 @@ export default function SignedInMenu() {
                 </MenuItem>
 
                 <MenuItem
-                    //component={NavLink}
-                    //to={`/profile/${currentUser?.currentUsername}`}
+                    component={NavLink}
+                    to={`/profile/${currentUserProfile?.id}`}
                     onClick={handleClose}
                 >
                     <AccountBoxIcon style={{marginRight: 5}} fontSize="small" />

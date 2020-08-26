@@ -6,6 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import AboutTab from '../AboutTab';
+import PhotosTab from '../PhotosTab/PhotosTab';
 // import ProfilePhotos from './ProfilePhotos';
 // import ProfileDescription from './ProfileDescription';
 // import ProfileFollowings from './ProfileFollowings';
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProfileContent(/* { setActiveTab } */{ profile, isCurrentUser }) {
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(1);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -79,10 +80,10 @@ export default function ProfileContent(/* { setActiveTab } */{ profile, isCurren
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                <AboutTab profile={profile} isCurrentUser={isCurrentUser}/>
+                <AboutTab profile={profile} isCurrentUser={isCurrentUser} />
             </TabPanel>
             <TabPanel value={value} index={1}> 
-                {/* <ProfilePhotos /> */} Photo
+                <PhotosTab profile={profile} isCurrentUser={isCurrentUser} />
             </TabPanel>
             <TabPanel value={value} index={2}>
                 {/* <ProfileActivities /> */} Activit

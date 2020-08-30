@@ -1,5 +1,5 @@
 import './event-detailed-header.scss';
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -9,16 +9,30 @@ import Typography from '@material-ui/core/Typography';
 import { Button, CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
-//import { RootStoreContext } from '../../../../app/stores/rootStore';
+import { toast } from 'react-toastify';
+import { addUserAttendance, cancelUserAttendance } from '../../../../app/firestore/firestoreService';
 
-export default function EventDetailedHeader({ event }) {
-    //const rootStore = useContext(RootStoreContext);
-    //const { attendActivity, cancelAttendance, loading } = rootStore.activityStore;
-    const loading = false;
-    //const event = { attendees: []};
-    const attendActivity = () => {};
-    const cancelAttendance = () => {};
-    const host = event.attendees.filter(x => x.isHost)[0] || {};
+export default function EventDetailedHeader({ event, isHost, isGoing }) {
+    const [loading, setLoading] = useState(false);
+    
+    async function handleUserJoinEvent() {
+        setLoading(true);
+        try {
+            await addUserAttendance(event);
+        } 
+        catch (error) { toast.error(error.message); } 
+        finally { setLoading(false); }
+    }
+
+    async function handleUserLeaveEvent() {
+        setLoading(true);
+        try {
+            await cancelUserAttendance(event);
+        } 
+        catch (error) { toast.error(error.message); } 
+        finally { setLoading(false); }
+    }
+
     return (
         //<Card className="activity-detailed-header">
         <Card className="event-detailed-header">
@@ -32,26 +46,25 @@ export default function EventDetailedHeader({ event }) {
                     title={event.title} />
                 <CardContent>
                     <Typography component="p">
-                        {/* {format(event.date, 'eeee do MMMM')} */}
                         {format(event.date, 'MMMM d, yyyy h:mm a')}
                     </Typography>
                     <Typography variant="body2" component="p">
-                        Hosted by <strong><Link to={`/profile/${host.username}`}>{host.displayName}</Link></strong>
+                        Hosted by <strong><Link to={`/profile/${event.hostUid}`}>{event.hostedBy}</Link></strong>
                     </Typography>
                 </CardContent>
             </div>
 
             <CardActions className="group-between">
-                {event.isHost ? (
+                { isHost ? (
                     <Button
                         className="btn-manage"
                         component={Link} to={`/manage/${event.id}`}
                         size="small">
                         Manage Event
                     </Button>
-                ) : event.isGoing ? (
+                ) : isGoing ? (
                     <Button
-                        onClick={cancelAttendance}
+                        onClick={handleUserLeaveEvent}
                         variant="contained"
                         size="small"
                     >
@@ -59,18 +72,17 @@ export default function EventDetailedHeader({ event }) {
                         {!loading && 'Cancel attendance'}
                     </Button>
                 ) : (
-                            <Button
-                                onClick={attendActivity}
-                                className="btn-join"
-                                size="small"
-                            >
-                                {loading && <CircularProgress size='1.3rem' />}
-                                {!loading && 'Join Activity'}
-                            </Button>
-                        )}
-                {/* <div className="group-left">buttons...</div> */}
-
+                    <Button
+                        onClick={handleUserJoinEvent}
+                        className="btn-join"
+                        size="small"
+                    >
+                        {loading && <CircularProgress size='1.3rem' />}
+                        {!loading && 'Join Activity'}
+                    </Button>
+                )}
             </CardActions>
+            
         </Card>
     );
 }

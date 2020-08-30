@@ -28,7 +28,6 @@ import { DatePicker } from 'formik-material-ui-pickers';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DataFnsUtils from '@date-io/date-fns';
 
-
 import * as Yup from 'yup';
 import { categoryData } from '../../../app/api/categoryData';
 import { CircularProgress } from '@material-ui/core';

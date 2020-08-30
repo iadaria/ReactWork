@@ -1,5 +1,5 @@
 import './event-dashboard.scss';
-import React from 'react';
+import React, { useState } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import EventList from './eventList';
@@ -15,11 +15,19 @@ export default function EventDashboard() {
     const dispatch = useDispatch();
     const { events } = useSelector(state => state.event);
     const { loading } = useSelector(state => state.async);
+    const [predicate, setPredicate] = useState(new Map([
+        ['startDate', new Date()],
+        ['filter', 'all']
+    ]));
+
+    function handleSetPredicate(key, value) {
+        setPredicate( new Map(predicate.set(key, value)) );
+    }
 
     useFirestoreCollection({
-        query: () => listenEventsFromFirestore(),
-        data: events => dispatch(listenToEvents(events)),
-        deps: [dispatch]
+        query: () => listenEventsFromFirestore(predicate),
+        data: _events => dispatch(listenToEvents(_events)),
+        deps: [dispatch, predicate]
     });
 
     //if (loading) return <LoadingComponent />;
@@ -38,7 +46,7 @@ export default function EventDashboard() {
                 <EventList events={events} />
             </Grid>
             <Grid className="item" item md={4} sm={5} xs={12}>
-                <EventFilters />
+                <EventFilters predicate={predicate} setPredicate={handleSetPredicate} loading={loading}/>
             </Grid>
         </Grid>
     );

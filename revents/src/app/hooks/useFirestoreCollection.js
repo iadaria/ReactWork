@@ -15,7 +15,7 @@ export default function useFirestoreCollection({ query, data, deps }) {
                 dispatch(asyncActionFinish());
             },
             error => dispatch(asyncActionError(error))
-        )
+        );
         return () => {
             unsubscibe();
         }

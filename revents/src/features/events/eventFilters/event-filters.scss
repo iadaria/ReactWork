@@ -1,4 +1,24 @@
-.event-filters {
+.activity-filter {
+    margin-top: .5rem;
+    &__calendar {
+        margin-top: 1rem;
+    }
+
+    .calendar {
+        //border: 1px solid red;
+        width: 100%;
+
+        border: none;
+        box-shadow: 0 1px 2px rgba(34, 36, 38, .15);
+    }
+}
+
+@media(max-width: 600px) {
+    .activity-filter {
+        margin-top: 0;
+    }
+}
+/* .event-filters {
     .filter-list {
         list-style: none;
         padding: 0;
@@ -39,4 +59,4 @@
         border: none;
         box-shadow: 0 1px 2px rgba(34, 36, 38, .15);
     }
-}
+} */

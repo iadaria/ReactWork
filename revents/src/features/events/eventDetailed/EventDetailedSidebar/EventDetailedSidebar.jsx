@@ -24,7 +24,7 @@ const AttendeeAvatar = ({ attendee }) => {
     );
 };
 
-export default function EventDetailedSidebar({ attendees }) {
+export default function EventDetailedSidebar({ attendees, hostUid }) {
 
     return (
         <Card className="event-detailed-sidebar">
@@ -40,7 +40,7 @@ export default function EventDetailedSidebar({ attendees }) {
                         className="person"
                         alignItems="flex-start">
                         <ListItemAvatar>
-                            {attendee.isHost 
+                            {hostUid === attendee.id 
                                 ? (
                                     <Badge
                                         className="badge"
@@ -56,7 +56,7 @@ export default function EventDetailedSidebar({ attendees }) {
                         </ListItemAvatar>
                         <ListItemText
                             primary={
-                                <Link to={`/profile/${attendee.username}`}>
+                                <Link to={`/profile/${attendee.id}`}>
                                     <b className="person-name">{attendee.displayName}</b>
                                 </Link>
                             }

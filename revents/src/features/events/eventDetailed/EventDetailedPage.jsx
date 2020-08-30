@@ -14,6 +14,7 @@ import { Redirect } from 'react-router-dom';
 
 export default function EventDetailedPage({ match }) {
     const dispatch = useDispatch();
+    const {currentUser} = useSelector(state => state.auth);
     const event = useSelector(state => 
         state.event.events.find(e => e.id === match.params.id)
     );
@@ -21,9 +22,12 @@ export default function EventDetailedPage({ match }) {
 
     useFirestoreDoc({
         query: () => listenToEventFromFirestore(match.params.id),
-        data: event => dispatch(listenToEvents([event])),
+        data: _event => dispatch(listenToEvents([_event])),
         deps: [match.params.id, dispatch]
     });
+
+    const isHost = currentUser.uid === event?.hostUid; //default false
+    const isGoing = event?.attendees?.some(attendee => attendee.id === currentUser.uid);
 
     if (loading || (!event && !error)) return <LoadingComponent content="Loading event ..."/>;
     else if (error) return <Redirect to='/error' />
@@ -31,12 +35,12 @@ export default function EventDetailedPage({ match }) {
     return (
         <Grid container spacing={3}>
             <Grid item md={8} xs={12}>
-                <EventDetailedHeader event={event}/>
+                <EventDetailedHeader event={event} isGoing={isGoing} isHost={isHost}/>
                 <EventDetailedInfo event={event}/>
                 <EventDetailedChat />
             </Grid>
             <Grid item md={4} xs={12}>
-                <EventDetailedSidebar attendees={event.attendees}/>
+                <EventDetailedSidebar attendees={event?.attendees} hostUid={event.hostUid}/>
             </Grid>
         </Grid>
     );

@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import AboutTab from '../AboutTab';
 import PhotosTab from '../PhotosTab/PhotosTab';
+import EventsTab from '../EventsTab';
 // import ProfilePhotos from './ProfilePhotos';
 // import ProfileDescription from './ProfileDescription';
 // import ProfileFollowings from './ProfileFollowings';
@@ -51,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProfileContent(/* { setActiveTab } */{ profile, isCurrentUser }) {
     const classes = useStyles();
-    const [value, setValue] = React.useState(1);
+    const [value, setValue] = React.useState(2);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -74,9 +75,10 @@ export default function ProfileContent(/* { setActiveTab } */{ profile, isCurren
                 >
                     <Tab label="About" {...Props(0)}/>
                     <Tab label="Photos" {...Props(1)}/>
-                    <Tab label="Activities" {...Props(2)}/>
-                    <Tab label="Followers" {...Props(3)}/>
-                    <Tab label="Following" {...Props(4)}/>
+                    <Tab label="Events" {...Props(2)}/>
+                    <Tab label="Activities" {...Props(3)}/>
+                    <Tab label="Followers" {...Props(4)}/>
+                    <Tab label="Following" {...Props(5)}/>
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
@@ -85,13 +87,16 @@ export default function ProfileContent(/* { setActiveTab } */{ profile, isCurren
             <TabPanel value={value} index={1}> 
                 <PhotosTab profile={profile} isCurrentUser={isCurrentUser} />
             </TabPanel>
-            <TabPanel value={value} index={2}>
-                {/* <ProfileActivities /> */} Activit
+            <TabPanel value={value} index={2}> 
+                <EventsTab profile={profile}/>
             </TabPanel>
             <TabPanel value={value} index={3}>
-                {/* <ProfileFollowings /> */} Followers
+                {/* <ProfileActivities /> */} Activit
             </TabPanel>
             <TabPanel value={value} index={4}>
+                {/* <ProfileFollowings /> */} Followers
+            </TabPanel>
+            <TabPanel value={value} index={5}>
                 {/* <ProfileFollowings /> */} Followings
             </TabPanel>
         </div>

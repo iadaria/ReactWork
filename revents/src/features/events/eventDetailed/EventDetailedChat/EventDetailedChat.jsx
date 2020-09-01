@@ -1,12 +1,11 @@
 import './event-detailed-chat.sass';
-import React from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -15,21 +14,34 @@ import CardContent from '@material-ui/core/CardContent';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ReplyIcon from '@material-ui/icons/Reply';
 import IconButton from '@material-ui/core/IconButton';
-import TextField from '@material-ui/core/TextField';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import EditIcon from '@material-ui/icons/Edit';
-// import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardActions from '@material-ui/core/CardActions'; 
+import { formatDistance } from 'date-fns';
+import EventDetailedChatForm from '../EventDetailedChatForm/EventDetailedChatForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { getEventChatRef, firebaseObjectToArray } from '../../../../app/firestore/firebaseService';
+import { listenToEventChat } from '../../eventActions';
+import { CLEAR_COMMENTS } from '../../eventConstants';
+import { createDataTree } from '../../../../app/common/util/util';
 
-//import { combineValidators, isRequired } from 'revalidate';
-//import { Form as FinalForm, Field } from 'react-final-form';
-//import TextInput from '../../../../app/common/form/TextInput';
-//import { formatDistance } from 'date-fns';
+export default function EventDetailedChat({ eventId }) {
+    const dispatch = useDispatch();
+    const { comments } = useSelector(state => state.event);
+    const [showReplyForm, setShowReplyForm] = useState({ open: false, commentId: null });
 
-export default function EventDetailedChat() {
+    useEffect(() => {
+        getEventChatRef(eventId).on('value', (snapshot) => {
+            if (!snapshot.exists()) return;
+            //console.log(firebaseObjectToArray(snapshot.val()));
+            dispatch(listenToEventChat(firebaseObjectToArray(snapshot.val()).reverse()));
+        });
+        return () => {
+            dispatch({ type: CLEAR_COMMENTS });
+            getEventChatRef().off();
+        };
+    }, [eventId, dispatch]);
 
-    const event = {comments: []};
-    const submitting = false;
+    function handleReply() {
+        setShowReplyForm({ open: false, commentId: null });
+    }
 
     return (
         <Card className="event-detailed-chat">
@@ -40,56 +52,143 @@ export default function EventDetailedChat() {
             <CardContent>
                 <List className="comments">
 
-                    {event && event?.comments && event.comments.map((comment) => (
-                        <ListItem
-                            key={comment.id}
-                            className="comment"
-                            alignItems="flex-start">
-                            <ListItemAvatar>
-                                <Avatar
-                                    src={comment.image || "/assets/user.png"}
-                                    alt={comment.displayName}
-                                    variant="rounded" />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={
-                                    <b className="comment-author-name">
-                                        <Link to={`/profile/${comment.username}`}>{comment.displayName}</Link>
-                                        <time>
-                                            {comment?.createAt}
-                                            {/* {formatDistance(comment.createdAt, new Date())} */}
-                                        </time>
-                                    </b>
-                                }
-                                secondary={
-                                    <Typography
-                                        component="span">
-                                        {comment.body}
-                                    </Typography>
-                                }>
+                    {comments && createDataTree(comments).map((comment) => (
+                        <Fragment key={comment.id}>
+                            <ListItem
+                                //key={comment.id}
+                                className="comment"
+                                alignItems="flex-start">
+                                <ListItemAvatar>
+                                    <Avatar
+                                        src={comment.photoURL || "/assets/user.png"}
+                                        alt={comment.displayName}
+                                        variant="rounded" />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={
+                                        <b className="comment-author-name">
+                                            <Link to={`/profile/${comment.uid}`}>{comment.displayName}</Link>
+                                            <time>
+                                                {formatDistance(comment.date, new Date())}
+                                            </time>
+                                        </b>
+                                    }
+                                    secondary={
+                                        <Typography
+                                            component="span">
+                                            {comment.text.split('\n').map((text, i) => (
+                                                <span key={i}>
+                                                    {text}
+                                                    <br />
+                                                </span>
+                                            ))}
+                                        </Typography>
+                                    }>
 
-                            </ListItemText>
+                                </ListItemText>
 
-                            <ListItemSecondaryAction>
-                                <IconButton>
-                                    <ReplyIcon />
-                                </IconButton>
-                            </ListItemSecondaryAction>
-                        </ListItem>
+                                <ListItemSecondaryAction>
+                                    <IconButton
+                                        onClick={() => {
+                                            setShowReplyForm({ open: true, commentId: comment.id });
+                                            //console.log('showReplyForm', showReplyForm);
+                                        }}
+                                    >
+                                        <ReplyIcon />
+                                    </IconButton>
+                                </ListItemSecondaryAction>
+                            </ListItem>
+
+                            {showReplyForm.open && showReplyForm.commentId === comment.id && (
+                                <ListItem
+                                //key={`${comment.id}_replay`}
+                                >
+                                    <EventDetailedChatForm
+                                        eventId={eventId}
+                                        parentId={comment.id}
+                                        closeForm={handleReply}
+                                    />
+                                </ListItem>
+                            )}
+
+                            {comment.childNodes.length > 0 && (
+                                <List style={{marginLeft: 20}}>
+                                    {comment.childNodes.reverse().map(child => (
+                                        <Fragment key={child.id}>
+                                            <ListItem
+                                                className="comment"
+                                                alignItems="flex-start"
+                                            >
+                                                <ListItemAvatar>
+                                                    <Avatar
+                                                        src={child.photoURL || "/assets/user.png"}
+                                                        alt={child.displayName}
+                                                        variant="rounded" />
+                                                </ListItemAvatar>
+                                                <ListItemText
+                                                    primary={
+                                                        <b className="comment-author-name">
+                                                            <Link to={`/profile/${child.uid}`}>{child.displayName}</Link>
+                                                            <time>
+                                                                {formatDistance(child.date, new Date())}
+                                                            </time>
+                                                        </b>
+                                                    }
+                                                    secondary={
+                                                        <Typography
+                                                            component="span">
+                                                            {child.text.split('\n').map((text, i) => (
+                                                                <span key={i}>
+                                                                    {text}
+                                                                    <br />
+                                                                </span>
+                                                            ))}
+                                                        </Typography>
+                                                    }>
+                                                </ListItemText>
+                                                <ListItemSecondaryAction>
+                                                    <IconButton
+                                                        onClick={() => {
+                                                            setShowReplyForm({ open: true, commentId: child.id });
+                                                        }}
+                                                    >
+                                                        <ReplyIcon />
+                                                    </IconButton>
+                                                </ListItemSecondaryAction>
+                                            </ListItem>
+                                            {showReplyForm.open && showReplyForm.commentId === child.id && (
+                                                    <ListItem
+                                                    //key={`${comment.id}_replay`}
+                                                    >
+                                                        <EventDetailedChatForm
+                                                            eventId={eventId}
+                                                            parentId={child.parentId}
+                                                            closeForm={handleReply}
+                                                        />
+                                                    </ListItem>
+                                            )}
+                                        </Fragment>
+                                    ))}
+                                </List>
+                            )}
+
+                        </Fragment>
                     ))}
-
                 </List>
+
+                <EventDetailedChatForm eventId={eventId} parentId={0} closeForm={null} />
+
                 {/* <CardActionArea> */}
-                    {/* <FinalForm
+                {/* <FinalForm
                         onSubmit={addComment}
                         render={({ handleSubmit, submitting, form }) => ( */}
-                            <form
+                {/* <form
                                 style={{ textAlign: 'right' }}
                                 className="profile-edit-form"
-                                // onSubmit={(e) => {
-                                //     e.preventDefault();
-                                //     handleSubmit()!.then(() => form.reset());  //clear fields
-                                // }}
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    handleSubmit()!.then(() => form.reset());  //clear fields
+                                }}
                                 autoComplete="Off"
                             >
                                 <TextField
@@ -100,14 +199,14 @@ export default function EventDetailedChat() {
                                     placeholder="Add your comment"
                                     fullWidth
                                 />
-                                {/* <Field
+                                <Field
                                     component={TextInput}
                                     multiple
                                     rows={8}
                                     variant="outlined"
                                     name="body"
                                     placeholder="Add your comment"
-                                /> */}
+                                />
                                 <Button
                                     type="submit"
                                     variant="contained"
@@ -119,8 +218,8 @@ export default function EventDetailedChat() {
                                     { submitting && <CircularProgress size='1.3rem' /> }
                                     { !submitting && 'Add Reply' }
                                 </Button>
-                            </form>
-                      {/*   )}
+                            </form> */}
+                {/*   )}
                     /> */}
                 {/* </CardActionArea> */}
                 {/* <CardActions>

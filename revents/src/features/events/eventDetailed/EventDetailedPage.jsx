@@ -37,7 +37,7 @@ export default function EventDetailedPage({ match }) {
             <Grid item md={8} xs={12}>
                 <EventDetailedHeader event={event} isGoing={isGoing} isHost={isHost}/>
                 <EventDetailedInfo event={event}/>
-                <EventDetailedChat />
+                <EventDetailedChat eventId={event.id}/>
             </Grid>
             <Grid item md={4} xs={12}>
                 <EventDetailedSidebar attendees={event?.attendees} hostUid={event.hostUid}/>

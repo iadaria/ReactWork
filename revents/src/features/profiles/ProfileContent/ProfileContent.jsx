@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import AboutTab from '../AboutTab';
 import PhotosTab from '../PhotosTab/PhotosTab';
 import EventsTab from '../EventsTab';
+import FollowingTab from '../FollowingTab/FollowingTab';
 // import ProfilePhotos from './ProfilePhotos';
 // import ProfileDescription from './ProfileDescription';
 // import ProfileFollowings from './ProfileFollowings';
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProfileContent(/* { setActiveTab } */{ profile, isCurrentUser }) {
     const classes = useStyles();
-    const [value, setValue] = React.useState(2);
+    const [value, setValue] = React.useState(4);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -94,10 +95,10 @@ export default function ProfileContent(/* { setActiveTab } */{ profile, isCurren
                 {/* <ProfileActivities /> */} Activit
             </TabPanel>
             <TabPanel value={value} index={4}>
-                {/* <ProfileFollowings /> */} Followers
+                <FollowingTab key={profile.id} profile={profile} activeTab={value} />
             </TabPanel>
             <TabPanel value={value} index={5}>
-                {/* <ProfileFollowings /> */} Followings
+                <FollowingTab key={profile.id} profile={profile} activeTab={value} />
             </TabPanel>
         </div>
     );

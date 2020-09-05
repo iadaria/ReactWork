@@ -9,20 +9,23 @@ import LoadingComponent from '../../../app/common/components/LoadingComponent';
 import { useSelector, useDispatch } from 'react-redux';
 import useFirestoreDoc from '../../../app/hooks/useFirestoreDoc';
 import { listenToEventFromFirestore } from '../../../app/firestore/firestoreService';
-import { listenToEvents } from '../eventActions';
+//import { listenToEvents } from '../eventActions';
 import { Redirect } from 'react-router-dom';
+import { listenToSelectedEvent } from '../eventActions';
 
 export default function EventDetailedPage({ match }) {
     const dispatch = useDispatch();
     const {currentUser} = useSelector(state => state.auth);
     const event = useSelector(state => 
-        state.event.events.find(e => e.id === match.params.id)
+        state.event.selectedEvent
+        //state.event.events.find(e => e.id === match.params.id)
     );
     const { loading, error } = useSelector((state) => state.async);
 
     useFirestoreDoc({
         query: () => listenToEventFromFirestore(match.params.id),
-        data: _event => dispatch(listenToEvents([_event])),
+        //data: _event => dispatch(listenToEvents([_event])),
+        data: _event => dispatch(listenToSelectedEvent(_event)),
         deps: [match.params.id, dispatch]
     });
 

@@ -19,7 +19,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 //import cuid from 'cuid';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { /* updateEvent, createEvent, */ listenToEvents } from '../eventActions';
+import { /* updateEvent, createEvent, listenToEvents, */ listenToSelectedEvent } from '../eventActions';
 
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
@@ -41,16 +41,18 @@ export default function EventForm({ match, history }) {
     const dispatch = useDispatch();
     const [loadingCancel, setLoadingCancel] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
-    const selectedEvent = useSelector(state =>
+   /*  const selectedEvent = useSelector(state =>
         state.event.events.find(event => event.id === match.params.id)
-    );
+    ); */
+    const { selectedEvent } = useSelector((state) => state.event);
     const { loading, error } = useSelector((state) => state.async);
 
 
     useFirestoreDoc({
         shouldExecute: !!match.params.id,
         query: () => listenToEventFromFirestore(match.params.id),
-        data: event => dispatch(listenToEvents([event])),
+        //data: event => dispatch(listenToEvents([event])),
+        data: event => dispatch(listenToSelectedEvent(event)),
         deps: [match.params.id, dispatch]
     });
 

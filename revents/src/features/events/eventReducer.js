@@ -4,13 +4,17 @@ import {
     DELETE_EVENT, 
     FETCH_EVENTS, 
     LISTEN_TO_EVENT_CHAT, 
-    CLEAR_COMMENTS} from "./eventConstants";
+    CLEAR_COMMENTS,
+    LISTEN_TO_SELECTED_EVENT,
+    CLEAR_EVENTS} from "./eventConstants";
 
 //const { sampleData } = require("../../app/api/sampleData");
 
 const initialState = {
     events: [],
-    comments: []
+    comments: [],
+    moreEvents: false,
+    selectedEvent: null
 };
 
 export default function eventReducer(state = initialState, { type, payload }) {
@@ -36,8 +40,14 @@ export default function eventReducer(state = initialState, { type, payload }) {
         case FETCH_EVENTS: 
             return {
                 ...state,
-                events: payload
+                events: [...state.events, ...payload.events], // accumulate 
+                moreEvents: payload.moreEvents
             };
+        /* case FETCH_EVENTS: 
+            return {
+                ...state,
+                events: payload
+            }; */
             
         case LISTEN_TO_EVENT_CHAT:
             return {
@@ -49,6 +59,19 @@ export default function eventReducer(state = initialState, { type, payload }) {
             return {
                 ...state,
                 comments: []
+            };
+
+        case LISTEN_TO_SELECTED_EVENT:
+            return {
+                ...state,
+                selectedEvent: payload
+            };
+
+        case CLEAR_EVENTS: 
+            return {
+                ...state,
+                events: [],
+                moreEvents: true   
             };
 
         default: return state;

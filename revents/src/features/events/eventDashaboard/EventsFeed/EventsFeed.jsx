@@ -11,9 +11,10 @@ import EventFeedItem from '../EventFeedItem/EventFeedItem';
 export default function EventsFeed() {
     const dispatch = useDispatch();
     const { feed } = useSelector(state => state.profile);
+    const { currentUser } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        getUserFeedRef().on('value', snapshot => {
+        currentUser && getUserFeedRef().on('value', snapshot => {
             if(!snapshot.exists()) {
                 return;
             }
@@ -21,7 +22,7 @@ export default function EventsFeed() {
             dispatch(listenToFeed(_feed));
         });
         return () => {
-            getUserFeedRef().off();
+            getUserFeedRef() && getUserFeedRef().off();
         }
     }, [dispatch])
 

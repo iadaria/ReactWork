@@ -3,3 +3,7 @@ description:
 technologies:
 -material-ui;
 -react, route;
+
+>yarn list --pattern "history"
+
+Ограничения, ключи и карты Section 18

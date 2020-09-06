@@ -41,7 +41,8 @@ export default function EventListItem({ event }) {
                 subheader={
                     <>
                         <Typography variant="caption" color="textSecondary">
-                            Hosted by {event.hostedBy}{/* Hosted by <b><Link to={`/profile/${host.hostedBy}`}>{host.displayName}</Link></b> */}
+                            {/* Hosted by {event.hostedBy} */}
+                            Hosted by <b><Link to={`/profile/${event.hostUid}`}>{event.hostedBy}</Link></b>
                         </Typography>
                         {event.isCancelled && (
                             <Typography color="error" style={{top: "-40px"}}>

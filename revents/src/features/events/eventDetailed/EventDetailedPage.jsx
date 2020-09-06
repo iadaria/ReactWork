@@ -29,8 +29,8 @@ export default function EventDetailedPage({ match }) {
         deps: [match.params.id, dispatch]
     });
 
-    const isHost = currentUser.uid === event?.hostUid; //default false
-    const isGoing = event?.attendees?.some(attendee => attendee.id === currentUser.uid);
+    const isHost = currentUser?.uid === event?.hostUid; //default false
+    const isGoing = event?.attendees?.some(attendee => attendee.id === currentUser?.uid);
 
     if (loading || (!event && !error)) return <LoadingComponent content="Loading event ..."/>;
     else if (error) return <Redirect to='/error' />

@@ -11,16 +11,20 @@ import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 import { addUserAttendance, cancelUserAttendance } from '../../../../app/firestore/firestoreService';
+import { useSelector } from 'react-redux';
+import UnauthModal from  '../../../../features/auth/UnauthModal';
 
 export default function EventDetailedHeader({ event, isHost, isGoing }) {
+    const { authenticated } = useSelector(state => state.auth);
+    const [modalOpen, setModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    
+
     async function handleUserJoinEvent() {
         setLoading(true);
         try {
             await addUserAttendance(event);
-        } 
-        catch (error) { toast.error(error.message); } 
+        }
+        catch (error) { toast.error(error.message); }
         finally { setLoading(false); }
     }
 
@@ -28,61 +32,65 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
         setLoading(true);
         try {
             await cancelUserAttendance(event);
-        } 
-        catch (error) { toast.error(error.message); } 
+        }
+        catch (error) { toast.error(error.message); }
         finally { setLoading(false); }
     }
 
     return (
-        //<Card className="activity-detailed-header">
-        <Card className="event-detailed-header">
-            <CardMedia
-                className="image"
-                image={`/assets/categoryImages/${event.category}.jpg`}
-                title="photo"
-            />
-            <div className="header">
-                <CardHeader
-                    title={event.title} />
-                <CardContent>
-                    <Typography component="p">
-                        {format(event.date, 'MMMM d, yyyy h:mm a')}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                        Hosted by <strong><Link to={`/profile/${event.hostUid}`}>{event.hostedBy}</Link></strong>
-                    </Typography>
-                </CardContent>
-            </div>
+        <>
+            {modalOpen && <UnauthModal setModalOpen={setModalOpen} />}
+            <Card className="event-detailed-header">
+                <CardMedia
+                    className="image"
+                    image={`/assets/categoryImages/${event.category}.jpg`}
+                    title="photo"
+                />
+                <div className="header">
+                    <CardHeader
+                        title={event.title} />
+                    <CardContent>
+                        <Typography component="p">
+                            {format(event.date, 'MMMM d, yyyy h:mm a')}
+                        </Typography>
+                        <Typography variant="body2" component="p">
+                            Hosted by <strong><Link to={`/profile/${event.hostUid}`}>{event.hostedBy}</Link></strong>
+                        </Typography>
+                    </CardContent>
+                </div>
 
-            <CardActions className="group-between">
-                { isHost ? (
-                    <Button
-                        className="btn-manage"
-                        component={Link} to={`/manage/${event.id}`}
-                        size="small">
-                        Manage Event
-                    </Button>
-                ) : isGoing ? (
-                    <Button
-                        onClick={handleUserLeaveEvent}
-                        variant="contained"
-                        size="small"
-                    >
-                        {loading && <CircularProgress size='1.3rem' />}
-                        {!loading && 'Cancel attendance'}
-                    </Button>
-                ) : (
-                    <Button
-                        onClick={handleUserJoinEvent}
-                        className="btn-join"
-                        size="small"
-                    >
-                        {loading && <CircularProgress size='1.3rem' />}
-                        {!loading && 'Join Activity'}
-                    </Button>
-                )}
-            </CardActions>
-            
-        </Card>
+                <CardActions className="group-between">
+                    {isHost ? (
+                        <Button
+                            className="btn-manage"
+                            component={Link} to={`/manage/${event.id}`}
+                            size="small">
+                            Manage Event
+                        </Button>
+                    ) : isGoing ? (
+                        <Button
+                            onClick={ authenticated ? handleUserLeaveEvent : () => setModalOpen(true)}
+                            variant="contained"
+                            size="small"
+                        >
+                            {loading && <CircularProgress size='1.3rem' />}
+                            {!loading && 'Cancel attendance'}
+                        </Button>
+                    ) : (
+                        <Button
+                            onClick={authenticated ? handleUserJoinEvent : () => setModalOpen(true)}
+                            className="btn-join"
+                            size="small"
+                        >
+                            {loading && <CircularProgress size='1.3rem' />}
+                            {!loading && 'Join Activity' }
+                        </Button>
+                    )}
+                </CardActions>
+
+            </Card>
+        </>
+
+
     );
 }

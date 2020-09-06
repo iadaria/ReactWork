@@ -15,7 +15,7 @@ export default function SignedOutMenu() {
                 onClick={ () => dispatch(openModal({ modalType: 'LoginForm' })) }
             >
                 Login
-        </Button>
+            </Button>
         
         <Button
             variant="outlined"

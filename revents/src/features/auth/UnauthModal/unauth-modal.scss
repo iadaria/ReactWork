@@ -1,0 +1,25 @@
+.unauth-modal {
+    .buttons {
+        //border: 1px solid red !important;
+        justify-content: center;
+
+        button {
+            width: 40%;
+            color: white;
+        }
+
+        .btn-login {
+            background-color: green;
+        }
+
+        .btn-register {
+            background-color: teal;
+        }
+    }
+
+    .guest {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+}

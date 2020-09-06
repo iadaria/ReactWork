@@ -99,5 +99,6 @@ export function getEventChatRef(eventId) {
 
 export function getUserFeedRef() {
     const user = firebase.auth().currentUser;
+    if (!user) return; //from me
     return firebase.database().ref(`posts/${user.uid}`).orderByKey().limitToLast(5);
 }

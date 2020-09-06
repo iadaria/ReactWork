@@ -8,48 +8,54 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Typography from '@material-ui/core/Typography';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import { useSelector } from 'react-redux';
 //import { DatePicker } from '@material-ui/pickers';
 //import DateFnsUtils from '@date-io/date-fns';
 
 export default function EventFilters({ predicate, setPredicate, loading }) {
+    const { authenticated } = useSelector(state => state.auth);
+
     const styleActive = { backgroundColor: 'teal', color: '#fff', opacity: .8 };
     return (
         <div className="activity-filter">
-            <Paper>
-                <MenuList>
+            {authenticated &&
+                <Paper>
+                    <MenuList>
 
-                    <MenuItem style={{ color: 'teal' }}>
-                        <ListItemIcon>
-                            <FilterListIcon />
-                        </ListItemIcon>
-                        <Typography color="inherit">Filters</Typography>
-                    </MenuItem>
+                        <MenuItem style={{ color: 'teal' }}>
+                            <ListItemIcon>
+                                <FilterListIcon />
+                            </ListItemIcon>
+                            <Typography color="inherit">Filters</Typography>
+                        </MenuItem>
 
-                    <MenuItem
-                        style={predicate.get('filter') === 'all' ? styleActive : {}}
-                        onClick={() => setPredicate('filter', 'all')}
-                        disabled={loading}
-                    >
-                        All Activities
-                    </MenuItem>
+                        <MenuItem
+                            style={predicate.get('filter') === 'all' ? styleActive : {}}
+                            onClick={() => setPredicate('filter', 'all')}
+                            disabled={loading}
+                        >
+                            All Activities
+                        </MenuItem>
 
-                    <MenuItem
-                        style={predicate.get('filter') === 'isGoing' ? styleActive : {}}
-                        onClick={() => setPredicate('filter', 'isGoing')}
-                        disabled={loading}
-                    >
-                        I'm going
-                    </MenuItem>
+                        <MenuItem
+                            style={predicate.get('filter') === 'isGoing' ? styleActive : {}}
+                            onClick={() => setPredicate('filter', 'isGoing')}
+                            disabled={loading}
+                        >
+                            I'm going
+                        </MenuItem>
 
-                    <MenuItem
-                        style={predicate.get('filter') === 'isHost' ? styleActive : {}}
-                        onClick={() => setPredicate('filter', 'isHost')}
-                        disabled={loading}
-                    >
-                        I'm hosting
-                    </MenuItem>
-                </MenuList>
-            </Paper>
+                        <MenuItem
+                            style={predicate.get('filter') === 'isHost' ? styleActive : {}}
+                            onClick={() => setPredicate('filter', 'isHost')}
+                            disabled={loading}
+                        >
+                            I'm hosting
+                        </MenuItem>
+                    </MenuList>
+                </Paper>
+            }
+
             <Paper className="activity-filter__calendar">
                 <MenuList>
                     <MenuItem style={{ color: 'teal' }}>

@@ -11,28 +11,36 @@ import LoadingComponent from '../../../app/common/components/LoadingComponent';
 
 export default function ProfilePage({ match }) {
     const dispatch = useDispatch();
-    const { selectedUserProfile } = useSelector((state) => state.profile);
+    const { selectedUserProfile, currentUserProfile } = useSelector((state) => state.profile);
     const { currentUser } = useSelector((state) => state.auth);
     const { loading, error } = useSelector((state) => state.async);
+    let profile;
 
     useFirestoreDoc({
         query: () => getUserProfile(match.params.id),
         //data: profile => dispatch(listenToCurrentUserProfile(profile)),
-        data: profile => dispatch(listenToSelectedUserProfile(profile)),
-        deps: [dispatch, match.params.id]
+        data: _profile => dispatch(listenToSelectedUserProfile(_profile)),
+        deps: [dispatch, match.params.id],
+        shouldExecute: match.params.id !== currentUser.uid
     });
 
+    if (match.params.id === currentUser.uid) {
+        profile = currentUserProfile;
+    } else {
+        profile = selectedUserProfile;
+    }
+
     if (
-        (loading && !selectedUserProfile) || (!selectedUserProfile && !error)
+        (loading && !profile) || (!profile && !error)
     ) return <LoadingComponent content="Loading profile..." />;
 
-    const isCurrentUser = currentUser.uid === selectedUserProfile.id;
+    const isCurrentUser = currentUser.uid === profile.id;
 
     return (
         <Grid container className="profile-page">
             <Grid item md={12}>
-                <ProfileHeader profile={selectedUserProfile} isCurrentUser={isCurrentUser} />
-                <ProfileContent profile={selectedUserProfile} isCurrentUser={isCurrentUser} />
+                <ProfileHeader profile={profile} isCurrentUser={isCurrentUser} />
+                <ProfileContent profile={profile} isCurrentUser={isCurrentUser} />
             </Grid>
         </Grid>
     );

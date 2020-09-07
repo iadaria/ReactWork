@@ -8,12 +8,15 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Typography from '@material-ui/core/Typography';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilter, setStartDate } from '../eventActions';
 //import { DatePicker } from '@material-ui/pickers';
 //import DateFnsUtils from '@date-io/date-fns';
 
-export default function EventFilters({ predicate, setPredicate, loading }) {
+export default function EventFilters({ loading }) {
+    const dispatch = useDispatch();
     const { authenticated } = useSelector(state => state.auth);
+    const { filter, startDate } = useSelector(state => state.event);
 
     const styleActive = { backgroundColor: 'teal', color: '#fff', opacity: .8 };
     return (
@@ -30,24 +33,24 @@ export default function EventFilters({ predicate, setPredicate, loading }) {
                         </MenuItem>
 
                         <MenuItem
-                            style={predicate.get('filter') === 'all' ? styleActive : {}}
-                            onClick={() => setPredicate('filter', 'all')}
+                            style={filter === 'all' ? styleActive : {}}
+                            onClick={() => dispatch(setFilter('all'))}
                             disabled={loading}
                         >
                             All Activities
                         </MenuItem>
 
                         <MenuItem
-                            style={predicate.get('filter') === 'isGoing' ? styleActive : {}}
-                            onClick={() => setPredicate('filter', 'isGoing')}
+                            style={filter === 'isGoing' ? styleActive : {}}
+                            onClick={() => dispatch(setFilter('isGoing'))}
                             disabled={loading}
                         >
                             I'm going
                         </MenuItem>
 
                         <MenuItem
-                            style={predicate.get('filter') === 'isHost' ? styleActive : {}}
-                            onClick={() => setPredicate('filter', 'isHost')}
+                            style={filter === 'isHost' ? styleActive : {}}
+                            onClick={() => dispatch(setFilter('isHost'))}
                             disabled={loading}
                         >
                             I'm hosting
@@ -67,8 +70,8 @@ export default function EventFilters({ predicate, setPredicate, loading }) {
                     <MenuItem>
                         <Calendar
                             className="calendar"
-                            onChange={date => setPredicate('startDate', date)}
-                            value={predicate.get('startDate') || new Date()}
+                            onChange={date => dispatch(setStartDate(date))}
+                            value={ startDate || new Date() }
                             tileDisabled={() => loading}
                         />
                     </MenuItem>
@@ -96,24 +99,24 @@ export default function EventFilters({ predicate, setPredicate, loading }) {
 }
 
 /* <div className="event-filters">
-        <ul className="filter-list">
-            <li>
-                Filters
-            </li>
-            <li
-                className=
-                onClick={() => setPredicate('filter', 'all')}
-            >
-                All Events
-            </li>
-            <li>I'm going</li>
-            <li>I'm hosting</li>
-        </ul>
+    <ul className="filter-list">
+        <li>
+            Filters
+        </li>
+        <li
+            className=
+            onClick={() => setPredicate('filter', 'all')}
+        >
+            All Events
+        </li>
+        <li>I'm going</li>
+        <li>I'm hosting</li>
+    </ul>
 
-        <ul className="filter-list filter-list-calendar">
-            <li>Calendar</li>
-        </ul>
+    <ul className="filter-list filter-list-calendar">
+        <li>Calendar</li>
+    </ul>
 
-        <Calendar className="calendar"/>
+    <Calendar className="calendar"/>
 
-    </div> */
+</div> */

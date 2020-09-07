@@ -4,55 +4,39 @@ import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import EventList from './eventList';
 import { useSelector, useDispatch } from 'react-redux';
-//import LoadingComponent from '../../../app/common/components/LoadingComponent';
 import EventListItemSkeleton from './EventListItemSkeleton/EventListItemSkeleton';
 import EventFilters from '../eventFilters/EventFilters';
-//import { /* getEventsFromFirestore,  dataFromSnapshot, */ fetchEventsFromFirestore } from '../../../app/firestore/firestoreService';
-import { /* listenToEvents, */ fetchEvents, clearEvents } from '../eventActions';
-//import useFirestoreCollection from '../../../app/hooks/useFirestoreCollection';
+import { /* listenToEvents, */ fetchEvents, /* clearEvents */ } from '../eventActions';
 import EventsFeed from './EventsFeed/EventsFeed';
-//import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
+import { RETAIN_STATE } from '../eventConstants';
 
 export default function EventDashboard() {
     const dispatch = useDispatch();
     const limit = 3;
-    const { events, moreEvents } = useSelector(state => state.event);
+    const { events, moreEvents, filter, startDate, lastVisible, retainState } = useSelector(state => state.event);
     const { loading } = useSelector(state => state.async);
     const { authenticated } = useSelector(state => state.auth);
-    const [lastDocSnapshot, setLastDocSnapshot] = useState(null);
     const [loadingInitial, setLoadingInitial] = useState(false);
-    const [predicate, setPredicate] = useState(new Map([
-        ['startDate', new Date()],
-        ['filter', 'all']
-    ]));
 
-    function handleSetPredicate(key, value) {
-        dispatch(clearEvents());
-        setLastDocSnapshot(null);
-        setPredicate( new Map(predicate.set(key, value)) );
-    }
 
     useEffect(() => {
+        if (retainState) return; //not update by new values
         setLoadingInitial(true);
-        dispatch(fetchEvents(predicate, limit)).then((lastVisible) => {
-            setLastDocSnapshot(lastVisible);
+        dispatch(fetchEvents(filter, startDate, limit)).then(() => {
             setLoadingInitial(false);
         });
-        return () => dispatch(clearEvents());
-    }, [dispatch, predicate]);
+        return () => {
+            dispatch({type: RETAIN_STATE}); // we want to keep this particular state
+        };
+    }, [dispatch, filter, startDate, retainState]);
 
     function handleFetchNextEvents() {
-        dispatch(fetchEvents(predicate, limit, lastDocSnapshot)).then(lastVisible => {
+        dispatch(fetchEvents(filter, startDate, limit, lastVisible));
+       /*  .then(lastVisible => {
             setLastDocSnapshot(lastVisible);
-        });
+        }); */
     }
-
-    /* useFirestoreCollection({
-        query: () => fetchEventsFromFirestore(predicate),
-        data: _events => dispatch(listenToEvents(_events)),
-        deps: [dispatch, predicate]
-    }); */
 
     //if (loading) return <LoadingComponent />;
 
@@ -85,7 +69,7 @@ export default function EventDashboard() {
             </Grid>
             <Grid className="item" item md={4} sm={5} xs={12}>
                 { authenticated && <EventsFeed />}
-                <EventFilters predicate={predicate} setPredicate={handleSetPredicate} loading={loading}/>
+                <EventFilters loading={loading}/>
             </Grid>
             <Grid item md={8} sm={7} xs={12}>
                 {loading && <CircularProgress />}
@@ -94,7 +78,37 @@ export default function EventDashboard() {
     );
 }
 
+//const [lastDocSnapshot, setLastDocSnapshot] = useState(null);
+/* const [predicate, setPredicate] = useState(new Map([
+    ['startDate', new Date()],
+    ['filter', 'all']
+])); */
+
+/* function handleSetPredicate(key, value) {
+    dispatch(clearEvents());
+    setLastDocSnapshot(null);
+    setPredicate( new Map(predicate.set(key, value)) );
+} */
+
+/* useEffect(() => {
+    setLoadingInitial(true);
+    dispatch(fetchEvents(predicate, limit)).then((lastVisible) => {
+        setLastDocSnapshot(lastVisible);
+        setLoadingInitial(false);
+    });
+    return () => dispatch(clearEvents());
+}, [dispatch, predicate]); */
+/* useFirestoreCollection({
+    query: () => fetchEventsFromFirestore(predicate),
+    data: _events => dispatch(listenToEvents(_events)),
+    deps: [dispatch, predicate]
+}); */
+
 /* 
+//import LoadingComponent from '../../../app/common/components/LoadingComponent';
+//import useFirestoreCollection from '../../../app/hooks/useFirestoreCollection';
+//import Button from '@material-ui/core/Button';
+//import { getEventsFromFirestore,  dataFromSnapshot, fetchEventsFromFirestore } from '../../../app/firestore/firestoreService';
 import { asyncActionStart, asyncActionFinish, asyncActionError } from '../../../app/async/asyncReducer';
 useEffect(() => {
     dispatch(asyncActionStart());

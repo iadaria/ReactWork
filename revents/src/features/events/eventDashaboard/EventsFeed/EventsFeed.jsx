@@ -11,10 +11,10 @@ import EventFeedItem from '../EventFeedItem/EventFeedItem';
 export default function EventsFeed() {
     const dispatch = useDispatch();
     const { feed } = useSelector(state => state.profile);
-    const { currentUser } = useSelector((state) => state.auth);
+    //const { currentUser } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        currentUser && getUserFeedRef().on('value', snapshot => {
+        getUserFeedRef().on('value', snapshot => {
             if(!snapshot.exists()) {
                 return;
             }

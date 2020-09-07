@@ -6,8 +6,6 @@
 /.pnp
 .pnp.js
 
-/public/index.html
-/src/features/sandbox/TestMap.jsx
 /src/app/config/firebase.js
 
 # testing

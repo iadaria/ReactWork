@@ -17,9 +17,11 @@ import EventListAttendees from '../eventListAttendees';
 //import { deleteEvent } from '../../eventActions';
 import { format } from 'date-fns';
 import { deleteEventInFirestore } from '../../../../app/firestore/firestoreService';
+import { useSelector } from 'react-redux';
 //import Chip from '@material-ui/core/Chip';
 
 export default function EventListItem({ event }) {
+    const { authenticated } = useSelector(state => state.auth);
     //const dispatch = useDispatch();
 
     const classes = useStyles();
@@ -73,14 +75,16 @@ export default function EventListItem({ event }) {
                 <Button variant="outlined" size="small">{event.category || "None"}</Button>
 
                 <Box>
-                    <Button
+                    {authenticated && 
+                        <Button
                         //onClick={ () => dispatch(deleteEvent(event.id)) }
                         onClick={() => deleteEventInFirestore(event.id)}
                         size="small"
                         color="secondary"
-                    >
-                        Delete
+                        >
+                            Delete
                         </Button>
+                    }
                     <Button
                         //onClick={selectEvent.bind(null, event)}
                         //onClick={ () => selectEvent(event) }

@@ -1,6 +1,6 @@
 /* global google */
 import './event-form.scss';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import Box from '@material-ui/core/Box';
@@ -19,7 +19,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 //import cuid from 'cuid';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { /* updateEvent, createEvent, listenToEvents, */ listenToSelectedEvent } from '../eventActions';
+import { /* updateEvent, createEvent, listenToEvents, */ listenToSelectedEvent, clearSelectedEvent } from '../eventActions';
 
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
@@ -37,7 +37,7 @@ import { listenToEventFromFirestore, updateEventInFirestore, addEventToFirestore
 import LoadingComponent from '../../../app/common/components/LoadingComponent';
 import { toast } from 'react-toastify';
 
-export default function EventForm({ match, history }) {
+export default function EventForm({ match, history, location }) {
     const dispatch = useDispatch();
     const [loadingCancel, setLoadingCancel] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
@@ -47,9 +47,14 @@ export default function EventForm({ match, history }) {
     const { selectedEvent } = useSelector((state) => state.event);
     const { loading, error } = useSelector((state) => state.async);
 
+    useEffect(() => {
+        if (location.pathname !== '/createEvent') return; //not doing thing
+        dispatch(clearSelectedEvent());
+    }, [dispatch, location.pathname])
+
 
     useFirestoreDoc({
-        shouldExecute: !!match.params.id,
+        shouldExecute: match.params.id !== selectedEvent?.id && location.pathname !== '/createEvent',
         query: () => listenToEventFromFirestore(match.params.id),
         //data: event => dispatch(listenToEvents([event])),
         data: event => dispatch(listenToSelectedEvent(event)),
@@ -103,6 +108,7 @@ export default function EventForm({ match, history }) {
                 <Paper className="card-event">
                     <h3>{selectedEvent ? "Edit the event" : "Create new event"}</h3>
                     <Formik
+                        enableReinitialize
                         initialValues={initialValues}
                         validationSchema={validationSchema}
                         onSubmit={async (values, { setSubmitting }) => {
@@ -156,6 +162,7 @@ export default function EventForm({ match, history }) {
                                             //InputLabelProps={{ shrink: true }}
                                             variant="outlined"
                                             size="small"
+                                            autoComplete='off'
                                         />
                                     </MuiPickersUtilsProvider>
 

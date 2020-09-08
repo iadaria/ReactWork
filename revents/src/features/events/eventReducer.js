@@ -9,7 +9,8 @@ import {
     CLEAR_EVENTS,
     SET_FILTER,
     SET_START_DATE,
-    RETAIN_STATE} from "./eventConstants";
+    RETAIN_STATE,
+    CLEAR_SELECTED_EVENT} from "./eventConstants";
 
 //const { sampleData } = require("../../app/api/sampleData");
 
@@ -74,6 +75,12 @@ export default function eventReducer(state = initialState, { type, payload }) {
                 ...state,
                 selectedEvent: payload
             };
+
+        case CLEAR_SELECTED_EVENT:
+            return {
+                ...state,
+                selectedEvent: null
+            }
 
         case CLEAR_EVENTS: 
             return {

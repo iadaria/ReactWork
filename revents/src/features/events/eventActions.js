@@ -7,7 +7,8 @@ import {
     LISTEN_TO_SELECTED_EVENT,
     CLEAR_EVENTS,
     SET_FILTER,
-    SET_START_DATE} from './eventConstants';
+    SET_START_DATE,
+    CLEAR_SELECTED_EVENT} from './eventConstants';
 //import { fetchSampleData } from '../../app/api/mockApi';
 import { asyncActionStart, asyncActionFinish, asyncActionError } from '../../app/async/asyncReducer';
 import { fetchEventsFromFirestore, dataFromSnapshot } from '../../app/firestore/firestoreService';
@@ -44,6 +45,12 @@ export function listenToEvents(events) {
         type: FETCH_EVENTS,
         payload: events
     }
+}
+
+export function clearSelectedEvent() {
+    return {
+        type: CLEAR_SELECTED_EVENT
+    };
 }
 
 export function setFilter(value) {

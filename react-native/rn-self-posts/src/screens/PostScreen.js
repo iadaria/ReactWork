@@ -21,7 +21,7 @@ export const PostScreen = ({ navigation, route }) => {
     //console.log('route -> ', route);
     const dispatch = useDispatch();
     const post = useSelector((state) =>
-        state.post.allPosts.find((post) => post.id === postId)
+        state.post.allPosts.find((_post) => _post.id === postId)
     );
 
     const handlerRemove = () => {

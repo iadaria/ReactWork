@@ -9,6 +9,7 @@ const InitialState = {
 export const postReducer = (state = InitialState, action) => {
     switch (action.type) {
         case LOAD_POSTS:
+            console.log('postReducer -> LOAD_POSTS - action', action);
             return {
                 ...state,
                 allPosts: action.payload,

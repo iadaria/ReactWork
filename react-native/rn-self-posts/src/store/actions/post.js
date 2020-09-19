@@ -5,7 +5,7 @@ import * as FileSystem from 'expo-file-system';
 
 export const loadPosts = () => {
     return async (dispatch) => {
-        const posts = await DB.getPosts();
+        const posts = await DB.getPosts() || [];
         dispatch({
             type: LOAD_POSTS,
             payload: posts, //DATA

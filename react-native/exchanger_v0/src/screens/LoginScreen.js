@@ -1,10 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
+import Separator from '../app/common/components/Separator';
+import SocialLogin from '../features/auth/SocialLogin';
 import { THEME } from '../theme';
-
-const Separator = () => (
-    <View style={styles.separator} />
-);
 
 //TODO Error Sign in + after error add "Enter the code shown above" - capchar, forgot password and etc
 
@@ -42,21 +40,12 @@ export default function LoginScreen({ navigation }) {
 
             <Text style={{ textAlign: 'center'}}>ИЛИ</Text>
 
-            <View
-                style={styles.googleButtonView}
-            >
-                <Button
-                    //color="transparent"
-                    onPress={() => console.log('press google')}
-                    accessibilityLabel="label"
-                    title="Продолжить с Google"
-                />
-            </View>
+            <SocialLogin />
 
             <Separator />
 
             <Text style={styles.signUp}>
-                Don't have an account? Sign up
+                Ещё нет аккаунта? Зарегистрироваться
             </Text>
 
         </View>
@@ -102,14 +91,6 @@ const styles = StyleSheet.create({
         //backgroundColor: THEME.MAIN_COLOR,
         //flexDirection: 'row',
         //justifyContent: 'center',
-    },
-    separator: {
-        marginVertical: '5%',
-        borderBottomColor: '#737373',
-        borderBottomWidth: StyleSheet.hairlineWidth,
-    },
-    googleButtonView: {
-        marginVertical: '5%'
     },
     signUp: {
         fontSize: 18,

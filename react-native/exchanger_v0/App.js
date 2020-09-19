@@ -2,9 +2,10 @@ import React from 'react';
 import AppNavigation from './src/navigation/AppNavigation';
 
 const App: () => React$Node = () => {
-  return (
-    <AppNavigation />
-  );
+
+    return (
+        <AppNavigation />
+    );
 };
 
 export default App;
@@ -26,7 +27,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen'; */
 
-/* 
+/*
 <>
     <StatusBar barStyle="dark-content" />
     <SafeAreaView>

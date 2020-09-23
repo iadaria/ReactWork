@@ -1,46 +1,91 @@
+import { Formik } from 'formik';
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 import Separator from '../app/common/components/Separator';
 import SocialLogin from '../features/auth/SocialLogin';
 import { THEME } from '../theme';
 
+import { useDispatch } from 'react-redux';
+import { signInWithEmail, socialLogin } from '../app/firestore/firebaseService';
+
 //TODO Error Sign in + after error add "Enter the code shown above" - capchar, forgot password and etc
 
 export default function LoginScreen({ navigation }) {
+    const dispatch = useDispatch();
+
     return (
         <View style={styles.root}>
-            <Text style={styles.welcome}>
-                Добро пажаловать 🎉
-            </Text>
-            <Text style={styles.enter}>
-                Введите данные для продолжения работы в iad
-            </Text>
-            <TextInput
-                style={styles.enterData}
-                placeholder="Логин или почтовый адрес"
-            />
-            <TextInput
-                style={styles.enterData}
-                placeholder="Пароль"
-            />
-            <Text style={styles.forgotPassword}>
-                Забыли пароль?
-            </Text>
+            <Formik
+                initialValues={{
+                    login: "",
+                    password: ""
+                }}
+                onSubmit={async (values, { setSubmitting, setErrors }) => {
+                    console.log('submit enter with values', values);
+                    try {
+                        await signInWithEmail(values);
+                    } catch(error) {
+                        setErrors({ auth: "Неверные логин и/или пароль" });
+                        console.log(error);
+                    } finally { setSubmitting(false); }
+                }}
+            >
+                {( { 
+                    handleChange, handleBlur, handleSubmit, isSubmitting, isValid, dirty, errors, values 
+                } ) => {
 
-            <View style={styles.viewButtons} >
-                <Button
-                    color={THEME.MAIN_COLOR}
-                    onPress={() => console.log('press')}
-                    accessibilityLabel="label"
-                    title="Продолжить"
-                />  
-            </View>
+                    return (
+                        <View>
+                            <Text style={styles.welcome}>
+                                Добро пажаловать 🎉
+                            </Text>
+                            <Text style={styles.enter}>
+                                Введите данные для продолжения работы в iad
+                            </Text>
 
-            <Separator />
+                            {errors.auth &&
+                                <Text style={{color: 'red', borderWidth: 1, borderColor: 'red', borderRadius: 5}}>
+                                    {errors.auth}
+                                </Text>
+                            }
+                           
+                            <TextInput
+                                style={styles.enterData}
+                                placeholder="Логин или почтовый адрес"
+                                onChangeText={handleChange('login')}
+                                onBlur={handleBlur('login')}
+                                value={values.login}
+                            />
+                            <TextInput
+                                style={styles.enterData}
+                                placeholder="Пароль"
+                                onChangeText={handleChange('password')}
+                                onBlur={handleBlur('password')}
+                                value={values.password}
+                            />
+                            <Text style={styles.forgotPassword}>
+                                Забыли пароль?
+                            </Text>
 
-            <Text style={{ textAlign: 'center'}}>ИЛИ</Text>
+                            <View style={styles.viewButtons} >
+                                <Button
+                                    color={THEME.MAIN_COLOR}
+                                    onPress={handleSubmit}
+                                    accessibilityLabel="label"
+                                    title="Продолжить"
+                                />
+                            </View>
 
-            <SocialLogin />
+                            <Separator />
+
+                            <Text style={{ textAlign: 'center' }}>ИЛИ</Text>
+
+                            <SocialLogin />
+                        </View>
+                    );
+                }}
+
+            </Formik>
 
             <Separator />
 
@@ -74,7 +119,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         //borderColor: '#737373', borderWidth: StyleSheet.hairlineWidth, borderRadius: 5,
         borderColor: 'grey', borderWidth: 1, borderRadius: 5,
-        color: '#eee',
+        color: 'grey',
         padding: 10
     },
     forgotPassword: {

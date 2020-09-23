@@ -1,17 +1,21 @@
 import React from 'react';
 import { View, StyleSheet, Button } from 'react-native';
-//import Separator from '../../app/common/components/Separator';
+import { socialLogin } from '../../app/firestore/firebaseService';
+//import { GoogleSignin } from '@react-native-community/google-signin';
 
 export default function SocialLogin() {
-    return (
-        
-            
+
+    return (  
             <View
                 style={styles.googleButtonView}
             >
                 <Button
                     //color="transparent"
-                    onPress={() => console.log('press google')}
+                    onPress={() => 
+                        socialLogin('google')
+                        .then(() => console.log('success entered by Google'))
+                        .catch(error => console.log('error', error))
+                    }
                     accessibilityLabel="label"
                     title="Продолжить с Google"
                 />

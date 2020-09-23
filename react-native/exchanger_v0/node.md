@@ -15,11 +15,36 @@
 >yarn add firebase
 >yarn add firebase-tools
 
+#not need
+>yarn add @react-native-firebase/app
+/*Install the authentication moduel that in web belongs to firebase package*/
+>yarn add @react-native-firebase/auth
+>yarn add @react-native-community/google-signin
+/*Install the cloud firestore*/
+>yarn add @react-native-firebase/firestore
+
+>yarn remove firebase firebase-tools
+
+
 #added redux
->yarn add redux react-redux redux-thunk
+>yarn add redux react-redux redux-thunk 
+>yarn add readux-devtools-extension react-native-debugger --dev
+>yarn global add react-devtols
+
+#error
+ ERROR    Warning: AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-community/async-storage' instead of 'react-native'. See https://github.com/react-native-community/async-storage
+ >yarn add @react-native-community/async-storage
 
 #environment TODO add environment for:
 -config/firebase.js
+
+#added for work with form
+>yarn add yup
+>yarn add formik
+
+#add toast https://www.npmjs.com/package/react-native-toast-message
+>yarn add react-native-toast-message
+
 
 
 #Flow ro TypeScript

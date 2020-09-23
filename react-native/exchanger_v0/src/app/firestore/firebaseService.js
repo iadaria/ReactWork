@@ -1,0 +1,54 @@
+import Toast from 'react-native-toast-message';
+//import firebase from '../config/firebase'; // It's for Web
+import auth from '@react-native-firebase/auth';
+import { setUserProfileData } from './firestoreService';
+import { GoogleSignin } from '@react-native-community/google-signin';
+
+GoogleSignin.configure({
+    webClientId: '1088744563414-4ga66dvdvts18ru1bogktieahaf0viiv.apps.googleusercontent.com',
+});
+
+/*************************** Sign ****************************/
+export function signInWithEmail(creds) {
+    //return firebase.auth().signInWithEmailAndPassword( //It's for Web
+    return auth().signInWithEmailAndPassword(
+        creds.login, creds.password
+    );
+}
+
+export function signOutFirebase() {
+    //return firebase.auth().signOut();
+    return auth().signOut();
+}
+
+export async function socialLogin(selectedProvider) {
+    
+    let provider;
+    if (selectedProvider === "google") {
+        console.log("firebaseService => involved socialLogin with google");
+        //provider = new firebase.auth().GoogleAuthProvider();
+        
+        // Get the users ID token
+        const { idToken } = await GoogleSignin.signIn();
+        // Create a Google credential with the token
+        provider = auth.GoogleAuthProvider.credential(idToken);
+    }
+
+    try {
+        //const result = await firebase.auth().signInWithPopup(provider);
+        const result = await auth().signInWithCredential(provider);
+        console.log("\nfirebaseServcie => sign in with Google - result: ", result);
+        if (result.additionalUserInfo.isNewUser) {
+            console.log('user is new, result user = ', result.user);
+            await setUserProfileData(result.user);
+        } else { console.log("not new ")}
+    } catch (error) {
+        Toast.show({
+            type: 'error',
+            position: 'bottom',
+            text1: error.message,
+            text2: error.message,
+            autoHide: true,
+        })
+    }
+}

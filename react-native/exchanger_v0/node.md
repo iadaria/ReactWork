@@ -11,7 +11,7 @@
 
 >yarn android
 
-#firebase
+# firebase
 >yarn add firebase
 >yarn add firebase-tools
 
@@ -26,27 +26,26 @@
 >yarn remove firebase firebase-tools
 
 
-#added redux
+# added redux
 >yarn add redux react-redux redux-thunk 
 >yarn add readux-devtools-extension react-native-debugger --dev
 >yarn global add react-devtols
 
-#error
- ERROR    Warning: AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-community/async-storage' instead of 'react-native'. See https://github.com/react-native-community/async-storage
- >yarn add @react-native-community/async-storage
 
-#environment TODO add environment for:
+# environment TODO add environment for:
 -config/firebase.js
 
-#added for work with form
+# added for work with form
 >yarn add yup
 >yarn add formik
 
-#add toast https://www.npmjs.com/package/react-native-toast-message
->yarn add react-native-toast-message
+# add toast https://github.com/magicismight/react-native-root-toast
+>yarn add react-native-root-toast
 
-
-
-#Flow ro TypeScript
+# Flow ro TypeScript
 #React natvie elements, material-ui
 #Вход по почте в firebase есть примеры при выборе способа https://console.firebase.google.com/u/0/project/exchanger-v0/authentication/providers
+
+# help
+>"Top 10 React Native Toast Libraries in 2020" openbase
+

@@ -1,4 +1,3 @@
-import Toast from 'react-native-toast-message';
 //import firebase from '../config/firebase'; // It's for Web
 import auth from '@react-native-firebase/auth';
 import { setUserProfileData } from './firestoreService';
@@ -43,12 +42,6 @@ export async function socialLogin(selectedProvider) {
             await setUserProfileData(result.user);
         } else { console.log("not new ")}
     } catch (error) {
-        Toast.show({
-            type: 'error',
-            position: 'bottom',
-            text1: error.message,
-            text2: error.message,
-            autoHide: true,
-        })
+        console.log(error); //error.message for toast
     }
 }

@@ -1,12 +1,13 @@
 import { Formik } from 'formik';
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button, ToastAndroid } from 'react-native';
 import Separator from '../app/common/components/Separator';
 import SocialLogin from '../features/auth/SocialLogin';
 import { THEME } from '../theme';
 
 import { useDispatch } from 'react-redux';
 import { signInWithEmail, socialLogin } from '../app/firestore/firebaseService';
+import Toast from 'react-native-root-toast';
 
 //TODO Error Sign in + after error add "Enter the code shown above" - capchar, forgot password and etc
 
@@ -23,16 +24,27 @@ export default function LoginScreen({ navigation }) {
                 onSubmit={async (values, { setSubmitting, setErrors }) => {
                     console.log('submit enter with values', values);
                     try {
-                        await signInWithEmail(values);
-                    } catch(error) {
+                        Toast.show("This is a message", {
+                            visible: true,
+                            duration: Toast.durations.SHORT,
+                            position: Toast.positions.BOTTOM,
+                            delay: 0,
+                            shadow: true,
+                            animation: true,
+                            textColor: 'black',
+                            backgroundColor: 'blue'
+                        }
+                        );
+                        //await signInWithEmail(values);
+                    } catch (error) {
                         setErrors({ auth: "Неверные логин и/или пароль" });
                         console.log(error);
                     } finally { setSubmitting(false); }
                 }}
             >
-                {( { 
-                    handleChange, handleBlur, handleSubmit, isSubmitting, isValid, dirty, errors, values 
-                } ) => {
+                {({
+                    handleChange, handleBlur, handleSubmit, isSubmitting, isValid, dirty, errors, values
+                }) => {
 
                     return (
                         <View>
@@ -44,11 +56,11 @@ export default function LoginScreen({ navigation }) {
                             </Text>
 
                             {errors.auth &&
-                                <Text style={{color: 'red', borderWidth: 1, borderColor: 'red', borderRadius: 5}}>
+                                <Text style={{ color: 'red', borderWidth: 1, borderColor: 'red', borderRadius: 5 }}>
                                     {errors.auth}
                                 </Text>
                             }
-                           
+
                             <TextInput
                                 style={styles.enterData}
                                 placeholder="Логин или почтовый адрес"

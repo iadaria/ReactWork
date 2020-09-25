@@ -1,8 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
+import { useSelector } from 'react-redux';
+import { getColorText } from '../app/common/utils/utils';
 import { THEME } from '../theme';
 
 export default function MainScreen({ navigation }) {
+    const { currentUserProfile } = useSelector((state) => state.profile);
     return (
         <View style={styles.root}>
             <Text style={styles.mainText}>
@@ -15,6 +18,11 @@ export default function MainScreen({ navigation }) {
                 color={THEME.SECOND_COLOR}
                 onPress={() => navigation.navigate('Login')} 
                 title="Войти"
+            />
+            <Button
+                color={THEME.SECOND_COLOR}
+                onPress={() => console.log(getColorText('currentProfileUser', currentUserProfile, 'yellow'))} 
+                title="Profile"
             />
         </View>
     );

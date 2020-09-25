@@ -15,6 +15,7 @@ export function configureStore() {
     const middleware = applyMiddleware(...middlewaresToApply, ...[thunk]);
     const store = createStore(
         rootReducer,
+        //applyMiddleware(thunk)
         middleware
     );
 

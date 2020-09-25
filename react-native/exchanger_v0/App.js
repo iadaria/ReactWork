@@ -2,20 +2,16 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from './src/app/store/configureStore';
 import AppNavigation from './src/navigation/AppNavigation';
-// import Toast from 'react-native-toast-message';
+
 
 const store = configureStore();
 
 const App: () => React$Node = () => {
 
     return (
-        <>
-            {/* <Toast ref={(ref) => Toast.setRef(ref)} /> */}
-            <Provider store={store}>
-                
-                <AppNavigation />
-            </Provider>     
-        </>
+        <Provider store={store}>
+            <AppNavigation />
+        </Provider>
     );
 };
 

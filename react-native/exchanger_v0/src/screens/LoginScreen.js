@@ -1,41 +1,33 @@
-import { Formik } from 'formik';
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, Button, ToastAndroid } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 import Separator from '../app/common/components/Separator';
 import SocialLogin from '../features/auth/SocialLogin';
 import { THEME } from '../theme';
 
-import { useDispatch } from 'react-redux';
-import { signInWithEmail, socialLogin } from '../app/firestore/firebaseService';
-import Toast from 'react-native-root-toast';
-
+import { signInWithEmail } from '../app/firestore/firebaseService';
+import { getColorText } from '../app/common/utils/utils';
 //TODO Error Sign in + after error add "Enter the code shown above" - capchar, forgot password and etc
 
 export default function LoginScreen({ navigation }) {
-    const dispatch = useDispatch();
 
     return (
         <View style={styles.root}>
             <Formik
                 initialValues={{
-                    login: "",
+                    email: "",
                     password: ""
                 }}
+                validationSchema={Yup.object({
+                    email: Yup.string().required().email(),
+                    password: Yup.string().required()
+                })}
+
                 onSubmit={async (values, { setSubmitting, setErrors }) => {
-                    console.log('submit enter with values', values);
+                    console.log(getColorText("values", values, "green"));
                     try {
-                        Toast.show("This is a message", {
-                            visible: true,
-                            duration: Toast.durations.SHORT,
-                            position: Toast.positions.BOTTOM,
-                            delay: 0,
-                            shadow: true,
-                            animation: true,
-                            textColor: 'black',
-                            backgroundColor: 'blue'
-                        }
-                        );
-                        //await signInWithEmail(values);
+                       //await signInWithEmail(values)
                     } catch (error) {
                         setErrors({ auth: "Неверные логин и/или пароль" });
                         console.log(error);
@@ -45,7 +37,7 @@ export default function LoginScreen({ navigation }) {
                 {({
                     handleChange, handleBlur, handleSubmit, isSubmitting, isValid, dirty, errors, values
                 }) => {
-
+                    const isDisabledSubmit = !isValid || !dirty || isSubmitting;
                     return (
                         <View>
                             <Text style={styles.welcome}>
@@ -58,15 +50,17 @@ export default function LoginScreen({ navigation }) {
                             {errors.auth &&
                                 <Text style={{ color: 'red', borderWidth: 1, borderColor: 'red', borderRadius: 5 }}>
                                     {errors.auth}
+                                    {errors.email}
+                                    {errors.password}
                                 </Text>
                             }
 
                             <TextInput
                                 style={styles.enterData}
                                 placeholder="Логин или почтовый адрес"
-                                onChangeText={handleChange('login')}
+                                onChangeText={handleChange('email')}
                                 onBlur={handleBlur('login')}
-                                value={values.login}
+                                value={values.email}
                             />
                             <TextInput
                                 style={styles.enterData}
@@ -81,10 +75,12 @@ export default function LoginScreen({ navigation }) {
 
                             <View style={styles.viewButtons} >
                                 <Button
+                                    disabled={isDisabledSubmit}
                                     color={THEME.MAIN_COLOR}
                                     onPress={handleSubmit}
                                     accessibilityLabel="label"
                                     title="Продолжить"
+                                    //TODO ActivityIndicator with custom button
                                 />
                             </View>
 

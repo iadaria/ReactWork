@@ -1,19 +1,22 @@
-import firestore from '@react-native-firebase/firestore';
-//import firebase from '../config/firebase'; It's for Web
+//import firestore from '@react-native-firebase/firestore';
+import { getCircularReplacer } from '../common/utils/utils';
+import firebase from '../config/firebase'; //It's for Web
 
 //const db = firebase.firestore(); //It's for Web
 //const db = firestore();
 
 /************************ Common ****************************/
 export function dataFromSnapshot(snapshot) {
-    console.log('snapshot', snapshot);
-    if (!snapshot || !snapshot.exists) return undefined;
+    if (!snapshot || !snapshot.exists) {
+        console.log('snapshot', snapshot);
+        return null;//undefined;
+    }
     const data = snapshot.data();
 
     for (const prop in data) {
         if (data.hasOwnProperty(prop)) {
             //if (data[prop] instanceof firebase.firestore.Timestamp) {
-            if (data[prop] instanceof firestore.Timestamp) {
+            if (data[prop] instanceof firebase.firestore.Timestamp) {
                 data[prop] = data[prop].toDate();
             }
         }
@@ -27,16 +30,16 @@ export function dataFromSnapshot(snapshot) {
 
 /************************ Profile ***************************/
 export function getUserProfile(userId) {
-    return firestore().collection('users').doc(userId);
+    return firebase.firestore().collection('users').doc(userId);
 }
 
 export function setUserProfileData(user) {
     console.log('Will be added user', user);
-    return firestore().collection('users').doc(user.uid).set({
+    return firebase.firestore().collection('users').doc(user.uid).set({
         displayName: user.displayName,
         email: user.email || "",
         photoURL: user.photoURL || null,
-        createAt: firestore.FieldValue.serverTimestamp()
+        createAt: firebase.firestore.FieldValue.serverTimestamp()
     });
 }
 

@@ -1,5 +1,9 @@
 AndroidManifest.xml
 
+/temp
+/react-native/debug_test_v01
+/react-native/debug_test_v02
+
 #data for login
 /server/config/
 

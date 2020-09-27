@@ -27,7 +27,7 @@ export default function LoginScreen({ navigation }) {
                 onSubmit={async (values, { setSubmitting, setErrors }) => {
                     console.log(getColorText("values", values, "green"));
                     try {
-                       //await signInWithEmail(values)
+                       await signInWithEmail(values)
                     } catch (error) {
                         setErrors({ auth: "Неверные логин и/или пароль" });
                         console.log(error);

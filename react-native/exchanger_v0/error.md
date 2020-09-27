@@ -15,6 +15,7 @@ See http://invertase.link/android for full setup instructions.
 # error 2 during login with Google
 error [Error: DEVELOPER_ERROR]
 #error 2 solve
+>cd android/app
 >keytool -list -v -keystore debug.keystore -alias androiddebugkey -storepass android -keypass android
 Get sh1 number of cert and enter it to firebase site
 

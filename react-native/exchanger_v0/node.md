@@ -1,3 +1,9 @@
+#base commands
+>yarn start --reset-cache
+>yarn cache clean --force
+>yarn remotedev
+
+
 #added libs
 
 #react-native navigation from site
@@ -76,3 +82,9 @@ BgBlue = "\x1b[44m"
 BgMagenta = "\x1b[45m"
 BgCyan = "\x1b[46m"
 BgWhite = "\x1b[47m"
+
+# remote redux
+>add remote-redux-devtools --dev
+>yarn add remotedev-rn-debugger --dev
+
+# remove: redux-devtools-extension, react-native-flipper, redux-flipper removedev-server

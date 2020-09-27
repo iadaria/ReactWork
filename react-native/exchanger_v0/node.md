@@ -1,12 +1,16 @@
+# TODO
+1. Разграничение прав
+
+
 #base commands
 >yarn start --reset-cache
 >yarn cache clean --force
 >yarn remotedev
 
 
-#added libs
+# added libs
 
-#react-native navigation from site
+# react-native navigation from site
 >yarn add @react-navigation/native
 >yarn add react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view
 >yarn add @react-navigation/stack

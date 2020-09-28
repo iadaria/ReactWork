@@ -1,6 +1,10 @@
 # TODO
 1. Разграничение прав
-
+2. Can change font of icons https://github.com/oblador/react-native-vector-icons as adding:
+project.ext.vectoricons = [
+    iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf' ] // Name of the font files you want to copy
+]
+3. Doing design for botton navigation button 
 
 #base commands
 >yarn start --reset-cache

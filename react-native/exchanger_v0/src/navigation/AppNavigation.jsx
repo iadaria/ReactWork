@@ -1,8 +1,5 @@
 import React from 'react';
-import { LogBox, Platform } from 'react-native';
-
-import MainScreen from '../screens/MainScreen';
-import LoginScreen from '../screens/LoginScreen';
+import { Platform, StatusBar } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -13,10 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import DealsScreen from '../screens/DealsScreen';
 import TradeListScreen from '../screens/TradeListScreen';
 import { THEME } from '../theme';
-//import { createDrawerNavigator } from "@react-navigation/drawer";
-
-//const Drawer = createDrawerNavigator();
-const Stack = createStackNavigator();
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Deals = createStackNavigator();
 const TradeList = createStackNavigator();
@@ -24,19 +18,17 @@ const PersonalAds = createStackNavigator();
 const PersonalCabinet = createStackNavigator();
 
 let Tab = createBottomTabNavigator();
-/* if (Platform.OS === "android") {
-    Tab = createMaterialBottomTabNavigator();
-} else {
-    Tab = createBottomTabNavigator();
-} */
-
 //LogBox.ignoreLogs(['Require cycle:']);
 
 export default function AppNavigation() {
     return (
-        <NavigationContainer>
-            <BottomNavigator />
-        </NavigationContainer>
+        <SafeAreaProvider>
+            <StatusBar barStyle="light-content" backgroundColor={THEME.MAIN_COLOR}/> 
+            <NavigationContainer>
+                <BottomNavigator />
+            </NavigationContainer>
+        </SafeAreaProvider>
+       
     );
 }
 
@@ -91,6 +83,9 @@ function BottomNavigator() {
     );
 }
 
+const tabScreenOptions = {
+    headerTitle: 7
+};
 
 function DealsNavigator() {
     return (

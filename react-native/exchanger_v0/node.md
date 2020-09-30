@@ -1,4 +1,5 @@
 # TODO
+0. !!! Новая версия, диалоговое окно о новой версии
 1. Разграничение прав
 2. Can change font of icons https://github.com/oblador/react-native-vector-icons as adding:
 project.ext.vectoricons = [
@@ -10,6 +11,9 @@ project.ext.vectoricons = [
 >yarn start --reset-cache
 >yarn cache clean --force
 >yarn remotedev
+
+# install react-native-svg-transform 
+>yarn add --dev react-native-svg-transformer
 
 
 # added libs

@@ -1,13 +1,12 @@
 import React from 'react';
 import { Text, StyleSheet, SafeAreaView } from 'react-native';
-import FocusAwareStatusBar from '../app/common/components/FocusAwareStatusBar';
-import { THEME } from '../theme';
+// import FocusAwareStatusBar from '../app/common/components/FocusAwareStatusBar';
 
 export default function DealsScreen() {
     return (
         <SafeAreaView style={styles.root}>
             {/* <StatusBar backgroundColor={THEME.MAIN_COLOR}/> */}
-            <FocusAwareStatusBar barStyle="light-content" backgroundColor={THEME.MAIN_COLOR}/>
+            {/* <FocusAwareStatusBar barStyle="light-content" backgroundColor={THEME.MAIN_COLOR}/> */}
             <Text>
                 DialsScreen
             </Text>

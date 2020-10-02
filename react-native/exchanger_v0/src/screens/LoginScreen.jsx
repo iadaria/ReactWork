@@ -12,6 +12,8 @@ import { getColorText } from '../app/common/utils/utils';
 
 export default function LoginScreen({ navigation }) {
 
+    const goToMainScreen = () => navigation.navigate("Bottom");
+
     return (
         <View style={styles.root}>
             <Formik
@@ -27,7 +29,8 @@ export default function LoginScreen({ navigation }) {
                 onSubmit={async (values, { setSubmitting, setErrors }) => {
                     console.log(getColorText("values", values, "green"));
                     try {
-                       await signInWithEmail(values)
+                       await signInWithEmail(values);
+                       goToMainScreen();
                     } catch (error) {
                         setErrors({ auth: "Неверные логин и/или пароль" });
                         console.log(error);
@@ -88,7 +91,7 @@ export default function LoginScreen({ navigation }) {
 
                             <Text style={{ textAlign: 'center' }}>ИЛИ</Text>
 
-                            <SocialLogin />
+                            <SocialLogin goToMainScreen={goToMainScreen} />
                         </View>
                     );
                 }}
@@ -140,10 +143,6 @@ const styles = StyleSheet.create({
     viewButtons: {
         //borderColor: 'grey', borderWidth: 1, 
         marginVertical: '5%'
-        //flex: 1/6,
-        //backgroundColor: THEME.MAIN_COLOR,
-        //flexDirection: 'row',
-        //justifyContent: 'center',
     },
     signUp: {
         fontSize: 18,

@@ -3,7 +3,7 @@ import { View, StyleSheet, Button } from 'react-native';
 import { socialLogin } from '../../app/firestore/firebaseService';
 //import { GoogleSignin } from '@react-native-community/google-signin';
 
-export default function SocialLogin() {
+export default function SocialLogin({ goToMainScreen }) {
 
     return (  
             <View
@@ -13,8 +13,10 @@ export default function SocialLogin() {
                     //color="transparent"
                     onPress={() => 
                         socialLogin('google')
-                        .then(() => console.log('success entered by Google'))
-                        .catch(error => console.log('error', error))
+                        .then(() => {
+                            console.log('success entered by Google');
+                            goToMainScreen();
+                        }).catch(error => console.log('error', error))
                     }
                     accessibilityLabel="label"
                     title="Продолжить с Google"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, Linking } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -16,6 +16,9 @@ import MainScreen from '../screens/MainScreen';
 import UnauthScreen from '../screens/UnauthScreen';
 import DealsScreen from '../screens/DealsScreen';
 import TradeListScreen from '../screens/TradeListScreen';
+import PersonalAdsScreen from '../screens/PersonalAdsScreen';
+import PersonalCabinetScreen from '../screens/PersonalCabinetScreen';
+import ErrorToast from '../app/common/components/AppToast';
 
 const Main = createStackNavigator();
 const Login = createStackNavigator();
@@ -41,10 +44,19 @@ export default function AppNavigation() {
 }
 
 function MainMenu() {
+    const { authenticated } = useSelector(state => state.auth);
     return (
-        <Main.Navigator initialRouteName="Main" screenOptions={defaultScreenOptions}>
-            <Main.Screen name="Main" component={LoginNavigator} />
-            <Main.Screen name="Bottom" component={BottomNavigator} />
+        <Main.Navigator>
+            {!authenticated && 
+                <Main.Screen 
+                    options={defaultScreenOptions}
+                    name="Main" component={LoginNavigator} 
+                />
+            }
+            <Main.Screen 
+                options={defaultTabScreenOptions} 
+                name="Bottom" component={BottomNavigator} 
+            />
         </Main.Navigator>
     );
 }
@@ -53,16 +65,9 @@ function LoginNavigator() {
     return (
         <Login.Navigator
             initialRouteName="Unauth"
-            // @ts-ignore
-            //screenOptions={defaultScreenOptions}
         >
-            <Login.Screen
-                options={defaultScreenOptions} name="Main" component={MainScreen} 
-            />
-
-            <Login.Screen 
-                options={defaultScreenOptions} name="Login" component={LoginScreen} 
-            />
+            <Login.Screen name="Main" component={MainScreen} />
+            <Login.Screen name="Login" component={LoginScreen} />
         </Login.Navigator>
     );
 }
@@ -73,6 +78,7 @@ function BottomNavigator() {
 
     return (
         <Tab.Navigator
+            //screenOptions={defaultTabScreenOptions}
             initialRouteName="BottomNavigation"
             tabBarOptions={{
                 activeTintColor: "#fff",
@@ -127,7 +133,7 @@ function DealsNavigator() {
         <Deals.Navigator
             initialRouteName="Deals"
             // @ts-ignore
-            screenOptions={defaultTabScreenOptions}
+            //screenOptions={defaultTabScreenOptions}
         >
             <Deals.Screen name="Deals" component={DealsScreen} />
             {/* <Deals.Screen name="Else in this part navigation" component={theOther} /> */}
@@ -139,11 +145,8 @@ function TradeListNavigator() {
     return (
         <TradeList.Navigator
             initialRouteName="TradeList"
-            // @ts-ignore
-            screenOptions={defaultTabScreenOptions}
         >
             <TradeList.Screen name="TradeList" component={TradeListScreen} />
-            {/* <Deals.Screen name="Else in this part navigation" component={theOther} /> */}
         </TradeList.Navigator>
     );
 }
@@ -152,11 +155,8 @@ function PersonalAdsNavigator() {
     return (
         <PersonalAds.Navigator 
             initialRouteName="PersonalAds"
-            // @ts-ignore
-            screenOptions={defaultTabScreenOptions}
         >
-            <PersonalAds.Screen name="PersonalAds" component={TradeListScreen} />
-            {/* <Deals.Screen name="Else in this part navigation" component={theOther} /> */}
+            <PersonalAds.Screen name="PersonalAds" component={PersonalAdsScreen} />
         </PersonalAds.Navigator>
     );
 }
@@ -165,21 +165,16 @@ function PersonalCabinetNavigator() {
     return (
         <PersonalCabinet.Navigator
             initialRouteName="PersonalCabinet"
-            // @ts-ignore
-            screenOptions={defaultTabScreenOptions}
         >
-            <PersonalCabinet.Screen name="PersonalCabinet" component={TradeListScreen} />
-            {/* <Deals.Screen name="Else in this part navigation" component={theOther} /> */}
+            <PersonalCabinet.Screen name="PersonalCabinet" component={PersonalCabinetScreen} />
         </PersonalCabinet.Navigator>
     );
 }
 
-function UnauthNavigator({ navigation }) {
+function UnauthNavigator() {
     return (
         <Unauth.Navigator
             initialRouteName="Unauth"
-            // @ts-ignore
-            //screenOptions={defaultScreenOptions}
         >
             <Unauth.Screen 
                 options={defaultTabScreenOptions} name="Unauth" component={UnauthScreen} 
@@ -205,7 +200,13 @@ const defaultTabScreenOptions = {
             <Item 
                 title="title"
                 iconName="headphones"
-                onPress={() => console.log('message')}
+                onPress={() => {
+                    Linking.openURL(`http://t.me/${THEME.TELEGRAM_COMMON_GROUP}`)
+                    .catch(error => {
+                        console.log('error when open telegram group', error);
+                        ErrorToast(error.message)
+                    });
+                }}
             />
         </HeaderButtons>
     ),

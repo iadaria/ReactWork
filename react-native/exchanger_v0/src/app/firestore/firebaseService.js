@@ -3,6 +3,7 @@ import firebase from '../config/firebase'; // It's for Web
 import { setUserProfileData } from './firestoreService';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import Toast from 'react-native-root-toast';
+import ErrorToast from '../common/components/AppToast';
 
 GoogleSignin.configure({ //For React Native
     webClientId: '1088744563414-4ga66dvdvts18ru1bogktieahaf0viiv.apps.googleusercontent.com',
@@ -46,14 +47,6 @@ export async function socialLogin(selectedProvider) {
         } else { console.log("not new user")}
     } catch (error) {
         console.log(error); //error.message for toast
-        Toast.show(error.message, {
-            visible: true,
-            duration: Toast.durations.LONG,
-            position: Toast.positions.BOTTOM,
-            delay: 5000,
-            animation: true,
-            textColor: '#fff',
-            backgroundColor: '#ba000d'
-        });
+        ErrorToast(error.message);
     }
 }

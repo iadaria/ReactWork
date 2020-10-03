@@ -102,7 +102,8 @@ function PostNavigator() {
             screenOptions={defaultNavigationOptions}
         >
             <Post.Screen name="Main" component={MainScreen} />
-            <Post.Screen name="Post" component={PostScreen} />
+            {/* Post - сюда будем переключаться из Main */}
+            <Post.Screen name="Post" component={PostScreen} /> 
         </Post.Navigator>
     );
 }
@@ -114,6 +115,7 @@ function BookedNavigator() {
             screenOptions={defaultNavigationOptions}
         >
             <Booked.Screen name="Booked" component={BookedScreen} />
+            {/* Post - сюда будем переключаться из Main */}
             <Booked.Screen name="Post" component={PostScreen} />
         </Booked.Navigator>
     );

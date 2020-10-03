@@ -42,7 +42,7 @@ export const MainScreen = ({ navigation }) => {
         headerLeft: () => (
             <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
                 <Item
-                    title="Take photo"
+                    title="Меню"
                     iconName="ios-menu"
                     onPress={() => navigation.toggleDrawer()}
                 />

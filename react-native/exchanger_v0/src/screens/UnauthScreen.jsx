@@ -18,7 +18,7 @@ export default function UnauthScreen({ navigation }) {
             <View style={styles.authButtonView}>
                 <Button
                     color={THEME.SUBMAIN_COLOR}
-                    onPress={() => navigation.navigate('Main')}
+                    onPress={() => navigation.navigate('MainLogin')}
                     title="Авторизироваться"
                 />
             </View>

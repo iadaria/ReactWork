@@ -11,6 +11,7 @@ GoogleSignin.configure({ //For React Native
 /*************************** Sign ****************************/
 
 export function signInWithEmail(creds) {
+    //If user new!!!!!! TODO
     return firebase.auth().signInWithEmailAndPassword(
     //return auth().signInWithEmailAndPassword(
         creds.email, 
@@ -18,7 +19,17 @@ export function signInWithEmail(creds) {
     );
 }
 
+export const signOutGoogle = async () => {
+  try {
+    await GoogleSignin.revokeAccess();
+    await GoogleSignin.signOut();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export function signOutFirebase() {
+
     return firebase.auth().signOut();
     //return auth().signOut();
 }

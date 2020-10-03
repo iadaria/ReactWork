@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import Toast from 'react-native-root-toast';
 import ErrorToast from '../app/common/components/AppToast';
-import { signOutFirebase } from '../app/firestore/firebaseService';
+import { signOutFirebase, signOutGoogle } from '../app/firestore/firebaseService';
 import { THEME } from '../theme';
 
 export default function PersonalCabinetScreen({ navigation }) {
@@ -10,7 +10,8 @@ export default function PersonalCabinetScreen({ navigation }) {
     async function handleSignOut() {
         try {
             await signOutFirebase();
-            navigation.navigate("Main");
+            navigation.navigate("MainLogin");
+            await signOutGoogle();
         } catch (error) { 
             ErrorToast('test');
             console.log('test toast');
@@ -19,9 +20,9 @@ export default function PersonalCabinetScreen({ navigation }) {
 
     return (
         <View style={styles.root}>
-            <Text>
+            {/* <Text>
                 Personal Cabinet Screen
-            </Text>
+            </Text> */}
             <View style={styles.buttons}>
                 <Button 
                     onPress={handleSignOut}

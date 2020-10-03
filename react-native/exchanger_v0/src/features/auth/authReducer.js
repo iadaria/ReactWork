@@ -3,7 +3,6 @@ import { SIGN_IN_USER, SIGN_OUT_USER } from "./authConstants";
 const initialState = {
     authenticated: false,
     currentUser: null,
-    rating: null,
 
     //prevScreen: null,
     //currentScreen: null
@@ -22,7 +21,8 @@ export default function authReducer(state = initialState, { type, payload }) {
                     displayName: payload.displayName,
                     photoURL: payload.photoURL || '',
                     uid: payload.uid,
-                    providerId: payload.providerData[0].providerId
+                    providerId: payload.providerData[0].providerId,
+                    rating: null
                 }
             };
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { socialLogin } from '../../app/firestore/firebaseService';
-//import { GoogleSignin } from '@react-native-community/google-signin';
+import { GoogleSigninButton } from '@react-native-community/google-signin';
 
 export default function SocialLogin({ goToMainScreen }) {
 
@@ -9,7 +9,20 @@ export default function SocialLogin({ goToMainScreen }) {
             <View
                 style={styles.googleButtonView}
             >
-                <Button
+                <Text style={{textAlign: 'center'}}>Авторизироваться с помощью Google</Text>
+                <GoogleSigninButton
+                    style={{ width: '100%', height: 48}}
+                    size={GoogleSigninButton.Size.Wide}
+                    //color={GoogleSigninButton.Color.Dark}
+                    onPress={() => 
+                        socialLogin('google')
+                        .then(() => {
+                            console.log('success entered by Google');
+                            goToMainScreen();
+                        }).catch(error => console.log('error', error))
+                    }
+                />
+                {/* <Button
                     //color="transparent"
                     onPress={() => 
                         socialLogin('google')
@@ -20,7 +33,7 @@ export default function SocialLogin({ goToMainScreen }) {
                     }
                     accessibilityLabel="label"
                     title="Продолжить с Google"
-                />
+                /> */}
             </View>
         
     );

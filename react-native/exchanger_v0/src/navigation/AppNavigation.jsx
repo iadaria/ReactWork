@@ -34,28 +34,29 @@ let Tab = createBottomTabNavigator();
 export default function AppNavigation() {
     return (
         <SafeAreaProvider>
-            <StatusBar barStyle="light-content" backgroundColor={THEME.MAIN_COLOR}/> 
+            <StatusBar barStyle="light-content" backgroundColor={THEME.MAIN_COLOR} />
             <NavigationContainer>
                 <MainMenu />
             </NavigationContainer>
         </SafeAreaProvider>
-       
+
     );
 }
 
 function MainMenu() {
     const { authenticated } = useSelector(state => state.auth);
     return (
-        <Main.Navigator>
-            {!authenticated && 
-                <Main.Screen 
-                    options={defaultScreenOptions}
-                    name="Main" component={LoginNavigator} 
-                />
-            }
-            <Main.Screen 
-                options={defaultTabScreenOptions} 
-                name="Bottom" component={BottomNavigator} 
+        <Main.Navigator
+            initialRouteName={authenticated ? "MainBottom" : "MainLogin"}
+        >
+            <Main.Screen
+                options={defaultScreenOptions}
+                name="MainLogin" component={LoginNavigator}
+            />
+
+            <Main.Screen
+                options={defaultTabScreenOptions}
+                name="MainBottom" component={BottomNavigator}
             />
         </Main.Navigator>
     );
@@ -63,9 +64,7 @@ function MainMenu() {
 
 function LoginNavigator() {
     return (
-        <Login.Navigator
-            initialRouteName="Unauth"
-        >
+        <Login.Navigator>
             <Login.Screen name="Main" component={MainScreen} />
             <Login.Screen name="Login" component={LoginScreen} />
         </Login.Navigator>
@@ -78,8 +77,6 @@ function BottomNavigator() {
 
     return (
         <Tab.Navigator
-            //screenOptions={defaultTabScreenOptions}
-            initialRouteName="BottomNavigation"
             tabBarOptions={{
                 activeTintColor: "#fff",
                 showLabel: false,
@@ -89,7 +86,7 @@ function BottomNavigator() {
             }}
         >
             <Tab.Screen
-                name="Сделки"
+                name="TabDeals"
                 component={authenticated ? DealsNavigator : UnauthNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
@@ -98,7 +95,7 @@ function BottomNavigator() {
                 }}
             />
             <Tab.Screen
-                name="Рынок"
+                name="TabTradeList"
                 component={TradeListNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
@@ -107,7 +104,7 @@ function BottomNavigator() {
                 }}
             />
             <Tab.Screen
-                name="Мои объявления"
+                name="TabPersonalAds"
                 component={authenticated ? PersonalAdsNavigator : UnauthNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
@@ -116,7 +113,7 @@ function BottomNavigator() {
                 }}
             />
             <Tab.Screen
-                name="Личный кабинет"
+                name="TabPersonalCabinet"
                 component={authenticated ? PersonalCabinetNavigator : UnauthNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
@@ -130,11 +127,7 @@ function BottomNavigator() {
 
 function DealsNavigator() {
     return (
-        <Deals.Navigator
-            initialRouteName="Deals"
-            // @ts-ignore
-            //screenOptions={defaultTabScreenOptions}
-        >
+        <Deals.Navigator>
             <Deals.Screen name="Deals" component={DealsScreen} />
             {/* <Deals.Screen name="Else in this part navigation" component={theOther} /> */}
         </Deals.Navigator>
@@ -143,9 +136,7 @@ function DealsNavigator() {
 
 function TradeListNavigator() {
     return (
-        <TradeList.Navigator
-            initialRouteName="TradeList"
-        >
+        <TradeList.Navigator>
             <TradeList.Screen name="TradeList" component={TradeListScreen} />
         </TradeList.Navigator>
     );
@@ -153,9 +144,7 @@ function TradeListNavigator() {
 
 function PersonalAdsNavigator() {
     return (
-        <PersonalAds.Navigator 
-            initialRouteName="PersonalAds"
-        >
+        <PersonalAds.Navigator>
             <PersonalAds.Screen name="PersonalAds" component={PersonalAdsScreen} />
         </PersonalAds.Navigator>
     );
@@ -163,9 +152,7 @@ function PersonalAdsNavigator() {
 
 function PersonalCabinetNavigator() {
     return (
-        <PersonalCabinet.Navigator
-            initialRouteName="PersonalCabinet"
-        >
+        <PersonalCabinet.Navigator>
             <PersonalCabinet.Screen name="PersonalCabinet" component={PersonalCabinetScreen} />
         </PersonalCabinet.Navigator>
     );
@@ -173,11 +160,9 @@ function PersonalCabinetNavigator() {
 
 function UnauthNavigator() {
     return (
-        <Unauth.Navigator
-            initialRouteName="Unauth"
-        >
-            <Unauth.Screen 
-                options={defaultTabScreenOptions} name="Unauth" component={UnauthScreen} 
+        <Unauth.Navigator>
+            <Unauth.Screen
+                options={defaultTabScreenOptions} name="Unauth" component={UnauthScreen}
             />
         </Unauth.Navigator>
     );
@@ -197,22 +182,22 @@ const defaultTabScreenOptions = {
     ...defaultScreenOptions,
     headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-            <Item 
+            <Item
                 title="title"
                 iconName="headphones"
                 onPress={() => {
                     Linking.openURL(`http://t.me/${THEME.TELEGRAM_COMMON_GROUP}`)
-                    .catch(error => {
-                        console.log('error when open telegram group', error);
-                        ErrorToast(error.message)
-                    });
+                        .catch(error => {
+                            console.log('error when open telegram group', error);
+                            ErrorToast(error.message)
+                        });
                 }}
             />
         </HeaderButtons>
     ),
     headerRight: () => (
         <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-            <Item 
+            <Item
                 title="title"
                 iconName="bell-outline"
                 onPress={() => console.log('message')}

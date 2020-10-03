@@ -12,7 +12,7 @@ import { getColorText } from '../app/common/utils/utils';
 
 export default function LoginScreen({ navigation }) {
 
-    const goToMainScreen = () => navigation.navigate("Bottom");
+    const goToMainScreen = () => navigation.navigate("MainBottom");
 
     return (
         <View style={styles.root}>

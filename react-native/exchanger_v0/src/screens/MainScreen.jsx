@@ -25,7 +25,7 @@ export default function MainScreen({ navigation }) {
             <View style={styles.nextButtonView}>
                 <Button
                     color={THEME.MAIN_COLOR}
-                    onPress={() => navigation.navigate('Bottom')} 
+                    onPress={() => navigation.navigate('MainBottom')} 
                     title="Далее"
                 />
             </View>

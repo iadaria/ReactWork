@@ -11,21 +11,16 @@ import { getColorText } from "../../app/common/utils/utils";
 export function verifyAuth() {
     return function (dispatch) {
         //Adds an observer for changes to the user's sign-in state.
-        //return firebase.auth().onAuthStateChanged(user => { //It's for Web
         return auth().onAuthStateChanged(user => {
             console.log(getColorText('event autherization was involved', "", "magenta"))
             // If user sign in
-            let un = () => {};
+            //let unsubscribe = () => {};
             if (user) {
                 console.log(getColorText('authAction =>user signed in successfully', "", "magenta"));
                 dispatch(signInUser(user));
                 const profileRef = getUserProfile(user.uid);
-                un = profileRef?.onSnapshot(snapshot => {
+                profileRef?.onSnapshot(snapshot => {
                     snapshot && console.log('verifyAuth -> profileRef.onSnapshot event', snapshot.metadata);
-                    /* if (!snapshot) {
-                        profileRef.get({ source: 'server'})
-                        .then(_snapshot => snapshot = _snapshot )
-                    } */
                     dispatch(
                         listenToCurrentUserProfile(dataFromSnapshot(snapshot))
                     );
@@ -35,7 +30,6 @@ export function verifyAuth() {
                 console.log(getColorText('authAction -> sign out', "", "magenta"));
                 dispatch(signOutUser());
                 dispatch( { type: APP_LOADED } );
-                un();
             }
         });
     };

@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import Toast from 'react-native-root-toast';
+import { View, StyleSheet, Button } from 'react-native';
 import ErrorToast from '../app/common/components/AppToast';
 import { signOutFirebase, signOutGoogle } from '../app/firestore/firebaseService';
+import ProfileContent from '../features/profiles/ProfileContent';
 import { THEME } from '../theme';
 
 export default function PersonalCabinetScreen({ navigation }) {
@@ -20,9 +20,7 @@ export default function PersonalCabinetScreen({ navigation }) {
 
     return (
         <View style={styles.root}>
-            {/* <Text>
-                Personal Cabinet Screen
-            </Text> */}
+            <ProfileContent />
             <View style={styles.buttons}>
                 <Button 
                     onPress={handleSignOut}

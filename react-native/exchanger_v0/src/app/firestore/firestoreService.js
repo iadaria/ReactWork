@@ -1,3 +1,4 @@
+import { tempID } from '../common/utils/utils';
 //import firestore from '@react-native-firebase/firestore';
 import firebase from '../config/firebase'; //It's for Web
 
@@ -32,6 +33,21 @@ export function getUserProfile(userId) {
     return db.collection('users').doc(userId);
 }
 
+export function setUserProfileData(user) {
+    console.log('Will be added user', user);
+    return db.collection('users').doc(user.uid).set({
+        name: tempID(),//generateUniqName(),//user.displayName,
+        email: user.email || "",
+        photoURL: user.photoURL || null,
+        createAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+}
+
+
+/*********************************** User ********************************************/
+
+
+/************************** Setting (TOOD in server side) ****************************/
 export function getUsersNames() {
 
 }
@@ -39,15 +55,3 @@ export function getUsersNames() {
 export function addUserName(name) {
     return db.collection('system')
 }
-
-export function setUserProfileData(user) {
-    console.log('Will be added user', user);
-    return db.collection('users').doc(user.uid).set({
-        name: ID(),//user.displayName,
-        email: user.email || "",
-        photoURL: user.photoURL || null,
-        createAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-}
-
-/************************** User ****************************/

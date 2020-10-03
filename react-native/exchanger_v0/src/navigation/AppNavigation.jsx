@@ -9,7 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { THEME } from '../theme';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { AppHeaderIcon } from '../app/common/components/AppHeaderIcon';
+import { AppHeaderIcon } from '../app/common/components/ui/AppHeaderIcon';
 import { useSelector } from 'react-redux';
 import LoginScreen from '../screens/LoginScreen';
 import MainScreen from '../screens/MainScreen';

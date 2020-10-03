@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import Separator from '../app/common/components/Separator';
+import Separator from '../app/common/components/ui/Separator';
 import SocialLogin from '../features/auth/SocialLogin';
 import { THEME } from '../theme';
 

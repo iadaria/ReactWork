@@ -71,6 +71,13 @@ export function ID() {
     );
 }
 
+export function tempID() {
+    return (
+        Math.random().toString(36).substr(2, 4) + 
+        Math.random().toString(36).substr(2, 4).toUpperCase()//.substr(2, 7);
+    );
+}
+
 // I suggeste it will be not more then 1000 users - it's alredy good
 export function generateUniqName(usersNames) {
     let uniqNewName = ID();

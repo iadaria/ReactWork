@@ -2,7 +2,6 @@ import firebase from '../config/firebase'; // It's for Web
 //import auth from '@react-native-firebase/auth'; // For RN
 import { setUserProfileData } from './firestoreService';
 import { GoogleSignin } from '@react-native-community/google-signin';
-import Toast from 'react-native-root-toast';
 import ErrorToast from '../common/components/AppToast';
 
 GoogleSignin.configure({ //For React Native

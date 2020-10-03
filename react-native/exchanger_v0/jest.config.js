@@ -11,10 +11,12 @@ module.exports = {
         + "|react-native-splash-screen"
         + "|react-native-screens"
         + "|react-native-reanimated"
-        + "|react-native-firebase"
+        + "|@react-native-firebase"
+        + "|@react-native-firebase/auth"
+        + "|@react-native-firebase/app"
         + ")/)",
     ],
-    "setupFiles": [
+   /*  "setupFiles": [
         "./__tests__/setup.js"
-    ]
+    ] */
 };

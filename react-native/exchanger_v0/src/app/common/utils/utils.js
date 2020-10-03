@@ -72,9 +72,9 @@ export function ID() {
 }
 
 // I suggeste it will be not more then 1000 users - it's alredy good
-function generateUniqName(usersNames) {
+export function generateUniqName(usersNames) {
     let uniqNewName = ID();
-    while(usersNames.includes(uniqNewName)) {
+    while(usersNames?.includes(uniqNewName)) {
         uniqNewName = ID();
     }
     return uniqNewName;

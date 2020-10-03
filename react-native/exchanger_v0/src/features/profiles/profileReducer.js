@@ -18,6 +18,7 @@ export default function profileReducer( state = initialState, { type, payload} )
                 ...state,
                 currentUserProfile: payload
             };
+        
 
         default: return state;
     }

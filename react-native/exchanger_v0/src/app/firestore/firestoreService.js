@@ -36,7 +36,7 @@ export function getUserProfile(userId) {
 export function setUserProfileData(user) {
     console.log('Will be added user', user);
     return db.collection('users').doc(user.uid).set({
-        name: tempID(),//generateUniqName(),//user.displayName,
+        displayName: tempID(),//generateUniqName(),//user.displayName,
         email: user.email || "",
         photoURL: user.photoURL || null,
         createAt: firebase.firestore.FieldValue.serverTimestamp()

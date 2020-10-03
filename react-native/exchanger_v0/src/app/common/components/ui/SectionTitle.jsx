@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text } from 'react-native'
 import { THEME } from '../../../../theme';
 
-export default function ProfileHeader({ text }) {
+export default function SectionTitle({ text }) {
     return (
         <>
             <Text style={styles.header}>{text}</Text>

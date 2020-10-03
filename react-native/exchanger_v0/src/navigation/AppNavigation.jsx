@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar, Linking } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -35,7 +35,7 @@ export default function AppNavigation() {
     return (
         <SafeAreaProvider>
             <StatusBar barStyle="light-content" backgroundColor={THEME.MAIN_COLOR} />
-            <NavigationContainer>
+            <NavigationContainer theme={MyTheme}>
                 <MainMenu />
             </NavigationContainer>
         </SafeAreaProvider>
@@ -204,6 +204,14 @@ const defaultTabScreenOptions = {
             />
         </HeaderButtons>
     )
+};
+
+const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+        ...DefaultTheme.colors,
+        background: THEME.BACKGROUND_SCREEN_COLOR
+    }
 };
 
 /* const defaultNavigationOptions = {

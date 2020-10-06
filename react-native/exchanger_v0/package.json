@@ -27,6 +27,7 @@
         "react": "16.13.1",
         "react-native": "0.63.2",
         "react-native-gesture-handler": "^1.8.0",
+        "react-native-push-notification": "^6.1.1",
         "react-native-reanimated": "^1.13.0",
         "react-native-root-siblings": "^4.0.6",
         "react-native-root-toast": "^3.2.1",

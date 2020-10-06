@@ -192,7 +192,11 @@ dependencies {
 
     implementation 'androidx.multidex:multidex:2.0.1' //added by Dasha
 
+    //implementation 'com.android.support:multidex:1.0.3' //test
+
     implementation 'com.google.firebase:firebase-analytics:17.5.0' // by Dasha
+
+    implementation project(':react-native-push-notification') //by Dasha
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

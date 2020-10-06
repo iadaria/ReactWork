@@ -5,8 +5,10 @@ import App from './App';
 import {name as appName} from './app.json';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { configureStore } from './src/app/store/configureStore';
+import { configurePushNotification } from './src/app/store/configurePushNotification';
 
 const store = configureStore();
+configurePushNotification();
 
 function Root() {
     return (

@@ -20,7 +20,7 @@ const PersonalAds = createStackNavigator();
 const PersonalCabinet = createStackNavigator();
 const Unauth = createStackNavigator();
 
-import HttpService from '../app/api/HttpService';
+import HttpService from '../app/services/HttpService';
 import { getInfoConnectedRef, getUserUidRef, updateUserAppState } from '../app/firestore/firebaseService';
 import firebase from '../app/config/firebase';
 import { getColorText } from '../app/common/utils/utils';
@@ -39,7 +39,7 @@ export default function BottomNavigator() {
                 await httpService.sendMessageToTelegramBot(`[useEffect] user ${currentUser.displayName} online`)
             }
         },
-        [authenticated, currentUser.displayName]
+        [authenticated, currentUser]
     )
     const test2 = useCallback(
         async () => {
@@ -47,7 +47,7 @@ export default function BottomNavigator() {
                 await httpService.sendMessageToTelegramBot(`[useEffect] user ${currentUser.displayName} offline`)
             }
         },
-        [authenticated, currentUser.displayName]
+        [authenticated, currentUser]
     )
 
     const initAppState = useCallback( async() => await updateUserAppState("foreground"), [authenticated]);

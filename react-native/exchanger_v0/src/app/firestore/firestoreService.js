@@ -36,22 +36,54 @@ export function getUserProfile(userId) {
 export function setUserProfileData(user) {
     console.log('Will be added user', user);
     return db.collection('users').doc(user.uid).set({
-        displayName: tempID(),//generateUniqName(),//user.displayName,
+        displayName: tempID(),//generateUniqName()
+        providerDisplayName: user.displayName,
         email: user.email || "",
         photoURL: user.photoURL || null,
-        createAt: firebase.firestore.FieldValue.serverTimestamp()
+        createAt: firebase.firestore.FieldValue.serverTimestamp(),
+        phoneNumber: null,
+        //lastVisit: firebase.firestore.FieldValue.serverTimestamp(),
+        rating: 0,
+        like: 0,
+        dislike: 0,
+        online: true,
+        //Standoff2
+        standoff2Nick: "",
+        standoff2ID: null,
+        standoff2Avatar: null,
+        standoff2Screen: null,
+        standoff2DateScreen: null,
     });
 }
 
 
 /*********************************** User ********************************************/
+//https://cloud.google.com/firestore/docs/solutions/presence
+export async function updateUserConnectedState(state) {
+    const user = firebase.auth().currentUser;
+    if (!user) return;
+    try {
+        return await db.collection('users').doc(user.uid).update({
+            state: state,
+            //last_changed: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+    } catch (error) {
+        throw error;
+    } 
+}
 
+/* export async function updateUserAppState(state) {
+    const user = firebase.auth().currentUser;
+    if (!user) return;
+    try {
+        return await db.collection('users').doc(user.uid).update({
+            appState: state,
+            last_changed: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+    } catch (error) {
+        throw error;
+    } 
+} */
 
 /************************** Setting (TOOD in server side) ****************************/
-export function getUsersNames() {
 
-}
-
-export function addUserName(name) {
-    return db.collection('system')
-}

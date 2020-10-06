@@ -1,18 +1,8 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { configureStore } from './src/app/store/configureStore';
 import AppNavigation from './src/navigation/AppNavigation';
 
-
-const store = configureStore();
-
 const App: () => React$Node = () => {
-
-    return (
-        <Provider store={store}>
-            <AppNavigation />
-        </Provider>
-    );
+    return (<AppNavigation />);
 };
 
 export default App;

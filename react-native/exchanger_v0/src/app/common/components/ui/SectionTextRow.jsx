@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 1,
+        marginBottom: 1,
         padding: 20,
         backgroundColor: THEME.SECTION_COLOR,
         borderRadius: 8,

@@ -60,3 +60,57 @@ export async function socialLogin(selectedProvider) {
         ErrorToast(error.message);
     }
 }
+
+
+/************************ User ***************************/
+//https://cloud.google.com/firestore/docs/solutions/presence
+export function setOnlineStatusToFirebase() {
+    const uid = firebase.auth().currentUser.uid;
+    
+    const userStatusDatabaseRef = firebase.database().ref(`users/${uid}`);
+    const isOfflineForDatabase = {
+        state: "offline",
+        last_changed: firebase.database.ServerValue.TIMESTAMP
+    };
+    const isOnlineForDatabase = {
+        state: "online",
+        last_changed: firebase.database.ServerValue.TIMESTAMP
+    };
+
+    /*  Create a reference to the special '.info/connected' path in Realtime Database. This path returns `true` when connected
+    and `false` when disconnected. */
+    return firebase.database().ref('.info/connected').on('value', function(snapshot) {
+        //If we're not currently connected, don't do anything.
+        if (snapshot.val() == false) {
+            return;
+        }
+        /* If we are currently connected, then use the 'onDisconnect()' method to add a set which will only trigger once this 
+        client has disconnected by closing the app, losing internet, or any other means. */
+        userStatusDatabaseRef.onDisconnect().set(isOfflineForDatabase).then(function() {
+            // The promise returned from .onDisconnect().set() will
+            // resolve as soon as the server acknowledges the onDisconnect() 
+            // request, NOT once we've actually disconnected:
+            // https://firebase.google.com/docs/reference/js/firebase.database.OnDisconnect
+
+            // We can now safely set ourselves as 'online' knowing that the
+            // server will mark us as offline once we lose connection.
+            userStatusDatabaseRef.set(isOnlineForDatabase);
+        })
+    });
+}
+
+export function getInfoConnectedRef() { return firebase.database().ref('.info/connected'); }
+
+export function getUserUidRef() { 
+    const user = firebase.auth().currentUser;
+    if (!user) return;
+    return firebase.database().ref(`users/${user.uid}`);
+}
+
+export function updateUserAppState(appState) {
+    return getUserUidRef().update({
+        appState,
+        lastChangedAppState: firebase.database.ServerValue.TIMESTAMP
+    });
+}
+

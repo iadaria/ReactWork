@@ -2,14 +2,11 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-// @ts-ignore
-import AppText from '@src/app/common/components/ui/AppText';
-// @ts-ignore
-import SectionTextRow from '@src/app/common/components/ui/SectionTextRow';
-// @ts-ignore
-import SectionTitle from '@src/app/common/components/ui/SectionTitle';
-// @ts-ignore
-import { THEME } from '@src/theme';
+import SectionTitle from  '../../../app/common/components/ui/SectionTitle';
+import SectionTextRow from  '../../../app/common/components/ui/SectionTextRow';
+import AppText from  '../../../app/common/components/ui/AppText';
+import { THEME } from '../../../theme';
+
 
 export default function ProfileMain({ profile }) {
     return (

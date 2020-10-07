@@ -8,7 +8,7 @@ import { configureStore } from './src/app/store/configureStore';
 import { configurePushNotification } from './src/app/store/configurePushNotification';
 
 const store = configureStore();
-configurePushNotification();
+//configurePushNotification();
 
 function Root() {
     return (

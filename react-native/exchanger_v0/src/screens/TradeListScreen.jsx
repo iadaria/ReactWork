@@ -1,17 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import NotifService from '../app/services/NotifService';
-import { THEME } from '../theme';
 
 export default function TradeListScreen() {
-    const notifService = new NotifService();
+
     return (
         <View style={styles.root}>
             <Text>
                 TradeListScreen
             </Text>
             <Button 
-                onPress={() => notifService.testPush()}
+                onPress={async () => {
+                }}
                 title="Push local notification"
             />
         </View>

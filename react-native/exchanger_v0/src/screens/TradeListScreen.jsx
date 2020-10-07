@@ -1,7 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
+//import { LocalNotification } from '../app/services/LocalPushController';
 
 export default function TradeListScreen() {
+
+    function handleButtonPress() {
+        //LocalNotification();
+    }
 
     return (
         <View style={styles.root}>
@@ -9,8 +14,7 @@ export default function TradeListScreen() {
                 TradeListScreen
             </Text>
             <Button 
-                onPress={async () => {
-                }}
+                onPress={async () => {}}
                 title="Push local notification"
             />
         </View>

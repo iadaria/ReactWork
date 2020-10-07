@@ -196,7 +196,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-analytics:17.5.0' // by Dasha
 
-    implementation project(':react-native-push-notification') //by Dasha
+    //implementation project(':react-native-push-notification') //by Dasha
     //implementation ('com.google.android.gms:play-services-gcm:8.1.0')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

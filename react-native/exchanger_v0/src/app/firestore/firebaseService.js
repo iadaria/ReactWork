@@ -3,6 +3,8 @@ import firebase from '../config/firebase'; // It's for Web
 import { setUserProfileData } from './firestoreService';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import ErrorToast from '../common/components/AppToast';
+import { getColorText } from '../common/utils/utils';
+import AsyncStorage from '@react-native-community/async-storage';
 
 GoogleSignin.configure({ //For React Native
     webClientId: '1088744563414-4ga66dvdvts18ru1bogktieahaf0viiv.apps.googleusercontent.com',
@@ -111,6 +113,16 @@ export function updateUserAppState(appState) {
     return getUserUidRef().update({
         appState,
         lastChangedAppState: firebase.database.ServerValue.TIMESTAMP
+    });
+}
+
+export function updateUserToken(token) {
+    console.log(getColorText("will update token to ", token, "green"));
+
+    AsyncStorage.setItem('pushToken', token);
+
+    return getUserUidRef().update({
+        tokens: firebase.firestore.FieldValue.arrayUnion(token)
     });
 }
 

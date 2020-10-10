@@ -13,24 +13,6 @@ export function getCircularReplacer() {
 
 export function getColorText(message, object, color) {
     const Reset = "\x1b[0m";
-    /* const Bright = "\x1b[1m";
-    const Dim = "\x1b[2m";
-    const Underscore = "\x1b[4m";
-    const Blink = "\x1b[5m";
-    const Reverse = "\x1b[7m";
-    const Hidden = "\x1b[8m";
-
-    const FgBlack = "\x1b[30m";
-    
-    const BgBlack = "\x1b[40m";
-    const BgRed = "\x1b[41m";
-    const BgGreen = "\x1b[42m";
-    const BgYellow = "\x1b[43m";
-    const BgBlue = "\x1b[44m";
-    const BgMagenta = "\x1b[45m";
-    const BgCyan = "\x1b[46m";
-    const BgWhite = "\x1b[47m"; */
-
     const colors = {
         red: "\x1b[31m",
         green: "\x1b[32m",
@@ -38,7 +20,24 @@ export function getColorText(message, object, color) {
         blue: "\x1b[34m",
         magenta: "\x1b[35m",
         cyan: "\x1b[36m",
-        white: "\x1b[37m"
+        white: "\x1b[37m",
+
+        BgRed: "\x1b[41m",
+        BgGreen: "\x1b[42m",
+        BgYellow: "\x1b[43m",
+        BgBlue: "\x1b[44m",
+        BgMagenta: "\x1b[45m",
+        BgCyan: "\x1b[46m",
+        BgWhite: "\x1b[47m",
+        BgBlack: "\x1b[40m",
+        
+        Dim: "\x1b[2m",
+        Underscore: "\x1b[4m",
+        Blink: "\x1b[5m",
+        Reverse: "\x1b[7m",
+        Hidden: "\x1b[8m",
+        FgBlack :"\x1b[30m",
+        Bright: "\x1b[1m",
     };
 
     return colors[color] + `${message} ${JSON.stringify(object, getCircularReplacer(), 2)}` + Reset;

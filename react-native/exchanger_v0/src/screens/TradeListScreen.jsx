@@ -1,11 +1,28 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-//import { LocalNotification } from '../app/services/LocalPushController';
+import AsyncStorage from '@react-native-community/async-storage';
+import HttpService from '../app/services/HttpService';
+import { getColorText } from '../app/common/utils/utils';
 
 export default function TradeListScreen() {
+    const httpService = new HttpService();
 
-    function handleButtonPress() {
-        //LocalNotification();
+    async function handleButtonPress() {
+        let previousToken = await AsyncStorage.getItem('pushToken');
+        console.log(getColorText("", previousToken, "BgYellow"));
+        if (previousToken) {
+            debugger;
+            const message = {
+                token: previousToken,
+                title: "first message",
+                message: "Hellow",
+            };
+            try {
+                const result = await httpService.sendPushMessage(message);
+                console.log(getColorText("result", result, "Underscore"));
+
+            } catch (err) { console.log(getColorText("[TradeListenScreen] error", err, "red")); }
+        }
     }
 
     return (
@@ -14,7 +31,7 @@ export default function TradeListScreen() {
                 TradeListScreen
             </Text>
             <Button 
-                onPress={async () => {}}
+                onPress={ async () => await handleButtonPress() }
                 title="Push local notification"
             />
         </View>

@@ -110,11 +110,13 @@ export default function BottomNavigator() {
             };
             getInfoConnectedRef().on('value', async (snapshot) => {
                 if (!snapshot.exists()) {
-                    await httpService.sendMessageToTelegramBot(`[.info/connected] user ${currentUser.displayName} offline`)
+                    await httpService.sendMessageToTelegramBot(
+                        `[.info/connected] user ${currentUser.displayName} offline`
+                    );
                     return;
                 }
                 getUserUidRef().onDisconnect().update(isOfflineForDatabase).then( async () => {
-                    getUserUidRef().update(isOnlineForDatabase);
+                    getUserUidRef().update(isOnlineForDatabase)
                     await httpService.sendMessageToTelegramBot(`[.info/connected] user ${currentUser.displayName} online`)
                 });
             });

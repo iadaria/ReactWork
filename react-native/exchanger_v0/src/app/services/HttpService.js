@@ -38,7 +38,6 @@ export default class HttpService {
     }
 
     async sendPushMessage(message) {
-        debugger;
         try {
             const result = await this.request(
                 `${this._apiBase}/messages/sendMessage`,

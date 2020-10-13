@@ -27,12 +27,15 @@ import { getColorText } from '../app/common/utils/utils';
 
 import messaging from '@react-native-firebase/messaging';
 
-export default function BottomNavigator() {
+export default function BottomNavigator({ navigation }) {
     const appState = useRef(AppState.currentState);
     const [appStateVisible, setAppStateVisible] = useState(appState.current);
     const { authenticated, currentUser } = useSelector((state) => state.auth);
-    console.info('[BottomNavigator function] authenticated', authenticated);
+    const [initialRoute, setInitialRoute] = useState("TabPersonalAds");
+    const [loading, setLoading] = useState(true);
+    console.info('[BottomNavigator/fun] authenticated is', authenticated);
 
+    const defaultScreen = "TabTradeList";
     const httpService = new HttpService();
     // Send message to telegram if user is online
     const test1 = useCallback(
@@ -55,7 +58,35 @@ export default function BottomNavigator() {
     const initAppState = useCallback( async() => await updateUserAppState("foreground"), [authenticated]);
 
     /************************************ UseEffect ****************************************/
-    // Recieved push notification
+    // Recieved push notification and navigatte   
+    useEffect(() => {
+        //let unsubscribe = () => {};
+        if (authenticated) {
+            /* unsubscribe = */ 
+            messaging().onNotificationOpenedApp(remoteMessage => {
+                console.log(
+                    "[AppBottomNavigation/useEffect/if auth] Notification caused app to open from quite state:",
+                    remoteMessage.notification
+                );
+                navigation.navigate(remoteMessage.data.screen);
+            });
+
+            // Check whether an initial notification is available
+            messaging().getInitialNotification()
+            .then(remoteMessage => {
+                if (remoteMessage) {
+                    console.log(
+                        "[AppBottomNavigation/useEffect/if auth] Notification caused app to open from quite state"
+                    );
+                    setInitialRoute(remoteMessage.data?.screen || defaultScreen);
+                }
+                setLoading(false);
+            })
+        }
+        //return unsubscribe;
+    }, []);
+
+    // Recieved push notification for display and save token
     useEffect(() => {
         let unsubscribe = () => {};
         if (authenticated) {
@@ -138,8 +169,13 @@ export default function BottomNavigator() {
         console.log(getColorText("AppState", appState, "cyan"));
     }
 
+    /* if (loading) {
+        return null;
+    } */
+
     return (
         <Tab.Navigator
+            initialRouteName={initialRoute}
             tabBarOptions={{
                 activeTintColor: "#fff",
                 showLabel: false,

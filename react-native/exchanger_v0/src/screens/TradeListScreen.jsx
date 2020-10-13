@@ -9,7 +9,7 @@ export default function TradeListScreen() {
 
     async function handleButtonPress() {
         let previousToken = await AsyncStorage.getItem('pushToken');
-        console.log(getColorText("", previousToken, "BgYellow"));
+        console.log(getColorText("", previousToken, "red.BgYellow"));
         console.log('process.env', process.env);
         //if (previousToken) {
             const message = {
@@ -18,8 +18,8 @@ export default function TradeListScreen() {
                 message: "Hellow",
             };
             try {
-                const result = await httpService.sendPushMessage(message);
-                console.log(getColorText("result", result, "blue"));
+                //const result = await httpService.sendPushMessage(message);
+                //console.log(getColorText("result", result, "blue"));
 
             } catch (err) { console.log(getColorText("[TradeListenScreen] error", err, "red")); }
        // }

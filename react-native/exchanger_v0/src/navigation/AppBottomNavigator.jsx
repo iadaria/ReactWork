@@ -34,7 +34,6 @@ export default function BottomNavigator() {
     console.info('[BottomNavigator function] authenticated', authenticated);
 
     const httpService = new HttpService();
-    
     // Send message to telegram if user is online
     const test1 = useCallback(
         async () => {
@@ -44,7 +43,6 @@ export default function BottomNavigator() {
         },
         [authenticated, currentUser]
     );
-
     // Send message to telegram if user is offline 
     const test2 = useCallback(
         async () => {
@@ -54,9 +52,9 @@ export default function BottomNavigator() {
         },
         [authenticated, currentUser]
     )
-
     const initAppState = useCallback( async() => await updateUserAppState("foreground"), [authenticated]);
 
+    /************************************ UseEffect ****************************************/
     // Recieved push notification
     useEffect(() => {
         let unsubscribe = () => {};

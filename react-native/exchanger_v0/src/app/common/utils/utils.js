@@ -12,6 +12,7 @@ export function getCircularReplacer() {
 }
 
 export function getColorText(message, object, color) {
+    let text = `${message} ${JSON.stringify(object, getCircularReplacer(), 2)}`;
     const Reset = "\x1b[0m";
     const colors = {
         red: "\x1b[31m",
@@ -40,7 +41,12 @@ export function getColorText(message, object, color) {
         Bright: "\x1b[1m",
     };
 
-    return colors[color] + `${message} ${JSON.stringify(object, getCircularReplacer(), 2)}` + Reset;
+    const array_colors = color.split('.');
+    array_colors.forEach(_color => {
+        text = colors[_color] + text + Reset;
+    });
+    return text;
+    //return colors[color] + `${message} ${JSON.stringify(object, getCircularReplacer(), 2)}` + Reset;
 }
 
 // Generate unique IDs for use as pseudo-private/protected names.

@@ -5,13 +5,18 @@ import { GoogleSignin } from '@react-native-community/google-signin';
 import ErrorToast from '../common/components/AppToast';
 import { getColorText } from '../common/utils/utils';
 import AsyncStorage from '@react-native-community/async-storage';
+import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 GoogleSignin.configure({ //For React Native
     webClientId: '1088744563414-4ga66dvdvts18ru1bogktieahaf0viiv.apps.googleusercontent.com',
 });
 /*************************** Sign ****************************/
-
-export function signInWithEmail(creds) {
+interface ICredential {
+    email: string,
+    password: string
+}
+export function signInWithEmail(creds: ICredential) {
     //If user new!!!!!! TODO
     return firebase.auth().signInWithEmailAndPassword(
     //return auth().signInWithEmailAndPassword(
@@ -30,14 +35,12 @@ export const signOutGoogle = async () => {
 };
 
 export function signOutFirebase() {
-
     return firebase.auth().signOut();
-    //return auth().signOut();
 }
 
-export async function socialLogin(selectedProvider) {
+export async function socialLogin(selectedProvider: string) {
     
-    let provider;
+    let provider: FirebaseAuthTypes.AuthCredential | undefined = undefined;
     if (selectedProvider === "google") {
         console.log("firebaseService => involved socialLogin with google");
         //provider = new firebase.auth.GoogleAuthProvider();
@@ -49,11 +52,14 @@ export async function socialLogin(selectedProvider) {
         provider = firebase.auth.GoogleAuthProvider.credential(idToken);
     }
 
+    if (!provider) return;
+
     try {
         //const result = await firebase.auth().signInWithPopup(provider); //For Web
-        const result = await firebase.auth().signInWithCredential(provider); //for RN
+        const result: FirebaseAuthTypes.UserCredential 
+            = await firebase.auth().signInWithCredential(provider); //for RN
         console.log("\nfirebaseServcie => sign in with Google - result: ", result);
-        if (result.additionalUserInfo.isNewUser) {
+        if (result.additionalUserInfo?.isNewUser) {
             console.log('user is new, result user = ', result.user);
             await setUserProfileData(result.user);
         } else { console.log("not new user")}
@@ -67,7 +73,9 @@ export async function socialLogin(selectedProvider) {
 /************************ User ***************************/
 //https://cloud.google.com/firestore/docs/solutions/presence
 export function setOnlineStatusToFirebase() {
-    const uid = firebase.auth().currentUser.uid;
+    if(!firebase.auth().currentUser) return;
+
+    const uid: string = firebase.auth().currentUser!.uid;
     
     const userStatusDatabaseRef = firebase.database().ref(`users/${uid}`);
     const isOfflineForDatabase = {
@@ -81,7 +89,7 @@ export function setOnlineStatusToFirebase() {
 
     /*  Create a reference to the special '.info/connected' path in Realtime Database. This path returns `true` when connected
     and `false` when disconnected. */
-    return firebase.database().ref('.info/connected').on('value', function(snapshot) {
+    return firebase.database().ref('.info/connected').on('value', function(snapshot: FirebaseDatabaseTypes.DataSnapshot) {
         //If we're not currently connected, don't do anything.
         if (snapshot.val() == false) {
             return;
@@ -101,7 +109,7 @@ export function setOnlineStatusToFirebase() {
     });
 }
 
-export function getInfoConnectedRef() { return firebase.database().ref('.info/connected'); }
+export function getInfoConnectedRef(): FirebaseDatabaseTypes.Reference { return firebase.database().ref('.info/connected'); }
 
 export function getUserUidRef() { 
     const user = firebase.auth().currentUser;
@@ -109,19 +117,26 @@ export function getUserUidRef() {
     return firebase.database().ref(`users/${user.uid}`);
 }
 
-export function updateUserAppState(appState) {
-    return getUserUidRef().update({
+export function updateUserAppState(appState: string) {
+    return getUserUidRef()?.update({
         appState,
         lastChangedAppState: firebase.database.ServerValue.TIMESTAMP
     });
 }
 
-export function updateUserToken(token) {
+export function testUpdateUserInOutUseEffect(inOutState: string) {
+    return getUserUidRef()?.update({
+        useEffect: inOutState,
+        lastChangedAppState: firebase.database.ServerValue.TIMESTAMP
+    });
+}
+
+export function updateUserToken(token: string) {
     console.log(getColorText("will update token to ", token, "green"));
 
     AsyncStorage.setItem('pushToken', token);
 
-    return getUserUidRef().update({
+    return getUserUidRef()?.update({
         tokens: firebase.firestore.FieldValue.arrayUnion(token)
     });
 }

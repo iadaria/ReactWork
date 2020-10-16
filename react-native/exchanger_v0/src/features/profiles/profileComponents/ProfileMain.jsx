@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableHighlight, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import SectionTitle from  '../../../app/common/components/ui/SectionTitle';
@@ -14,7 +14,20 @@ export default function ProfileMain({ profile }) {
             <SectionTitle text="Профиль" />
             <SectionTextRow
                 label={<AppText>Имя</AppText>}
-                value={<AppText style={{ fontFamily: 'Montserrat-Bold' }}>{profile.displayName}</AppText>}
+                value={
+                    <>
+                        <AppText style={{ fontFamily: 'Montserrat-Bold' }}>
+                            {profile.displayName}
+                        </AppText>
+                        <TouchableHighlight 
+                            style={{marginLeft: 10 }}
+                            onPress={() => console.log('Changing')}
+                            underlayColor="#eee"
+                        >
+                            <MaterialCommunityIcons size={25} name="square-edit-outline" color={THEME.SUBMAIN_COLOR} />
+                        </TouchableHighlight>
+                    </>
+                }
             />
             <SectionTextRow
                 label={<AppText>Рейтинг</AppText>}

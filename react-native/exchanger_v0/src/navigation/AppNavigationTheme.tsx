@@ -1,3 +1,4 @@
+import React from 'react';
 import { Linking } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { AppHeaderIcon } from '../app/common/components/ui/AppHeaderIcon';

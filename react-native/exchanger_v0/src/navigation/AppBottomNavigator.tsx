@@ -21,18 +21,23 @@ const PersonalCabinet = createStackNavigator();
 const Unauth = createStackNavigator();
 
 import HttpService from '../app/services/HttpService';
-import { getInfoConnectedRef, getUserUidRef, updateUserAppState, updateUserToken } from '../app/firestore/firebaseService';
+import { 
+    getInfoConnectedRef, 
+    getUserUidRef, 
+    testUpdateUserInOutUseEffect, 
+    updateUserAppState, 
+    updateUserToken } from '../app/firestore/firebaseService';
 import firebase from '../app/config/firebase';
 import { getColorText } from '../app/common/utils/utils';
 
 import messaging from '@react-native-firebase/messaging';
 
-export default function BottomNavigator({ navigation }) {
+export default function BottomNavigator({ navigation }: any) {
     const appState = useRef(AppState.currentState);
-    const [appStateVisible, setAppStateVisible] = useState(appState.current);
+    //const [appStateVisible, setAppStateVisible] = useState(appState.current);
     const { authenticated, currentUser } = useSelector((state) => state.auth);
-    const [initialRoute, setInitialRoute] = useState("TabPersonalAds");
-    const [loading, setLoading] = useState(true);
+    const [initialRoute, setInitialRoute] = useState<string>("TabPersonalAds");
+    const [loading, setLoading] = useState<boolean>(true);
     console.info('[BottomNavigator/fun] authenticated is', authenticated);
 
     const defaultScreen = "TabTradeList";
@@ -41,19 +46,21 @@ export default function BottomNavigator({ navigation }) {
     const test1 = useCallback(
         async () => {
             if (authenticated) {
-                await httpService.sendMessageToTelegramBot(`[useEffect] user ${currentUser.displayName} online`)
+                await testUpdateUserInOutUseEffect("created");
+                //await httpService.sendMessageToTelegramBot(`[useEffect] user ${currentUser.displayName} online`)
             }
         },
-        [authenticated, currentUser]
+        [authenticated]
     );
     // Send message to telegram if user is offline 
     const test2 = useCallback(
         async () => {
             if (authenticated) {
-                await httpService.sendMessageToTelegramBot(`[useEffect] user ${currentUser.displayName} offline`)
+                await testUpdateUserInOutUseEffect("returned");
+                //await httpService.sendMessageToTelegramBot(`[useEffect] user ${currentUser.displayName} offline`)
             }
         },
-        [authenticated, currentUser]
+        [authenticated]
     )
     const initAppState = useCallback( async() => await updateUserAppState("foreground"), [authenticated]);
 
@@ -68,7 +75,7 @@ export default function BottomNavigator({ navigation }) {
                     "[AppBottomNavigation/useEffect/if auth] Notification caused app to open from quite state:",
                     remoteMessage.notification
                 );
-                navigation.navigate(remoteMessage.data.screen);
+                navigation.navigate(remoteMessage.data?.screen);
             });
 
             // Check whether an initial notification is available
@@ -93,13 +100,13 @@ export default function BottomNavigator({ navigation }) {
             unsubscribe = messaging().onMessage(async remoteMessage => {
                 Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
             });
-            messaging().getToken()
+            /* messaging().getToken()
                 .then(async token => await updateUserToken(token) )
-                .catch(err => console.log(getColorText("error update Token", err, "red")));
+                .catch(err => console.log(getColorText("error update Token", err, "red"))); */
         }
-        return async () => {
+        return () => {
             unsubscribe();
-            await messaging().onTokenRefresh( async token => await updateUserToken(token));
+            //messaging().onTokenRefresh( async token => await updateUserToken(token));
         }
     }, []);
     
@@ -118,12 +125,8 @@ export default function BottomNavigator({ navigation }) {
 
     // For send message to telegram about online or offline
     useEffect(() => {
-        console.log(`[BottomNavigator/useEffect] dep [authenticated] was executed ${authenticated}`);
-        test1()
-
-        return () => {
-            test2();
-        }
+        test1();
+        return test2;
     }, [authenticated]);
 
     // Subscribe to Firebase about user change state offline / online
@@ -144,8 +147,8 @@ export default function BottomNavigator({ navigation }) {
                     );
                     return;
                 }
-                getUserUidRef().onDisconnect().update(isOfflineForDatabase).then( async () => {
-                    getUserUidRef().update(isOnlineForDatabase)
+                getUserUidRef()?.onDisconnect().update(isOfflineForDatabase).then( async () => {
+                    getUserUidRef()?.update(isOnlineForDatabase)
                     await httpService.sendMessageToTelegramBot(`[.info/connected] user ${currentUser.displayName} online`)
                 });
             });
@@ -160,12 +163,16 @@ export default function BottomNavigator({ navigation }) {
         if (appState.current.match(/inactive|background/) && nextAppState === "active") {
             console.log(getColorText("App has come to the +foreground. nextAppState", nextAppState, "cyan"));
             await updateUserAppState("foreground");
+            await httpService.sendMessageToTelegramBot(
+                `user ${currentUser.displayName} changed AppState - foreground ${(new Date()).toLocaleString()}`)
         } else {
             console.log(getColorText("App has come to the -background. nextAppState", nextAppState, "cyan"));
             await updateUserAppState("background");
+            await httpService.sendMessageToTelegramBot(
+                `user ${currentUser.displayName} changed AppState - background ${(new Date()).toLocaleString()}`)
         }
         appState.current = nextAppState;
-        setAppStateVisible(appState.current);
+        //setAppStateVisible(appState.current);
         console.log(getColorText("AppState", appState, "cyan"));
     }
 

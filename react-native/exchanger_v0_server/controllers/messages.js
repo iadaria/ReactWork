@@ -5,7 +5,7 @@ const admin = require("../config/admin");
 // @access  Private
 exports.sendMessage = async (req, res, next) => {
     try {
-        const { token, title, message } = req.body;
+        const { token, title, message, screen } = req.body;
 
         setTimeout(async () => {
             const message = {
@@ -15,6 +15,9 @@ exports.sendMessage = async (req, res, next) => {
                     title: 'FCM Notification',
                 },
                 android: {
+                    data: {
+                        screen
+                    },
                     notification: {
                         image: "image-url",
                     },

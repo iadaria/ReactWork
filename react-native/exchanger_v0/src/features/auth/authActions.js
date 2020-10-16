@@ -24,7 +24,8 @@ export function verifyAuth() {
                     dispatch(
                         listenToCurrentUserProfile(dataFromSnapshot(snapshot))
                     );
-                });
+                },
+                error => console.log('error update Profile', error));
                 dispatch( { type: APP_LOADED } );
             } else {
                 console.log(getColorText('authAction -> sign out', "", "magenta"));

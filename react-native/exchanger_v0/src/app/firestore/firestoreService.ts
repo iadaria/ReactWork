@@ -1,11 +1,13 @@
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { tempID } from '../common/utils/utils';
-//import firestore from '@react-native-firebase/firestore';
-import firebase from '../config/firebase'; //It's for Web
+import firebase from '../config/firebase'; 
+import { IUser } from '../models/IUser';
 
 const db = firebase.firestore(); //It's for Web
 
 /************************ Common ****************************/
-export function dataFromSnapshot(snapshot) {
+export function dataFromSnapshot(snapshot: FirebaseFirestoreTypes.DocumentSnapshot) : Object | null {
     
     if (!snapshot || !snapshot.exists) {
         console.log('snapshot', snapshot);
@@ -29,11 +31,13 @@ export function dataFromSnapshot(snapshot) {
 }
 
 /************************ Profile ***************************/
-export function getUserProfile(userId) {
+export function getUserProfile(userId: string): 
+    FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData> 
+{
     return db.collection('users').doc(userId);
 }
 
-export function setUserProfileData(user) {
+export function setUserProfileData(user:  FirebaseAuthTypes.User): Promise<void> {
     console.log('Will be added user', user);
     return db.collection('users').doc(user.uid).set({
         displayName: tempID(),//generateUniqName()
@@ -58,8 +62,14 @@ export function setUserProfileData(user) {
 
 
 /*********************************** User ********************************************/
+
+
+/************************** Setting (TOOD in server side) ****************************/
+
+
+/*********************************** User ********************************************/
 //https://cloud.google.com/firestore/docs/solutions/presence
-export async function updateUserConnectedState(state) {
+/* export async function updateUserConnectedState(state: string) {
     const user = firebase.auth().currentUser;
     if (!user) return;
     try {
@@ -70,7 +80,7 @@ export async function updateUserConnectedState(state) {
     } catch (error) {
         throw error;
     } 
-}
+} */
 
 /* export async function updateUserAppState(state) {
     const user = firebase.auth().currentUser;
@@ -84,6 +94,3 @@ export async function updateUserConnectedState(state) {
         throw error;
     } 
 } */
-
-/************************** Setting (TOOD in server side) ****************************/
-

@@ -1,0 +1,19 @@
+{
+    "development": {
+      "database": "movies_api_development",
+      "dialect": "postgres",
+      "username": "postgres",
+      "password": "123456"
+    },
+    "test": {
+      "database": "movies_api_test",
+      "dialect": "postgres"
+    },
+    "production": {
+      "use_env_variable": "DATABASE_URL",
+      "dialect": "postgres",
+      "dialectOptions": {
+        "ssl": true
+      }
+    }
+  }

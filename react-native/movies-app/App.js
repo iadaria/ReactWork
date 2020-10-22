@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import AppNavigator from './navigation/AppNavigator';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import MovieDetail from './screens/MovieDetail';
+import { ApolloProvider } from '@apollo/react-hooks';
+import client from './ApolloClient';
 //import { SplashScreen } from 'expo';
 
 const Stack = createStackNavigator();
@@ -45,14 +46,16 @@ export default function App(props) {
         return null;
     } else {
         return (
-            <View style={styles.container}>
-                <NavigationContainer ref={containerRef}>
-                    <Stack.Navigator>
-                        <Stack.Screen name="Root" component={BottomTabNavigator} />
-                        <Stack.Screen name="MovieDetail" component={MovieDetail} />
-                    </Stack.Navigator>
-                </NavigationContainer>
-            </View>
+            <ApolloProvider client={client}>
+                <View style={styles.container}>
+                    <NavigationContainer ref={containerRef}>
+                        <Stack.Navigator>
+                            <Stack.Screen name="Root" component={BottomTabNavigator} />
+                            <Stack.Screen name="MovieDetail" component={MovieDetail} />
+                        </Stack.Navigator>
+                    </NavigationContainer>
+                </View>
+            </ApolloProvider>
         );
     }
 }

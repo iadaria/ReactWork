@@ -2,9 +2,8 @@
     {
         "_id": "5d7a514b5d2c12c7449be046",
         "user": "5d7a514b5d2c12c7449be042",
-        "login": "login",
+        "email": "dasha.box@mail.ru",
         "password": "password",
-        "success": false,
-        "createdAt": "23.03.1986"
+        "success": false
     }
 ]

@@ -8,14 +8,14 @@ const sendTokenResponse = async (user, statusCode, res) => {
     // Create token
     const token = user.getSignedJwtToken();
 
-    console.log('sendToken', {user});
+    //console.log('sendToken', {user});
 
     const session = await Session.create({
         user: user._id,
         token
     });
 
-    console.log('sendToken', {session});
+    //console.log('sendToken', {session});
 
     res
         .status(statusCode)
@@ -29,7 +29,7 @@ const sendTokenResponse = async (user, statusCode, res) => {
 // @route   POST /users
 // @access  Public
 exports.register = asyncHandler(async (req, res, next) => {
-    console.log(req.body);
+    //console.log(req.body);
     const { username, password, email } = req.body;
 
     // Validate email & password
@@ -37,9 +37,15 @@ exports.register = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse('You must send username and password', 400));
     }
 
-    const foundUser = await User.findOne({ email });
-    if (foundUser) {
+
+    const foundUserByEmail = await User.findOne({ email });
+    if (foundUserByEmail) {
         return next(new ErrorResponse('A user with that email already exists', 400));
+    }
+
+    const foundUserByName = await User.findOne({ username });
+    if (foundUserByName) {
+        return next(new ErrorResponse('A user with that username already exists', 400));
     }
 
     // Create user

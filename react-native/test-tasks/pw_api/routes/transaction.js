@@ -1,7 +1,8 @@
 const express = require('express');
 const Transaction = require('../models/Transaction');
 const {
-    getTransactions } = require('../controllers/transaction');
+    getTransactions, 
+    createTransaction } = require('../controllers/transaction');
 const advancedResults = require('../middleware/advancedResults') ;
 
 const router = express.Router();
@@ -9,6 +10,7 @@ const router = express.Router();
 const { protect } = require('../middleware/auth');
 
 router.route('/')
-    .get(protect, advancedResults(Transaction), getTransactions);
+    .get(protect, advancedResults(Transaction), getTransactions)
+    .post(protect, createTransaction);
 
 module.exports = router;

@@ -7,12 +7,14 @@ const User = require('../models/User');
 exports.protect = asyncHandler(async(req, res,next) => {
     let token;
 
+    console.log('req header', req.headers.authorization);
+
     if (
-        req.header.authorization &&
-        req.header.authorization.startWith('Bearer')
+        req.headers.authorization && 
+        req.headers.authorization.startsWith('Bearer')
     ) {
         token = req.headers.authorization.split(' ')[1];
-    }
+    } 
 
     if (!token) {
         //return next(new ErrorResponse("Not authorizate to access this route", 401));

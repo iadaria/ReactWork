@@ -36,9 +36,9 @@ const users = JSON.parse(
 // Import into DB
 const importData = async () => {
     try {
+        await User.create(users);
         await Transaction.create(transactions);
         await Session.create(sessions);
-        await User.create(users);
         console.log('Date Imported ...'.black.bgGreen);
         process.exit();
     } catch (error) {

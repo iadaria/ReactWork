@@ -25,30 +25,28 @@ const TransactionSchema = new mongoose.Schema({
 });
 
 TransactionSchema.post('save', async function () {
-    const amountPW = this.amount;
-
-    // Get the User(sender) current balance
-    const senderObj = await this.model('User').findById(this.sender);
-
-    console.log('[TransactionSchema] sender before transaction'.bgBlue, { sender: senderObj });
-
-    const beforeSenderBalancePW = senderObj.balance;
-    const afterSenderBalancePW = beforeSenderBalancePW - amountPW;
-    // Change current balance in the transaction
-    this.balance = afterSenderBalancePW;
+    let session = await mongoose.startSession();
 
     try {
-        // The recipient account will be credited (+PW)
-        await this.model('User').findById(this.recipient, function (err, doc) {
-            doc.balance = doc.balance + amountPW;
+        await session.startTransaction();
+
+        const newSenderBalancePW = this.sender.balance - this.amount;
+        const newRecipientBalancePW = this.recipient.balance + this.amount;
+
+        this.balance = newSenderBalancePW;
+        await this.model('User').findByIdAndUpdate(this.sender, {
+            balance: newSenderBalancePW
+        });
+        await this.model('User').findByIdAndUpdate(this.recipient, {
+            balance: newRecipientBalancePW
         });
 
-        // The payee account debited (PW--)
-        await senderObj.updateOne({
-            balance: afterSenderBalancePW
-        });
+        await session.commitTransaction();
     } catch (err) {
         console.log(err);
+        await session.abortTransaction();
+    } finally {
+        await session.endSession();
     }
 
 });

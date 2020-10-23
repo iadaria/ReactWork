@@ -8,14 +8,10 @@ const sendTokenResponse = async (user, statusCode, res) => {
     // Create token
     const token = user.getSignedJwtToken();
 
-    //console.log('sendToken', {user});
-
     const session = await Session.create({
         user: user._id,
         token
     });
-
-    //console.log('sendToken', {session});
 
     res
         .status(statusCode)
@@ -56,7 +52,7 @@ exports.register = asyncHandler(async (req, res, next) => {
         //balance: 500
     });
 
-    await user.save();
+    //await user.save();
 
     await sendTokenResponse(user, 200, res);
 });

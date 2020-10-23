@@ -2,7 +2,7 @@ const advanceResults = (model, populate = null) => async(req, res, next) => {
     let query;
 
     // Copy req.query
-    let reqQuery = {...req.query}; //reqQuery = {sender: req.user.id};
+    let reqQuery = {...req.query};
 
     // Fields to exclude
     const removeFields = ['select', 'sort', 'page', 'limit', 'filter'];

@@ -51,7 +51,7 @@ exports.createTransaction = asyncHandler(async (req, res, next) => {
     const transaction = await Transaction.create({
         sender: currentUser, //req.user
         recipient:  recipient,
-        amount
+        amount 
     });
     //await transaction.save();
 

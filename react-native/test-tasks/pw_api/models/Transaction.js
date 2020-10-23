@@ -24,32 +24,33 @@ const TransactionSchema = new mongoose.Schema({
     }
 });
 
-TransactionSchema.post('save', async function() {
-    const _amount = this.amount;
-    const _sender = await this.model('User').findById(this.sender); console.log('_sender', {sender: _sender});
-    const _balance = _sender.balance;
-    this.balance = _balance - _amount;
+TransactionSchema.post('save', async function () {
+    const amountPW = this.amount;
 
-    const recipient = await this.model('User').findById(this.recipient, function(err, doc) {
-        doc.balance = doc.balance + _amount;
-    }); 
+    // Get the User(sender) current balance
+    const senderObj = await this.model('User').findById(this.sender);
 
-    await this.model('User').findById(this.sender, function(err, doc) {
-        doc.balance = doc.balance - _amount;
-    }); 
-    
-    /* console.log('recipient', {recipient});
-    recipient.update({
+    console.log('[TransactionSchema] sender before transaction'.bgBlue, { sender: senderObj });
 
-    })
+    const beforeSenderBalancePW = senderObj.balance;
+    const afterSenderBalancePW = beforeSenderBalancePW - amountPW;
+    // Change current balance in the transaction
+    this.balance = afterSenderBalancePW;
 
     try {
-        console.log('sender', {sender: this.sender});
+        // The recipient account will be credited (+PW)
+        await this.model('User').findById(this.recipient, function (err, doc) {
+            doc.balance = doc.balance + amountPW;
+        });
+
+        // The payee account debited (PW--)
+        await senderObj.updateOne({
+            balance: afterSenderBalancePW
+        });
     } catch (err) {
         console.log(err);
-    } */
+    }
 
-    //next(); if pre
 });
 
 module.exports = mongoose.model('Transaction', TransactionSchema);

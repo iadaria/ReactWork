@@ -1,9 +1,8 @@
 const advanceResults = (model, populate = null) => async(req, res, next) => {
-    console.log('advanced'.blue);
     let query;
 
     // Copy req.query
-    const reqQuery = {...req.query};
+    let reqQuery = {...req.query}; //reqQuery = {sender: req.user.id};
 
     // Fields to exclude
     const removeFields = ['select', 'sort', 'page', 'limit', 'filter'];
@@ -11,7 +10,8 @@ const advanceResults = (model, populate = null) => async(req, res, next) => {
     // Loop over removeFields and delete them from reqQuery
     removeFields.forEach(param => delete reqQuery[param]);
 
-    console.log(reqQuery.blue);
+    console.log('reqQuery'.bgYellow, reqQuery);
+    
 
     // Create query string
     let queryStr = JSON.stringify(reqQuery);

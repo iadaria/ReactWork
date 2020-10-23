@@ -9,6 +9,9 @@ const User = require("../models/User");
 // @access  Private
 exports.getTransactions = asyncHandler(async (req, res, next) => {
     const { success, count, data } = res.advancedResults;
+
+    //if (course.user.toString() !== req.user.id && req.user.role !== 'admin') {
+
     const result = {
         success,
         count,
@@ -25,26 +28,32 @@ exports.getTransactions = asyncHandler(async (req, res, next) => {
     res.status(200).json(result);
 });
 
+exports.addCurrentUserToQuery = (req, res, next) => {
+    req.query = {...req.query, sender: req.user.id };
+    next();
+}
+
 exports.createTransaction = asyncHandler(async (req, res, next) => {
     const { name, amount } = req.body;
+
+    // Transaction only for current user
+    const currentUser = await User.findById(req.user.id);
+    if(currentUser.balance < amount) {
+        return next(new ErrorResponse('Balance exceeded', 400));
+    }
     
     // Check for user
     const recipient = await User.findOne({ username: name }).select('+password');
-
     if(!recipient) {
         return next(new ErrorResponse('User not found', 400));
     }
 
-    if(recipient.balance < amount) {
-        return next(new ErrorResponse('Balance exceeded', 400));
-    }
-
     const transaction = await Transaction.create({
-        sender: req.user,
+        sender: currentUser, //req.user
         recipient:  recipient,
         amount
     });
-    await transaction.save();
+    //await transaction.save();
 
     res.status(200).json({
         success: true,

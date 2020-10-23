@@ -10,6 +10,7 @@ connectDB();
 
 // Route files
 const transactions = require('./routes/transaction');
+const auth = require('./routes/auth');
 
 const app = express();
 
@@ -21,6 +22,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // routes
 app.use('/api/protected/transactions', transactions);
+app.use('/', auth);
 
 app.use(errorHandler);
 

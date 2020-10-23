@@ -1,11 +1,12 @@
 const advanceResults = (model, populate = null) => async(req, res, next) => {
+    console.log('advanced'.blue);
     let query;
 
     // Copy req.query
     const reqQuery = {...req.query};
 
     // Fields to exclude
-    const removeFields = ['select', 'sort', 'page', 'limit'];
+    const removeFields = ['select', 'sort', 'page', 'limit', 'filter'];
 
     // Loop over removeFields and delete them from reqQuery
     removeFields.forEach(param => delete reqQuery[param]);

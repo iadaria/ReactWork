@@ -5,8 +5,7 @@ const jwt = require('jsonwebtoken');
 const UserSchema = new mongoose.Schema({
     username: {
         type: String,
-        required: [true, 'Please add a name'],
-        unique: true,
+        required: [true, 'Please add a name']
     },
     email: {
         type: String,
@@ -27,6 +26,11 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    balance: {
+        type: Number,
+        required: [true, 'Please add a balance'],
+        default: 500
+    }
 });
 
 UserSchema.pre('save', async function(next) {

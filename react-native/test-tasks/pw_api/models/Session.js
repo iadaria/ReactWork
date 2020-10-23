@@ -6,10 +6,13 @@ const SessionSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    email: {
+    token: {
+        type: String,
+        required: true
+    },
+    /* email: {
         type: String,
         required: true,
-        unique: true,
         match: [
             /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
             'Please add a valid email',
@@ -24,7 +27,7 @@ const SessionSchema = new mongoose.Schema({
     success: {
         type: Boolean,
         default: false
-    },
+    },*/
     createdAt: {
         type: Date,
         default: Date.now,

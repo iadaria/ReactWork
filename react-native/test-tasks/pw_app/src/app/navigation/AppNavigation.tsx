@@ -1,12 +1,24 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { 
+    NavigationContainer,
+    DarkTheme as NavigationDarkTheme,
+    DefaultTheme as NavigationDefaultTheme, } from '@react-navigation/native';
+import { createStackNavigator, } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSelector } from 'react-redux';
 import LoginScreen from '../../screens/LoginScreen';
 import RegisterScreen from '../../screens/RegisterScreen';
 import NewTransactionScreen from '../../screens/NewTransactionScreen';
 import TransactionsScreen from '../../screens/TransactionsScreen';
+import {
+    DarkTheme as PaperDarkTheme,
+    DefaultTheme as PaperDefaultTheme } from 'react-native-paper';
+import { RootSiblingParent } from 'react-native-root-siblings';
+import merge from 'deepmerge';
+import { defaultScreenOptions } from './defaultTheme';
+  
+  const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
+  const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 
 const Main = createStackNavigator();
 const Auth = createStackNavigator();
@@ -14,9 +26,11 @@ const BottomTab = createBottomTabNavigator();
 
 export default function AppNavigation() {
     return (
-        <NavigationContainer>
-            <MainMenu />
-        </NavigationContainer>
+        <RootSiblingParent>
+            <NavigationContainer theme={CombinedDefaultTheme}>
+                <MainMenu />
+            </NavigationContainer>
+        </RootSiblingParent>
     );
 }
 
@@ -30,6 +44,11 @@ function MainMenu() {
         >
             <Main.Screen
                 name="Authenticate" component={AuthNavigator}
+                
+                options={{
+                    //title: "Parrot Wings",
+                    ...defaultScreenOptions
+                }}
             />
             <Main.Screen
                 name="BottomTab" component={BottomNavigation}

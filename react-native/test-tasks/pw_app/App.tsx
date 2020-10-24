@@ -1,11 +1,18 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
-import { IUserFormValues } from './src/app/models/user';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as StoreProvider } from 'react-redux';
 import AppNavigation from './src/app/navigation/AppNavigation';
-import { User } from './src/app/services/agent';
 
+import { configureStore } from './src/app/store/configureStore';
 
-const App: () => React$Node = () => <AppNavigation />
+const store = configureStore();
+
+const App: () => React$Node = () => 
+    <StoreProvider store={store}>
+        <PaperProvider>
+            <AppNavigation />
+        </PaperProvider>
+    </StoreProvider>
 
 export default App;
 

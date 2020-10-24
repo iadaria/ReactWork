@@ -103,3 +103,16 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
     res.status(200).json(result); //res.advancedResults
 });
 
+exports.getUserInfo = asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+
+    res.status(200).json({
+        success: true,
+        data: {
+            id: user._id,
+            name: user.username,
+            email: user.email,
+            balance: user.balance
+        }
+    });
+});

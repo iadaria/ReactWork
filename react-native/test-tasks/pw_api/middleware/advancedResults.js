@@ -1,8 +1,11 @@
 const advanceResults = (model, populate = null) => async(req, res, next) => {
     let query;
 
+    const { filter = {} } = req.body;
+    console.log('filter'.black.bgYellow, filter);
+
     // Copy req.query
-    let reqQuery = {...req.query};
+    let reqQuery = {...req.query, ...filter};
 
     // Fields to exclude
     const removeFields = ['select', 'sort', 'page', 'limit', 'filter'];

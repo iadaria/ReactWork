@@ -14,7 +14,10 @@ router.route('/')
     .get(
         protect,
         addCurrentUserToQuery,
-        advancedResults(Transaction),
+        advancedResults(Transaction, {
+            path: 'recipient',
+            select: 'username'
+        }),
         getTransactions
     )
     .post(protect, createTransaction);

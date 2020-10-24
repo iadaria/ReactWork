@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const ErrorResponse = require("../utils/ErrorResponse");
 const asyncHandler = require("../middleware/async");
 const Transaction = require("../models/Transaction");
@@ -10,7 +11,7 @@ const User = require("../models/User");
 exports.getTransactions = asyncHandler(async (req, res, next) => {
     const { success, count, data } = res.advancedResults;
 
-    //if (course.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    console.log('transactions'.bgCyan, { data });
 
     const result = {
         success,
@@ -19,7 +20,7 @@ exports.getTransactions = asyncHandler(async (req, res, next) => {
             trans_token: data.map(({ _id, recipient, amount, balance, createdAt }) => ({
                 id: _id,
                 date: createdAt,
-                username: recipient,
+                username: recipient.username,
                 amount,
                 balance
             }))
@@ -48,12 +49,36 @@ exports.createTransaction = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse('User not found', 400));
     }
 
-    const transaction = await Transaction.create({
-        sender: currentUser, //req.user
-        recipient:  recipient,
-        amount 
-    });
-    //await transaction.save();
+    let transaction;
+    const newSenderBalancePW = currentUser.balance - amount;
+    const newRecipientBalancePW = recipient.balance + amount;
+    const session = await mongoose.startSession();
+    try {
+        await session.startTransaction();
+
+        await User.findByIdAndUpdate(currentUser, {
+            balance: newSenderBalancePW
+        });
+        await User.findByIdAndUpdate(recipient, {
+            balance: newRecipientBalancePW
+        });
+
+        transaction = await Transaction.create({
+            sender: currentUser,
+            recipient:  recipient,
+            amount,
+            balance: newSenderBalancePW
+        });
+
+
+        await session.commitTransaction();
+    } catch (err) {
+        console.log(err);
+        await session.abortTransaction();
+        return next(new ErrorResponse('Invalid transaction', 400));
+    } finally {
+        await session.endSession();
+    }
 
     res.status(200).json({
         success: true,

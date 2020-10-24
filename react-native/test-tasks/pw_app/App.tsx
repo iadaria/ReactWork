@@ -1,32 +1,36 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import { Button, Text, View } from 'react-native';
+import { IUserFormValues } from './src/app/models/user';
+import AppNavigation from './src/app/navigation/AppNavigation';
+import { User } from './src/app/services/agent';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-const App: () => React$Node = () => {
-  return (
-    <>
+const App: () => React$Node = () => <AppNavigation />
+
+export default App;
+
+/** const userFormValues: IUserFormValues = {
+                        email: "dasha_2@mail.ru",
+    password: "123456",
+    username: "Dasha 2"
+};
+
+try {
+    /* const result = await User.login(userFormValues);
+    console.log('login', result); */
+    /* const response = await fetch('http://192.168.1.82:3001/sessions/create', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userFormValues)
+    });
+    console.log(await response.json());
+} catch (error) {
+    console.log('catch error', error);
+} */
+
+/**<AppNavigation>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView
@@ -68,11 +72,10 @@ const App: () => React$Node = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </>
-  );
-};
+    </AppNavigation> */
 
-const styles = StyleSheet.create({
+/**
+ * const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
   },
@@ -110,5 +113,4 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
-
-export default App;
+ */

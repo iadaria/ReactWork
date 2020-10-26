@@ -23,3 +23,25 @@
 >npx sequelize-cli seed:generate --name movies
 Insert date to seed file
 >npx sequelize-cli db:seed --seed 20201021182411-movies.js
+
+# HEROKU Deploy
+>heroku login
+>heroku create graphql-movies_v2
+>heroku create graphql-movies_v2-api
+https://git.heroku.com/graphql-movies-v2.git
+https://git.heroku.com/graphql-movies-v2-api.git
+
+>heroku buildpacks:set heroku/nodejs --app=graphql-movies-v2-api
+
+>heroku addons:create heroku-postgresql:hobby-dev --app=graphql-movies-v2-api
+Created postgresql-convex-10454 as DATABASE_URL
+
+>git init
+>git remote add heroku https://git.heroku.com/graphql-movies-v2-api.git
+>git remote -v
+>git add -A .
+>git commit -m "init server "
+>git push heroku master
+
+
+>heroku run npx sequelize-cli db:migrate

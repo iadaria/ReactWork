@@ -14,7 +14,33 @@ function getUserId(context) {
     }
 }
 
+const mapAttributes = (model, { fieldNodes }) => {
+    //get the fields of the Model (columns of the tabe)
+    const columns = new Set(Object.keys(model.rawAttributes));
+    
+    //get nested attributes for each selection set
+    const nested_attributes = selectionSet => 
+        (selectionSet &&
+            selectionSet.selections &&
+            selectionSet.selections.reduce(
+                (acc, { name: { value }, selectionSet }) =>
+                    new Set([...acc, value, ...nested_attributes(selectionSet)]),
+                new Set()
+            )) ||
+        [];
+
+    /* const requested_attributes = fieldNodes[0].selectionSet.selections.map(
+        ({ name: { value }}) => value
+    ); */
+    const requested_attributes = nested_attributes(fieldNodes[0].selectionSet);
+
+    //filter the attribute against the columns
+    //return requested_attributes.filter(attribute => columns.has(attribute));
+    return [...requested_attributes].filter(attribute => columns.has(attribute));
+}
+
 module.exports = {
     getUserId,
-    APP_SECRET
+    APP_SECRET,
+    mapAttributes
 };

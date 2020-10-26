@@ -15,6 +15,7 @@ const cols = 2, rows = 2;
 
 export default function MoviePoster(props) {
   const { movie, movie: { title, category, imageUrl }, onPress } = props;
+  
   return (
     <TouchableOpacity style={styles.container} onPress={() => onPress && onPress(movie)}>
       <View style={styles.imageContainer}>

@@ -16,7 +16,7 @@ const httpLink = new HttpLink({
 });
 
 const request = async (operation) => {
-    const token = AsyncStorage.getItem('token');
+    const token = await AsyncStorage.getItem('token');
     operation.setContext({
         headers: {
             authorization: token ? `Bearer ${token}` : ''
@@ -27,23 +27,25 @@ const request = async (operation) => {
 // observer each request
 // forward operation with existing context
 // applies middleware, credentials (express)
-const requestLink = new ApolloLink((operation, forward) => new Observable(observer => {
+const requestLink = new ApolloLink((operation, forward) =>
+  new Observable(observer => {
     let handle;
     Promise.resolve(operation)
-    .then(oper => request(oper))
-    .then(() => {
+      .then(oper => request(oper))
+      .then(() => {
         handle = forward(operation).subscribe({
-            next: observer.next.bind(observer),
-            error: observer.error.bind(observer),
-            complete: observer.complete.bind(observer)
-        })
-    })
-    .catch(observer.error.bind(observer))
+          next: observer.next.bind(observer),
+          error: observer.error.bind(observer),
+          complete: observer.complete.bind(observer),
+        });
+      })
+      .catch(observer.error.bind(observer));
 
     return () => {
-        if (handle) handle.unsubscribe();
-    }
-}));
+      if (handle) handle.unsubscribe();
+    };
+  })
+);
 
 // ApolloLink allows multiple links
 const client = new ApolloClient({

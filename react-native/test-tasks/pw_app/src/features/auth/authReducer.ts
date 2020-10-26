@@ -3,6 +3,7 @@ import { IUserInfo } from "../../app/models/user";
 /**************** Constants **************/
 export const SIGN_IN_USER = 'SIGN_IN_USER';
 export const SIGN_OUT_USER = 'SIGN_OUT_USER';
+export const SET_ID_TOKEN = 'SET_TOKEN';
 
 /**************** Actions **************/
 export function signInUser(user: IUserInfo) {
@@ -17,21 +18,30 @@ export function signOutUser() {
         type: SIGN_OUT_USER
     };
 }
+
+export function setToken(id_token: string) {
+    return {
+        type: SET_ID_TOKEN,
+        payload: id_token
+    };
+}
 /**************** Reducer **************/
-interface IAuthInitialState {
+export interface IAuthState {
     authenticated: boolean;
     currentUser: IUserInfo | null;
+    id_token: string | null;
 }
 
-const initialState: IAuthInitialState = {
+const initialState: IAuthtate = {
     authenticated: false,
     currentUser: null,
+    id_token: null,
 };
 
 export default function authReducer(
-    state: IAuthInitialState = initialState, 
+    state: IAuthState = initialState, 
     { type, payload } : any
-): IAuthInitialState {
+): IAuthState {
     switch(type) {
         case SIGN_IN_USER:
             return {
@@ -45,6 +55,12 @@ export default function authReducer(
                 authenticated: false,
                 currentUser: null
             };
+        case SET_ID_TOKEN:
+            return {
+                ...state,
+                id_token: payload
+            }
+
         default: return state;
     }
 }

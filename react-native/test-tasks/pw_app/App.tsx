@@ -2,17 +2,29 @@ import React from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider as StoreProvider } from 'react-redux';
 import AppNavigation from './src/app/navigation/AppNavigation';
+import { RootSiblingParent } from 'react-native-root-siblings';
+
+//import { PWService } from './src/app/services/pw-servide';
 
 import { configureStore } from './src/app/store/configureStore';
+import { LogBox } from 'react-native';
 
 const store = configureStore();
 
-const App: () => React$Node = () => 
-    <StoreProvider store={store}>
-        <PaperProvider>
-            <AppNavigation />
-        </PaperProvider>
-    </StoreProvider>
+LogBox.ignoreLogs(["Require cycle:"]);
+
+const App: () => React$Node = () => {
+
+    return (
+        <RootSiblingParent>
+            <StoreProvider store={store}>
+                <PaperProvider>
+                    <AppNavigation />
+                </PaperProvider>
+            </StoreProvider>
+        </RootSiblingParent>
+    );
+}
 
 export default App;
 
@@ -25,16 +37,16 @@ export default App;
 try {
     /* const result = await User.login(userFormValues);
     console.log('login', result); */
-    /* const response = await fetch('http://192.168.1.82:3001/sessions/create', {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userFormValues)
-    });
-    console.log(await response.json());
+/* const response = await fetch('http://192.168.1.82:3001/sessions/create', {
+    method: "POST",
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(userFormValues)
+});
+console.log(await response.json());
 } catch (error) {
-    console.log('catch error', error);
+console.log('catch error', error);
 } */
 
 /**<AppNavigation>

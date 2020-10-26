@@ -1,4 +1,4 @@
-const { default: Toast } = require("react-native-root-toast");
+import Toast from "react-native-root-toast";
 
 export default function ErrorToast(message) {
     return Toast.show(message, {

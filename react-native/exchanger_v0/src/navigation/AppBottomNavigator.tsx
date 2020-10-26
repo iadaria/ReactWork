@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, AppState } from 'react-native';
+import { Alert, AppState, AppStateStatus } from 'react-native';
 import { useSelector } from "react-redux";
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -31,6 +31,7 @@ import firebase from '../app/config/firebase';
 import { getColorText } from '../app/common/utils/utils';
 
 import messaging from '@react-native-firebase/messaging';
+import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 
 export default function BottomNavigator({ navigation }: any) {
     const appState = useRef(AppState.currentState);
@@ -125,8 +126,8 @@ export default function BottomNavigator({ navigation }: any) {
 
     // For send message to telegram about online or offline
     useEffect(() => {
-        test1();
-        return test2;
+       test1();
+       return test2;
     }, [authenticated]);
 
     // Subscribe to Firebase about user change state offline / online
@@ -140,7 +141,7 @@ export default function BottomNavigator({ navigation }: any) {
                 state: "online",
                 lastChangedState: firebase.database.ServerValue.TIMESTAMP
             };
-            getInfoConnectedRef().on('value', async (snapshot) => {
+            getInfoConnectedRef().on('value', async (snapshot: FirebaseDatabaseTypes.DataSnapshot) => {
                 if (!snapshot.exists()) {
                     await httpService.sendMessageToTelegramBot(
                         `[.info/connected] user ${currentUser.displayName} offline`
@@ -159,7 +160,7 @@ export default function BottomNavigator({ navigation }: any) {
     }, [authenticated, currentUser]);
 
     // Change state user in Firebase -  background / foreground
-    async function _handleAppStateChange(nextAppState) {
+    async function _handleAppStateChange(nextAppState: AppStateStatus): Promise<void> {
         if (appState.current.match(/inactive|background/) && nextAppState === "active") {
             console.log(getColorText("App has come to the +foreground. nextAppState", nextAppState, "cyan"));
             await updateUserAppState("foreground");

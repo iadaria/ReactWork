@@ -11,18 +11,19 @@ export const defaultScreenOptions = {
     headerStyle: {
         backgroundColor: THEME.BACKGROUND_TITLE
     },
-    headerTintColor: THEME.TITLE_COLOR,
     headerTitleAlign: "center"
 };
 
 export const defaultTabScreenOptions = {
-    ...defaultScreenOptions,
+    headerTitleAlign: "center",
+    headerTintColor: "#FFF"
 }
 
-const defaultTheme = {
+export const defaultTheme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        //background: THEME.BACKGROUND_SCREEN_COLOR
+        card: '#512da8',
+        primary: '#eee'
     }
 };

@@ -18,7 +18,7 @@ import {
     IconButton
 } from 'react-native-paper';
 import merge from 'deepmerge';
-import { defaultScreenOptions } from './defaultTheme';
+import { defaultScreenOptions, defaultTabScreenOptions, defaultTheme } from './defaultTheme';
 import AsyncStorage from '@react-native-community/async-storage';
 import { setToken, signInUser } from '../../features/auth/authReducer';
 import { IUserInfo } from '../models/user';
@@ -26,9 +26,11 @@ import { User } from '../services/agent';
 import { asyncActionFinish, asyncActionStart } from '../../features/async/asyncReducer';
 import { StyleSheet } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
+
 
 const Main = createStackNavigator();
 const Auth = createStackNavigator();
@@ -52,13 +54,14 @@ export default function AppNavigation() {
 
     // A few - When null, when not null, when id_token changed
     useEffect(() => {
-        dispatch(asyncActionStart());
         if (id_token) {
+            dispatch(asyncActionStart());
             getUserInfo()
             .then((_user) => {
                 _user && dispatch(signInUser(_user));
                 console.log("[useEffect/get current user]", {_user})
             })
+            .catch(error => console.log("[useEffect getUser error", error))
             .finally(() => dispatch(asyncActionFinish()));
         }
     }, [id_token]);
@@ -71,7 +74,7 @@ export default function AppNavigation() {
 
     return (
 
-        <NavigationContainer theme={CombinedDefaultTheme}>
+        <NavigationContainer theme={defaultTheme}>
             <MainMenu />
         </NavigationContainer>
     );
@@ -93,11 +96,11 @@ function MainMenu() {
         >
             <Main.Screen
                 name="Authenticate" component={AuthNavigator}
-                options={{
-                    ...defaultScreenOptions
-                }}
+                options={defaultScreenOptions}
             />
             <Main.Screen
+                options={defaultTabScreenOptions}
+                //options={defaultTabScreenOptions}
                 name="BottomTab" component={BottomNavigation}
             />
         </Main.Navigator>
@@ -115,14 +118,28 @@ function AuthNavigator() {
 
 function BottomNavigation() {
     return (
-        <BottomTab.Navigator>
+        <BottomTab.Navigator
+            screenOptions={{
+            
+            }}
+            tabBarOptions={{
+                showLabel: false,
+                activeTintColor: '#c85a54',
+                inactiveTintColor: '#bcaaa4',
+                style: {
+                    backgroundColor: '#e0e0e0'
+                }
+            }}
+        >
             <BottomTab.Screen
                 name="NewTransaction"
                 component={NewTransactionScreen}
+                
                 options={{
-                    title: "Create a transaction",
+                    title: "d",
+                    
                     tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="handshake" size={27}/>
+                        <MaterialIcons name="create-new-folder" size={27} color={color}/>
                     )
                 }}
             />
@@ -131,7 +148,10 @@ function BottomNavigation() {
                 name="Transactions"
                 component={TransactionsScreen}
                 options={{
-                    title: "History"
+                    title: "History",
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="handshake" size={27} color={color}/>
+                    )
                 }}
             />
 
@@ -139,7 +159,10 @@ function BottomNavigation() {
                 name="Recipents"
                 component={TransactionsScreen}
                 options={{
-                    title: "Recipients"
+                    title: "Recipients",
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="account-multiple" size={27} color={color}/>
+                    )
                 }}
             />
         </BottomTab.Navigator>

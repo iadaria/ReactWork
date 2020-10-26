@@ -7,7 +7,7 @@ export const THEME = {
     GREY_TEXT_COLOR: '#757575',
     ERROR_TEXT: '#CF6679',
 
-    //DARK_PRIMARY: '#38006b',
+    DARK_PRIMARY: '#38006b',
     LIGHT_PRIMARY: "#BB86FC",
 
     TITLE_COLOR: "#502989",

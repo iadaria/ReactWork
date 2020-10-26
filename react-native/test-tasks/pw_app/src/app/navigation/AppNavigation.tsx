@@ -4,7 +4,7 @@ import {
     DarkTheme as NavigationDarkTheme,
     DefaultTheme as NavigationDefaultTheme,
 } from '@react-navigation/native';
-import { createStackNavigator, } from '@react-navigation/stack';
+import { createStackNavigator, StackHeaderProps, } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useDispatch, useSelector } from 'react-redux';
 import LoginScreen from '../../screens/LoginScreen';
@@ -24,7 +24,7 @@ import { setToken, signInUser } from '../../features/auth/authReducer';
 import { IUserInfo } from '../models/user';
 import { User } from '../services/agent';
 import { asyncActionFinish, asyncActionStart } from '../../features/async/asyncReducer';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -100,7 +100,6 @@ function MainMenu() {
             />
             <Main.Screen
                 options={defaultTabScreenOptions}
-                //options={defaultTabScreenOptions}
                 name="BottomTab" component={BottomNavigation}
             />
         </Main.Navigator>
@@ -139,7 +138,9 @@ function BottomNavigation() {
                     title: "d",
                     
                     tabBarIcon: ({ color }) => (
+                        <>
                         <MaterialIcons name="create-new-folder" size={27} color={color}/>
+                        </>
                     )
                 }}
             />

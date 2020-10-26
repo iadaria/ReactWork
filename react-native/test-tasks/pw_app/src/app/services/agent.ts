@@ -1,9 +1,10 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import * as Toast from "../common/components/AppToast";
 import { IAuthResult, IUser, IUserFormValues } from "../models/user";
 import AsyncStorage from '@react-native-community/async-storage';
 
 axios.defaults.baseURL = 'http://192.168.1.82:3001';
+//xios.defaults.baseURL = 'http://127.0.0.1:3001';
 axios.defaults.timeout = 5000;
 axios.defaults.timeoutErrorMessage = "Network Error";
 
@@ -46,13 +47,28 @@ axios.interceptors.response.use(undefined, error => {
 })
 
 const responseBody = async (response: AxiosResponse) => {
-    console.log("[agent responseBody]", {response});
-    return await response.data?.data;
+    console.log("[agent responseBody]", JSON.stringify({response}, null, 4));
+    console.log("[agent responseBody.data]", JSON.stringify(response.data, null, 4));
+    console.log("[agent responseBody.data.data]", JSON.stringify(response.data?.data, null, 4));
+    
+    if (response.data?.data) {
+        return response.data?.data;
+    }
+
+    return await response.data;
+}
+
+const headers: AxiosRequestConfig = {
+    headers: {
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': "application/json"
+    }
 }
 
 const requests = {
     get: (url: string) => axios.get(url).then(responseBody),
-    post: (url: string, body: {}) => axios.post(url, body).then(responseBody)
+    post: (url: string, body: {}) => axios.post(url, body, headers).then(responseBody)
 };
 
 const User = {

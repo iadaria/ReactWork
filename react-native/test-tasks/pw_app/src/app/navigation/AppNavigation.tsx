@@ -20,7 +20,7 @@ import {
 import merge from 'deepmerge';
 import { defaultScreenOptions } from './defaultTheme';
 import AsyncStorage from '@react-native-community/async-storage';
-import { IAuthState, setToken, signInUser } from '../../features/auth/authReducer';
+import { setToken, signInUser } from '../../features/auth/authReducer';
 import { IUserInfo } from '../models/user';
 import { User } from '../services/agent';
 import { asyncActionFinish, asyncActionStart } from '../../features/async/asyncReducer';
@@ -40,34 +40,34 @@ export default function AppNavigation() {
 
     // One - when create App
     useEffect(() => {
-        let _token: string | null = null;
-        
         dispatch(asyncActionStart());
-        (async function getToken() {
-            _token = await AsyncStorage.getItem('id_token');
-            _token && dispatch(setToken(_token));
-            console.log("[useEffect/get AsyncStorage token]", {_token})
-            dispatch(asyncActionFinish());
-        })();
-        
-        
+        getToken()
+            .then((_id_token: string | null) => {
+                _id_token && dispatch(setToken(_id_token));
+                console.log("[useEffect/get AsyncStorage token]", {_id_token})
+            })
+        .catch(error => console.log("[useEffect getToken error", error))
+        .finally(() => dispatch(asyncActionFinish()));
     }, []);
 
     // A few - When null, when not null, when id_token changed
     useEffect(() => {
-        let user: IUserInfo | null = null;
+        dispatch(asyncActionStart());
         if (id_token) {
-            dispatch(asyncActionStart());
-            (async function getUserInfo() {
-                user = await User.current();
-                user && dispatch(signInUser(user));
-                console.log("[useEffect/get current user]", {user})
-                dispatch(asyncActionFinish());
-            })();
-            
+            getUserInfo()
+            .then((_user) => {
+                _user && dispatch(signInUser(_user));
+                console.log("[useEffect/get current user]", {_user})
+            })
+            .finally(() => dispatch(asyncActionFinish()));
         }
     }, [id_token]);
 
+    const getToken = async (): Promise<string | null> => 
+        await AsyncStorage.getItem('id_token');
+
+    const getUserInfo = async(): Promise<IUserInfo | null> =>
+        await User.current();
 
     return (
 

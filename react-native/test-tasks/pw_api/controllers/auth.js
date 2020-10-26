@@ -96,7 +96,7 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
         count,
         data: data.map(({ _id, username, email, createdAt }) => ({
             id: _id,
-            name: username
+            username
         }))
     };
 
@@ -110,7 +110,7 @@ exports.getUserInfo = asyncHandler(async (req, res, next) => {
         success: true,
         data: {
             id: user._id,
-            name: user.username,
+            username: user.username,
             email: user.email,
             balance: user.balance
         }

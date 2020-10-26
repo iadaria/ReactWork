@@ -11,7 +11,7 @@ const { protect } = require('../middleware/auth');
 router.post('/users', register);
 router.post('/sessions/create', login);
 router.route('/api/protected/user-info')
-    .post(protect, getUserInfo);
+    .get(protect, getUserInfo);
 
 // protected
 router

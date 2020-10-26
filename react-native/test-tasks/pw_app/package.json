@@ -17,6 +17,7 @@
     "@react-navigation/native": "^5.7.6",
     "@react-navigation/stack": "^5.9.3",
     "@types/graceful-fs": "^4.1.4",
+    "@types/react-native-vector-icons": "^6.4.6",
     "axios": "^0.21.0",
     "cp-fetch": "^0.1.5",
     "fetch-intercept": "^2.3.1",

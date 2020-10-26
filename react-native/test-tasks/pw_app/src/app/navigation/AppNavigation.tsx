@@ -14,7 +14,8 @@ import TransactionsScreen from '../../screens/TransactionsScreen';
 import {
     ActivityIndicator,
     DarkTheme as PaperDarkTheme,
-    DefaultTheme as PaperDefaultTheme
+    DefaultTheme as PaperDefaultTheme,
+    IconButton
 } from 'react-native-paper';
 import merge from 'deepmerge';
 import { defaultScreenOptions } from './defaultTheme';
@@ -24,6 +25,7 @@ import { IUserInfo } from '../models/user';
 import { User } from '../services/agent';
 import { asyncActionFinish, asyncActionStart } from '../../features/async/asyncReducer';
 import { StyleSheet } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
@@ -91,7 +93,6 @@ function MainMenu() {
         >
             <Main.Screen
                 name="Authenticate" component={AuthNavigator}
-
                 options={{
                     ...defaultScreenOptions
                 }}
@@ -119,7 +120,10 @@ function BottomNavigation() {
                 name="NewTransaction"
                 component={NewTransactionScreen}
                 options={{
-                    title: "Create a transaction"
+                    title: "Create a transaction",
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="handshake" size={27}/>
+                    )
                 }}
             />
 

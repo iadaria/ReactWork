@@ -4,6 +4,7 @@ import { IUserInfo } from "../../app/models/models";
 export const SIGN_IN_USER = 'SIGN_IN_USER';
 export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 export const SET_ID_TOKEN = 'SET_TOKEN';
+export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER';
 
 /**************** Actions **************/
 export function signInUser(user: IUserInfo) {
@@ -23,6 +24,14 @@ export function setToken(id_token: string) {
     return {
         type: SET_ID_TOKEN,
         payload: id_token
+    };
+}
+
+export function updateCurrentUser(user: IUserInfo) {
+    console.log("updateUser", {user});
+    return {
+        type: UPDATE_CURRENT_USER,
+        payload: user
     };
 }
 /**************** Reducer **************/
@@ -59,7 +68,13 @@ export default function authReducer(
             return {
                 ...state,
                 id_token: payload
-            }
+            };
+
+        case UPDATE_CURRENT_USER:
+            return {
+                ...state,
+                currentUser: payload
+            };
 
         default: return state;
     }

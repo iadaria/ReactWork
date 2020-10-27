@@ -20,7 +20,7 @@ axios.interceptors.response.use(undefined, error => {
     if (error.message === 'Network Error' && !error.response) {
         Toast.ErrorToast('Network error - make sure API is running!');
     }
-    console.log("[agen.ts]", JSON.stringify(error, null, 4));
+    //console.log("[agen.ts]", JSON.stringify(error, null, 4));
 
     const {status, data, config, headers} = error.response;
 
@@ -47,9 +47,9 @@ axios.interceptors.response.use(undefined, error => {
 })
 
 const responseBody = async (response: AxiosResponse) => {
-    console.log("[agent responseBody]", JSON.stringify({response}, null, 4));
-    console.log("[agent responseBody.data]", JSON.stringify(response.data, null, 4));
-    console.log("[agent responseBody.data.data]", JSON.stringify(response.data?.data, null, 4));
+    //console.log("[agent responseBody]", JSON.stringify({response}, null, 4));
+    //console.log("[agent responseBody.data]", JSON.stringify(response.data, null, 4));
+    //console.log("[agent responseBody.data.data]", JSON.stringify(response.data?.data, null, 4));
     
     if (response.data?.data) {
         return response.data?.data;
@@ -60,8 +60,8 @@ const responseBody = async (response: AxiosResponse) => {
 
 const headers: AxiosRequestConfig = {
     headers: {
-        //'Content-Type': 'application/json',
-        //"Access-Control-Allow-Origin": "*",
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
         'Accept': "application/json"
     }
 }

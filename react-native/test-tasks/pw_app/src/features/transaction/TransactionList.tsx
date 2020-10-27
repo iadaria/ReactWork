@@ -5,22 +5,14 @@ import { useSelector } from 'react-redux';
 import { ITransaction } from '../../app/models/models';
 import { ITransactionState } from './transactionReducer';
 import { format } from 'date-fns';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { THEME } from '../../theme';
 
 interface IProps {
     title?: string;
+    transactions: ITransaction[];
 }
 
-export default function TransactionList<IProps>({ title }) {
-    const { transactions } = useSelector((state: ITransactionState) => state.transaction);
-
-    transactions.sort((a: ITransaction, b: ITransaction) => {
-        if (a === b) {
-            return 0;
-        }
-        return a.username < b.username ? -1 : 1;
-    });
+export default function TransactionList({ title, transactions}: IProps) {
 
     const DATA = [
         {
@@ -30,7 +22,6 @@ export default function TransactionList<IProps>({ title }) {
     ];
 
     return (
-
         <SectionList
             sections={DATA}
             keyExtractor={(transaction: ITransaction, index: number) => transaction.id + index}
@@ -52,7 +43,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: THEME.TITLE_FONT_SIZE,
         textAlign: 'center',
-        marginTop: 20
+        marginTop: 18
     }
 });
 

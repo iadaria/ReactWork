@@ -1,23 +1,45 @@
-import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import React, { Dispatch } from 'react';
+import { connect } from 'react-redux';
+
+import { ITransaction, IUserInfo } from '../app/models/models';
+import { IRootReducer } from '../app/store/rootReducer';
+import { updateCurrentUser } from '../features/auth/authReducer';
+import { AppHeader } from '../features/header/AppHeader';
 import AppCard from '../features/transaction/AppCard';
 import TransactionList from '../features/transaction/TransactionList';
-import { THEME } from '../theme';
+import { createTransaction } from '../features/transaction/transactionReducer';
 
-export default function NewTransactionScreen() {
-    return (
-        <View>
-            {/* <Text style={styles.title}>Create a transaction</Text> */}
-            <AppCard />
-            <TransactionList title="The recently transactions"/>
-        </View>
-    )
+interface IProps {
+    currentUser: IUserInfo;
+    transactions: ITransaction[];
+    addTransaction: (transaction: ITransaction) => void;
+    updateCurrentUserInfo: (userInfo: IUserInfo) => void,
+    navigation: any;
 }
 
-const styles = StyleSheet.create({
-    title: {
-        fontSize: THEME.TITLE_FONT_SIZE,
-        textAlign: 'center',
-        marginTop: 20
-    }
+function NewTransactionScreen({ 
+    currentUser, transactions, addTransaction, navigation, updateCurrentUserInfo} : IProps
+) {
+    navigation.setOptions({
+        headerTitle: () => <AppHeader currentUser={currentUser}/>
+    });
+
+    return (
+        <>
+            <AppCard newTransaction={addTransaction} updateCurrentUserInfo={updateCurrentUserInfo} currentUser={currentUser}/>
+            <TransactionList title="The recently transactions" transactions={transactions}/>
+        </>
+    );
+}
+
+const mapStateToProps = (state: IRootReducer, ownProps: any) => ({
+    transactions: state.transaction.transactions,
+    currentUser: state.auth.currentUser!
 })
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+    addTransaction: (transaction: ITransaction) => dispatch(createTransaction(transaction)),
+    updateCurrentUserInfo: (userInfo: IUserInfo) => dispatch(updateCurrentUser(userInfo)),
+});
+
+export default connect( mapStateToProps, mapDispatchToProps)(NewTransactionScreen);

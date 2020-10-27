@@ -3,11 +3,16 @@ import { StyleSheet, Text, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { AppHeaderIcon } from './AppHederIcon';
 import { THEME} from '../../theme';
+import { IUserInfo } from '../../app/models/models';
 import { useSelector } from 'react-redux';
-import { IAuthState } from '../auth/authReducer';
 
-export function AppHeader() {
-    const { currentUser }: IAuthState = useSelector(state => state.auth);
+interface IProps {
+    currentUser?: IUserInfo;
+}
+
+export function AppHeader({ currentUser: _currentUser }: IProps) {
+    const { currentUser } = useSelector(state => state.auth)
+
     return (
         <View style={styles.line}>
             <Text style={styles.header}>

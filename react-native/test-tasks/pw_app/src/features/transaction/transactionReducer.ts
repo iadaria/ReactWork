@@ -39,7 +39,7 @@ export default function transactionReducer(
         case CREATE_TRANSACTION:
             return {
                 ...state,
-                transactions: [...state.transactions, payload]
+                transactions: [payload, ...state.transactions]
             };
         case FETCH_TRANSACTIONS:
             console.log(payload);

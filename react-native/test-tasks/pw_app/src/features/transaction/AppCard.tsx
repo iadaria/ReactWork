@@ -4,23 +4,32 @@ import { Avatar, Button, Card, TextInput } from 'react-native-paper';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { THEME } from '../../theme';
-import { ITransactionFormValues } from '../../app/models/models';
+import { ITransaction, ITransactionFormValues, IUserInfo } from '../../app/models/models';
 import TextInputMask from 'react-native-text-input-mask';
 import { Transaction } from '../../app/services/agent';
+import { ErrorToast, InfoToast } from '../../app/common/components/AppToast';
+import { useDispatch } from 'react-redux';
+import { createTransaction } from './transactionReducer';
 
 interface IError {
     error?: string;
 }
 
-const LeftContent = ( props: any ) =>
+const LeftContent = (props: any) =>
     <Avatar.Icon
         {...props}
         icon="credit-card"
         style={{ backgroundColor: THEME.ACCENT }}
     />;
 
-export default function AppCard() {
+interface IProps {
+    newTransaction: (transaction: ITransaction) => void;
+    updateCurrentUserInfo: (userInfo: IUserInfo) => void,
+    currentUser: IUserInfo;
+}
 
+export default function AppCard({ newTransaction, updateCurrentUserInfo, currentUser }: IProps) {
+    //const dispatch = useDispatch();
     return (
         <Card>
             <Card.Title
@@ -32,36 +41,40 @@ export default function AppCard() {
             <Formik
                 initialValues={{
                     username: "",
-                    amount: ""
+                    amount: NaN
                 }}
                 validationSchema={Yup.object({
                     username: Yup.string().required(),
-                    //amount: Yup.number().required()
-                    amount: Yup.string().required()
+                    amount: Yup.number().min(1).required()
                 })}
 
-                onSubmit={async (values: ITransactionFormValues & IError, { setSubmitting, setErrors }) => {
+                onSubmit={async (values: ITransactionFormValues & IError, { setSubmitting, setErrors, resetForm }) => {
                     console.log("[Formik Create a Transaction Submit] values", values);
                     try {
                         const createdTransaction = await Transaction.create(values);
-                        console.log('created transaction', {createdTransaction});
-                    } catch(error) {
-                        error.data && error.data.error && setErrors({ "error": error.data.error })
-                        console.log('[Formik/submit/login/error]', JSON.stringify(error, null, 4));
+                        newTransaction(createdTransaction.trans_token);
+                        InfoToast("Success the transaction");
+                        resetForm();
+                        updateCurrentUserInfo({
+                            ...currentUser,
+                            balance: currentUser.balance - values.amount
+                        });
+                        console.log('created transaction', { createdTransaction });
+                    } catch (error) {
+                        if (error.data && error.data.error) {
+                            setErrors({ "error": error.data.error });
+                            ErrorToast(error.data.error);
+                        }
+                        console.error('[Formik/submit/login/error]', JSON.stringify(error, null, 4));
                     } finally { setSubmitting(false); }
                 }}
             >
                 {({
-                    handleChange, handleBlur, handleSubmit, isSubmitting, isValid, dirty, errors, values, setFieldValue, resetForm, 
+                    handleChange, handleBlur, handleSubmit, isSubmitting, isValid, dirty, errors, values, setFieldValue, resetForm,
                 }) => {
                     const isDisabledSubmit = !isValid || !dirty || isSubmitting;
                     return (
                         <>
-                            {errors.error &&
-                                <Text style={styles.error}>
-                                    {errors.error}
-                                </Text>
-                            }
                             <Card.Content>
                                 <TextInput
                                     style={styles.element}
@@ -81,17 +94,22 @@ export default function AppCard() {
                                         {...props}
                                         mask={"[0000000] PW"}
                                     />}
-                                    onChangeText={value => setFieldValue('amount', parseFloat(value))}
+                                    onChangeText={handleChange('amount')}
+                                    //onChangeText={value => setFieldValue('amount', parseFloat(value))}
                                     onBlur={handleBlur('amount')}
                                     keyboardType="decimal-pad"
                                     value={values.amount}
                                 />
+                                {(errors.error /* || errors.amount */) &&
+                                    <Text style={styles.error}>
+                                        {errors.error} {/* {errors.amount} */}
+                                    </Text>
+                                }
                             </Card.Content>
                             <Card.Actions>
-                                <Button 
+                                <Button
                                     onPress={resetForm}
                                     disabled={isDisabledSubmit}
-                                    loading={isSubmitting}
                                 >
                                     Cancel
                                 </Button>
@@ -116,7 +134,15 @@ const styles = StyleSheet.create({
     element: {
         marginTop: THEME.MARGIN_TOP_ELEMENT,
     },
-    error: { 
-        color: THEME.LIGHT_PRIMARY
+    error: {
+        paddingHorizontal: 5,
+        textAlign: 'center',
+        marginTop: 10,
+        alignSelf: 'center',
+        minWidth: '50%',
+        color: THEME.ERROR_TEXT,
+        borderColor: THEME.ERROR_TEXT,
+        borderWidth: 1,
+        borderRadius: 5
     }
 });

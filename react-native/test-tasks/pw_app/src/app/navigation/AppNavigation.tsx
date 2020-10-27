@@ -21,12 +21,13 @@ import merge from 'deepmerge';
 import { defaultScreenOptions, defaultTabScreenOptions, defaultTheme } from './defaultTheme';
 import AsyncStorage from '@react-native-community/async-storage';
 import { setToken, signInUser } from '../../features/auth/authReducer';
-import { IUserInfo } from '../models/models';
-import { User } from '../services/agent';
+import { ITransactions, IUserInfo } from '../models/models';
+import { Transaction, User } from '../services/agent';
 import { asyncActionFinish, asyncActionStart } from '../../features/async/asyncReducer';
 import { StyleSheet, Text } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { fetchTransaction } from '../../features/transaction/transactionReducer';
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
@@ -38,7 +39,7 @@ const BottomTab = createBottomTabNavigator();
 
 export default function AppNavigation() {
     const dispatch = useDispatch();
-    const { id_token } = useSelector(state => state.auth);
+    const { id_token, authenticated } = useSelector(state => state.auth);
 
     // One - when create App
     useEffect(() => {
@@ -66,11 +67,27 @@ export default function AppNavigation() {
         }
     }, [id_token]);
 
+    useEffect(() => {
+        if (authenticated) {
+            dispatch(asyncActionStart());
+            loadTransactions()
+            .then(({trans_token}) => {
+                trans_token && dispatch(fetchTransaction(trans_token));
+                console.log("[useEffect/load transactions]");
+            })
+            .catch(error => console.log("[useEffect loadTransactions error", error))
+            .finally(() => dispatch(asyncActionFinish()));
+        }
+    }, [authenticated]);
+
     const getToken = async (): Promise<string | null> => 
         await AsyncStorage.getItem('id_token');
 
     const getUserInfo = async(): Promise<IUserInfo | null> =>
         await User.current();
+
+    const loadTransactions = async(): Promise<ITransactions> =>
+        await Transaction.list();
 
     return (
 

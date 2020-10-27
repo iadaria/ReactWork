@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import * as Toast from "../common/components/AppToast";
-import { IAuthResult,  IUserForList,  IUserFormValues, IUserInfo } from "../models/models";
+import { IAuthResult,  ICreatedTransaction, IFilter, ITransactionFormValues,  ITransactions,  IUserForList,  IUserFormValues, IUserInfo } from "../models/models";
 import AsyncStorage from '@react-native-community/async-storage';
 
 axios.defaults.baseURL = 'http://192.168.1.82:3001';
@@ -60,8 +60,8 @@ const responseBody = async (response: AxiosResponse) => {
 
 const headers: AxiosRequestConfig = {
     headers: {
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*",
+        //'Content-Type': 'application/json',
+        //"Access-Control-Allow-Origin": "*",
         'Accept': "application/json"
     }
 }
@@ -75,11 +75,13 @@ const User = {
     register: (user: IUserFormValues): Promise<IAuthResult> => requests.post(`/users`, user),
     login: (user: IUserFormValues): Promise<IAuthResult> => requests.post(`/sessions/create`, user),
     current: (): Promise<IUserInfo> => requests.get(`/api/protected/user-info`),
-    list: (user: IUserFormValues): Promise<IUserForList[]> => requests.post(`/api/protected/users/list`, user)
+    list: (filter: {filter: IFilter}): Promise<IUserForList[]> => requests.post(`/api/protected/users/list`, filter)
 };
 
-/* const Transactions = {
-    get: ()
-} */
+const Transaction = {
+    create: (transaction: ITransactionFormValues): Promise<ICreatedTransaction> => 
+        requests.post(`/api/protected/transactions`, transaction),
+    list: (): Promise<ITransactions> => requests.get(`/api/protected/transactions`),
+}
 
-export { User };
+export { User, Transaction };

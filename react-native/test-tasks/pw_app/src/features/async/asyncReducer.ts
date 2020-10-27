@@ -25,20 +25,20 @@ export function asyncActionError(error: string) {
 }
 
 /***************** Async reducer **********************/
-interface IAsyncInitialState {
+export interface IAsyncState {
     loading: boolean,
     error: string | null
 }
 
-const initialState: IAsyncInitialState = {
+const initialState: IAsyncState = {
     loading: false,
     error: null
 };
 
 export default function asyncReducer( 
-    state: IAsyncInitialState = initialState,
+    state: IAsyncState = initialState,
     { type, payload } : any 
-): IAsyncInitialState {
+): IAsyncState {
     switch(type) {
 
         case ASYNC_ACTION_START:

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import AppCard from '../features/card/AppCard';
+import AppCard from '../features/transaction/AppCard';
+import TransactionList from '../features/transaction/TransactionList';
 import { THEME } from '../theme';
 
 export default function NewTransactionScreen() {
@@ -8,6 +9,7 @@ export default function NewTransactionScreen() {
         <View>
             {/* <Text style={styles.title}>Create a transaction</Text> */}
             <AppCard />
+            <TransactionList />
         </View>
     )
 }

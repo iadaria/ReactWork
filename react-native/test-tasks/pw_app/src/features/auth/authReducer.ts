@@ -32,7 +32,7 @@ export interface IAuthState {
     id_token: string | null;
 }
 
-const initialState: IAuthtate = {
+const initialState: IAuthState = {
     authenticated: false,
     currentUser: null,
     id_token: null,

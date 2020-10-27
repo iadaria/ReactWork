@@ -1,13 +1,18 @@
-import React, { useRef } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text } from 'react-native';
 import { Avatar, Button, Card, TextInput } from 'react-native-paper';
-import { THEME } from '../../theme';
-import TextInputMask from 'react-native-text-input-mask';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { THEME } from '../../theme';
 import { ITransactionFormValues } from '../../app/models/models';
+import TextInputMask from 'react-native-text-input-mask';
+import { Transaction } from '../../app/services/agent';
 
-const LeftContent = props =>
+interface IError {
+    error?: string;
+}
+
+const LeftContent = ( props: any ) =>
     <Avatar.Icon
         {...props}
         icon="credit-card"
@@ -35,8 +40,15 @@ export default function AppCard() {
                     amount: Yup.string().required()
                 })}
 
-                onSubmit={async (values: ITransactionFormValues, { setSubmitting, setErrors }) => {
+                onSubmit={async (values: ITransactionFormValues & IError, { setSubmitting, setErrors }) => {
                     console.log("[Formik Create a Transaction Submit] values", values);
+                    try {
+                        const createdTransaction = await Transaction.create(values);
+                        console.log('created transaction', {createdTransaction});
+                    } catch(error) {
+                        error.data && error.data.error && setErrors({ "error": error.data.error })
+                        console.log('[Formik/submit/login/error]', JSON.stringify(error, null, 4));
+                    } finally { setSubmitting(false); }
                 }}
             >
                 {({
@@ -45,6 +57,11 @@ export default function AppCard() {
                     const isDisabledSubmit = !isValid || !dirty || isSubmitting;
                     return (
                         <>
+                            {errors.error &&
+                                <Text style={styles.error}>
+                                    {errors.error}
+                                </Text>
+                            }
                             <Card.Content>
                                 <TextInput
                                     style={styles.element}
@@ -64,14 +81,12 @@ export default function AppCard() {
                                         {...props}
                                         mask={"[0000000] PW"}
                                     />}
-                                    //onChangeText={handleChange('amount')}
                                     onChangeText={value => setFieldValue('amount', parseFloat(value))}
                                     onBlur={handleBlur('amount')}
                                     keyboardType="decimal-pad"
                                     value={values.amount}
                                 />
                             </Card.Content>
-                            {/* <Card.Cover source={{ uri: 'https://picsum.photos/700' }} /> */}
                             <Card.Actions>
                                 <Button 
                                     onPress={resetForm}
@@ -101,4 +116,7 @@ const styles = StyleSheet.create({
     element: {
         marginTop: THEME.MARGIN_TOP_ELEMENT,
     },
+    error: { 
+        color: THEME.LIGHT_PRIMARY
+    }
 });

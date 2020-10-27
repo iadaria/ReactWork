@@ -4,7 +4,7 @@ import { Button, TextInput } from 'react-native-paper';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { THEME } from '../theme';
-import { IAuthResult, IUserFormValues } from '../app/models/user';
+import { IAuthResult, IUserFormValues } from '../app/models/models';
 import { ErrorToast } from '../app/common/components/AppToast';
 import { User } from '../app/services/agent';
 import { useDispatch } from 'react-redux';

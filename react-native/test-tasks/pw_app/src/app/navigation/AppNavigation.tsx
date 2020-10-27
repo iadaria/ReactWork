@@ -21,7 +21,7 @@ import merge from 'deepmerge';
 import { defaultScreenOptions, defaultTabScreenOptions, defaultTheme } from './defaultTheme';
 import AsyncStorage from '@react-native-community/async-storage';
 import { setToken, signInUser } from '../../features/auth/authReducer';
-import { IUserInfo } from '../models/user';
+import { IUserInfo } from '../models/models';
 import { User } from '../services/agent';
 import { asyncActionFinish, asyncActionStart } from '../../features/async/asyncReducer';
 import { StyleSheet, Text } from 'react-native';
@@ -172,8 +172,6 @@ function BottomNavigation() {
 
 const styles = StyleSheet.create({
     indicator: {
-        flex: 1,
-        //justifyContent: 'center',
-        //alignItems: 'center'
+        flex: 1
     }
 });

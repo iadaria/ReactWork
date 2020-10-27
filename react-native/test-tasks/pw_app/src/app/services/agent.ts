@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import * as Toast from "../common/components/AppToast";
-import { IAuthResult, IUser, IUserFormValues } from "../models/user";
+import { IAuthResult,  IUserForList,  IUserFormValues, IUserInfo } from "../models/models";
 import AsyncStorage from '@react-native-community/async-storage';
 
 axios.defaults.baseURL = 'http://192.168.1.82:3001';
@@ -74,8 +74,8 @@ const requests = {
 const User = {
     register: (user: IUserFormValues): Promise<IAuthResult> => requests.post(`/users`, user),
     login: (user: IUserFormValues): Promise<IAuthResult> => requests.post(`/sessions/create`, user),
-    current: (): Promise<IUser> => requests.get(`/api/protected/user-info`),
-    list: (user: IUserFormValues): Promise<IUser[]> => requests.post(`/api/protected/users/list`, user)
+    current: (): Promise<IUserInfo> => requests.get(`/api/protected/user-info`),
+    list: (user: IUserFormValues): Promise<IUserForList[]> => requests.post(`/api/protected/users/list`, user)
 };
 
 /* const Transactions = {

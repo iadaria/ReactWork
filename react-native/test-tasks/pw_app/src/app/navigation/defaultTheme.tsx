@@ -18,15 +18,16 @@ export const defaultScreenOptions = {
 };
 
 export const defaultTabScreenOptions = {
-    /* headerTitleAlign: "center",
-    headerTitleStyle: {
-        color: THEME.LIGHT_PRIMARY,
-        fontSize: THEME.DEFAULT_FONT_SIZE
-    },
-    title: "PW",
-    headerTintColor: "#FFF", */
+    /* 
+        headerTitleAlign: "center",
+        headerTitleStyle: {
+            color: THEME.LIGHT_PRIMARY,
+            fontSize: THEME.DEFAULT_FONT_SIZE
+        },
+        title: "PW",
+        headerTintColor: "", 
+    */
     headerRight: () => <AppHeaderRight />,
-    //headerLeft: () => <AppHeaderLeft />,
     headerTitle: () => <AppHeader />
 }
 

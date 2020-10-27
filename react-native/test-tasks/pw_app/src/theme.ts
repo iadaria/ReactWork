@@ -1,9 +1,8 @@
 export const THEME = {
     //MAIN_COLOR: '#6200ee',
     PRIMARY: '#3498db',
-    //ACCENT: '#f1c40f',
+    ACCENT: '#f1c40f',
     //SUBMAIN_COLOR: '',
-    TITLE_BIG: 40,
     GREY_TEXT_COLOR: '#757575',
     ERROR_TEXT: '#CF6679',
 
@@ -19,4 +18,6 @@ export const THEME = {
     BUTTON_HEIGHT: 50,
 
     DEFAULT_FONT_SIZE: 16,
+    TITLE_FONT_SIZE: 25,
+    TITLE_BIG: 40,
 };

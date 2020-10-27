@@ -1,4 +1,4 @@
-import { IAuthResult, IUserFormValues } from "../models/user";
+import { IAuthResult, IUserFormValues } from "../models/models";
 // @ts-ignore
 import FetchInterceptor from 'fetch-interceptor';
 //import fetchIntercept from 'fetch-intercept';

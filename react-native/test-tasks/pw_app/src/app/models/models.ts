@@ -5,6 +5,11 @@ export interface IUserInfo {
     balance: number
 }
 
+export interface IUserForList {
+    id: string,
+    username: string,
+}
+
 export interface IUserFormValues {
     email: string;
     password: string;
@@ -16,4 +21,9 @@ export interface IAuthResult {
     id_token?: string;
     success: boolean;
     error?: string;
+}
+
+export interface ITransactionFormValues {
+    username: string;
+    amount: number;
 }

@@ -1,4 +1,4 @@
-import { IUserInfo } from "../../app/models/user";
+import { IUserInfo } from "../../app/models/models";
 
 /**************** Constants **************/
 export const SIGN_IN_USER = 'SIGN_IN_USER';

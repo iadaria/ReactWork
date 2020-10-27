@@ -11,7 +11,7 @@ const User = require("../models/User");
 exports.getTransactions = asyncHandler(async (req, res, next) => {
     const { success, count, data } = res.advancedResults;
 
-    console.log('transactions'.bgCyan, { data });
+    //onsole.log('transactions'.bgCyan, { data });
 
     const result = {
         success,
@@ -35,7 +35,7 @@ exports.addCurrentUserToQuery = (req, res, next) => {
 }
 
 exports.createTransaction = asyncHandler(async (req, res, next) => {
-    const { name, amount } = req.body;
+    const { username, amount } = req.body;
 
     // Transaction only for current user
     const currentUser = await User.findById(req.user.id);
@@ -44,7 +44,7 @@ exports.createTransaction = asyncHandler(async (req, res, next) => {
     }
     
     // Check for user
-    const recipient = await User.findOne({ username: name }).select('+password');
+    const recipient = await User.findOne({ username }).select('+password');
     if(!recipient) {
         return next(new ErrorResponse('User not found', 400));
     }

@@ -75,7 +75,7 @@ const User = {
     register: (user: IUserFormValues): Promise<IAuthResult> => requests.post(`/users`, user),
     login: (user: IUserFormValues): Promise<IAuthResult> => requests.post(`/sessions/create`, user),
     current: (): Promise<IUserInfo> => requests.get(`/api/protected/user-info`),
-    list: (filter: {filter: IFilter}): Promise<IUserForList[]> => requests.post(`/api/protected/users/list`, filter)
+    list: (filter: {filter: IFilter} | {}): Promise<IUserForList[]> => requests.post(`/api/protected/users/list`, filter)
 };
 
 const Transaction = {

@@ -21,13 +21,14 @@ import merge from 'deepmerge';
 import { defaultScreenOptions, defaultTabScreenOptions, defaultTheme } from './defaultTheme';
 import AsyncStorage from '@react-native-community/async-storage';
 import { setToken, signInUser } from '../../features/auth/authReducer';
-import { ITransactions, IUserInfo } from '../models/models';
+import { ITransactions, IUserForList, IUserInfo } from '../models/models';
 import { Transaction, User } from '../services/agent';
 import { asyncActionFinish, asyncActionStart } from '../../features/async/asyncReducer';
 import { StyleSheet, Text } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { fetchTransaction } from '../../features/transaction/transactionReducer';
+import { fetchUsers } from '../../features/user/userReducer';
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
@@ -80,6 +81,19 @@ export default function AppNavigation() {
         }
     }, [authenticated]);
 
+    useEffect(() => {
+        if (authenticated) {
+            dispatch(asyncActionStart());
+            loadUsers()
+            .then((users: IUserForList[]) => {
+                users && users.length && dispatch(fetchUsers(users));
+                console.log("[useEffect/load user");
+            })
+            .catch(error => console.log("[useEffect users error", error))
+            .finally(() => dispatch(asyncActionFinish()));
+        }
+    }, [authenticated])
+
     const getToken = async (): Promise<string | null> => 
         await AsyncStorage.getItem('id_token');
 
@@ -88,6 +102,9 @@ export default function AppNavigation() {
 
     const loadTransactions = async(): Promise<ITransactions> =>
         await Transaction.list();
+
+    const loadUsers = async(): Promise<IUserForList[]> =>
+        await User.list({});
 
     return (
 

@@ -1,10 +1,9 @@
 import React, { Dispatch, useState } from 'react';
 import { connect } from 'react-redux';
 
-import { ITransaction, ITransactionFormValues, IUserInfo } from '../app/models/models';
+import { ITransaction, ITransactionFormValues, IUserForList, IUserInfo } from '../app/models/models';
 import { IRootReducer } from '../app/store/rootReducer';
 import { updateCurrentUser } from '../features/auth/authReducer';
-import { AppHeader } from '../features/header/AppHeader';
 import AppCard from '../features/transaction/AppCard';
 import TransactionList from '../features/transaction/TransactionList';
 import { createTransaction } from '../features/transaction/transactionReducer';
@@ -12,6 +11,7 @@ import { createTransaction } from '../features/transaction/transactionReducer';
 interface IProps {
     currentUser: IUserInfo;
     transactions: ITransaction[];
+    users: IUserForList[];
     addTransaction: (transaction: ITransaction) => void;
     updateCurrentUserInfo: (userInfo: IUserInfo) => void,
     navigation: any;
@@ -19,7 +19,7 @@ interface IProps {
 }
 
 function NewTransactionScreen({
-    currentUser, transactions, addTransaction, navigation, updateCurrentUserInfo }: IProps
+    currentUser, transactions, addTransaction, navigation, updateCurrentUserInfo, users }: IProps
 ) {
     const [initialTransaction, setInitialTransaction] = useState<ITransactionFormValues>({
         username: "", amount: NaN 
@@ -32,6 +32,7 @@ function NewTransactionScreen({
                 newTransaction={addTransaction}
                 updateCurrentUserInfo={updateCurrentUserInfo} 
                 currentUser={currentUser} 
+                users={users}
             />
 
             <TransactionList 
@@ -44,6 +45,7 @@ function NewTransactionScreen({
 }
 
 const mapStateToProps = (state: IRootReducer, ownProps: any) => ({
+    users: state.user.users,
     transactions: state.transaction.transactions,
     currentUser: state.auth.currentUser!
 })

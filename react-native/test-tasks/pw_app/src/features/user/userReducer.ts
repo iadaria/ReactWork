@@ -20,3 +20,31 @@ export function createTransaction() {
     };
 }
 /********************* Reducer *************************/
+export interface IUserState {
+    users: IUserForList[];
+    filter: string;
+}
+
+const initialState: IUserState  = {
+    users: [],
+    filter: 'all'
+};
+
+export default function userReducer(
+    state: IUserState = initialState,
+    { type, payload }: { type: string, payload: IUserForList[]}
+): IUserState {
+    switch(type) {
+        case FETCH_USERS: 
+            return {
+                ...state,
+                users: payload
+            };
+        case CLEAR_USERS:
+            return {
+                ...state,
+                users: []
+            };
+        default: return state;
+    }
+}

@@ -4,10 +4,11 @@ import { Avatar, Button, Card, List, Searchbar, TextInput } from 'react-native-p
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { THEME } from '../../theme';
-import { ITransaction, ITransactionFormValues, IUserInfo } from '../../app/models/models';
+import { ITransaction, ITransactionFormValues, IUserForList, IUserInfo } from '../../app/models/models';
 import TextInputMask from 'react-native-text-input-mask';
 import { Transaction } from '../../app/services/agent';
 import { ErrorToast, InfoToast } from '../../app/common/components/AppToast';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 interface IError {
     error?: string;
@@ -22,18 +23,23 @@ const LeftContent = (props: any) =>
 
 interface IProps {
     currentUser: IUserInfo;
+    users: IUserForList[];
     initialTransaction: ITransactionFormValues & IError;
     newTransaction: (transaction: ITransaction) => void;
-    updateCurrentUserInfo: (userInfo: IUserInfo) => void,
+    updateCurrentUserInfo: (userInfo: IUserInfo) => void;
 }
 
 export default function AppCard({
-    newTransaction, updateCurrentUserInfo, currentUser, initialTransaction
+    newTransaction, updateCurrentUserInfo, currentUser, initialTransaction, users
 }: IProps) {
 
-    const [searchQuery, setSearchQuery] = React.useState('');
+    const [searchUser, setSearchUser] = React.useState<string>('');
 
-    const onChangeSearch = (query: string) => setSearchQuery(query);
+    const DATA =
+        searchUser &&
+        searchUser.length > 1 &&
+        users.filter(user => user.username.toLowerCase().includes(searchUser)) || [];
+    console.log('DATA', DATA);
 
     return (
         <Card>
@@ -77,69 +83,54 @@ export default function AppCard({
                     handleChange, handleBlur, handleSubmit, isSubmitting, isValid, dirty, errors, values, setFieldValue, resetForm,
                 }) => {
                     const isDisabledSubmit = !isValid || !dirty || isSubmitting;
-                    const DATA = [
-                        { id: "1", username: "user 1" },
-                        { id: "2", username: "user 2" },
-                        { id: "3", username: "user 3" },
-                        { id: "4", username: "user 4" },
-                        { id: "5", username: "user 5" },
-                        { id: "6", username: "user 6" },
-                    ];
+
                     return (
                         <View>
                             <Card.Content>
-                                {/* <Searchbar
-                                    style={styles.searchUser}
-                                    icon="account"
-                                    placeholder="User"
-                                    onChangeText={onChangeSearch}
-                                    value={searchQuery}
-                                /> */}
                                 <TextInput
                                     style={styles.element}
                                     mode="outlined"
                                     label="User name"
                                     placeholder="Enter the recipient"
+                                    left={<TextInput.Icon name="account" color="grey" />}
                                     autoCorrect={false}
-                                    onChangeText={handleChange('username')}
+                                    //onChangeText={handleChange('username')}
+                                    onChangeText={(text: string) => {
+                                        setFieldValue('username', text);
+                                        text && text.length > 2 && setSearchUser(text);
+                                    }}
                                     onBlur={handleBlur('username')}
                                     value={values.username}
+                                //value={searchUser}
                                 />
-                                <View style={styles.viewUsersList}>
-                                    <FlatList
-                                        scrollEnabled={true}
-                                        style={styles.listUsers}
-                                        data={DATA}
-                                        keyExtractor={item => item.id}
-                                        renderItem={({ item, separators }) => (
 
-                                            <TouchableHighlight
-                                                key={item.id}
-                                                onPress={() => console.info("was pressed", item)}
-                                                underlayColor="#DDD"
-                                            //onShowUnderlay={separators.highlight}
-                                            //onHideUnderlay={separators.unhighlight}
-                                            >
-                                                <View style={{ backgroundColor: 'white' }}>
-                                                    <Text style={styles.itemUser}>
-                                                        {item.username}
-                                                    </Text>
-                                                </View>
+                                {DATA && DATA.length > 0 && (
+                                    <View style={styles.viewUsersList}>
+                                        <FlatList
+                                            onTouchCancel={() => console.log("TouchCancel")}
+                                            scrollEnabled={true}
+                                            style={styles.listUsers}
+                                            data={DATA}
+                                            keyExtractor={item => item.id}
+                                            renderItem={({ item, separators }) => (
 
-                                            </TouchableHighlight>
-                                        )}
-                                    />
-                                </View>
+                                                <TouchableHighlight
+                                                    key={item.id}
+                                                    onPress={() => console.info("was pressed", item)}
+                                                    underlayColor={THEME.UNDERLINE_COLOR}
+                                                >
+                                                    <View style={{ backgroundColor: 'white' }}>
+                                                        <Text style={styles.itemUser}>
+                                                            {item.username}
+                                                        </Text>
+                                                    </View>
 
-                                {/*  <TextInput
-                                    style={styles.element}
-                                    label="User name"
-                                    placeholder="Enter the recipient"
-                                    autoCorrect={false}
-                                    onChangeText={handleChange('username')}
-                                    onBlur={handleBlur('username')}
-                                    value={values.username}
-                                /> */}
+                                                </TouchableHighlight>
+                                            )}
+                                        />
+                                    </View>)
+                                }
+
                                 <TextInput
                                     mode="outlined"
                                     style={styles.element}
@@ -207,12 +198,7 @@ const styles = StyleSheet.create({
         height: 90,
         position: 'absolute',
         bottom: -20,
-        width: '100%'
-    },
-    listUsers: {
-        width: '101%',
-        left: THEME.PADDING_PAGE - 10,
-        zIndex: 1,
+        width: '100%',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -222,6 +208,12 @@ const styles = StyleSheet.create({
         shadowRadius: 2.22,
 
         elevation: 3,
+    },
+    listUsers: {
+        width: '101%',
+        left: THEME.PADDING_PAGE - 10,
+        zIndex: 1,
+
     },
     itemUser: {
         fontSize: 18,

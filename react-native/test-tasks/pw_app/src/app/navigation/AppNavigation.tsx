@@ -29,6 +29,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { fetchTransaction } from '../../features/transaction/transactionReducer';
 import { fetchUsers } from '../../features/user/userReducer';
+import UsersScreen from '../../screens/UsersScreen';
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
@@ -192,7 +193,7 @@ function BottomNavigation() {
 
             <BottomTab.Screen
                 name="Recipents"
-                component={TransactionsScreen}
+                component={UsersScreen}
                 options={{
                     title: "Recipients",
                     tabBarIcon: ({ color }) => (

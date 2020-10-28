@@ -59,31 +59,3 @@ const styles = StyleSheet.create({
         marginTop: 18
     }
 });
-
-
-/* <FlatList
-    data={transactions}
-    keyExtractor={(transaction: ITransaction) => transaction.id}
-    renderItem={({ item: transaction }) => (
-        <List.Item
-            title={`to ${transaction.username}, amount: ${transaction.amount}`}
-            description={format(new Date(transaction.date), 'MMMM d, yyyy h:mm:ss')}
-            left={props => <List.Icon {...props} icon="credit-card-check-outline" color="green" />}
-        />
-    )}
-/* 
-const DATA = [
-    {
-        id: "1",
-        username: "user 1"
-    },
-    {
-        id: "1",
-        username: "user 1"
-    }
-]
-<FlatList
-    data={DATA}
-    keyExtractor={item => item.id}
-    renderItem={({ item }) => item.username}
-/> */

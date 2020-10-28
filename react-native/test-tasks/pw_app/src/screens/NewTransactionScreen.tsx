@@ -1,7 +1,7 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useState } from 'react';
 import { connect } from 'react-redux';
 
-import { ITransaction, IUserInfo } from '../app/models/models';
+import { ITransaction, ITransactionFormValues, IUserInfo } from '../app/models/models';
 import { IRootReducer } from '../app/store/rootReducer';
 import { updateCurrentUser } from '../features/auth/authReducer';
 import { AppHeader } from '../features/header/AppHeader';
@@ -15,19 +15,30 @@ interface IProps {
     addTransaction: (transaction: ITransaction) => void;
     updateCurrentUserInfo: (userInfo: IUserInfo) => void,
     navigation: any;
+
 }
 
-function NewTransactionScreen({ 
-    currentUser, transactions, addTransaction, navigation, updateCurrentUserInfo} : IProps
+function NewTransactionScreen({
+    currentUser, transactions, addTransaction, navigation, updateCurrentUserInfo }: IProps
 ) {
-    navigation.setOptions({
-        headerTitle: () => <AppHeader currentUser={currentUser}/>
+    const [initialTransaction, setInitialTransaction] = useState<ITransactionFormValues>({
+        username: "", amount: NaN 
     });
 
     return (
         <>
-            <AppCard newTransaction={addTransaction} updateCurrentUserInfo={updateCurrentUserInfo} currentUser={currentUser}/>
-            <TransactionList title="The recently transactions" transactions={transactions}/>
+            <AppCard 
+                initialTransaction={initialTransaction}
+                newTransaction={addTransaction}
+                updateCurrentUserInfo={updateCurrentUserInfo} 
+                currentUser={currentUser} 
+            />
+
+            <TransactionList 
+                setInitialTransaction={setInitialTransaction}
+                title="The recently transactions"
+                transactions={transactions} 
+            />
         </>
     );
 }
@@ -42,4 +53,4 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
     updateCurrentUserInfo: (userInfo: IUserInfo) => dispatch(updateCurrentUser(userInfo)),
 });
 
-export default connect( mapStateToProps, mapDispatchToProps)(NewTransactionScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(NewTransactionScreen);

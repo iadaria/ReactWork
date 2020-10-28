@@ -1,18 +1,18 @@
 import React from 'react'
 import { StyleSheet, SectionList, Text } from 'react-native'
 import { List } from 'react-native-paper';
-import { useSelector } from 'react-redux';
-import { ITransaction } from '../../app/models/models';
-import { ITransactionState } from './transactionReducer';
+import { ITransaction, ITransactionFormValues } from '../../app/models/models';
 import { format } from 'date-fns';
 import { THEME } from '../../theme';
+import AppAlert from '../../app/common/components/AppAlert';
 
 interface IProps {
     title?: string;
     transactions: ITransaction[];
+    setInitialTransaction: (transaction: ITransactionFormValues) => void;
 }
 
-export default function TransactionList({ title, transactions}: IProps) {
+export default function TransactionList({ title, transactions, setInitialTransaction, setIsLoading}: IProps) {
 
     const DATA = [
         {
@@ -21,12 +21,23 @@ export default function TransactionList({ title, transactions}: IProps) {
         }
     ];
 
+
+
     return (
         <SectionList
             sections={DATA}
             keyExtractor={(transaction: ITransaction, index: number) => transaction.id + index}
             renderItem={({ item: transaction }) => (
                 <List.Item
+                    onPress={() => {
+                        console.log('press and init transaction', {transaction});
+                        const func = setInitialTransaction({ 
+                            username: transaction.username,
+                            amount: Number(transaction.amount)
+                        });
+                        AppAlert("title test", "text test", () => func());
+                    }}
+                    underlayColor={THEME.UNDERLINE_COLOR}
                     title={`to ${transaction.username}, amount: ${transaction.amount}`}
                     description={format(new Date(transaction.date), 'MMMM d, yyyy h:mm:ss')}
                     left={props => <List.Icon {...props} icon="credit-card-check-outline" color="green" />}

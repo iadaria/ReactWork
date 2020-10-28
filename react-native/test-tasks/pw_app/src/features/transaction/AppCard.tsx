@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
-import { Avatar, Button, Card, TextInput } from 'react-native-paper';
+import { ActivityIndicator, Avatar, Button, Card, TextInput } from 'react-native-paper';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { THEME } from '../../theme';
@@ -8,8 +8,6 @@ import { ITransaction, ITransactionFormValues, IUserInfo } from '../../app/model
 import TextInputMask from 'react-native-text-input-mask';
 import { Transaction } from '../../app/services/agent';
 import { ErrorToast, InfoToast } from '../../app/common/components/AppToast';
-import { useDispatch } from 'react-redux';
-import { createTransaction } from './transactionReducer';
 
 interface IError {
     error?: string;
@@ -23,13 +21,16 @@ const LeftContent = (props: any) =>
     />;
 
 interface IProps {
+    currentUser: IUserInfo;
+    initialTransaction: ITransactionFormValues & IError;
     newTransaction: (transaction: ITransaction) => void;
     updateCurrentUserInfo: (userInfo: IUserInfo) => void,
-    currentUser: IUserInfo;
 }
 
-export default function AppCard({ newTransaction, updateCurrentUserInfo, currentUser }: IProps) {
-    //const dispatch = useDispatch();
+export default function AppCard({ 
+    newTransaction, updateCurrentUserInfo, currentUser, initialTransaction
+}: IProps) {
+
     return (
         <Card>
             <Card.Title
@@ -39,15 +40,14 @@ export default function AppCard({ newTransaction, updateCurrentUserInfo, current
             />
 
             <Formik
-                initialValues={{
-                    username: "",
-                    amount: NaN
-                }}
+                initialValues={initialTransaction}
+                enableReinitialize={true}
+                
                 validationSchema={Yup.object({
                     username: Yup.string().required(),
                     amount: Yup.number().min(1).required()
                 })}
-
+            
                 onSubmit={async (values: ITransactionFormValues & IError, { setSubmitting, setErrors, resetForm }) => {
                     console.log("[Formik Create a Transaction Submit] values", values);
                     try {
@@ -59,7 +59,7 @@ export default function AppCard({ newTransaction, updateCurrentUserInfo, current
                             ...currentUser,
                             balance: currentUser.balance - values.amount
                         });
-                        console.log('created transaction', { createdTransaction });
+                        console.info({ createdTransaction });
                     } catch (error) {
                         if (error.data && error.data.error) {
                             setErrors({ "error": error.data.error });

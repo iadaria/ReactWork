@@ -1,9 +1,9 @@
 export const THEME = {
-    //MAIN_COLOR: '#6200ee',
+    MAIN_COLOR: '#6200ee',
     PRIMARY: '#3498db',
     ACCENT: '#f1c40f',
-    //SUBMAIN_COLOR: '',
     GREY_TEXT_COLOR: '#757575',
+    UNDERLINE_COLOR: "#DDD",
     ERROR_TEXT: '#CF6679',
 
     DARK_PRIMARY: '#38006b',

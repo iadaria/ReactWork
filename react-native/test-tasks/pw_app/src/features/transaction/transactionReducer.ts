@@ -42,7 +42,6 @@ export default function transactionReducer(
                 transactions: [payload, ...state.transactions]
             };
         case FETCH_TRANSACTIONS:
-            console.log(payload);
             return {
                 ...state,
                 transactions: payload

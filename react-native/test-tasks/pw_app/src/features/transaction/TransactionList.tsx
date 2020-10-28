@@ -12,7 +12,7 @@ interface IProps {
     setInitialTransaction: (transaction: ITransactionFormValues) => void;
 }
 
-export default function TransactionList({ title, transactions, setInitialTransaction, setIsLoading}: IProps) {
+export default function TransactionList({ title, transactions, setInitialTransaction}: IProps) {
 
     const DATA = [
         {
@@ -31,11 +31,15 @@ export default function TransactionList({ title, transactions, setInitialTransac
                 <List.Item
                     onPress={() => {
                         console.log('press and init transaction', {transaction});
-                        const func = setInitialTransaction({ 
+                        const func = () => setInitialTransaction({ 
                             username: transaction.username,
                             amount: Number(transaction.amount)
                         });
-                        AppAlert("title test", "text test", () => func());
+                        AppAlert(
+                            "New Transaction", 
+                            "Create a new transaction from the existing transactions?", 
+                            func
+                        );
                     }}
                     underlayColor={THEME.UNDERLINE_COLOR}
                     title={`to ${transaction.username}, amount: ${transaction.amount}`}
@@ -69,4 +73,19 @@ const styles = StyleSheet.create({
             left={props => <List.Icon {...props} icon="credit-card-check-outline" color="green" />}
         />
     )}
+/* 
+const DATA = [
+    {
+        id: "1",
+        username: "user 1"
+    },
+    {
+        id: "1",
+        username: "user 1"
+    }
+]
+<FlatList
+    data={DATA}
+    keyExtractor={item => item.id}
+    renderItem={({ item }) => item.username}
 /> */

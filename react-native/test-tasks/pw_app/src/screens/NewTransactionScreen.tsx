@@ -2,6 +2,7 @@ import React, { Dispatch, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { ITransaction, ITransactionFormValues, IUserForList, IUserInfo } from '../app/models/models';
+import {  TouchableWithoutFeedback, View } from 'react-native';
 import { IRootReducer } from '../app/store/rootReducer';
 import { updateCurrentUser } from '../features/auth/authReducer';
 import AppCard from '../features/transaction/AppCard';
@@ -24,23 +25,28 @@ function NewTransactionScreen({
     const [initialTransaction, setInitialTransaction] = useState<ITransactionFormValues>({
         username: "", amount: NaN 
     });
+    const [visibleUsersList, setVisibleUsersList] = useState(false);
 
     return (
-        <>
-            <AppCard 
-                initialTransaction={initialTransaction}
-                newTransaction={addTransaction}
-                updateCurrentUserInfo={updateCurrentUserInfo} 
-                currentUser={currentUser} 
-                users={users}
-            />
+        <TouchableWithoutFeedback onPress={() => setVisibleUsersList(false)}>
+            <View>
+                <AppCard 
+                    initialTransaction={initialTransaction}
+                    newTransaction={addTransaction}
+                    updateCurrentUserInfo={updateCurrentUserInfo} 
+                    currentUser={currentUser} 
+                    users={users}
+                    visibleUsersList={visibleUsersList}
+                    setVisibleUsersList={setVisibleUsersList}
+                />
 
-            <TransactionList 
-                setInitialTransaction={setInitialTransaction}
-                title="The recently transactions"
-                transactions={transactions} 
-            />
-        </>
+                <TransactionList 
+                    setInitialTransaction={setInitialTransaction}
+                    title="The recently transactions"
+                    transactions={transactions} 
+                />
+            </View>
+        </TouchableWithoutFeedback>
     );
 }
 

@@ -34,13 +34,16 @@ export default function LoginScreen({ navigation }: any) {
                         
                         await AsyncStorage.setItem('id_token', result.id_token!);
                         dispatch(setToken(result.id_token!));
+
+                        setSubmitting(false); // ?
                         
                         navigation.navigate("BottomTab");
         
                     } catch (error) {
                         error.data && error.data.error && ErrorToast(error.data.error);
                         console.log('[Formik/submit/login/error]', JSON.stringify(error, null, 4));
-                    } finally { setSubmitting(false); }
+                        setSubmitting(false);
+                    }
                 }}
             >
                 {({

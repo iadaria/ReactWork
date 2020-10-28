@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet } from 'react-native'
 
 export default function AppAlert(title: string, text: string, func: () => void) {
     return (

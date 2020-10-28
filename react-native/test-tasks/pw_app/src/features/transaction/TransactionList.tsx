@@ -21,8 +21,6 @@ export default function TransactionList({ title, transactions, setInitialTransac
         }
     ];
 
-
-
     return (
         <SectionList
             sections={DATA}

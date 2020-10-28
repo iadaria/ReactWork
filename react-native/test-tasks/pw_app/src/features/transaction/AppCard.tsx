@@ -96,7 +96,6 @@ export default function AppCard({
                                     placeholder="Enter the recipient"
                                     left={<TextInput.Icon name="account" color="grey" />}
                                     autoCorrect={false}
-                                    //onChangeText={handleChange('username')}
                                     onChangeText={(text: string) => {
                                         setFieldValue('username', text);
                                         if (text && text.length > 1) {
@@ -106,7 +105,6 @@ export default function AppCard({
                                     }}
                                     onBlur={handleBlur('username')}
                                     value={values.username}
-                                //value={searchUser}
                                 />
 
                                 {visibleUsersList && DATA && DATA.length > 0 && (
@@ -124,7 +122,11 @@ export default function AppCard({
 
                                                     <TouchableHighlight
                                                         key={item.id}
-                                                        onPress={() => console.info("was pressed", item)}
+                                                        onPress={() => {
+                                                            setFieldValue('username', item.username);
+                                                            setVisibleUsersList(false);
+                                                            console.info("was pressed", item);
+                                                        }}
                                                         underlayColor={THEME.UNDERLINE_COLOR}
                                                     >
                                                         <View style={{ backgroundColor: 'white' }}>
@@ -137,11 +139,8 @@ export default function AppCard({
                                                 )}
                                             />
                                             </TouchableWithoutFeedback>
-                                            
+                                    
                                         </View>
-                                  
-
-
                                 )}
 
                                 <TextInput

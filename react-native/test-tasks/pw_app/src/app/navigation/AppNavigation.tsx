@@ -170,12 +170,9 @@ function BottomNavigation() {
                 component={NewTransactionScreen}
                 
                 options={{
-                    title: "d",
-                    
+                    title: "Transaction",   
                     tabBarIcon: ({ color }) => (
-                        <>
                         <MaterialIcons name="create-new-folder" size={27} color={color}/>
-                        </>
                     )
                 }}
             />

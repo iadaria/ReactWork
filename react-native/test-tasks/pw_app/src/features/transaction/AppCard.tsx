@@ -37,11 +37,10 @@ export default function AppCard({
 
     const [searchUser, setSearchUser] = React.useState<string>('');
 
-    const DATA =
+    const searchedUsers =
         searchUser &&
         searchUser.length > 1 &&
         users.filter(user => user.username.toLowerCase().includes(searchUser)) || [];
-    console.log('DATA', DATA);
 
     return (
         <Card>
@@ -107,7 +106,7 @@ export default function AppCard({
                                     value={values.username}
                                 />
 
-                                {visibleUsersList && DATA && DATA.length > 0 && (
+                                {visibleUsersList && searchedUsers && searchedUsers.length > 0 && (
                                    
                                         <View
                                             style={styles.viewUsersList}
@@ -116,7 +115,7 @@ export default function AppCard({
                                             <FlatList
                                                 scrollEnabled={true}
                                                 style={styles.listUsers}
-                                                data={DATA}
+                                                data={searchedUsers}
                                                 keyExtractor={item => item.id}
                                                 renderItem={({ item }) => (
 

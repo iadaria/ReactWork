@@ -28,7 +28,7 @@ export default function TransactionsScreen() {
 
     const emptyTransactions = (
             <View style={styles.empty}>
-                <Title>No transactions was found</Title>
+                <Title>No transactions found</Title>
             </View>
         );
 

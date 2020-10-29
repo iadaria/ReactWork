@@ -15,7 +15,8 @@ import {
     ActivityIndicator,
     DarkTheme as PaperDarkTheme,
     DefaultTheme as PaperDefaultTheme,
-    IconButton
+    IconButton,
+    Title
 } from 'react-native-paper';
 import merge from 'deepmerge';
 import { defaultScreenOptions, defaultTabScreenOptions, defaultTheme } from './defaultTheme';
@@ -24,7 +25,7 @@ import { setToken, signInUser } from '../../features/auth/authReducer';
 import { ITransactions, IUserForList, IUserInfo } from '../models/models';
 import { Transaction, User } from '../services/agent';
 import { asyncActionFinish, asyncActionStart } from '../../features/async/asyncReducer';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { fetchTransaction } from '../../features/transaction/transactionReducer';
@@ -125,6 +126,9 @@ function MainMenu() {
     
     return (
         <Main.Navigator
+            screenOptions={{
+                headerStatusBarHeight: 0
+            }}
             initialRouteName={
                 authenticated ? "BottomTab" : "Authenticate"
             }
@@ -132,6 +136,7 @@ function MainMenu() {
             <Main.Screen
                 name="Authenticate" component={AuthNavigator}
                 options={defaultScreenOptions}
+                
             />
             <Main.Screen
                 options={defaultTabScreenOptions}

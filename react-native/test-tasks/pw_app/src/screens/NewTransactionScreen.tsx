@@ -8,6 +8,7 @@ import { updateCurrentUser } from '../features/auth/authReducer';
 import AppCard from '../features/transaction/AppCard';
 import TransactionList from '../features/transaction/TransactionList';
 import { createTransaction } from '../features/transaction/transactionReducer';
+import { AppHeaderRight } from '../features/header/AppHeader';
 
 interface IProps {
     currentUser: IUserInfo;
@@ -26,6 +27,10 @@ function NewTransactionScreen({
         username: "", amount: NaN 
     });
     const [visibleUsersList, setVisibleUsersList] = useState(false);
+
+    /* navigation.setOptions({
+        headerRight: () => <AppHeaderRight navigation={navigation} />
+    }); */
 
     return (
         <TouchableWithoutFeedback onPress={() => setVisibleUsersList(false)}>

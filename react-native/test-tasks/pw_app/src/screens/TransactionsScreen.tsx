@@ -4,6 +4,7 @@ import { IconButton, TextInput, Title } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { ITransaction } from '../app/models/models';
 import { IRootReducer } from '../app/store/rootReducer';
+import { AppHeaderRight } from '../features/header/AppHeader';
 import { ITransactionState } from '../features/transaction/transactionReducer';
 import TransactionSampleList from '../features/transaction/TransactionSampleList';
 import { THEME } from '../theme';

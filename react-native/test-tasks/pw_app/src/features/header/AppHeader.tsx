@@ -4,7 +4,11 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { AppHeaderIcon } from './AppHederIcon';
 import { THEME} from '../../theme';
 import { IUserInfo } from '../../app/models/models';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { signOutUser } from '../auth/authReducer';
+import AsyncStorage from '@react-native-community/async-storage';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ParamListBase } from '@react-navigation/native';
 
 interface IProps {
     currentUser?: IUserInfo;
@@ -26,14 +30,24 @@ export function AppHeader({ currentUser: _currentUser }: IProps) {
     );
 }
 
-export function AppHeaderRight() {
+export function AppHeaderRight({ navigation }:  { navigation: StackNavigationProp<ParamListBase> }) {
+    const dispatch = useDispatch();
+
+    console.log("AppHeaderRight", navigation);
+
+
     return (
         <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
             <Text style={styles.label}>Logout</Text>
             <Item
                 title="title"
                 iconName="logout"
-                onPress={() => console.log('message logout')}
+                onPress={async () => {
+                    console.log('message logout');
+                    dispatch(signOutUser());
+                    await AsyncStorage.removeItem('id_token');
+                    navigation.navigate("Authenticate")
+                }}
             />
         </HeaderButtons>
     );

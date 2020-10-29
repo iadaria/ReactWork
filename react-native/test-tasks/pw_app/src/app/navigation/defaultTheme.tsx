@@ -1,12 +1,10 @@
 import React from 'react';
-//import { Linking } from 'react-native';
-//import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-//import { AppHeaderIcon } from '../app/common/components/ui/AppHeaderIcon';
-//import ErrorToast from '../app/common/components/AppToast';
-import { DefaultTheme, NavigationHelpersContext } from '@react-navigation/native';
+import { DefaultTheme, } from '@react-navigation/native';
 import { THEME } from '../../theme';
-import { AppHeader, AppHeaderLeft, AppHeaderRight } from '../../features/header/AppHeader';
-import { Text } from 'react-native';
+import { AppHeader, AppHeaderRight } from '../../features/header/AppHeader';
+
+import { Header, StackHeaderProps, StackNavigationOptions } from '@react-navigation/stack';
+import { AppRegistry, Button, View } from 'react-native';
 
 export const defaultScreenOptions = {
     title: "Parrot Wings",
@@ -17,18 +15,21 @@ export const defaultScreenOptions = {
     headerTitleAlign: "center"
 };
 
-export const defaultTabScreenOptions = {
-    /* 
-        headerTitleAlign: "center",
-        headerTitleStyle: {
-            color: THEME.LIGHT_PRIMARY,
-            fontSize: THEME.DEFAULT_FONT_SIZE
-        },
-        title: "PW",
-        headerTintColor: "", 
-    */
-    headerRight: () => <AppHeaderRight />,
-    headerTitle: () => <AppHeader />
+export const defaultTabScreenOptions: StackNavigationOptions = {
+    headerTitle: () => <AppHeader />,
+    header: (props: StackHeaderProps): React.ReactNode => { // <Header {...props}/>{
+        const { scene, navigation } = props;
+        const { options: { headerRight } } = scene.descriptor;
+       
+        const newScene = {...scene};
+
+        /* newScene.descriptor.options.headerTitle = 
+            () => <AppHeader />; */
+        newScene.descriptor.options.headerRight = 
+            () => <AppHeaderRight navigation={navigation} />;
+
+        return <Header {...props} scene={newScene} />;
+    }
 }
 
 export const defaultTheme = {

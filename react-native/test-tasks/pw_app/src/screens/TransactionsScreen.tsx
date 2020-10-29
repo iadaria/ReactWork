@@ -3,14 +3,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import { IconButton, TextInput, Title } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { ITransaction } from '../app/models/models';
-import { IRootReducer } from '../app/store/rootReducer';
-import { AppHeaderRight } from '../features/header/AppHeader';
+import { IRootState } from '../app/store/rootReducer';
 import { ITransactionState } from '../features/transaction/transactionReducer';
 import TransactionSampleList from '../features/transaction/TransactionSampleList';
 import { THEME } from '../theme';
 
 export default function TransactionsScreen() {
-    const { transactions }: ITransactionState = useSelector<IRootReducer>(state => state.transaction);
+    const { transactions } 
+        = useSelector<IRootState>(state => state.transaction) as ITransactionState;
     const [searchUsername, setSearchUsername] = React.useState<string>('');
     const [filterDecrease, setFilterDecrease] = React.useState<number>(-1);
     const [toggle, setToggle] = React.useState<boolean>(false);

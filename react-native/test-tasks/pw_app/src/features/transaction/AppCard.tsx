@@ -8,6 +8,7 @@ import { ITransaction, ITransactionFormValues, IUserForList, IUserInfo } from '.
 import TextInputMask from 'react-native-text-input-mask';
 import { Transaction } from '../../app/services/agent';
 import { ErrorToast, InfoToast } from '../../app/common/components/AppToast';
+import { RenderProps } from 'react-native-paper/lib/typescript/src/components/TextInput/types';
 
 interface IError {
     error?: string;
@@ -26,13 +27,13 @@ interface IProps {
     initialTransaction: ITransactionFormValues & IError;
     newTransaction: (transaction: ITransaction) => void;
     updateCurrentUserInfo: (userInfo: IUserInfo) => void;
-
+    setInitialTransaction: (transaction: ITransactionFormValues) => void;
     visibleUsersList: boolean;
     setVisibleUsersList: (visible: boolean) => void;
 }
 
 export default function AppCard({
-    newTransaction, updateCurrentUserInfo, currentUser, initialTransaction, users, visibleUsersList, setVisibleUsersList
+    newTransaction, updateCurrentUserInfo, currentUser, initialTransaction, users, visibleUsersList, setVisibleUsersList, setInitialTransaction
 }: IProps) {
 
     const [searchUser, setSearchUser] = React.useState<string>('');
@@ -52,8 +53,9 @@ export default function AppCard({
 
             <Formik
                 initialValues={initialTransaction}
+                //initialTouched={{ username: true, amount: true}}
                 enableReinitialize={true}
-
+                validateOnChange={true}
                 validationSchema={Yup.object({
                     username: Yup.string().required(),
                     amount: Yup.number().min(1).required()
@@ -65,6 +67,10 @@ export default function AppCard({
                         const createdTransaction = await Transaction.create(values);
                         newTransaction(createdTransaction.trans_token);
                         InfoToast("Success the transaction");
+                        setInitialTransaction({
+                            username: "",
+                            amount: NaN,
+                        });
                         resetForm();
                         updateCurrentUserInfo({
                             ...currentUser,
@@ -81,9 +87,12 @@ export default function AppCard({
                 }}
             >
                 {({
-                    handleChange, handleBlur, handleSubmit, isSubmitting, isValid, dirty, errors, values, setFieldValue, resetForm,
+                    handleChange, handleBlur, handleSubmit, isSubmitting, isValid, dirty, errors, values, setFieldValue, resetForm, initialTouched, initialValues
                 }) => {
-                    const isDisabledSubmit = !isValid || !dirty || isSubmitting;
+                    const isDisabledSubmit = (!isValid  || !dirty || isSubmitting) && (!initialValues.amount)
+                    console.log(initialValues);
+                    console.log("initialvalues.amount", !initialValues.amount);
+
 
                     return (
                         <View>
@@ -148,7 +157,7 @@ export default function AppCard({
                                     type="number"
                                     label="Amount"
                                     placeholder="Enter the amount"
-                                    render={(props) => <TextInputMask
+                                    render={(props: RenderProps) => <TextInputMask
                                         {...props}
                                         mask={"[0000000] PW"}
                                     />}
@@ -166,7 +175,13 @@ export default function AppCard({
                             </Card.Content>
                             <Card.Actions>
                                 <Button
-                                    onPress={resetForm}
+                                    onPress={() => {
+                                        setInitialTransaction({
+                                            username: "",
+                                            amount: NaN,
+                                        });
+                                        resetForm();
+                                    }}
                                     disabled={isDisabledSubmit}
                                 >
                                     Cancel

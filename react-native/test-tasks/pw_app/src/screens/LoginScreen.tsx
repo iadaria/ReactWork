@@ -10,8 +10,16 @@ import { User } from '../app/services/agent';
 import { useDispatch } from 'react-redux';
 import { setToken  } from '../features/auth/authReducer';
 import AsyncStorage from '@react-native-community/async-storage';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ParamListBase } from '@react-navigation/native';
 
-export default function LoginScreen({ navigation }: any) {
+interface IError {
+    auth?: string;
+}
+
+export default function LoginScreen(
+    { navigation } : { navigation: StackNavigationProp<ParamListBase> }
+) {
     const dispatch = useDispatch();
     return (
         <View style={styles.viewRoot}>
@@ -23,10 +31,10 @@ export default function LoginScreen({ navigation }: any) {
                 }}
                 validationSchema={Yup.object({
                     email: Yup.string().required().email(),
-                    password: Yup.string().required()
+                    password: Yup.string().required().min(6).max(10)
                 })}
 
-                onSubmit={async (values: IUserFormValues, { setSubmitting, setErrors }) => {
+                onSubmit={async (values: IUserFormValues & IError, { setSubmitting, setErrors }) => {
                     console.log("[Formik Login Submit] values", values);
                     try {
                         const result: IAuthResult = await User.login(values);
@@ -34,20 +42,20 @@ export default function LoginScreen({ navigation }: any) {
                         
                         await AsyncStorage.setItem('id_token', result.id_token!);
                         dispatch(setToken(result.id_token!));
-
                         setSubmitting(false); // ?
-                        
                         navigation.navigate("BottomTab");
-        
                     } catch (error) {
-                        error.data && error.data.error && ErrorToast(error.data.error);
+                        if (error.data && error.data.error) {
+                            setErrors({ auth: error.data.error });
+                            ErrorToast(error.data.error);
+                        }
                         console.log('[Formik/submit/login/error]', JSON.stringify(error, null, 4));
                         setSubmitting(false);
                     }
                 }}
             >
                 {({
-                    handleChange, handleBlur, handleSubmit, isSubmitting, isValid, dirty, errors, values
+                    handleChange, handleBlur, handleSubmit, isSubmitting, isValid, dirty, errors, values, touched
                 }) => {
                     const isDisabledSubmit = !isValid || !dirty || isSubmitting;
                     return (
@@ -60,7 +68,7 @@ export default function LoginScreen({ navigation }: any) {
                                 onBlur={handleBlur('email')}
                                 value={values.email}
                             />
-                            {errors.email &&
+                            {errors.email && touched.email &&
                                 <Text style={styles.error}>
                                     {errors.email}
                                 </Text>
@@ -75,9 +83,15 @@ export default function LoginScreen({ navigation }: any) {
                                 value={values.password}
                                 secureTextEntry={true}
                             />
-                            {errors.password &&
+                            {errors.password && touched.password &&
                                 <Text style={styles.error}>
                                     {errors.password}
+                                </Text>
+                            }
+
+                            {errors.auth &&
+                                <Text style={{ color: THEME.ERROR_TEXT, textAlign: 'center'}}>
+                                    {errors.auth}
                                 </Text>
                             }
 
@@ -91,16 +105,16 @@ export default function LoginScreen({ navigation }: any) {
                                 Continue
                             </Button>
 
-                            {/* <View style={[styles.element, styles.rowElements]}>
+                            <View style={[styles.element, styles.rowElements]}>
                                 <Text style={styles.text}>Don't have an account?</Text>
                                 <Button
                                     style={[styles.element, styles.button, styles.buttonText]}
                                     mode="text"
-                                    onPress={() => console.log('Pressed')}
+                                    onPress={() => navigation.navigate("Register")}
                                 >
                                     Sign up
                                 </Button>
-                            </View> */}
+                            </View>
 
                         </View>
                     );

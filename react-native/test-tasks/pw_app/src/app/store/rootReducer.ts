@@ -4,14 +4,14 @@ import authReducer, { IAuthState } from "../../features/auth/authReducer";
 import transactionReducer, { ITransactionState } from "../../features/transaction/transactionReducer";
 import userReducer, { IUserState } from "../../features/user/userReducer";
 
-export interface IRootReducer {
+export interface IRootState {
     auth: IAuthState;
     async: IAsyncState;
     user: IUserState,
     transaction: ITransactionState;
 }
 
-const rootReducer = combineReducers<IRootReducer>({
+const rootReducer = combineReducers<IRootState>({
     auth: authReducer,
     async: asyncReducer,
     user: userReducer,

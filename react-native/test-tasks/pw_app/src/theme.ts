@@ -19,5 +19,5 @@ export const THEME = {
 
     DEFAULT_FONT_SIZE: 16,
     TITLE_FONT_SIZE: 25,
-    TITLE_BIG: 40,
+    TITLE_BIG: 30,
 };

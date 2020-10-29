@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 
 import { ITransaction, ITransactionFormValues, IUserForList, IUserInfo } from '../app/models/models';
 import {  TouchableWithoutFeedback, View } from 'react-native';
-import { IRootReducer } from '../app/store/rootReducer';
 import { updateCurrentUser } from '../features/auth/authReducer';
 import AppCard from '../features/transaction/AppCard';
 import TransactionList from '../features/transaction/TransactionList';
 import { createTransaction } from '../features/transaction/transactionReducer';
-import { AppHeaderRight } from '../features/header/AppHeader';
+import { IRootState } from '../app/store/rootReducer';
 
 interface IProps {
     currentUser: IUserInfo;
@@ -17,7 +16,6 @@ interface IProps {
     addTransaction: (transaction: ITransaction) => void;
     updateCurrentUserInfo: (userInfo: IUserInfo) => void,
     navigation: any;
-
 }
 
 function NewTransactionScreen({
@@ -27,10 +25,6 @@ function NewTransactionScreen({
         username: "", amount: NaN 
     });
     const [visibleUsersList, setVisibleUsersList] = useState(false);
-
-    /* navigation.setOptions({
-        headerRight: () => <AppHeaderRight navigation={navigation} />
-    }); */
 
     return (
         <TouchableWithoutFeedback onPress={() => setVisibleUsersList(false)}>
@@ -43,6 +37,7 @@ function NewTransactionScreen({
                     users={users}
                     visibleUsersList={visibleUsersList}
                     setVisibleUsersList={setVisibleUsersList}
+                    setInitialTransaction={setInitialTransaction}
                 />
 
                 <TransactionList 
@@ -55,7 +50,7 @@ function NewTransactionScreen({
     );
 }
 
-const mapStateToProps = (state: IRootReducer, ownProps: any) => ({
+const mapStateToProps = (state: IRootState, ownProps: any) => ({
     users: state.user.users,
     transactions: state.transaction.transactions,
     currentUser: state.auth.currentUser!

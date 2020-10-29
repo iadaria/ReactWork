@@ -3,14 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { IconButton, TextInput, Title } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { IUserForList } from '../app/models/models';
-import { IRootReducer } from '../app/store/rootReducer';import { AppHeaderRight } from '../features/header/AppHeader';
-;
+import { IRootState } from '../app/store/rootReducer';
 import { IUserState } from '../features/user/userReducer';
 import UsersList from '../features/user/UsersList';
 import { THEME } from '../theme';
 
 export default function UsersScreen() {
-    const { users }: IUserState = useSelector<IRootReducer>(state => state.user);
+    const { users } = useSelector<IRootState>(state => state.user) as IUserState;
     const [searchUsername, setSearchUsername] = React.useState<string>('');
     const [filterDecrease, setFilterDecrease] = React.useState<number>(-1);
     const [toggle, setToggle] = React.useState<boolean>(false);

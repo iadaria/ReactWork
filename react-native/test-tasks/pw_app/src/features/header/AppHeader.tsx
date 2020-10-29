@@ -3,19 +3,20 @@ import { StyleSheet, Text, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { AppHeaderIcon } from './AppHederIcon';
 import { THEME} from '../../theme';
-import { IUserInfo } from '../../app/models/models';
+import { IAuthResult, IUserInfo } from '../../app/models/models';
 import { useDispatch, useSelector } from 'react-redux';
-import { signOutUser } from '../auth/authReducer';
+import { IAuthState, signOutUser } from '../auth/authReducer';
 import AsyncStorage from '@react-native-community/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ParamListBase } from '@react-navigation/native';
+import { IRootState } from '../../app/store/rootReducer';
 
 interface IProps {
     currentUser?: IUserInfo;
 }
 
-export function AppHeader({ currentUser: _currentUser }: IProps) {
-    const { currentUser } = useSelector(state => state.auth)
+export function AppHeader() {
+    const { currentUser } = useSelector<IRootState>(state => state.auth) as IAuthState;
 
     return (
         <View style={styles.line}>
@@ -30,12 +31,8 @@ export function AppHeader({ currentUser: _currentUser }: IProps) {
     );
 }
 
-export function AppHeaderRight({ navigation }:  { navigation: StackNavigationProp<ParamListBase> }) {
+export function AppHeaderRight({ navigation } : { navigation: StackNavigationProp<ParamListBase> }) {
     const dispatch = useDispatch();
-
-    console.log("AppHeaderRight", navigation);
-
-
     return (
         <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
             <Text style={styles.label}>Logout</Text>
@@ -46,7 +43,7 @@ export function AppHeaderRight({ navigation }:  { navigation: StackNavigationPro
                     console.log('message logout');
                     dispatch(signOutUser());
                     await AsyncStorage.removeItem('id_token');
-                    navigation.navigate("Authenticate")
+                    navigation.navigate("Authenticate");
                 }}
             />
         </HeaderButtons>
@@ -58,7 +55,6 @@ const styles = StyleSheet.create({
     label: {
         alignSelf: 'center',
         color: '#fff',
-        //borderWidth: 1, borderColor: 'red',
         fontSize: THEME.DEFAULT_FONT_SIZE
     },
     line: {

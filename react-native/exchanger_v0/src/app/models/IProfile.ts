@@ -1,5 +1,7 @@
-export interface IProfile {
-    id: string,
+import { Identifier } from "./common";
+
+export interface IProfile extends Identifier {
+    //id: string,
     displayName: string,
     createdAt: Date,
     description: string,

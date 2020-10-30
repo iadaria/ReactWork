@@ -2,17 +2,15 @@ import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { tempID } from '../common/utils/utils';
 import firebase from '../config/firebase'; 
+import { Identifier } from '../models/common';
 import { IUser } from '../models/IUser';
 
 const db = firebase.firestore(); //It's for Web
 
 /************************ Common ****************************/
-export function dataFromSnapshot(snapshot: FirebaseFirestoreTypes.DocumentSnapshot) : Object | null {
+
+export function dataFromSnapshot<T extends Identifier>(snapshot: FirebaseFirestoreTypes.DocumentSnapshot) : T {
     
-    if (!snapshot || !snapshot.exists) {
-        console.log('snapshot', snapshot);
-        return null;//undefined;
-    }
     const data: FirebaseFirestoreTypes.DocumentData | undefined = snapshot.data();
 
     for (const prop in data) {
@@ -27,7 +25,7 @@ export function dataFromSnapshot(snapshot: FirebaseFirestoreTypes.DocumentSnapsh
         ...data, //data hasn't id
         id: snapshot.id 
     }; 
-    return newObj;
+    return newObj as T;
 }
 
 /************************ Profile ***************************/

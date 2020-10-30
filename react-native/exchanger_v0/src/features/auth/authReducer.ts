@@ -1,6 +1,12 @@
+import { DefaultUserValues, IUser } from "../../app/models/IUser";
 import { SIGN_IN_USER, SIGN_OUT_USER } from "./authConstants";
 
-const initialState = {
+export interface IUserState {
+    authenticated: boolean;
+    currentUser: IUser | null;
+}
+
+const initialState: IUserState = {
     authenticated: false,
     currentUser: null,
 
@@ -8,7 +14,10 @@ const initialState = {
     //currentScreen: null
 };
 
-export default function authReducer(state = initialState, { type, payload }) {
+export default function authReducer(
+    state: IUserState = initialState, 
+    { type, payload } : { type: string, payload: any } = { type: "", payload: undefined }
+): IUserState {
 
     switch(type) {
 
@@ -17,12 +26,12 @@ export default function authReducer(state = initialState, { type, payload }) {
                 ...state,
                 authenticated: true,
                 currentUser: {
-                    email: payload.email || "",
-                    displayName: payload.displayName,
-                    photoURL: payload.photoURL || '',
+                    ...DefaultUserValues,
                     uid: payload.uid,
+                    displayName: payload.displayName,
+                    email: payload.email,           
+                    photoURL: payload.photoURL,
                     providerId: payload.providerData[0].providerId,
-                    rating: null
                 }
             };
 

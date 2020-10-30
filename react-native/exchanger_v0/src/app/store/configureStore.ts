@@ -33,3 +33,7 @@ export function configureStore() {
 
     return store;
 }
+
+const _ = configureStore();
+
+export type AppDispatch = typeof _.dispatch;

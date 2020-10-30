@@ -11,10 +11,11 @@ import { IUserByProvider } from "../../app/models/IUser";
 import { IAction } from "../../app/models/common";
 import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
 import { IProfile } from "../../app/models/IProfile";
+import { AppDispatch } from "../../app/store/configureStore";
 
 export function verifyAuth() {
 
-    return function (dispatch: any) {
+    return function (dispatch: AppDispatch) {
         //Adds an observer for changes to the user's sign-in state.
         return auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null ) => {
             console.log(getColorText('event autherization was involved', "", "magenta"))

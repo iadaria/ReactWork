@@ -17,7 +17,7 @@ export function asyncActionFinish() {
     };
 }
 
-export function asyncActionError(error) {
+export function asyncActionError(error: string) {
     console.log('error from asyncReducer', error);
     return {
         type: ASYNC_ACTION_ERROR,
@@ -26,13 +26,22 @@ export function asyncActionError(error) {
 }
 
 /***************** Async reducer **********************/
-const initialState = {
+export interface IAsyncState {
+    loading: boolean;
+    error: string | null;
+    initialized: boolean;
+}
+
+const initialState: IAsyncState = {
     loading: false,
     error: null,
     initialized: false
 };
 
-export default function asyncReducer( state = initialState, { type, payload } ) {
+export default function asyncReducer( 
+    state: IAsyncState = initialState, 
+    { type, payload } : { type: string, payload: any} = { type: "", payload: undefined }
+) : IAsyncState {
     switch(type) {
 
         case ASYNC_ACTION_START:
@@ -45,7 +54,7 @@ export default function asyncReducer( state = initialState, { type, payload } ) 
         case ASYNC_ACTION_FINISH:
             return {
                 ...state,
-                lading: false
+                loading: false
             };
         
         case ASYNC_ACTION_ERROR:

@@ -33,23 +33,3 @@ export function configureStore() {
 
     return store;
 }
-
-/* 
-    let middlewaresToApply = [];
-    if (__DEV__) {
-        const createFlipperDebugger = require('redux-flipper').default;
-        middlewaresToApply.push(createFlipperDebugger());
-    }
-
-    const middleware = applyMiddleware(...middlewaresToApply, ...[thunk]);
-    const store = createStore(
-        rootReducer,
-        middleware
-    );
-*/
-/* 
-    const store = createStore(
-        rootReducer, 
-        composeWithDevTools(applyMiddleware(thunk))
-    );
-*/

@@ -128,13 +128,6 @@ export default function RegisterScreen(
                                 >
                                     Sign in
                                 </Button>
-                                <Button
-                                    style={[styles.element, styles.button, styles.buttonText]}
-                                    mode="text"
-                                    onPress={() => navigation.navigate("BottomTab")}
-                                >
-                                    Go to BottomTab
-                                </Button>
                             </View>
 
                         </View>

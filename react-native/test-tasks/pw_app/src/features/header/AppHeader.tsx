@@ -35,7 +35,7 @@ export function AppHeaderRight({ navigation } : { navigation: StackNavigationPro
     const dispatch = useDispatch();
     return (
         <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-            <Text style={styles.label}>Logout</Text>
+            {/* <Text style={styles.label}>Logout</Text> */}
             <Item
                 title="title"
                 iconName="logout"

@@ -1,3 +1,16 @@
+export interface IUserByProvider {
+    displayName: string | null;
+    email: string | null;
+    emailVerified: boolean;
+    isAnonymous: boolean;
+    //metadata: UserMetadata;
+    phoneNumber: string | null;
+    photoURL: string | null;
+    providerId: string;
+    uid: string;
+}
+
+
 export interface IUser {
     uid: string | null,
     displayName: string,
@@ -10,6 +23,7 @@ export interface IUser {
     dislike: number,
     
     providerId: string | null,
+    emailVerified: boolean;
 }
 
 export const DefaultUserValues: IUser = {
@@ -23,5 +37,6 @@ export const DefaultUserValues: IUser = {
     like: 0,
     dislike: 0,
 
-    providerId: null
+    providerId: null,
+    emailVerified: false,
 };

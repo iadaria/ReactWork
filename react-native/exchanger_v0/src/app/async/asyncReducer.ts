@@ -1,3 +1,5 @@
+import { IAction } from "../models/common";
+
 /***************** Async constants ********************/
 const ASYNC_ACTION_START = 'ASYNC_ACTION_START';
 const ASYNC_ACTION_FINISH = 'ASYNC_ACTION_FINISH';
@@ -40,7 +42,7 @@ const initialState: IAsyncState = {
 
 export default function asyncReducer( 
     state: IAsyncState = initialState, 
-    { type, payload } : { type: string, payload: any} = { type: "", payload: undefined }
+    { type, payload }: IAction = { type: "", payload: undefined }
 ) : IAsyncState {
     switch(type) {
 

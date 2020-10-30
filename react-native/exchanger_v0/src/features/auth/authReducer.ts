@@ -1,3 +1,4 @@
+import { IAction } from "../../app/models/common";
 import { DefaultUserValues, IUser } from "../../app/models/IUser";
 import { SIGN_IN_USER, SIGN_OUT_USER } from "./authConstants";
 
@@ -16,7 +17,7 @@ const initialState: IUserState = {
 
 export default function authReducer(
     state: IUserState = initialState, 
-    { type, payload } : { type: string, payload: any } = { type: "", payload: undefined }
+    { type, payload } : IAction = { type: "", payload: undefined }
 ): IUserState {
 
     switch(type) {

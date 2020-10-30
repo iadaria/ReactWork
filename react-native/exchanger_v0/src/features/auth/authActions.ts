@@ -2,22 +2,25 @@ import {
     SIGN_IN_USER, 
     SIGN_OUT_USER } from "./authConstants";
 //import firebase from '../../app/config/firebase'; //It's for Web
-import auth from '@react-native-firebase/auth'; // For RN
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'; // For RN
 import { dataFromSnapshot, getUserProfile } from "../../app/firestore/firestoreService";
 import { listenToCurrentUserProfile } from "../profiles/profileActions";
 import { APP_LOADED } from "../../app/async/asyncReducer";
 import { getColorText } from "../../app/common/utils/utils";
+import { IUser, IUserByProvider } from "../../app/models/IUser";
+import { IAction } from "../../app/models/common";
+import { Dispatch } from "react";
 
 export function verifyAuth() {
-    return function (dispatch) {
+    return function (dispatch: Dispatch<any>) {
         //Adds an observer for changes to the user's sign-in state.
-        return auth().onAuthStateChanged(user => {
+        return auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null ) => {
             console.log(getColorText('event autherization was involved', "", "magenta"))
-            // If user sign in
             //let unsubscribe = () => {};
             if (user) {
+                const _user: IUserByProvider = user as IUserByProvider;
                 console.log(getColorText('authAction =>user signed in successfully', "", "magenta"));
-                dispatch(signInUser(user));
+                dispatch(signInUser(_user));
                 const profileRef = getUserProfile(user.uid);
                 profileRef?.onSnapshot(snapshot => {
                     snapshot && console.log('verifyAuth -> profileRef.onSnapshot event', snapshot.metadata);
@@ -36,14 +39,14 @@ export function verifyAuth() {
     };
 }
 
-export function signInUser(user) {
+export function signInUser(user: IUserByProvider): IAction  {
     return {
         type: SIGN_IN_USER,
         payload: user
     };
 }
 
-export function signOutUser() {
+export function signOutUser(): IAction {
     return {
         type: SIGN_OUT_USER
     };

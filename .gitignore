@@ -1,8 +1,13 @@
 AndroidManifest.xml
 
+ios
+android
+
 /temp
 /react-native/debug_test_v01
 /react-native/debug_test_v02
+
+react-native/exchanger_v0_server/config/exchanger-v0-firebase-adminsdk-7k4pn-a430bc4932.json
 
 #data for login
 /server/config/

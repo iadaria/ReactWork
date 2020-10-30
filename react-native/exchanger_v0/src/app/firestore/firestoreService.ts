@@ -13,21 +13,21 @@ export function dataFromSnapshot(snapshot: FirebaseFirestoreTypes.DocumentSnapsh
         console.log('snapshot', snapshot);
         return null;//undefined;
     }
-    const data = snapshot.data();
+    const data: FirebaseFirestoreTypes.DocumentData | undefined = snapshot.data();
 
     for (const prop in data) {
         if (data.hasOwnProperty(prop)) {
-            //if (data[prop] instanceof firebase.firestore.Timestamp) {
             if (data[prop] instanceof firebase.firestore.Timestamp) {
                 data[prop] = data[prop].toDate();
             }
         }
     }
 
-    return {
-        ...data,
-        id: snapshot.id //data hasn't id
-    };
+    const newObj = {
+        ...data, //data hasn't id
+        id: snapshot.id 
+    }; 
+    return newObj;
 }
 
 /************************ Profile ***************************/

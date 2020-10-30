@@ -7,12 +7,14 @@ import { dataFromSnapshot, getUserProfile } from "../../app/firestore/firestoreS
 import { listenToCurrentUserProfile } from "../profiles/profileActions";
 import { APP_LOADED } from "../../app/async/asyncReducer";
 import { getColorText } from "../../app/common/utils/utils";
-import { IUser, IUserByProvider } from "../../app/models/IUser";
+import { IUserByProvider } from "../../app/models/IUser";
 import { IAction } from "../../app/models/common";
-import { Dispatch } from "react";
+import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
+import { IProfile } from "../../app/models/IProfile";
 
 export function verifyAuth() {
-    return function (dispatch: Dispatch<any>) {
+
+    return function (dispatch: any) {
         //Adds an observer for changes to the user's sign-in state.
         return auth().onAuthStateChanged((user: FirebaseAuthTypes.User | null ) => {
             console.log(getColorText('event autherization was involved', "", "magenta"))
@@ -22,10 +24,11 @@ export function verifyAuth() {
                 console.log(getColorText('authAction =>user signed in successfully', "", "magenta"));
                 dispatch(signInUser(_user));
                 const profileRef = getUserProfile(user.uid);
-                profileRef?.onSnapshot(snapshot => {
+                profileRef?.onSnapshot((snapshot: FirebaseFirestoreTypes.DocumentSnapshot) => {
                     snapshot && console.log('verifyAuth -> profileRef.onSnapshot event', snapshot.metadata);
-                    dispatch(
-                        listenToCurrentUserProfile(dataFromSnapshot(snapshot))
+                    
+                    snapshot.exists && dispatch(
+                        listenToCurrentUserProfile(dataFromSnapshot<IProfile>(snapshot))
                     );
                 },
                 error => console.log('error update Profile', error));

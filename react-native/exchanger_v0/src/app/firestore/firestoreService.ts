@@ -9,7 +9,9 @@ const db = firebase.firestore(); //It's for Web
 
 /************************ Common ****************************/
 
-export function dataFromSnapshot<T extends Identifier>(snapshot: FirebaseFirestoreTypes.DocumentSnapshot) : T {
+export function dataFromSnapshot<T extends Identifier>(
+    snapshot: FirebaseFirestoreTypes.DocumentSnapshot
+) : T {
     
     const data: FirebaseFirestoreTypes.DocumentData | undefined = snapshot.data();
 
@@ -21,11 +23,10 @@ export function dataFromSnapshot<T extends Identifier>(snapshot: FirebaseFiresto
         }
     }
 
-    const newObj = {
+    return {
         ...data, //data hasn't id
         id: snapshot.id 
-    }; 
-    return newObj as T;
+    } as T; 
 }
 
 /************************ Profile ***************************/

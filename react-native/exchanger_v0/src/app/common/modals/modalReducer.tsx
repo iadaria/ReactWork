@@ -6,14 +6,14 @@ const OPEN_MODAL = "OPEN_MODAL";
 const CLOSE_MODAL = "CLOSE_MODAL";
 
 /**************** Actions ***********************/
-export function openModal(payload) {
+export function openModal(payload: IModalState) {
     return {
         type: OPEN_MODAL,
         payload
     };
 }
 
-export function closeModal(payload) {
+export function closeModal() {
     return {
         type: CLOSE_MODAL
     };
@@ -22,7 +22,7 @@ export function closeModal(payload) {
 /***************** Reducer ********************/
 export interface IModalState {
     modalType?: string | null;
-    modalProps?: string | null;
+    modalProps?: object | null;
 }
 
 const initialState: IModalState = {};

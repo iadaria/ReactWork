@@ -2,12 +2,12 @@ import { IAction } from "../../app/models/common";
 import { DefaultUserValues, IUser } from "../../app/models/IUser";
 import { SIGN_IN_USER, SIGN_OUT_USER } from "./authConstants";
 
-export interface IUserState {
+export interface IAuthState {
     authenticated: boolean;
     currentUser: IUser | null;
 }
 
-const initialState: IUserState = {
+const initialState: IAuthState = {
     authenticated: false,
     currentUser: null,
 
@@ -16,9 +16,9 @@ const initialState: IUserState = {
 };
 
 export default function authReducer(
-    state: IUserState = initialState, 
+    state: IAuthState = initialState, 
     { type, payload } : IAction = { type: "", payload: undefined }
-): IUserState {
+): IAuthState {
 
     switch(type) {
 

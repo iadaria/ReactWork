@@ -91,3 +91,8 @@ export function generateUniqName(usersNames) {
     }
     return uniqNewName;
 }
+
+export function isEmpty(obj: Object) {
+    for(const _: string in obj) return false;
+    return true
+}

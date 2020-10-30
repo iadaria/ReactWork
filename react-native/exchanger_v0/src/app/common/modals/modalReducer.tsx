@@ -1,3 +1,6 @@
+import { useGestureHandlerRef } from "@react-navigation/stack";
+import { IAction } from "../../models/common";
+
 /****************** CONST ***********************/
 const OPEN_MODAL = "OPEN_MODAL";
 const CLOSE_MODAL = "CLOSE_MODAL";
@@ -17,16 +20,29 @@ export function closeModal(payload) {
 }
 
 /***************** Reducer ********************/
-const initialState = null;
+export interface IModalState {
+    modalType?: string | null;
+    modalProps?: string | null;
+}
 
-export default function modalReducer(state = initialState, { type, payload }) {
+const initialState: IModalState = {};
+
+/* const initialState: IModalState = {
+    modalType: null,
+    modalProps: null,
+}; */
+
+export default function modalReducer(
+    state: IModalState = initialState, 
+    { type, payload } : IAction = { type: "", payload: undefined}
+): IModalState {
     switch(type) {
         case OPEN_MODAL:
             const {modalType, modalProps} = payload;
             return {modalType, modalProps};
 
         case CLOSE_MODAL:
-            return null
+            return {}
 
         default: return state;
     }

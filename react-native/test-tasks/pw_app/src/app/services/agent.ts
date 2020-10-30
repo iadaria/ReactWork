@@ -4,7 +4,7 @@ import { IAuthResult,  ICreatedTransaction, IFilter, ITransactionFormValues,  IT
 import AsyncStorage from '@react-native-community/async-storage';
 
 axios.defaults.baseURL = 'http://192.168.1.82:3001';
-//xios.defaults.baseURL = 'http://127.0.0.1:3001';
+//axios.defaults.baseURL = 'https://rntest.iadaria.best';
 axios.defaults.timeout = 5000;
 axios.defaults.timeoutErrorMessage = "Network Error";
 
@@ -20,15 +20,12 @@ axios.interceptors.response.use(undefined, error => {
     if (error.message === 'Network Error' && !error.response) {
         Toast.ErrorToast('Network error - make sure API is running!');
     }
-    //console.log("[agen.ts]", JSON.stringify(error, null, 4));
 
     const {status, data, config, headers} = error.response;
 
     if (status === 401 && 
         headers['www-authenticate'] === 'Bearer error="invalid_token", error_description="The token is expired"'
     ) {
-        //window.localStorage.removeItem('jwt');
-        //history.push('/');
         Toast.InfoToast('Your session has expired, please login again');
     }
 
@@ -49,7 +46,6 @@ axios.interceptors.response.use(undefined, error => {
 const responseBody = async (response: AxiosResponse) => {
     //console.log("[agent responseBody]", JSON.stringify({response}, null, 4));
     //console.log("[agent responseBody.data]", JSON.stringify(response.data, null, 4));
-    //console.log("[agent responseBody.data.data]", JSON.stringify(response.data?.data, null, 4));
     
     if (response.data?.data) {
         return response.data?.data;
@@ -58,7 +54,7 @@ const responseBody = async (response: AxiosResponse) => {
     return await response.data;
 }
 
-const headers: AxiosRequestConfig = {
+const appHeaders: AxiosRequestConfig = {
     headers: {
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
@@ -68,7 +64,7 @@ const headers: AxiosRequestConfig = {
 
 const requests = {
     get: (url: string) => axios.get(url).then(responseBody),
-    post: (url: string, body: {}) => axios.post(url, body, headers).then(responseBody)
+    post: (url: string, body: {}) => axios.post(url, body, appHeaders).then(responseBody)
 };
 
 const User = {

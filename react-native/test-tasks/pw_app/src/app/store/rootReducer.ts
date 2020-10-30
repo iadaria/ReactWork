@@ -18,4 +18,7 @@ const rootReducer = combineReducers<IRootState>({
     transaction: transactionReducer,
 });
 
-export default rootReducer;
+export default (state: IRootState, action: any) =>
+    rootReducer(action.type === 'SIGN_OUT_USER' ? undefined : state, action);
+
+//export default rootReducer;

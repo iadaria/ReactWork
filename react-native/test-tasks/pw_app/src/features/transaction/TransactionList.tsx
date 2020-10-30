@@ -28,7 +28,6 @@ export default function TransactionList({ title, transactions, setInitialTransac
             renderItem={({ item: transaction }) => (
                 <List.Item
                     onPress={() => {
-                        console.log('press and init transaction', {transaction});
                         const func = () => setInitialTransaction({ 
                             username: transaction.username,
                             amount: Number(transaction.amount)
@@ -45,8 +44,8 @@ export default function TransactionList({ title, transactions, setInitialTransac
                     left={props => <List.Icon {...props} icon="credit-card-check-outline" color="green" />}
                 />
             )}
-            renderSectionHeader={({ section: { title } }) => (
-                <Text style={styles.title}>{title}</Text>
+            renderSectionHeader={({ section: { title: _title } }) => (
+                <Text style={styles.title}>{_title}</Text>
             )}
         />
     );

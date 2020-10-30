@@ -28,7 +28,6 @@ export function setToken(id_token: string) {
 }
 
 export function updateCurrentUser(user: IUserInfo) {
-    console.log("updateUser", {user});
     return {
         type: UPDATE_CURRENT_USER,
         payload: user

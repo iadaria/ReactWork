@@ -35,22 +35,24 @@ export default function LoginScreen(
                 })}
 
                 onSubmit={async (values: IUserFormValues & IError, { setSubmitting, setErrors }) => {
-                    console.log("[Formik Login Submit] values", values);
                     try {
-                        const result: IAuthResult = await User.login(values);
-                        console.log('login', result);        
+                        const result: IAuthResult = await User.login(values);        
                         
                         await AsyncStorage.setItem('id_token', result.id_token!);
                         dispatch(setToken(result.id_token!));
-                        setSubmitting(false); // ?
-                        navigation.navigate("BottomTab");
+
+                        //navigation.goBack();
                     } catch (error) {
                         if (error.data && error.data.error) {
                             setErrors({ auth: error.data.error });
                             ErrorToast(error.data.error);
                         }
-                        console.log('[Formik/submit/login/error]', JSON.stringify(error, null, 4));
-                        setSubmitting(false);
+                        else { 
+                            console.log('[Formik/submit/login/error]', JSON.stringify(error, null, 4));
+                        }
+                       
+                    } finally {
+                        setSubmitting(false)
                     }
                 }}
             >

@@ -22,7 +22,6 @@ export default function useAbortableEffect<T>(
         query()
             .then((result: T) => {
                 result && data(result);
-                console.log("useAbortableEffect", result);
             })
             .catch(error => console.log("[useAbortableEffect", error))
             .finally(() => dispatch(asyncActionFinish()));

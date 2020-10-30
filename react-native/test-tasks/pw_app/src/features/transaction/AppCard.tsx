@@ -62,7 +62,6 @@ export default function AppCard({
                 })}
 
                 onSubmit={async (values: ITransactionFormValues & IError, { setSubmitting, setErrors, resetForm }) => {
-                    console.log("[Formik Create a Transaction Submit] values", values);
                     try {
                         const createdTransaction = await Transaction.create(values);
                         newTransaction(createdTransaction.trans_token);
@@ -90,9 +89,6 @@ export default function AppCard({
                     handleChange, handleBlur, handleSubmit, isSubmitting, isValid, dirty, errors, values, setFieldValue, resetForm, initialTouched, initialValues
                 }) => {
                     const isDisabledSubmit = (!isValid  || !dirty || isSubmitting) && (!initialValues.amount)
-                    console.log(initialValues);
-                    console.log("initialvalues.amount", !initialValues.amount);
-
 
                     return (
                         <View>

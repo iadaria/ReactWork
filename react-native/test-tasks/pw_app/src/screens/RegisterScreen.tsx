@@ -37,26 +37,22 @@ export default function RegisterScreen(
                 })}
 
                 onSubmit={async (values: IUserFormValues & IError, { setSubmitting, setErrors }) => {
-                    console.log("[Formik Register Submit] values", values);
                     try {
                         const result: IAuthResult = await User.register(values);
-                        console.log('register', result);        
-                        
+
                         await AsyncStorage.setItem('id_token', result.id_token!);
                         dispatch(setToken(result.id_token!));
-                        navigation.navigate("BottomTab");
-                        setSubmitting(false);
         
                     } catch (error) {
                         if (error.data && error.data.error) {
                             setErrors({ register: error.data.error});
                             ErrorToast(error.data.error);
                         } else {
-                            setErrors({ register: "Server Error"})
+                            setErrors({ register: "Server Error"});
+                            console.log('[Formik/submit/register/error]', JSON.stringify(error, null, 4));
                         }
-                        console.log('[Formik/submit/register/error]', JSON.stringify(error, null, 4));
-                        setSubmitting(false);
-                    }
+                        
+                    } finally { setSubmitting(false);}
                 }}
             >
                 {({
@@ -131,6 +127,13 @@ export default function RegisterScreen(
                                     onPress={() => navigation.navigate("Login")}
                                 >
                                     Sign in
+                                </Button>
+                                <Button
+                                    style={[styles.element, styles.button, styles.buttonText]}
+                                    mode="text"
+                                    onPress={() => navigation.navigate("BottomTab")}
+                                >
+                                    Go to BottomTab
                                 </Button>
                             </View>
 

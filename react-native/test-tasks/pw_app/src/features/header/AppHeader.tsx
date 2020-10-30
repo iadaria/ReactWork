@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { AppHeaderIcon } from './AppHederIcon';
 import { THEME} from '../../theme';
-import { IAuthResult, IUserInfo } from '../../app/models/models';
+import { IUserInfo } from '../../app/models/models';
 import { useDispatch, useSelector } from 'react-redux';
 import { IAuthState, signOutUser } from '../auth/authReducer';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -40,7 +40,6 @@ export function AppHeaderRight({ navigation } : { navigation: StackNavigationPro
                 title="title"
                 iconName="logout"
                 onPress={async () => {
-                    console.log('message logout');
                     dispatch(signOutUser());
                     await AsyncStorage.removeItem('id_token');
                     navigation.navigate("Authenticate");

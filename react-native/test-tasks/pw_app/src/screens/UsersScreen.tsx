@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { IconButton, TextInput, Title } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { IUserForList } from '../app/models/models';

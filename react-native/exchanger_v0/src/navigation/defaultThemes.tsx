@@ -5,8 +5,9 @@ import { AppHeaderIcon } from '../app/common/components/ui/AppHeaderIcon';
 import ErrorToast from '../app/common/components/AppToast';
 import { DefaultTheme } from '@react-navigation/native';
 import { THEME } from '../theme';
+import { StackNavigationOptions } from '@react-navigation/stack';
 
-export const defaultScreenOptions = {
+export const defaultScreenOptions: StackNavigationOptions = {
     title: THEME.COMPANI_NAME,
     headerStyle: {
         backgroundColor: THEME.MAIN_COLOR
@@ -15,7 +16,7 @@ export const defaultScreenOptions = {
     headerTitleAlign: "center"
 };
 
-export const defaultTabScreenOptions = {
+export const defaultTabScreenOptions: StackNavigationOptions = {
     ...defaultScreenOptions,
     headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>

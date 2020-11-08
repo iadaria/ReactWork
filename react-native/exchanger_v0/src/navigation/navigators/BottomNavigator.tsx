@@ -1,37 +1,26 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, AppState, AppStateStatus } from 'react-native';
 import { useSelector } from "react-redux";
-import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import UnauthScreen from '../screens/UnauthScreen';
-import DealsScreen from '../screens/DealsScreen';
-import TradeListScreen from '../screens/TradeListScreen';
-import PersonalAdsScreen from '../screens/PersonalAdsScreen';
-import PersonalCabinetScreen from '../screens/PersonalCabinetScreen';
-import { THEME } from "../theme";
-import { defaultTabScreenOptions } from "./AppNavigationTheme";
-
-const Tab = createBottomTabNavigator();
-const Deals = createStackNavigator();
-const TradeList = createStackNavigator();
-const PersonalAds = createStackNavigator();
-const PersonalCabinet = createStackNavigator();
-const Unauth = createStackNavigator();
-
-import HttpService from '../app/services/HttpService';
+import { THEME } from "../../theme";
+import HttpService from '../../app/services/HttpService';
 import { 
     getInfoConnectedRef, 
     getUserUidRef, 
     testUpdateUserInOutUseEffect, 
     updateUserAppState, 
-    updateUserToken } from '../app/firestore/firebaseService';
-import firebase from '../app/config/firebase';
-import { getColorText } from '../app/common/utils/utils';
+    updateUserToken } from '../../app/firestore/firebaseService';
+import firebase from '../../app/config/firebase';
+import { getColorText } from '../../app/common/utils/utils';
 
 import messaging from '@react-native-firebase/messaging';
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
+import DealsNavigator from './DealsNavigators';
+import UnauthNavigator from './UnauthNavigator';
+import TradeListNavigator from './TradeListNavigator';
+import PersonalAdsNavigator from './PersonalAdsNavigator';
+import PersonalCabinetNavigator from './PersonalCabinetNavigator';
 
 export default function BottomNavigator({ navigation }: any) {
     const appState = useRef(AppState.currentState);
@@ -181,6 +170,7 @@ export default function BottomNavigator({ navigation }: any) {
         return null;
     } */
 
+    const Tab = createBottomTabNavigator();
     return (
         <Tab.Navigator
             initialRouteName={initialRoute}
@@ -231,74 +221,3 @@ export default function BottomNavigator({ navigation }: any) {
         </Tab.Navigator>
     );
 }
-
-function DealsNavigator() {
-    return (
-        <Deals.Navigator>
-            <Deals.Screen name="Deals" component={DealsScreen} />
-            {/* <Deals.Screen name="Else in this part navigation" component={theOther} /> */}
-        </Deals.Navigator>
-    );
-}
-
-function TradeListNavigator() {
-    return (
-        <TradeList.Navigator>
-            <TradeList.Screen name="TradeList" component={TradeListScreen} />
-        </TradeList.Navigator>
-    );
-}
-
-function PersonalAdsNavigator() {
-    return (
-        <PersonalAds.Navigator>
-            <PersonalAds.Screen name="PersonalAds" component={PersonalAdsScreen} />
-        </PersonalAds.Navigator>
-    );
-}
-
-function PersonalCabinetNavigator() {
-    return (
-        <PersonalCabinet.Navigator>
-            <PersonalCabinet.Screen name="PersonalCabinet" component={PersonalCabinetScreen} />
-        </PersonalCabinet.Navigator>
-    );
-}
-
-function UnauthNavigator() {
-    return (
-        <Unauth.Navigator>
-            <Unauth.Screen
-                options={defaultTabScreenOptions} name="Unauth" component={UnauthScreen}
-            />
-        </Unauth.Navigator>
-    );
-}
-
-// //Sample Expo Notification
-// useEffect(() => {
-//     //registerForNotificatioins();
-//     /* Notification.addListener(notification => {
-//         const { data: { text } } = notification;
-
-//         if (origin === 'received' && text)  {
-//             const text = notification.data.text;
-//             Alert.alert(
-//                 'New Push Notification',
-//                 text,
-//                 [{ text: 'Ok.'}]
-//             )
-//         }
-//     }) */
-// }, []);
-
-/* This is send messages when last_change date was changed is very ofent
-    getUserUidRef().on('value', async (snapshot) => {
-    if (!snapshot.exists()) return;
-    const val = snapshot.val();
-    const data = JSON.stringify({
-        state: val.state,
-        last_changed: new Date(val.last_changed).toLocaleString()
-    });
-    await httpService.sendMessageToTelegramBot(`[database users/{uid}] ${data}`);
-}); */

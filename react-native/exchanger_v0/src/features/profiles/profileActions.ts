@@ -1,4 +1,4 @@
-import { getCircularReplacer, getColorText } from "../../app/common/utils/utils";
+import { getColorText } from "../../app/common/utils/utils";
 import { IProfile } from "../../app/models/IProfile";
 import { LISTEN_TO_CURRENT_USER_PROFILE } from "./profileConstants";
 

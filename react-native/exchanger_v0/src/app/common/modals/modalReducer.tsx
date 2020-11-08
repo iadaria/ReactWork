@@ -1,4 +1,3 @@
-import { useGestureHandlerRef } from "@react-navigation/stack";
 import { IAction } from "../../models/common";
 
 /****************** CONST ***********************/

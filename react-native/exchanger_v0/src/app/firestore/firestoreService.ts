@@ -3,7 +3,6 @@ import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { tempID } from '../common/utils/utils';
 import firebase from '../config/firebase'; 
 import { Identifier } from '../models/common';
-import { IUser } from '../models/IUser';
 
 const db = firebase.firestore(); //It's for Web
 
